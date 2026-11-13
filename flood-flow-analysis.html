@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="te" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>భీమవరం వరద ప్రవాహ విశ్లేషణ & డ్రైనేజీ ఇంటెలిజెన్స్ AI వేదిక (Bhimavaram Flood Intelligence & Drainage Analysis System)</title>
+  
+  <!-- Comprehensive Site Meta Description depicting Total Functionality -->
+  <meta name="description" content="భీమవరం పురపాలక సంఘం వరద ప్రవాహ విశ్లేషణ & డ్రైనేజీ ఇంటెలిజెన్స్ AI వేదిక: ఎనమదుర్రు కాలువ 3.8m బ్యాక్‌వాటర్ సిమ్యులేషన్, 20 వాటర్‌లాగింగ్ హాట్‌స్పాట్లు, SCS-CN & Rational వర్షపాత రన్-ఆఫ్ మోడలింగ్, మరియు తెలుగు/ఇంగ్లీష్ FloodFlow AI ఏజెంట్.">
+  <meta name="keywords" content="భీమవరం వరద విశ్లేషణ, Bhimavaram Flood Flow, Drainage Intelligence, Yenamadurru Drain, Waterlogging Hotspots, SCS-CN Runoff, Urban Flood AI">
+  <meta property="og:title" content="భీమవరం వరద ప్రవాహ విశ్లేషణ & డ్రైనేజీ ఇంటెలిజెన్స్ AI వేదిక">
+  <meta property="og:description" content="ఎనమదుర్రు కాలువ బ్యాక్‌వాటర్ ప్రభావం, 20 క్రిటికల్ వాటర్‌లాగింగ్ హాట్‌స్పాట్లు, వర్షపాత దృశ్యాలు మరియు ముందస్తు డ్రైనేజీ పూడికతీత కార్యాచరణ ప్రణాళిక.">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Leaflet CSS & JS (Offline first with CDN Fallback) -->
+  <link rel="stylesheet" href="leaflet.css" onerror="this.onerror=null;this.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';" />
+  <script src="leaflet.js" onerror="this.onerror=null;this.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Telugu:ital@0;1&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Core Data Files -->
+  <script src="assets/bhimavaram_39_wards_data.js"></script>
+  <script src="assets/bhimavaram_waterbodies_data.js"></script>
+  <script src="assets/bhimavaram_flood_intelligence.js"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', 'Tiro Telugu', sans-serif;
+    }
+    .telugu-font {
+      font-family: 'Tiro Telugu', 'Gautami', 'Nirmala UI', sans-serif;
+    }
+    .code-font {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    #floodMap {
+      width: 100%;
+      height: 100%;
+      background: #090d16;
+    }
+
+    /* Water Animations */
+    .canal-flow-anim {
+      stroke-dasharray: 9, 6;
+      animation: canalFlow 22s linear infinite;
+    }
+    @keyframes canalFlow {
+      from { stroke-dashoffset: 300; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    .drain-flow-anim {
+      stroke-dasharray: 6, 4;
+      animation: drainFlow 14s linear infinite;
+    }
+    @keyframes drainFlow {
+      from { stroke-dashoffset: 200; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    .hotspot-pulse {
+      animation: pulseHotspot 1.8s infinite cubic-bezier(0.4, 0, 0.6, 1);
+    }
+    @keyframes pulseHotspot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 0.85; }
+    }
+
+    /* Custom Leaflet Hotspot Badges */
+    .hs-marker-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(185, 28, 28, 0.95);
+      border: 2px solid #fecaca;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 11px;
+      border-radius: 9999px;
+      box-shadow: 0 0 14px rgba(239, 68, 68, 0.9);
+      width: 30px !important;
+      height: 30px !important;
+      margin-left: -15px !important;
+      margin-top: -15px !important;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+    .hs-marker-badge:hover {
+      transform: scale(1.3);
+      z-index: 9999 !important;
+      box-shadow: 0 0 20px #ef4444;
+    }
+
+    .infra-marker-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 23, 42, 0.92);
+      border: 2px solid #38bdf8;
+      color: #ffffff;
+      font-size: 13px;
+      border-radius: 8px;
+      width: 32px !important;
+      height: 32px !important;
+      margin-left: -16px !important;
+      margin-top: -16px !important;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .infra-marker-badge:hover {
+      transform: scale(1.25);
+      border-color: #facc15;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.8);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col selection:bg-cyan-500 selection:text-white">
+
+  <!-- ======================================================== -->
+  <!-- 1. TOP HEADER & METRIC COMMAND BAR                       -->
+  <!-- ======================================================== -->
+  <header class="border-b border-slate-800 bg-slate-900/95 backdrop-blur sticky top-0 z-50 px-4 py-2.5 shadow-xl">
+    <div class="max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Brand & Title -->
+      <div class="flex items-center space-x-3">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-cyan-600 via-blue-600 to-indigo-700 flex items-center justify-center shadow-lg shadow-cyan-500/25 text-white font-bold text-2xl border border-cyan-400/40 animate-pulse">
+          🌊
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base md:text-lg font-extrabold tracking-tight text-white flex items-center gap-2">
+              భీమవరం వరద ప్రవాహ విశ్లేషణ & డ్రైనేజీ AI వ్యవస్థ
+            </h1>
+            <span class="px-2 py-0.5 text-[10px] uppercase font-bold rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span> GIS Hydrology 2.0
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 telugu-font">
+            Bhimavaram Municipal Flood Intelligence, Drainage Analysis & Waterlogging Prediction System
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Ribbon -->
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        
+        <!-- Yanamudurru Gauge Indicator -->
+        <div class="bg-slate-800/90 border border-slate-700/80 rounded-lg px-3 py-1 flex items-center gap-2">
+          <div class="text-slate-400 text-[11px]">ఎనమదురు లెవెల్:</div>
+          <div id="headerYanamudurruStage" class="font-bold text-amber-400 text-xs flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span> 2.80 m (సాధారణం)
+          </div>
+        </div>
+
+        <!-- Simulation Scenario Tag -->
+        <div class="bg-slate-800/90 border border-slate-700/80 rounded-lg px-3 py-1 flex items-center gap-2">
+          <div class="text-slate-400 text-[11px]">వర్షపాత సినారియో:</div>
+          <div id="headerScenarioTag" class="font-bold text-cyan-300 text-xs">
+            110 mm / 6 Hrs (భారీ వర్షం)
+          </div>
+        </div>
+
+        <!-- Peak Flow Rate -->
+        <div class="bg-slate-800/90 border border-slate-700/80 rounded-lg px-3 py-1 flex items-center gap-2">
+          <div class="text-slate-400 text-[11px]">పీక్ డిశ్చార్జ్ Q:</div>
+          <div id="headerPeakQ" class="font-bold text-rose-400 text-xs">
+            102.4 m³/s
+          </div>
+        </div>
+
+        <!-- AI Assistant Launcher Button -->
+        <button onclick="toggleAiDrawer()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white font-bold text-xs shadow-md shadow-purple-600/30 border border-purple-400/40 transition hover:scale-105 active:scale-95">
+          <span>🤖</span>
+          <span>AI అసిస్టెంట్ ఏజెంట్</span>
+          <span class="bg-purple-900/60 text-[10px] px-1.5 py-0.2 rounded border border-purple-400/30">Online</span>
+        </button>
+
+        <!-- Traffic & Mobility AI System Link -->
+        <a href="traffic-mobility-system.html" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-amber-950/80 hover:bg-amber-900 text-amber-300 border border-amber-500/40 font-bold text-xs transition" title="భీమవరం స్మార్ట్ ట్రాఫిక్ & మొబిలిటీ ప్లానింగ్ సిస్టమ్">
+          <span>🚦</span>
+          <span>ట్రాఫిక్ AI ఏజెంట్</span>
+        </a>
+
+        <!-- Navigation Buttons -->
+        <a href="index.html" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs transition">
+          <span>🏛️</span>
+          <span>52 వార్డుల పోర్టల్</span>
+        </a>
+        <a href="gis-ward-map.html" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs transition">
+          <span>🗺️</span>
+          <span>GIS వార్డు పటం</span>
+        </a>
+        <button onclick="window.print()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs" title="నివేదిక ప్రింట్ / PDF సేవ్ చేయండి">
+          <span>📄</span>
+          <span>PDF రిపోర్ట్</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================== -->
+  <!-- 2. DASHBOARD NAVIGATION TABS (A to F)                    -->
+  <!-- ======================================================== -->
+  <div class="bg-slate-900/80 border-b border-slate-800 px-4 py-2 text-xs">
+    <div class="max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Tab Buttons -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+        <button onclick="switchTab('tab-overview')" id="btn-tab-overview" class="tab-btn px-3 py-1.5 rounded-md font-bold text-xs bg-cyan-600 text-white shadow-sm flex items-center gap-1.5 transition">
+          <span>🗺️</span>
+          <span>A: నగర సమగ్ర పటం (Overview)</span>
+        </button>
+        <button onclick="switchTab('tab-terrain')" id="btn-tab-terrain" class="tab-btn px-3 py-1.5 rounded-md font-medium text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-1.5 transition">
+          <span>🏔️</span>
+          <span>B: ఎలివేషన్ & భూస్వరూపం (Terrain)</span>
+        </button>
+        <button onclick="switchTab('tab-drainage')" id="btn-tab-drainage" class="tab-btn px-3 py-1.5 rounded-md font-medium text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-1.5 transition">
+          <span>🌊</span>
+          <span>C: డ్రైనేజీ & కాలువలు (Drainage)</span>
+        </button>
+        <button onclick="switchTab('tab-simulation')" id="btn-tab-simulation" class="tab-btn px-3 py-1.5 rounded-md font-medium text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-1.5 transition">
+          <span>🌧️</span>
+          <span>D: వరద అనుకరణ (Flood Sim)</span>
+        </button>
+        <button onclick="switchTab('tab-wards')" id="btn-tab-wards" class="tab-btn px-3 py-1.5 rounded-md font-medium text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-1.5 transition">
+          <span>📊</span>
+          <span>E: 52 వార్డుల ముప్పు విశ్లేషణ (52 Wards)</span>
+        </button>
+        <button onclick="switchTab('tab-action')" id="btn-tab-action" class="tab-btn px-3 py-1.5 rounded-md font-medium text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-1.5 transition">
+          <span>📋</span>
+          <span>F: మున్సిపల్ కార్యాచరణ & సర్వే (Action Plan)</span>
+        </button>
+      </div>
+
+      <!-- Quick Status Notification -->
+      <div class="flex items-center gap-2 text-[11px] text-slate-400">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>హైడ్రాలిక్ మోడల్ లైవ్ స్థితి: <strong class="text-emerald-400">క్రియాశీలకం (Active)</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- 3. MAIN WORKSPACE: MAP CANVAS + COLLAPSIBLE SIDE PANELS  -->
+  <!-- ======================================================== -->
+  <div class="flex-1 flex flex-col lg:flex-row relative overflow-hidden" style="min-height: calc(100vh - 105px);">
+    
+    <!-- LEFT / MAIN VIEW: CENTRAL INTERACTIVE MAP (70% width on desktop) -->
+    <div class="flex-1 flex flex-col relative h-[500px] lg:h-auto">
+      
+      <!-- Leaflet Map Container -->
+      <div id="floodMap"></div>
+
+      <!-- Map Floating Layer Bar (Top Left) -->
+      <div class="absolute top-4 left-4 z-[1000] bg-slate-900/90 backdrop-blur border border-slate-700/80 rounded-xl p-2.5 shadow-2xl max-w-xs text-xs space-y-2">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-1.5">
+          <span class="font-bold text-slate-200 flex items-center gap-1.5">
+            <span>Layers</span> 🗺️ GIS లేయర్లు
+          </span>
+          <span class="text-[10px] text-cyan-400">Interactive</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-1.5 text-[11px]">
+          <label class="flex items-center gap-1.5 cursor-pointer text-slate-300 hover:text-white">
+            <input type="checkbox" id="layerWards" checked onchange="toggleMapLayer('wards')" class="rounded border-slate-700 text-cyan-500 focus:ring-0">
+            <span>52 వార్డులు</span>
+          </label>
+          <label class="flex items-center gap-1.5 cursor-pointer text-slate-300 hover:text-white">
+            <input type="checkbox" id="layerHotspots" checked onchange="toggleMapLayer('hotspots')" class="rounded border-slate-700 text-cyan-500 focus:ring-0">
+            <span class="text-rose-400 font-semibold">20 హాట్‌స్పాట్లు</span>
+          </label>
+          <label class="flex items-center gap-1.5 cursor-pointer text-slate-300 hover:text-white">
+            <input type="checkbox" id="layerCanals" checked onchange="toggleMapLayer('canals')" class="rounded border-slate-700 text-cyan-500 focus:ring-0">
+            <span class="text-sky-400">కాలువలు & డ్రెయిన్లు</span>
+          </label>
+          <label class="flex items-center gap-1.5 cursor-pointer text-slate-300 hover:text-white">
+            <input type="checkbox" id="layerFloodExtent" checked onchange="toggleMapLayer('floodExtent')" class="rounded border-slate-700 text-cyan-500 focus:ring-0">
+            <span class="text-indigo-400 font-semibold">వరద విస్తీర్ణం (Depth)</span>
+          </label>
+          <label class="flex items-center gap-1.5 cursor-pointer text-slate-300 hover:text-white">
+            <input type="checkbox" id="layerInfra" checked onchange="toggleMapLayer('infra')" class="rounded border-slate-700 text-cyan-500 focus:ring-0">
+            <span class="text-amber-400">ముఖ్య భవనాలు</span>
+          </label>
+          <label class="flex items-center gap-1.5 cursor-pointer text-slate-300 hover:text-white">
+            <input type="checkbox" id="layerDepressions" onchange="toggleMapLayer('depressions')" class="rounded border-slate-700 text-cyan-500 focus:ring-0">
+            <span class="text-teal-400">పల్లపు గుంతలు (Sinks)</span>
+          </label>
+        </div>
+
+        <!-- Basemap Selector -->
+        <div class="pt-1.5 border-t border-slate-800 flex items-center justify-between text-[10px]">
+          <span class="text-slate-400">బేస్‌మ్యాప్:</span>
+          <select id="basemapSelect" onchange="changeBasemap(this.value)" class="bg-slate-800 border border-slate-700 rounded px-1.5 py-0.5 text-slate-200 text-[10px]">
+            <option value="satellite">Google Hybrid శాటిలైట్</option>
+            <option value="streets">Google వీధుల పటం</option>
+            <option value="dark">Carto Dark డార్క్ మోడ్</option>
+            <option value="osm">OpenStreetMap</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Time Simulation Player Bar (Floating Bottom of Map) -->
+      <div class="absolute bottom-4 left-4 right-4 lg:right-auto lg:left-6 z-[1000] bg-slate-900/95 backdrop-blur border border-slate-700/80 rounded-2xl p-3 shadow-2xl flex flex-wrap items-center gap-3 text-xs max-w-xl">
+        <div class="flex items-center gap-2">
+          <button id="btnPlaySim" onclick="toggleSimPlayback()" class="w-8 h-8 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold flex items-center justify-center transition shadow-lg shadow-cyan-500/30">
+            ▶️
+          </button>
+          <button onclick="resetSimulation()" class="w-7 h-7 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs flex items-center justify-center border border-slate-700" title="రీసెట్ చేయండి">
+            🔄
+          </button>
+        </div>
+
+        <div class="flex-1 min-w-[180px]">
+          <div class="flex items-center justify-between text-[11px] mb-1">
+            <span class="text-slate-400">ప్రవాహ ప్రగతి కాలక్రమం (Flow Time):</span>
+            <span id="simTimeLabel" class="font-bold text-cyan-400 code-font">T + 0.0 Hrs (ప్రారంభం)</span>
+          </div>
+          <input 
+            type="range" 
+            id="simTimeSlider" 
+            min="0" 
+            max="6" 
+            step="0.5" 
+            value="0" 
+            oninput="handleTimeSlider(this.value)"
+            class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+          >
+          <div class="flex justify-between text-[9px] text-slate-500 mt-0.5">
+            <span>0h (ఆరంభం)</span>
+            <span>1h (డ్రెయిన్ ఫిల్లింగ్)</span>
+            <span>2h (ఓవర్‌ఫ్లో)</span>
+            <span>3h (పీక్ ముంపు)</span>
+            <span>4h (బ్యాక్ వాటర్)</span>
+            <span>6h (రికవరీ)</span>
+          </div>
+        </div>
+
+        <!-- Quick Depth Legend -->
+        <div class="border-l border-slate-800 pl-3 hidden sm:flex flex-col gap-0.5 text-[9px]">
+          <div class="text-slate-400 font-semibold">నీటి లోతు:</div>
+          <div class="flex items-center gap-1"><span class="w-2.5 h-1.5 bg-sky-400 rounded-sm"></span> 0.2 - 0.5m (స్వల్పం)</div>
+          <div class="flex items-center gap-1"><span class="w-2.5 h-1.5 bg-amber-400 rounded-sm"></span> 0.5 - 1.0m (మధ్యస్థం)</div>
+          <div class="flex items-center gap-1"><span class="w-2.5 h-1.5 bg-rose-500 rounded-sm"></span> > 1.0m (తీవ్రం)</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT VIEW: INTERACTIVE CONTROL & ANALYTICS PANELS (30% width on desktop) -->
+    <div class="w-full lg:w-[480px] bg-slate-900 border-l border-slate-800 flex flex-col overflow-y-auto">
+      
+      <!-- ============================================== -->
+      <!-- TAB A: CITY OVERVIEW PANEL                     -->
+      <!-- ============================================== -->
+      <div id="panel-tab-overview" class="tab-panel p-4 space-y-4">
+        
+        <!-- Header Summary Card -->
+        <div class="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl p-3.5 shadow-md">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-cyan-400">నగర సమగ్ర స్వరూపం (ULB Profile)</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              52 వార్డులు / 25.6 చ.కి.మీ
+            </span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            భీమవరం గోదావరి పశ్చిమ డెల్టా మైదానంలో సముద్ర మట్టానికి సగటున <strong>4.85 మీటర్ల ఎత్తులో</strong> ఉంది. పల్లపు నైసర్గిక స్వరూపం, వర్షాకాలంలో ఎనమదురు కాలువ బ్యాక్ వాటర్ ప్రభావం వల్ల నగరంలోని లోతట్టు ప్రాంతాలు నీటమునుగుతున్నాయి.
+          </p>
+        </div>
+
+        <!-- 5 Essential Answers Box -->
+        <div class="bg-slate-800/80 border border-slate-700/70 rounded-xl p-3 space-y-2 text-xs">
+          <div class="font-bold text-amber-300 flex items-center gap-1.5">
+            <span>🎯</span> 5 ప్రాథమిక ప్రశ్నలు & శాస్త్రీయ సమాధానాలు
+          </div>
+          <ul class="space-y-1.5 text-[11px] text-slate-300">
+            <li class="flex items-start gap-1.5">
+              <span class="text-cyan-400 font-bold">1.</span>
+              <span><strong>నీరు ఎక్కడి నుండి ప్రవహిస్తుంది?</strong> ఉత్తరాన గొల్లలకోడేరు & పశ్చిమాన ఉండి ఎగువ నుండి సహజ వాలుతో ఎనమదురు వైపు ప్రవహిస్తుంది.</span>
+            </li>
+            <li class="flex items-start gap-1.5">
+              <span class="text-cyan-400 font-bold">2.</span>
+              <span><strong>ఎక్కడ నీరు నిలుస్తుంది?</strong> మవుళ్ళమ్మ ఆలయ వీధి (2.25m), సోంపేట (2.4m), రైల్వే అండర్‌పాస్ (2.1m) సహజ గుంతలుగా మారి నీరు నిల్వ ఉంటుంది.</span>
+            </li>
+            <li class="flex items-start gap-1.5">
+              <span class="text-cyan-400 font-bold">3.</span>
+              <span><strong>ఏ కాలువలు అడ్డుకుంటున్నాయి?</strong> ఎనమదురు కాలువలో నీటి మట్టం 3.8m దాటితే మున్సిపల్ అవుట్‌ఫాల్స్ మూసుకుపోయి బ్యాక్ వాటర్ రివర్స్ అవుతుంది.</span>
+            </li>
+            <li class="flex items-start gap-1.5">
+              <span class="text-cyan-400 font-bold">4.</span>
+              <span><strong>ఏ వార్డులు ముప్పులో ఉన్నాయి?</strong> వార్డులు 2, 3, 4, 17, 26, 29, 37, 48 అత్యంత ప్రమాదకర (Critical) కేటగిరీలో ఉన్నాయి.</span>
+            </li>
+            <li class="flex items-start gap-1.5">
+              <span class="text-cyan-400 font-bold">5.</span>
+              <span><strong>ఏ పనులు చేయాలి?</strong> తక్షణ పూడికతీత, అవుట్‌ఫాల్స్ వద్ద నాన్-రిటర్న్ ఫ్లాప్ గేట్లు, మరియు మవుళ్ళమ్మ & అండర్‌పాస్ వద్ద పంప్ స్టేషన్లు.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Yanamudurru Drain Hydraulic Status Card -->
+        <div class="bg-slate-800/90 border border-blue-500/30 rounded-xl p-3 text-xs space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-sky-300 flex items-center gap-1.5">
+              <span>🌊</span> ఎనమదురు కాలువ హైడ్రాలిక్ స్థితి
+            </span>
+            <span class="text-[10px] text-slate-400">8.2 కి.మీ పట్టణ ప్రవాహం</span>
+          </div>
+          
+          <div class="space-y-1">
+            <div class="flex justify-between text-[11px]">
+              <span class="text-slate-400">ప్రస్తుత నీటి మట్టం:</span>
+              <span id="overviewCanalStageVal" class="font-bold text-amber-300">2.80 మీ (సాధారణ వర్షాకాలం)</span>
+            </div>
+            <div class="w-full bg-slate-700 h-2 rounded-full overflow-hidden">
+              <div id="overviewCanalStageBar" class="bg-gradient-to-r from-emerald-500 via-amber-500 to-rose-600 h-full w-[52%]"></div>
+            </div>
+            <div class="flex justify-between text-[9px] text-slate-500">
+              <span>సాధారణం 2.1m</span>
+              <span>హెచ్చరిక 3.8m</span>
+              <span>ప్రమాద స్థాయి 4.9m</span>
+              <span>గట్టు మట్టం 5.4m</span>
+            </div>
+          </div>
+
+          <p class="text-[11px] text-slate-300 pt-1 border-t border-slate-700/60">
+            హెచ్చరిక స్థాయి (3.8m) దాటిన వెంటనే పట్టణంలోని 14 అవుట్‌ఫాల్స్ ద్వారా డ్రెయిన్ వాటర్ కాలువలోకి వెళ్ళడం ఆగిపోయి లోతట్టు బస్తీలలోకి నీరు రివర్స్ అవుతుంది.
+          </p>
+        </div>
+
+        <!-- Quick Hotspots Preview -->
+        <div class="bg-slate-800/70 border border-slate-700 rounded-xl p-3 text-xs space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-rose-400 flex items-center gap-1.5">
+              <span>⚠️</span> టాప్ 5 అత్యంత ప్రమాదకర ప్రాంతాలు
+            </span>
+            <button onclick="switchTab('tab-simulation')" class="text-cyan-400 hover:underline text-[11px]">
+              అన్నీ చూడండి ➔
+            </button>
+          </div>
+          <div class="space-y-1.5" id="overviewHotspotsList">
+            <!-- Dynamically injected -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================== -->
+      <!-- TAB B: TERRAIN & ELEVATION INTELLIGENCE PANEL  -->
+      <!-- ============================================== -->
+      <div id="panel-tab-terrain" class="tab-panel p-4 space-y-4 hidden">
+        <div class="bg-slate-800/90 border border-slate-700 rounded-xl p-3.5 space-y-2 text-xs">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-cyan-400 uppercase tracking-wide">ఎలివేషన్ & నైసర్గిక విశ్లేషణ (DEM/DTM)</span>
+            <span class="text-[10px] text-slate-400">Cartosat & SRTM 10m DEM</span>
+          </div>
+          <p class="text-slate-300 text-[11px] leading-relaxed">
+            భీమవరం పురపాలక సంఘం భూభాగం అతి తక్కువ వాలును (సగటున 1:2500) కలిగి ఉంది. కనిష్ట ఎత్తు <strong>2.10 మీటర్లు</strong> ఉండగా, గరిష్ట ఎత్తు వాయువ్యంలో <strong>8.60 మీటర్లు</strong> ఉంది.
+          </p>
+        </div>
+
+        <!-- Elevation Profile Metrics -->
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <div class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-lg">
+            <div class="text-slate-400 text-[10px]">కనిష్ట భూమట్టం (Sinks):</div>
+            <div class="text-rose-400 font-extrabold text-sm">2.10 m MSL</div>
+            <div class="text-[9px] text-slate-400">రైల్వే అండర్‌పాస్ / మవుళ్ళమ్మ</div>
+          </div>
+          <div class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-lg">
+            <div class="text-slate-400 text-[10px]">సగటు భూమట్టం:</div>
+            <div class="text-cyan-300 font-extrabold text-sm">4.85 m MSL</div>
+            <div class="text-[9px] text-slate-400">డెల్టా సగటు భూతలం</div>
+          </div>
+          <div class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-lg">
+            <div class="text-slate-400 text-[10px]">సహజ వాలు దిశ (Flow):</div>
+            <div class="text-emerald-400 font-extrabold text-sm">NW ➔ SE</div>
+            <div class="text-[9px] text-slate-400">ఎనమదురు కాలువ వైపు</div>
+          </div>
+          <div class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-lg">
+            <div class="text-slate-400 text-[10px]">గుంతలు & పల్లపు ప్రాంతం:</div>
+            <div class="text-amber-400 font-extrabold text-sm">34.5% విస్తీర్ణం</div>
+            <div class="text-[9px] text-slate-400">&lt; 3.0 మీటర్ల పరిధి</div>
+          </div>
+        </div>
+
+        <!-- Micro Catchments Overview -->
+        <div class="bg-slate-800/80 border border-slate-700 rounded-xl p-3 text-xs space-y-2">
+          <div class="font-bold text-slate-200">🌊 ప్రధాన మైక్రో-వాటర్‌షెడ్ క్యాచ్‌మెంట్లు (4)</div>
+          <div class="space-y-1.5 text-[11px]">
+            <div class="p-2 rounded bg-slate-900/60 border border-slate-800 flex justify-between items-center">
+              <div>
+                <strong class="text-cyan-300">1. ఎనమదురు సెంట్రల్ కారిడార్</strong>
+                <p class="text-[10px] text-slate-400">వన్ టౌన్ & టూ టౌన్ ప్రధాన మురుగునీటి బేసిన్ (11.2 చ.కి.మీ)</p>
+              </div>
+              <span class="text-xs font-bold text-rose-400">అత్యధిక ముప్పు</span>
+            </div>
+            <div class="p-2 rounded bg-slate-900/60 border border-slate-800 flex justify-between items-center">
+              <div>
+                <strong class="text-cyan-300">2. పశ్చిమ భీమవరం బ్రాంచ్ బేసిన్</strong>
+                <p class="text-[10px] text-slate-400">చినమిరం, డి.ఎన్.ఆర్ కళాశాల, సోంపేట ప్రాంతం (7.4 చ.కి.మీ)</p>
+              </div>
+              <span class="text-xs font-bold text-amber-400">మధ్యస్థ ముప్పు</span>
+            </div>
+            <div class="p-2 rounded bg-slate-900/60 border border-slate-800 flex justify-between items-center">
+              <div>
+                <strong class="text-cyan-300">3. కరకోడు దక్షిణ వ్యవసాయ-పట్టణ బేసిన్</strong>
+                <p class="text-[10px] text-slate-400">రాయలం, కొమరద సరిహద్దు ప్రాంతాలు (4.8 చ.కి.మీ)</p>
+              </div>
+              <span class="text-xs font-bold text-rose-400">హై రిస్క్</span>
+            </div>
+            <div class="p-2 rounded bg-slate-900/60 border border-slate-800 flex justify-between items-center">
+              <div>
+                <strong class="text-cyan-300">4. అమరం ఎగువ వాటర్‌షెడ్</strong>
+                <p class="text-[10px] text-slate-400">ఉండి వైపు నుండి వచ్చే బాహ్య ప్రవాహం (2.2 చ.కి.మీ)</p>
+              </div>
+              <span class="text-xs font-bold text-emerald-400">తక్కువ ముప్పు</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3D Elevation Simulation Visualizer -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs space-y-2">
+          <div class="flex items-center justify-between text-slate-300 font-semibold">
+            <span>3D టెర్రైన్ ఎలివేషన్ ప్రొఫైల్ (Cross Section)</span>
+            <span class="text-[10px] text-cyan-400">W to E (చినమిరం ➔ ఎనమదురు ➔ వన్ టౌన్)</span>
+          </div>
+          <div class="h-28 w-full bg-slate-950 rounded-lg p-2 flex items-end justify-between gap-1 border border-slate-800/80">
+            <!-- Simulated terrain bars with elevation labels -->
+            <div class="w-full flex flex-col items-center gap-1">
+              <span class="text-[8px] text-slate-400">4.5m</span>
+              <div class="w-full bg-emerald-600 rounded-t h-16"></div>
+              <span class="text-[7px] text-slate-500">చినమిరం</span>
+            </div>
+            <div class="w-full flex flex-col items-center gap-1">
+              <span class="text-[8px] text-slate-400">2.6m</span>
+              <div class="w-full bg-amber-600 rounded-t h-8"></div>
+              <span class="text-[7px] text-slate-500">సోంపేట</span>
+            </div>
+            <div class="w-full flex flex-col items-center gap-1">
+              <span class="text-[8px] text-slate-400">2.1m</span>
+              <div class="w-full bg-rose-700 rounded-t h-6 border-b-2 border-cyan-400"></div>
+              <span class="text-[7px] text-cyan-400 font-bold">రైల్వే అండర్‌పాస్</span>
+            </div>
+            <div class="w-full flex flex-col items-center gap-1">
+              <span class="text-[8px] text-slate-400">1.8m</span>
+              <div class="w-full bg-blue-600 rounded-t h-5"></div>
+              <span class="text-[7px] text-sky-400 font-bold">ఎనమదురు డ్రెయిన్</span>
+            </div>
+            <div class="w-full flex flex-col items-center gap-1">
+              <span class="text-[8px] text-slate-400">2.2m</span>
+              <div class="w-full bg-rose-600 rounded-t h-7"></div>
+              <span class="text-[7px] text-rose-400 font-bold">మవుళ్ళమ్మ</span>
+            </div>
+            <div class="w-full flex flex-col items-center gap-1">
+              <span class="text-[8px] text-slate-400">3.8m</span>
+              <div class="w-full bg-emerald-600 rounded-t h-14"></div>
+              <span class="text-[7px] text-slate-500">దుర్గాపురం</span>
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-400 italic text-center">
+            కేంద్రంలో ఎనమదురు కాలువ మరియు మవుళ్ళమ్మ ఆలయ ప్రాంతాలు గిన్నెలాంటి (Cup-shape) పల్లంలో ఉన్నట్లు స్పష్టమవుతుంది.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- ============================================== -->
+      <!-- TAB C: DRAINAGE NETWORK & SILT INTELLIGENCE    -->
+      <!-- ============================================== -->
+      <div id="panel-tab-drainage" class="tab-panel p-4 space-y-4 hidden">
+        <div class="bg-slate-800/90 border border-slate-700 rounded-xl p-3.5 space-y-2 text-xs">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-sky-400 uppercase tracking-wide">మున్సిపల్ డ్రైనేజీ నెట్‌వర్క్ & పూడిక సర్వే</span>
+            <span class="text-[10px] text-slate-400">మొత్తం 184 కి.మీ</span>
+          </div>
+          <p class="text-slate-300 text-[11px] leading-relaxed">
+            పట్టణంలో 4 ప్రధాన ట్రంక్ డ్రెయిన్లు, 18 సెకండరీ నాలాలు, మరియు 162 కి.మీ లోకల్ వీధి డ్రెయిన్లు ఉన్నాయి. సర్వే ప్రకారం <strong>సగటున 47% మేర పూడిక</strong> పేరుకుపోయింది.
+          </p>
+        </div>
+
+        <!-- 4 Primary Trunk Drains List -->
+        <div class="space-y-2 text-xs">
+          <div class="font-bold text-slate-200">ప్రధాన ట్రంక్ డ్రెయిన్లు (Primary Outfall Drains):</div>
+          
+          <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700 space-y-1.5">
+            <div class="flex justify-between items-start">
+              <div>
+                <strong class="text-cyan-300">PD-01: వన్ టౌన్ మెయిన్ ట్రంక్ డ్రెయిన్</strong>
+                <p class="text-[10px] text-slate-400">పొడవు: 2,400 మీ | వెడల్పు: 3.2 మీ | మవుళ్ళమ్మ మార్గం</p>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30">45% పూడిక</span>
+            </div>
+            <div class="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
+              <div class="bg-rose-500 h-full w-[45%]"></div>
+            </div>
+            <div class="text-[10px] text-slate-400">అవుట్‌ఫాల్: ఎనమదురు కాలువ Km 4.2 (బ్యాక్ వాటర్ లాకింగ్ ముప్పు)</div>
+          </div>
+
+          <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700 space-y-1.5">
+            <div class="flex justify-between items-start">
+              <div>
+                <strong class="text-cyan-300">PD-02: టూ టౌన్ సోంపేట - డి.ఎన్.ఆర్ ట్రంక్</strong>
+                <p class="text-[10px] text-slate-400">పొడవు: 3,100 మీ | వెడల్పు: 3.5 మీ | RCC బాక్స్ కండ్యూట్</p>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30">38% పూడిక</span>
+            </div>
+            <div class="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
+              <div class="bg-amber-500 h-full w-[38%]"></div>
+            </div>
+            <div class="text-[10px] text-slate-400">అవుట్‌ఫాల్: ఎనమదురు కాలువ Km 5.0 వద్ద</div>
+          </div>
+
+          <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700 space-y-1.5">
+            <div class="flex justify-between items-start">
+              <div>
+                <strong class="text-cyan-300">PD-03: గుణుపూడి సోమేశ్వర స్వామి నాలా</strong>
+                <p class="text-[10px] text-slate-400">పొడవు: 1,850 మీ | వెడల్పు: 2.4 మీ | స్టోన్ పిచ్చింగ్</p>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30">58% పూడిక</span>
+            </div>
+            <div class="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
+              <div class="bg-rose-500 h-full w-[58%]"></div>
+            </div>
+            <div class="text-[10px] text-slate-400">సమస్య: గుర్రపుడెక్క మరియు ప్లాస్టిక్ వ్యర్థాలు అడ్డుపడటం</div>
+          </div>
+
+          <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700 space-y-1.5">
+            <div class="flex justify-between items-start">
+              <div>
+                <strong class="text-cyan-300">PD-04: రాయలం సౌత్ పెరిఫెరల్ ఇంటర్‌సెప్టర్</strong>
+                <p class="text-[10px] text-slate-400">పొడవు: 2,800 మీ | వెడల్పు: 2.8 మీ | కరకోడు లింక్</p>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30">62% పూడిక</span>
+            </div>
+            <div class="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
+              <div class="bg-rose-500 h-full w-[62%]"></div>
+            </div>
+            <div class="text-[10px] text-slate-400">అత్యవసరం: భారీ యంత్రాలతో లోతైన పూడికతీత చేపట్టాలి</div>
+          </div>
+        </div>
+
+        <!-- Constricted Culverts & Bottlenecks -->
+        <div class="bg-slate-800/80 border border-amber-500/30 rounded-xl p-3 text-xs space-y-2">
+          <div class="font-bold text-amber-300 flex items-center gap-1.5">
+            <span>⚠️</span> క్లిష్టమైన బాటిల్‌నెక్ కల్వర్టులు (4 Bottlenecks)
+          </div>
+          <div class="space-y-1 text-[11px] text-slate-300">
+            <div class="p-1.5 rounded bg-slate-900/60 border border-slate-800">
+              <strong class="text-rose-400">1. టౌన్ రైల్వే స్టేషన్ కల్వర్టు:</strong> ప్రస్తుత ఓపెనింగ్ 2.4 m² (కావాల్సింది 6.8 m² - 65% కొరత).
+            </div>
+            <div class="p-1.5 rounded bg-slate-900/60 border border-slate-800">
+              <strong class="text-rose-400">2. సోంపేట రోడ్డు ట్విన్ పైపు కల్వర్టు:</strong> 900mm పైపులు నీటిని త్వరగా లాగలేకపోతున్నాయి (68% కొరత).
+            </div>
+            <div class="p-1.5 rounded bg-slate-900/60 border border-slate-800">
+              <strong class="text-amber-400">3. మవుళ్ళమ్మ రోడ్డు కల్వర్టు:</strong> వ్యాపారాల ఆక్రమణల వల్ల ఓపెనింగ్ కుంచించుకుపోయింది.
+            </div>
+            <div class="p-1.5 rounded bg-slate-900/60 border border-slate-800">
+              <strong class="text-amber-400">4. ఎనమదురు గేట్ నం. 3:</strong> తుప్పుపట్టిన ఫ్లాప్ గేట్ వల్ల కాలువ నీరు లోపలికి చేరుతోంది.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================== -->
+      <!-- TAB D: URBAN RAINFALL-TO-RUNOFF SIMULATION     -->
+      <!-- ============================================== -->
+      <div id="panel-tab-simulation" class="tab-panel p-4 space-y-4 hidden">
+        
+        <!-- Scenario Selector Card -->
+        <div class="bg-gradient-to-br from-slate-800 to-slate-900 border border-cyan-500/40 rounded-xl p-3.5 space-y-3 text-xs shadow-lg">
+          <div class="flex items-center justify-between">
+            <span class="font-extrabold text-cyan-300 uppercase tracking-wide flex items-center gap-1.5">
+              <span>🌧️</span> వర్షపాత సినారియో ఎంపిక (Rainfall Scenarios)
+            </span>
+            <span class="text-[10px] text-cyan-400 code-font">SCS-CN Engine</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <button onclick="setScenario(25, 24, 'సాధారణ వర్షం (Normal 25mm)')" class="sc-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:border-cyan-400 text-left transition">
+              <div class="font-bold text-slate-200">సాధారణం</div>
+              <div class="text-[10px] text-slate-400">25 mm / 24 గంటలు</div>
+            </button>
+            <button onclick="setScenario(55, 12, 'మధ్యస్థ వర్షం (Moderate 55mm)')" class="sc-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:border-cyan-400 text-left transition">
+              <div class="font-bold text-slate-200">మధ్యస్థం</div>
+              <div class="text-[10px] text-slate-400">55 mm / 12 గంటలు</div>
+            </button>
+            <button onclick="setScenario(110, 6, 'భారీ వర్షం (Heavy 110mm)')" class="sc-btn active p-2 rounded-lg bg-cyan-950 border border-cyan-400 text-left transition">
+              <div class="font-bold text-cyan-300">భారీ వర్షం (Heavy)</div>
+              <div class="text-[10px] text-cyan-200">110 mm / 6 గంటలు</div>
+            </button>
+            <button onclick="setScenario(180, 6, 'తీవ్ర వర్షం (Extreme 180mm)')" class="sc-btn p-2 rounded-lg bg-slate-800 border border-slate-700 hover:border-rose-400 text-left transition">
+              <div class="font-bold text-rose-300">తీవ్ర వర్షం (25-Yr)</div>
+              <div class="text-[10px] text-slate-400">180 mm / 6 గంటలు</div>
+            </button>
+            <button onclick="setScenario(280, 12, 'తుఫాను వర్షం (Cyclone 280mm)')" class="sc-btn col-span-2 p-2 rounded-lg bg-slate-800 border border-slate-700 hover:border-rose-500 text-left transition flex justify-between items-center">
+              <div>
+                <div class="font-bold text-rose-400 flex items-center gap-1">
+                  <span>🌀 తీవ్ర తుఫాను వర్షం (Cyclone Inundation)</span>
+                </div>
+                <div class="text-[10px] text-slate-400">280 mm / 12 గంటలు (గరిష్ట వరద విస్తీర్ణం)</div>
+              </div>
+              <span class="text-xs font-bold text-rose-400">Critical</span>
+            </button>
+          </div>
+
+          <!-- Custom Rainfall Slider -->
+          <div class="pt-2 border-t border-slate-700/80 space-y-1.5">
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="text-slate-300">యూజర్ నిర్వచిత వర్షపాతం:</span>
+              <span id="customRainLabel" class="font-bold text-cyan-400 code-font">110 mm</span>
+            </div>
+            <input 
+              type="range" 
+              id="customRainSlider" 
+              min="10" 
+              max="350" 
+              step="5" 
+              value="110" 
+              oninput="handleCustomRain(this.value)"
+              class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+            >
+          </div>
+
+          <!-- Yanamudurru Canal Stage Boundary Slider -->
+          <div class="pt-2 border-t border-slate-700/80 space-y-1.5">
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="text-slate-300">ఎనమదురు కాలువ నీటిమట్టం:</span>
+              <span id="simCanalStageLabel" class="font-bold text-amber-400 code-font">3.80 m (హెచ్చరిక స్థాయి)</span>
+            </div>
+            <input 
+              type="range" 
+              id="simCanalStageSlider" 
+              min="1.8" 
+              max="5.6" 
+              step="0.1" 
+              value="3.8" 
+              oninput="handleCanalStage(this.value)"
+              class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-400"
+            >
+            <div class="flex justify-between text-[9px] text-slate-500">
+              <span>1.8m (సాధారణ)</span>
+              <span>3.8m (బ్యాక్ వాటర్)</span>
+              <span>4.9m (డేంజర్)</span>
+              <span>5.4m (ఓవర్‌ఫ్లో)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulation Hydrological Results Card -->
+        <div class="bg-slate-800/90 border border-slate-700 rounded-xl p-3.5 space-y-3 text-xs">
+          <div class="font-bold text-slate-200 flex items-center justify-between border-b border-slate-700/60 pb-1.5">
+            <span class="flex items-center gap-1.5">
+              <span>⚡</span> రియల్-టైమ్ హైడ్రాలజీ గణాంకాలు
+            </span>
+            <span class="text-[10px] text-emerald-400">SCS Runoff: 88 CN</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="p-2 rounded bg-slate-900 border border-slate-800">
+              <div class="text-[10px] text-slate-400">రన్-ఆఫ్ లోతు (Runoff):</div>
+              <div id="simResRunoff" class="text-cyan-300 font-bold text-sm">82.4 mm</div>
+              <div class="text-[9px] text-slate-500">74.9% వర్షం ప్రవాహంగా మారుతుంది</div>
+            </div>
+            <div class="p-2 rounded bg-slate-900 border border-slate-800">
+              <div class="text-[10px] text-slate-400">పీక్ డిశ్చార్జ్ (Q Peak):</div>
+              <div id="simResPeakQ" class="text-rose-400 font-bold text-sm">102.4 m³/s</div>
+              <div class="text-[9px] text-slate-500">రేషనల్ మెథడ్ లెక్కల ప్రకారం</div>
+            </div>
+            <div class="p-2 rounded bg-slate-900 border border-slate-800">
+              <div class="text-[10px] text-slate-400">మొత్తం ప్రవాహ పరిమాణం:</div>
+              <div id="simResVolume" class="text-amber-300 font-bold text-sm">21.09 లక్షల m³</div>
+              <div class="text-[9px] text-slate-500">నగర క్యాచ్‌మెంట్ విస్తీర్ణంలో</div>
+            </div>
+            <div class="p-2 rounded bg-slate-900 border border-slate-800">
+              <div class="text-[10px] text-slate-400">ముంపునకు గురయ్యే వార్డులు:</div>
+              <div id="simResWardsCount" class="text-rose-400 font-bold text-sm">22 / 52 వార్డులు</div>
+              <div class="text-[9px] text-slate-500">హై & క్రిటికల్ జోన్లలో</div>
+            </div>
+          </div>
+
+          <!-- Backwater Status Alert -->
+          <div id="simBackwaterAlertBox" class="p-2 rounded bg-amber-950/40 border border-amber-500/40 text-[11px] text-amber-200">
+            ⚠️ <strong>బ్యాక్ వాటర్ హెచ్చరిక:</strong> ఎనమదురు కాలువ మట్టం 3.8 మీటర్లు చేరడం వల్ల వన్ టౌన్ మవుళ్ళమ్మ, లంకాపేట, సోంపేట అవుట్‌ఫాల్స్ మూసుకుపోయాయి!
+          </div>
+        </div>
+
+        <!-- Ranked 20 Hotspots Table -->
+        <div class="bg-slate-800/80 border border-slate-700 rounded-xl p-3 text-xs space-y-2">
+          <div class="flex items-center justify-between font-bold text-slate-200">
+            <span class="flex items-center gap-1.5 text-rose-400">
+              <span>📍</span> టాప్ 20 వాటర్‌లాగింగ్ హాట్‌స్పాట్లు
+            </span>
+            <span class="text-[10px] text-slate-400">క్లిక్ చేసి మ్యాప్‌లో చూడండి</span>
+          </div>
+          <div class="max-h-72 overflow-y-auto space-y-1.5 pr-1" id="hotspotsTableBody">
+            <!-- Dynamically populated from BHIMAVARAM_HOTSPOTS -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================== -->
+      <!-- TAB E: 52-WARD RISK ASSESSMENT PANEL           -->
+      <!-- ============================================== -->
+      <div id="panel-tab-wards" class="tab-panel p-4 space-y-4 hidden">
+        <div class="bg-slate-800/90 border border-slate-700 rounded-xl p-3.5 space-y-2 text-xs">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-cyan-400 uppercase tracking-wide">52 వార్డుల ముప్పు విశ్లేషణ పట్టిక</span>
+            <span class="text-[10px] text-slate-400">Flood Risk Index (FRI)</span>
+          </div>
+          <p class="text-slate-300 text-[11px] leading-relaxed">
+            ప్రతి వార్డు యొక్క భూమట్టం, పల్లపు శాతం, డ్రైనేజీ పూడిక, జనాభా మరియు కాలువ బ్యాక్ వాటర్ ఆధారంగా రిస్క్ స్కోరు (0 - 100) లెక్కించబడింది.
+          </p>
+          
+          <!-- Ward Search & Filter -->
+          <div class="flex gap-2 pt-1">
+            <input 
+              type="text" 
+              id="wardRiskSearch" 
+              placeholder="వార్డు నెంబర్ లేదా పేరు వెతకండి..." 
+              oninput="filterWardTable(this.value)"
+              class="flex-1 bg-slate-900 border border-slate-700 rounded px-2.5 py-1 text-slate-200 text-xs placeholder:text-slate-500 focus:outline-none focus:border-cyan-500"
+            >
+            <select id="wardZoneFilter" onchange="filterWardZone(this.value)" class="bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-200 text-xs">
+              <option value="all">అన్ని జోన్లు</option>
+              <option value="Town-1">వన్ టౌన్ (1-20)</option>
+              <option value="Town-2">టూ టౌన్ (21-40)</option>
+              <option value="Amaram">అమరం (41-45)</option>
+              <option value="Rayalam">రాయలం (46-52)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 52 Wards Ranking Table -->
+        <div class="bg-slate-800/80 border border-slate-700 rounded-xl overflow-hidden text-xs shadow-md">
+          <div class="max-h-96 overflow-y-auto">
+            <table class="w-full text-left border-collapse text-[11px]">
+              <thead class="bg-slate-900/90 text-slate-400 sticky top-0 border-b border-slate-700">
+                <tr>
+                  <th class="p-2">వార్డు</th>
+                  <th class="p-2">పేరు</th>
+                  <th class="p-2 text-center">ఎత్తు</th>
+                  <th class="p-2 text-center">పల్లం %</th>
+                  <th class="p-2 text-right">ముప్పు స్థాయి</th>
+                </tr>
+              </thead>
+              <tbody id="wardsTableBody" class="divide-y divide-slate-800 text-slate-300">
+                <!-- Dynamically populated from BHIMAVARAM_52_WARDS_FLOOD_DATA -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================== -->
+      <!-- TAB F: MUNICIPAL ACTION TRACKER & SURVEY       -->
+      <!-- ============================================== -->
+      <div id="panel-tab-action" class="tab-panel p-4 space-y-4 hidden">
+        
+        <!-- Pre-Monsoon Action Plan Card -->
+        <div class="bg-slate-800/90 border border-slate-700 rounded-xl p-3.5 space-y-3 text-xs">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-amber-400 uppercase tracking-wide flex items-center gap-1.5">
+              <span>📋</span> ముందస్తు వర్షాకాల కార్యాచరణ ప్రణాళిక (Phased Plan)
+            </span>
+            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              అమలులో ఉంది
+            </span>
+          </div>
+
+          <div class="space-y-2 text-[11px] text-slate-300">
+            <!-- Phase 1 -->
+            <div class="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 space-y-1">
+              <div class="flex justify-between items-center">
+                <strong class="text-cyan-300">1. తక్షణ పనులు (15 Days - Pre-Monsoon):</strong>
+                <span class="text-[10px] text-emerald-400 font-bold">85% పూర్తి</span>
+              </div>
+              <ul class="list-disc pl-4 space-y-0.5 text-slate-400 text-[10px]">
+                <li>వన్ టౌన్ & సోంపేట ట్రంక్ డ్రెయిన్లలో పూడికతీత</li>
+                <li>ఎనమదురు కాలువలో గుర్రపుడెక్క తొలగింపు</li>
+                <li>రైల్వే అండర్‌పాస్ వద్ద పంపుల సర్వీసింగ్</li>
+              </ul>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 space-y-1">
+              <div class="flex justify-between items-center">
+                <strong class="text-amber-300">2. స్వల్పకాలిక పనులు (3 Months):</strong>
+                <span class="text-[10px] text-amber-400 font-bold">టెండర్ దశ</span>
+              </div>
+              <ul class="list-disc pl-4 space-y-0.5 text-slate-400 text-[10px]">
+                <li>సోంపేట & టౌన్ స్టేషన్ కల్వర్టుల వెడల్పు పెంపు</li>
+                <li>ఎనమదురు 14 అవుట్‌ఫాల్స్ వద్ద ఫ్లాప్ గేట్లు అమరిక</li>
+                <li>ఆసుపత్రి రోడ్డు ఎలివేటెడ్ కారిడార్ బాక్స్ డ్రెయిన్</li>
+              </ul>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 space-y-1">
+              <div class="flex justify-between items-center">
+                <strong class="text-indigo-300">3. దీర్ఘకాలిక పనులు (1 Year):</strong>
+                <span class="text-[10px] text-indigo-400 font-bold">DPR తయారీ</span>
+              </div>
+              <ul class="list-disc pl-4 space-y-0.5 text-slate-400 text-[10px]">
+                <li>రాయలం సరిహద్దు వెంట 1.2 కి.మీ ఇంటర్‌సెప్టర్ కాలువ</li>
+                <li>ఎనమదురు కాలువ ఆధునీకరణ & డ్రెడ్జింగ్</li>
+                <li>శాశ్వత రెసిలియెంట్ స్టోర్మ్‌వాటర్ మాస్టర్ ప్లాన్</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Field Inspection & Citizen Report Button -->
+        <div class="bg-gradient-to-r from-blue-900/40 to-cyan-900/40 border border-cyan-500/40 rounded-xl p-3 text-xs flex items-center justify-between">
+          <div>
+            <div class="font-bold text-cyan-300">📱 క్షేత్ర స్థాయి ఫిర్యాదు నమోదు (Field Report)</div>
+            <div class="text-[10px] text-slate-400">డ్రెయిన్ పూడిక లేదా వరద నీరు నిల్వపై సమాచారం ఇవ్వండి</div>
+          </div>
+          <button onclick="openComplaintModal()" class="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs shadow transition">
+            + ఫిర్యాదు చేయండి
+          </button>
+        </div>
+
+        <!-- Active Complaints / Audit Tracker -->
+        <div class="bg-slate-800/80 border border-slate-700 rounded-xl p-3 text-xs space-y-2">
+          <div class="flex items-center justify-between font-bold text-slate-200">
+            <span>లైవ్ మున్సిపల్ ఫిర్యాదుల స్థితి (Audit Log)</span>
+            <span class="text-[10px] text-slate-400">3 యాక్టివ్</span>
+          </div>
+
+          <div class="space-y-2 text-[11px]" id="complaintsList">
+            <div class="p-2 rounded bg-slate-900/80 border border-slate-800 space-y-1">
+              <div class="flex justify-between">
+                <strong class="text-slate-200">#CMP-104: మవుళ్ళమ్మ ఆలయ రోడ్డు డ్రెయిన్ బ్లాక్</strong>
+                <span class="px-1.5 py-0.2 rounded text-[9px] bg-amber-500/20 text-amber-300 border border-amber-500/30">In Progress</span>
+              </div>
+              <p class="text-[10px] text-slate-400">ప్లాస్టిక్ వ్యర్థాలు అడ్డుపడటం వల్ల నీరు రోడ్డుపైకి వస్తోంది. సానిటేషన్ బృందం కేటాయించబడింది.</p>
+              <div class="text-[9px] text-slate-500">వార్డు: 3 | నివేదించిన సమయం: ఈరోజు ఉదయం 08:30</div>
+            </div>
+
+            <div class="p-2 rounded bg-slate-900/80 border border-slate-800 space-y-1">
+              <div class="flex justify-between">
+                <strong class="text-slate-200">#CMP-103: సోంపేట కల్వర్టు పూడికతీత</strong>
+                <span class="px-1.5 py-0.2 rounded text-[9px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Resolved</span>
+              </div>
+              <p class="text-[10px] text-slate-400">JCB ద్వారా 350 మీటర్ల డ్రెయిన్ పూడిక తొలగించబడింది. ప్రవాహం పునరుద్ధరించబడింది.</p>
+              <div class="text-[9px] text-slate-500">వార్డు: 29 | పూర్తి చేసిన సమయం: నిన్న సాయంత్రం 05:15</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- 4. EMBEDDED AI AGENT FLOATING DRAWER / MODAL             -->
+  <!-- ======================================================== -->
+  <div id="aiAgentDrawer" class="fixed bottom-4 right-4 z-[2000] w-[95vw] sm:w-[480px] max-h-[85vh] bg-slate-900/98 backdrop-blur-xl border border-purple-500/50 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 transform translate-y-[120%] opacity-0 pointer-events-none">
+    
+    <!-- AI Drawer Header -->
+    <div class="bg-gradient-to-r from-purple-900 via-indigo-900 to-slate-900 p-3.5 border-b border-purple-500/40 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-400/50 flex items-center justify-center text-lg shadow-inner">
+          🤖
+        </div>
+        <div>
+          <div class="font-extrabold text-sm text-white flex items-center gap-2">
+            Bhimavaram FloodFlow AI Agent
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          </div>
+          <div class="text-[10px] text-purple-200 telugu-font">వరద ప్రవాహ విశ్లేషణ & డ్రైనేజీ మోడలింగ్ ఏజెంట్</div>
+        </div>
+      </div>
+      <button onclick="toggleAiDrawer()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition">
+        ✕
+      </button>
+    </div>
+
+    <!-- AI Chat Log Area -->
+    <div id="aiChatLog" class="flex-1 p-3.5 overflow-y-auto space-y-3 text-xs max-h-[420px]">
+      
+      <!-- Initial Greeting Message -->
+      <div class="flex items-start gap-2.5">
+        <div class="w-7 h-7 rounded-lg bg-purple-700/50 border border-purple-400/40 flex items-center justify-center text-xs shrink-0 mt-0.5">
+          🤖
+        </div>
+        <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl rounded-tl-none p-3 text-slate-200 space-y-2 shadow-sm leading-relaxed">
+          <p class="font-medium text-cyan-300">నమస్కారం! నేను భీమవరం పురపాలక సంఘం వరద ప్రవాహ విశ్లేషణ AI ఏజెంట్‌ను.</p>
+          <p class="text-[11px] text-slate-300">
+            నేను ఎనమదురు కాలువ ప్రవాహం, 52 వార్డుల ముప్పు స్థాయి, వర్షపాత ప్రభావం మరియు అత్యవసర పూడికతీత ప్రణాళికలను విశ్లేషించగలను. క్రింది ప్రశ్నలను ఎంచుకోండి లేదా మీ సందేహాన్ని టైప్ చేయండి:
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Quick Prompt Chips -->
+    <div class="px-3 py-2 bg-slate-950/80 border-t border-slate-800/80 flex items-center gap-1.5 overflow-x-auto text-[10px]">
+      <button onclick="submitAiPrompt('yanamudurru backwater')" class="px-2.5 py-1 rounded-full bg-slate-800 hover:bg-purple-900/60 border border-slate-700 text-slate-300 whitespace-nowrap transition">
+        🚨 ఎనమదురు బ్యాక్ వాటర్
+      </button>
+      <button onclick="submitAiPrompt('simulate 180mm')" class="px-2.5 py-1 rounded-full bg-slate-800 hover:bg-purple-900/60 border border-slate-700 text-slate-300 whitespace-nowrap transition">
+        🌧️ 180mm తుఫాను వర్షం
+      </button>
+      <button onclick="submitAiPrompt('top 5 hotspots')" class="px-2.5 py-1 rounded-full bg-slate-800 hover:bg-purple-900/60 border border-slate-700 text-slate-300 whitespace-nowrap transition">
+        ⚠️ టాప్ 5 హాట్‌స్పాట్లు
+      </button>
+      <button onclick="submitAiPrompt('infrastructure exposure')" class="px-2.5 py-1 rounded-full bg-slate-800 hover:bg-purple-900/60 border border-slate-700 text-slate-300 whitespace-nowrap transition">
+        🏥 ఆసుపత్రి & రైల్వే ముప్పు
+      </button>
+      <button onclick="submitAiPrompt('desilting action plan')" class="px-2.5 py-1 rounded-full bg-slate-800 hover:bg-purple-900/60 border border-slate-700 text-slate-300 whitespace-nowrap transition">
+        📋 పూడికతీత ప్రణాళిక
+      </button>
+    </div>
+
+    <!-- AI Input Bar -->
+    <div class="p-3 bg-slate-950 border-t border-purple-500/30 flex items-center gap-2">
+      <input 
+        type="text" 
+        id="aiPromptInput" 
+        placeholder="మీ ప్రశ్నను ఇక్కడ అడగండి (తెలుగు లేదా English)..." 
+        onkeydown="if(event.key === 'Enter') handleAiSend()"
+        class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition"
+      >
+      <button onclick="handleAiSend()" class="p-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md shadow-purple-600/30 transition">
+        ➔
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- 5. FIELD INSPECTION / CITIZEN REPORT MODAL               -->
+  <!-- ======================================================== -->
+  <div id="complaintModal" class="fixed inset-0 z-[3000] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-md w-full p-5 shadow-2xl space-y-4 text-xs">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+        <div class="font-bold text-sm text-cyan-300 flex items-center gap-2">
+          <span>📱</span> క్షేత్ర స్థాయి డ్రైనేజీ / వరద ఫిర్యాదు నమోదు
+        </div>
+        <button onclick="closeComplaintModal()" class="text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-slate-300 mb-1">వార్డు ఎంపిక:</label>
+          <select id="rptWard" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-200 text-xs">
+            <!-- Dynamically populated -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1">సమస్య వర్గం (Category):</label>
+          <select id="rptCategory" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-200 text-xs">
+            <option>డ్రెయిన్ పూడిక & చెత్త పేరుకుపోవడం (Silt & Trash)</option>
+            <option>రోడ్డుపై వర్షపు నీరు నిలవడం (Waterlogging)</option>
+            <option>ఎనమదురు కాలువ బ్యాక్ వాటర్ / ఓవర్‌ఫ్లో</option>
+            <option>విరిగిన కల్వర్టు / డ్రెయిన్ స్లాబ్ (Broken Culvert)</option>
+            <option>డ్రెయిన్ ఆక్రమణ (Encroachment)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1">ఖచ్చితమైన స్థలం & వివరాలు:</label>
+          <input type="text" id="rptLocation" placeholder="ఉదా: మవుళ్ళమ్మ ఆలయ రోడ్డు, మెయిన్ బజార్..." class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-200 text-xs">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1">GPS కోఆర్డినేట్లు:</label>
+          <div class="flex gap-2">
+            <input type="text" id="rptGps" readonly value="16.5449° N, 81.5212° E (Bhimavaram Center)" class="flex-1 bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-400 text-xs code-font">
+            <button onclick="captureLocation()" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg border border-slate-700 text-cyan-400 font-semibold text-[11px]">
+              📍 లొకేషన్
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1">ఫోటో అప్‌లోడ్ (Optional):</label>
+          <input type="file" class="w-full text-slate-400 text-xs file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:bg-slate-800 file:text-cyan-400 hover:file:bg-slate-700">
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-2 border-t border-slate-800">
+        <button onclick="closeComplaintModal()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300">రద్దు చేయండి</button>
+        <button onclick="submitComplaint()" class="px-4 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold">ఫిర్యాదు దాఖలు చేయండి</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- 6. CORE JAVASCRIPT APPLICATION LOGIC                     -->
+  <!-- ======================================================== -->
+  <script>
+    // State variables
+    let map = null;
+    let basemaps = {};
+    let activeBasemap = 'satellite';
+    
+    // Feature Layer Groups
+    let layerGroups = {
+      wards: L.layerGroup(),
+      hotspots: L.layerGroup(),
+      canals: L.layerGroup(),
+      floodExtent: L.layerGroup(),
+      infra: L.layerGroup(),
+      depressions: L.layerGroup()
+    };
+
+    // Current Hydraulic Simulation State
+    let simState = {
+      rainfallMm: 110,
+      durationHours: 6,
+      scenarioName: "భారీ వర్షం (Heavy 110mm)",
+      canalStageM: 3.8, // Warning stage
+      timeT: 0.0,
+      isPlaying: false,
+      playbackTimer: null
+    };
+
+    // ==========================================
+    // INITIALIZATION ON WINDOW LOAD
+    // ==========================================
+    window.addEventListener('DOMContentLoaded', () => {
+      initMap();
+      loadCanalAndDrainLayers();
+      loadHotspotMarkers();
+      loadCriticalInfrastructure();
+      load52WardsPolygons();
+      renderSimulationInundation();
+      populateHotspotList();
+      populateWardsTable();
+      populateWardSelectOptions();
+      updateDashboardMetrics();
+    });
+
+    // ==========================================
+    // 1. LEAFLET MAP & BASEMAP SETUP
+    // ==========================================
+    function initMap() {
+      // Bhimavaram Center: 16.5430° N, 81.5260° E (Balanced between Town-1 East, Town-2 West & Canal)
+      map = L.map('floodMap', {
+        center: [16.5430, 81.5260],
+        zoom: 14,
+        zoomControl: false,
+        attributionControl: false
+      });
+
+      // Add Zoom Control to bottom-right
+      L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+      // Basemap Definitions
+      basemaps.satellite = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+      });
+
+      basemaps.streets = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        maxZoom: 20
+      });
+
+      basemaps.dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        subdomains: 'abcd'
+      });
+
+      basemaps.osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19
+      });
+
+      // Add initial satellite layer
+      basemaps.satellite.addTo(map);
+
+      // Add all layer groups to map
+      Object.values(layerGroups).forEach(lg => lg.addTo(map));
+    }
+
+    function changeBasemap(key) {
+      if (basemaps[activeBasemap]) {
+        map.removeLayer(basemaps[activeBasemap]);
+      }
+      if (basemaps[key]) {
+        basemaps[key].addTo(map);
+        activeBasemap = key;
+      }
+    }
+
+    function toggleMapLayer(layerKey) {
+      const checkbox = document.getElementById('layer' + layerKey.charAt(0).toUpperCase() + layerKey.slice(1));
+      if (!checkbox) return;
+      if (checkbox.checked) {
+        if (!map.hasLayer(layerGroups[layerKey])) {
+          map.addLayer(layerGroups[layerKey]);
+        }
+      } else {
+        if (map.hasLayer(layerGroups[layerKey])) {
+          map.removeLayer(layerGroups[layerKey]);
+        }
+      }
+    }
+
+    // ==========================================
+    // 2. CANALS, YANAMUDURRU & DRAINS LAYERING (Calibrated to Google Maps Satellite)
+    // ==========================================
+    function loadCanalAndDrainLayers() {
+      layerGroups.canals.clearLayers();
+
+      // 1. Yanamudurru Drain (The Major Central Hydraulic Spine)
+      // Polyline running North to South through center calibrated to Google Maps satellite
+      const yanamudurruCoords = [
+        [16.5700, 81.5238],
+        [16.5590, 81.5230],
+        [16.5518, 81.5228],
+        [16.5465, 81.5235],
+        [16.5430, 81.5230], // Prakasam Chowk & Municipal Office bridge
+        [16.5380, 81.5228],
+        [16.5335, 81.5228],
+        [16.5260, 81.5232],
+        [16.5180, 81.5235],
+        [16.5050, 81.5220],
+        [16.4925, 81.5140]
+      ];
+
+      // Draw Main Spine
+      const yanamudurruLine = L.polyline(yanamudurruCoords, {
+        color: '#2563eb',
+        weight: 8,
+        opacity: 0.9,
+        lineCap: 'round',
+        lineJoin: 'round',
+        className: 'canal-flow-anim'
+      }).addTo(layerGroups.canals);
+
+      yanamudurruLine.bindPopup(`
+        <div class="p-2 text-xs font-sans text-slate-800">
+          <strong class="text-blue-700 text-sm">🌊 ఎనమదురు మేజర్ డ్రెయిన్ (యలమదుర్రు కాలువ)</strong>
+          <div class="text-[11px] text-slate-600 mt-1">
+            • పొడవు: 8.2 కి.మీ ULB పరిధిలో (Google Maps అలైన్‌మెంట్)<br>
+            • ప్రధాన విధి: వన్ టౌన్ మరియు టూ టౌన్ విభజన కాలువ<br>
+            • డిజైన్ సామర్థ్యం: 14,500 క్యూసెక్కులు<br>
+            • ప్రస్తుత హెచ్చరిక స్థాయి: 3.8 మీ (MSL)<br>
+            • బ్యాక్ వాటర్ ప్రభావం: ఈ కాలువ నిండితే పట్టణ డ్రైనేజీలు ఆగిపోతాయి.
+          </div>
+        </div>
+      `);
+
+      // 2. Balasumudi Branch Canal (Aligned strictly along Undi Road / SH 165 Corridor)
+      const balasumudiCoords = [
+        [16.5580, 81.5030], // Tipsy Topsy / Anakoderu along Undi Road (SH 165)
+        [16.5540, 81.5075], // Following SH 165 highway corridor
+        [16.5510, 81.5115], // Along SH 165 towards bypass junction
+        [16.5495, 81.5145], // Bypass Road corridor north of Town Station
+        [16.5485, 81.5185], // North of Town Station tracks corridor
+        [16.5480, 81.5215], // Approaching railway underpass & canal
+        [16.5475, 81.5230]  // Confluence at Yenamudurru canal near bridge
+      ];
+      L.polyline(balasumudiCoords, {
+        color: '#06b6d4',
+        weight: 5,
+        opacity: 0.85,
+        className: 'canal-flow-anim'
+      }).addTo(layerGroups.canals).bindPopup('<strong class="text-xs">బాలసుముడి బ్రాంచ్ కాలువ (Balasumudi Canal - ఉండి రోడ్డు వెంబడి)</strong>');
+
+      // 3. Bhimavaram Branch Canal (చినమిరం రోడ్డు కూడలి & బైపాస్ లింక్ - South of SRKR College & ASR Nagar)
+      const bhimavaramBranchCoords = [
+        [16.5405, 81.4953], // Chinamiram Road Junction (Marker 11)
+        [16.5398, 81.4980], // South edge of SRKR campus along boundary road
+        [16.5385, 81.5030], // South of SRKR & Chinamiram bypass road
+        [16.5375, 81.5075], // Southern boundary road of ASR Nagar
+        [16.5365, 81.5110], // Rayalam North canal road corridor
+        [16.5350, 81.5150], // North of DNR College / Sompeta
+        [16.5342, 81.5190], // Sompeta / Balusumudi south canal link
+        [16.5340, 81.5228]  // Confluence at Yenamudurru drain
+      ];
+      L.polyline(bhimavaramBranchCoords, {
+        color: '#06b6d4',
+        weight: 5,
+        opacity: 0.85,
+        className: 'canal-flow-anim'
+      }).addTo(layerGroups.canals).bindPopup('<strong class="text-xs">చినమిరం రోడ్డు కూడలి & బైపాస్ లింక్ కాలువ (Bhimavaram Branch Canal)</strong>');
+
+      // 4. Karakodu Field Channel (కరకోడు ఫీల్డ్ ఛానల్ - దక్షిణ సరిహద్దు నాలా - Southern Agrarian Boundary)
+      const karakoduCoords = [
+        [16.5200, 81.4980], // Komarada / Rayalam southern agrarian field boundary
+        [16.5195, 81.5040], // Along east-west agricultural drain bund
+        [16.5188, 81.5100], // Field bund drainage channel
+        [16.5182, 81.5160], // Southern drainage culvert line
+        [16.5175, 81.5200], // Komarada agrarian sluice outfall
+        [16.5170, 81.5232]  // Confluence into Yenamudurru drain
+      ];
+      L.polyline(karakoduCoords, {
+        color: '#0284c7',
+        weight: 4,
+        opacity: 0.8,
+        dashArray: '5, 5'
+      }).addTo(layerGroups.canals).bindPopup('<strong class="text-xs">కరకోడు ఫీల్డ్ ఛానల్ (దక్షిణ సరిహద్దు నాలా - Karakodu Channel)</strong>');
+
+      // 5. Municipal Outfall Points into Yanamudurru (Google Maps Aligned)
+      const outfallPoints = [
+        { lat: 16.5428, lon: 81.5231, name: "OF-01: మవుళ్ళమ్మ ఆలయ అవుట్‌ఫాల్", status: "Critical Backwater Risk (Mavullamma Line)" },
+        { lat: 16.5455, lon: 81.5236, name: "OF-02: లంకాపేట & హాస్పిటల్ అవుట్‌ఫాల్", status: "Backwater Risk (Hospital Corridor)" },
+        { lat: 16.5445, lon: 81.5229, name: "OF-03: టౌన్ స్టేషన్ & సోంపేట అవుట్‌ఫాల్", status: "Critical Risk (Town Station Line)" },
+        { lat: 16.5360, lon: 81.5227, name: "OF-04: DNR కళాశాల ట్రంక్ అవుట్‌ఫాల్", status: "High Risk (DNR Campus Line)" },
+        { lat: 16.5380, lon: 81.5233, name: "OF-05: గుణుపూడి సోమేశ్వర నాలా అవుట్‌ఫాల్", status: "High Risk (Somaramam Heritage Line)" }
+      ];
+
+      outfallPoints.forEach(pt => {
+        const outfallIcon = L.divIcon({
+          className: 'outfall-marker',
+          html: `<div style="background:#0284c7; width:14px; height:14px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 8px #38bdf8;" title="${pt.name}"></div>`,
+          iconSize: [14, 14],
+          iconAnchor: [7, 7]
+        });
+        L.marker([pt.lat, pt.lon], { icon: outfallIcon }).addTo(layerGroups.canals)
+          .bindPopup(`<strong class="text-xs">${pt.name}</strong><br><span class="text-[10px] text-rose-600">${pt.status}</span>`);
+      });
+    }
+
+    // ==========================================
+    // 3. TOP 20 WATERLOGGING HOTSPOTS MARKERS
+    // ==========================================
+    function loadHotspotMarkers() {
+      layerGroups.hotspots.clearLayers();
+
+      BHIMAVARAM_HOTSPOTS.forEach(hs => {
+        const badgeColor = hs.rank <= 3 ? '#991b1b' : (hs.rank <= 8 ? '#ea580c' : '#d97706');
+        const hsIcon = L.divIcon({
+          className: 'custom-hs-icon',
+          html: `<div class="hs-marker-badge hotspot-pulse" style="background:${badgeColor}">${hs.rank}</div>`,
+          iconSize: [30, 30],
+          iconAnchor: [15, 15]
+        });
+
+        const marker = L.marker([hs.lat, hs.lon], { icon: hsIcon }).addTo(layerGroups.hotspots);
+
+        const popupHtml = `
+          <div class="p-2 text-xs font-sans text-slate-800 max-w-xs">
+            <div class="flex items-center justify-between border-b pb-1">
+              <strong class="text-rose-700 text-sm">ర్యాంక్ #${hs.rank}: ${hs.nameTe}</strong>
+            </div>
+            <div class="text-[11px] text-slate-600 mt-1 space-y-0.5">
+              <div><strong>వార్డు సంఖ్య:</strong> వార్డు ${hs.ward} (${hs.zone})</div>
+              <div><strong>భూమట్టం:</strong> ${hs.groundElevationM} మీ (MSL) - పల్లపు ప్రాంతం</div>
+              <div><strong>అంచనా వరద లోతు:</strong> <span class="text-rose-600 font-bold">${hs.maxWaterDepthM} మీటర్లు</span></div>
+              <div><strong>నీరు చేరే సమయం:</strong> ${hs.flowArrivalTimeMin} నిమిషాల్లో</div>
+              <div><strong>నీరు నిలిచే కాలం:</strong> ${hs.avgDurationHrs} గంటలు</div>
+              <div class="text-slate-700 pt-1"><strong>కారణం:</strong> ${hs.causeTe}</div>
+              <div class="bg-amber-50 border border-amber-200 rounded p-1 text-[10px] text-amber-900 mt-1">
+                <strong>సిఫార్సు:</strong> ${hs.proposedIntervention}
+              </div>
+            </div>
+          </div>
+        `;
+        marker.bindPopup(popupHtml);
+      });
+    }
+
+    // ==========================================
+    // 4. CRITICAL MUNICIPAL INFRASTRUCTURE
+    // ==========================================
+    function loadCriticalInfrastructure() {
+      layerGroups.infra.clearLayers();
+
+      const iconMap = {
+        "Healthcare / Hospital": "🏥",
+        "Transportation / Railway": "🚆",
+        "Transportation / Bus Stand": "🚌",
+        "Governance / Municipal": "🏛️",
+        "Power Utility": "⚡",
+        "Education / Relief Shelter": "🏫",
+        "Religious / Heritage": "🛕",
+        "Drinking Water Supply": "🚰",
+        "Emergency Response": "🚒"
+      };
+
+      BHIMAVARAM_CRITICAL_ASSETS.forEach(item => {
+        const symbol = iconMap[item.category] || "📍";
+        const infraIcon = L.divIcon({
+          className: 'custom-infra-icon',
+          html: `<div class="infra-marker-badge">${symbol}</div>`,
+          iconSize: [32, 32],
+          iconAnchor: [16, 16]
+        });
+
+        const marker = L.marker([item.lat, item.lon], { icon: infraIcon }).addTo(layerGroups.infra);
+
+        marker.bindPopup(`
+          <div class="p-2 text-xs font-sans text-slate-800 max-w-xs">
+            <strong class="text-cyan-800 text-sm">${symbol} ${item.nameTe}</strong>
+            <div class="text-[11px] text-slate-600 mt-1 space-y-0.5">
+              <div><strong>వర్గం:</strong> ${item.category} (వార్డు ${item.ward})</div>
+              <div><strong>భూమట్టం:</strong> ${item.elevationM} మీ MSL</div>
+              <div><strong>110mm వర్షంలో ముప్పు:</strong> <span class="text-amber-600 font-semibold">${item.exposureUnder110mm}</span></div>
+              <div><strong>180mm తుఫానులో ముప్పు:</strong> <span class="text-rose-600 font-semibold">${item.exposureUnder180mm}</span></div>
+              <div class="text-slate-700 pt-1"><strong>రక్షణ చర్య:</strong> ${item.mitigationPriority}</div>
+            </div>
+          </div>
+        `);
+      });
+    }
+
+    // ==========================================
+    // 5. 52 WARDS VECTOR BOUNDARIES & RISK COLORS
+    // ==========================================
+    function load52WardsPolygons() {
+      layerGroups.wards.clearLayers();
+
+      // Check if official 39 wards data is loaded from bhimavaram_39_wards_data.js
+      if (typeof BHIMAVARAM_39_WARDS !== 'undefined' && Array.isArray(BHIMAVARAM_39_WARDS)) {
+        BHIMAVARAM_39_WARDS.forEach(w => {
+          // Find matching risk data from 52 wards table
+          const riskInfo = BHIMAVARAM_52_WARDS_FLOOD_DATA.find(d => d.id === w.number) || {
+            riskCategory: "Moderate Risk",
+            riskColor: "#eab308",
+            riskScore: 65,
+            lowLyingPct: 35
+          };
+
+          const polygon = L.polygon(w.coords, {
+            color: riskInfo.riskColor,
+            weight: 2,
+            opacity: 0.85,
+            fillColor: riskInfo.riskColor,
+            fillOpacity: 0.25
+          }).addTo(layerGroups.wards);
+
+          // Add interactive hover effect
+          polygon.on('mouseover', function() {
+            this.setStyle({ fillOpacity: 0.55, weight: 3 });
+          });
+          polygon.on('mouseout', function() {
+            this.setStyle({ fillOpacity: 0.25, weight: 2 });
+          });
+
+          polygon.bindPopup(`
+            <div class="p-2 text-xs font-sans text-slate-800">
+              <strong class="text-sm font-bold" style="color:${riskInfo.riskColor}">వార్డు #${w.number}: ${w.nameTe}</strong>
+              <div class="text-[11px] text-slate-600 mt-1 space-y-0.5">
+                <div><strong>ముప్పు స్థాయి:</strong> <span class="font-bold" style="color:${riskInfo.riskColor}">${riskInfo.riskCategory} (స్కోరు: ${riskInfo.riskScore}/100)</span></div>
+                <div><strong>పల్లపు విస్తీర్ణం:</strong> ${riskInfo.lowLyingPct}%</div>
+                <div><strong>జనాభా:</strong> ~${riskInfo.pop || 3200} మంది</div>
+                <div><strong>ప్రభావిత భవనాలు:</strong> ${riskInfo.vulnerableBldgs || 180} భవనాలు</div>
+              </div>
+            </div>
+          `);
+        });
+      }
+    }
+
+    // ==========================================
+    // 6. DYNAMIC FLOOD INUNDATION LAYER
+    // ==========================================
+    function renderSimulationInundation() {
+      layerGroups.floodExtent.clearLayers();
+      layerGroups.depressions.clearLayers();
+
+      // Inundation extent and depth expand based on:
+      // 1. rainfallMm
+      // 2. canalStageM (backwater locking)
+      // 3. timeT (slider progression: 0h = dry, 3h = peak, 6h = draining)
+
+      const timeFactor = Math.sin((Math.PI * simState.timeT) / 6.0); // 0 at t=0, 1 at t=3, 0 at t=6
+      const baseSeverity = (simState.rainfallMm / 110.0) * (simState.canalStageM / 3.0);
+      const effectiveFactor = Math.max(0.05, timeFactor * baseSeverity);
+
+      // Render Inundation Circles / Ellipses at critical low depressions
+      BHIMAVARAM_HOTSPOTS.forEach(hs => {
+        const depth = parseFloat((hs.maxWaterDepthM * effectiveFactor).toFixed(2));
+        if (depth > 0.05) {
+          const radius = Math.min(320, 80 + (depth * 140));
+          const depthColor = depth > 0.9 ? '#ef4444' : (depth > 0.4 ? '#f59e0b' : '#38bdf8');
+
+          const circle = L.circle([hs.lat, hs.lon], {
+            radius: radius,
+            color: depthColor,
+            weight: 1.5,
+            fillColor: depthColor,
+            fillOpacity: Math.min(0.7, 0.25 + (depth * 0.28))
+          }).addTo(layerGroups.floodExtent);
+
+          circle.bindPopup(`
+            <div class="p-1.5 text-xs font-sans text-slate-800">
+              <strong class="text-rose-700">వరద నిల్వ పాకెట్: ${hs.nameTe}</strong><br>
+              <span class="text-[11px]">ప్రస్తుత అంచనా లోతు: <strong>${depth} మీటర్లు</strong> (T+${simState.timeT} hrs వద్ద)</span>
+            </div>
+          `);
+        }
+      });
+
+      // Also mark pure depression sinks (<3.0m MSL) in depressions layer (Google Maps Calibrated)
+      const sinks = [
+        [16.54250, 81.52530], // Mavullamma Temple
+        [16.54728, 81.51917], // 5: టౌన్ రైల్వే స్టేషన్ దరి (BVRT Station)
+        [16.54760, 81.52345], // 9: రైల్వే అండర్‌పాస్ / సబ్‌వే (RUB)
+        [16.53350, 81.51650], // Sompeta & DNR College rear
+        [16.54360, 81.52680], // Lankapeta
+        [16.52190, 81.49440]  // Rayalam South
+      ];
+      sinks.forEach(pos => {
+        L.circle(pos, {
+          radius: 120,
+          color: '#2dd4bf',
+          dashArray: '3, 4',
+          fillColor: '#14b8a6',
+          fillOpacity: 0.15
+        }).addTo(layerGroups.depressions);
+      });
+    }
+
+    // ==========================================
+    // 7. TIME SLIDER & PLAYBACK CONTROLS
+    // ==========================================
+    function handleTimeSlider(val) {
+      simState.timeT = parseFloat(val);
+      updateSimTimeDisplay();
+      renderSimulationInundation();
+    }
+
+    function updateSimTimeDisplay() {
+      const slider = document.getElementById('simTimeSlider');
+      if (slider) slider.value = simState.timeT;
+
+      const label = document.getElementById('simTimeLabel');
+      let statusText = "ఆరంభం (Start)";
+      if (simState.timeT >= 5.5) statusText = "రికవరీ దశ (Draining)";
+      else if (simState.timeT >= 4.0) statusText = "బ్యాక్ వాటర్ నిల్వ (Stagnation)";
+      else if (simState.timeT >= 2.5) statusText = "గరిష్ట పీక్ ముంపు (Peak Flooding)";
+      else if (simState.timeT >= 1.5) statusText = "డ్రెయిన్ ఓవర్‌ఫ్లో (Drain Overflow)";
+      else if (simState.timeT >= 0.5) statusText = "కాలువలు నిండటం (Filling)";
+
+      if (label) {
+        label.innerText = `T + ${simState.timeT.toFixed(1)} Hrs (${statusText})`;
+      }
+    }
+
+    function toggleSimPlayback() {
+      const btn = document.getElementById('btnPlaySim');
+      if (simState.isPlaying) {
+        // Pause
+        clearInterval(simState.playbackTimer);
+        simState.isPlaying = false;
+        if (btn) btn.innerHTML = "▶️";
+      } else {
+        // Play
+        simState.isPlaying = true;
+        if (btn) btn.innerHTML = "⏸️";
+        simState.playbackTimer = setInterval(() => {
+          simState.timeT += 0.5;
+          if (simState.timeT > 6.0) {
+            simState.timeT = 0.0;
+          }
+          updateSimTimeDisplay();
+          renderSimulationInundation();
+        }, 1200);
+      }
+    }
+
+    function resetSimulation() {
+      if (simState.isPlaying) toggleSimPlayback();
+      simState.timeT = 0.0;
+      updateSimTimeDisplay();
+      renderSimulationInundation();
+    }
+
+    // ==========================================
+    // 8. SCENARIO SWITCHER & HYDROLOGY ENGINE
+    // ==========================================
+    function setScenario(rainMm, durationHrs, name) {
+      simState.rainfallMm = rainMm;
+      simState.durationHours = durationHrs;
+      simState.scenarioName = name;
+
+      // Update button visual styles
+      document.querySelectorAll('.sc-btn').forEach(btn => btn.classList.remove('active', 'border-cyan-400', 'bg-cyan-950'));
+      if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active', 'border-cyan-400', 'bg-cyan-950');
+      }
+
+      const rainSlider = document.getElementById('customRainSlider');
+      if (rainSlider) rainSlider.value = rainMm;
+      const rainLabel = document.getElementById('customRainLabel');
+      if (rainLabel) rainLabel.innerText = rainMm + " mm";
+
+      updateDashboardMetrics();
+      renderSimulationInundation();
+    }
+
+    function handleCustomRain(val) {
+      simState.rainfallMm = parseFloat(val);
+      simState.scenarioName = `యూజర్ నిర్వచిత (${val} mm)`;
+      const rainLabel = document.getElementById('customRainLabel');
+      if (rainLabel) rainLabel.innerText = val + " mm";
+      updateDashboardMetrics();
+      renderSimulationInundation();
+    }
+
+    function handleCanalStage(val) {
+      simState.canalStageM = parseFloat(val);
+      const stageLabel = document.getElementById('simCanalStageLabel');
+      let statusStr = "సాధారణం";
+      if (val >= 5.4) statusStr = "గట్టు దాటి ప్రవాహం (Spill Over)";
+      else if (val >= 4.9) statusStr = "డేంజర్ స్థాయి (Danger Level)";
+      else if (val >= 3.8) statusStr = "హెచ్చరిక & బ్యాక్ వాటర్ (Warning/Backwater)";
+
+      if (stageLabel) {
+        stageLabel.innerText = `${val} m (${statusStr})`;
+      }
+      updateDashboardMetrics();
+      renderSimulationInundation();
+    }
+
+    function updateDashboardMetrics() {
+      // Hydrology Calculations
+      const hyd = BhimavaramHydrologyEngine.calculateSCSましたRunoff(simState.rainfallMm);
+      const peak = BhimavaramHydrologyEngine.calculatePeakDischarge(simState.rainfallMm, simState.durationHours, 2560, 0.78);
+      const backwater = BhimavaramHydrologyEngine.evaluateBackwaterImpact(simState.canalStageM);
+
+      // Header Metrics
+      const hScenario = document.getElementById('headerScenarioTag');
+      if (hScenario) hScenario.innerText = `${simState.rainfallMm} mm / ${simState.durationHours}h`;
+
+      const hPeakQ = document.getElementById('headerPeakQ');
+      if (hPeakQ) hPeakQ.innerText = `${peak.qPeakM3s} m³/s`;
+
+      const hStage = document.getElementById('headerYanamudurruStage');
+      if (hStage) {
+        hStage.innerHTML = `<span class="w-2 h-2 rounded-full ${simState.canalStageM >= 3.8 ? 'bg-rose-400' : 'bg-emerald-400'} animate-pulse"></span> ${simState.canalStageM.toFixed(2)} m`;
+      }
+
+      // Panel D Metrics
+      const resRunoff = document.getElementById('simResRunoff');
+      if (resRunoff) resRunoff.innerText = `${hyd.runoffMm} mm`;
+
+      const resPeakQ = document.getElementById('simResPeakQ');
+      if (resPeakQ) resPeakQ.innerText = `${peak.qPeakM3s} m³/s`;
+
+      const resVol = document.getElementById('simResVolume');
+      if (resVol) resVol.innerText = `${(peak.totalVolumeM3 / 100000).toFixed(2)} లక్షల m³`;
+
+      // Backwater Alert text
+      const bwBox = document.getElementById('simBackwaterAlertBox');
+      if (bwBox) {
+        if (simState.canalStageM >= 3.8) {
+          bwBox.className = "p-2 rounded bg-rose-950/50 border border-rose-500/50 text-[11px] text-rose-200";
+          bwBox.innerHTML = `🚨 <strong>బ్యాక్ వాటర్ హెచ్చరిక:</strong> ఎనమదురు కాలువ మట్టం ${simState.canalStageM}m చేరడంతో 14 అవుట్‌ఫాల్స్ పూర్తిగా లాక్ అయ్యాయి! మురుగునీరు వన్ టౌన్ వార్డులు 2, 3 మరియు టూ టౌన్ 29, 37 లోకి వెనుకకు ప్రవహిస్తోంది.`;
+        } else {
+          bwBox.className = "p-2 rounded bg-emerald-950/40 border border-emerald-500/40 text-[11px] text-emerald-200";
+          bwBox.innerHTML = `✅ <strong>సాధారణ ప్రవాహం:</strong> ఎనమదురు కాలువలో నీటి మట్టం (${simState.canalStageM}m) హెచ్చరిక స్థాయి (3.8m) కంటే తక్కువగా ఉంది. గ్రావిటీ అవుట్‌ఫాల్స్ పనిచేస్తున్నాయి.`;
+        }
+      }
+
+      // Overview Tab Stage Display
+      const ovStageVal = document.getElementById('overviewCanalStageVal');
+      if (ovStageVal) ovStageVal.innerText = `${simState.canalStageM} m (${simState.canalStageM >= 3.8 ? 'హెచ్చరిక స్థాయి' : 'సాధారణం'})`;
+
+      const ovBar = document.getElementById('overviewCanalStageBar');
+      if (ovBar) {
+        const pct = Math.min(100, Math.round((simState.canalStageM / 5.6) * 100));
+        ovBar.style.width = pct + '%';
+      }
+    }
+
+    // ==========================================
+    // 9. TAB SWITCHING SYSTEM (A to F)
+    // ==========================================
+    function switchTab(tabId) {
+      // Hide all panels
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+
+      // Show requested panel
+      const targetPanel = document.getElementById('panel-' + tabId);
+      if (targetPanel) targetPanel.classList.remove('hidden');
+
+      // Update Tab Button Styles
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-cyan-600', 'text-white', 'shadow-sm');
+        btn.classList.add('bg-slate-800', 'text-slate-300');
+      });
+
+      const activeBtn = document.getElementById('btn-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-cyan-600', 'text-white', 'shadow-sm');
+        activeBtn.classList.remove('bg-slate-800', 'text-slate-300');
+      }
+
+      // If switching to terrain tab, enable depression layer
+      if (tabId === 'tab-terrain') {
+        const depCheck = document.getElementById('layerDepressions');
+        if (depCheck && !depCheck.checked) {
+          depCheck.checked = true;
+          toggleMapLayer('depressions');
+        }
+      }
+    }
+
+    // ==========================================
+    // 10. POPULATE UI TABLES & LISTS
+    // ==========================================
+    function populateHotspotList() {
+      const container = document.getElementById('hotspotsTableBody');
+      const overviewContainer = document.getElementById('overviewHotspotsList');
+      if (!container) return;
+
+      container.innerHTML = '';
+      if (overviewContainer) overviewContainer.innerHTML = '';
+
+      BHIMAVARAM_HOTSPOTS.forEach(hs => {
+        // Full table row in Simulation tab
+        const item = document.createElement('div');
+        item.className = "p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-cyan-500 cursor-pointer transition flex items-center justify-between";
+        item.onclick = () => focusHotspotOnMap(hs);
+        item.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-rose-600/80 text-white font-bold text-[10px] flex items-center justify-center shrink-0">
+              ${hs.rank}
+            </span>
+            <div>
+              <div class="font-bold text-slate-200 text-[11px]">${hs.nameTe}</div>
+              <div class="text-[10px] text-slate-400">వార్డు ${hs.ward} | భూమట్టం: ${hs.groundElevationM}m | లోతు: <strong class="text-rose-400">${hs.maxWaterDepthM}m</strong></div>
+            </div>
+          </div>
+          <span class="text-[10px] text-cyan-400 font-semibold shrink-0">చూడండి ➔</span>
+        `;
+        container.appendChild(item);
+
+        // First 5 for Overview panel
+        if (overviewContainer && hs.rank <= 5) {
+          const ovItem = document.createElement('div');
+          ovItem.className = "p-1.5 rounded bg-slate-900/60 border border-slate-800 flex justify-between items-center text-[11px] cursor-pointer hover:border-cyan-400";
+          ovItem.onclick = () => focusHotspotOnMap(hs);
+          ovItem.innerHTML = `
+            <div class="flex items-center gap-1.5">
+              <span class="w-4 h-4 rounded-full bg-rose-600 text-white font-bold text-[9px] flex items-center justify-center">${hs.rank}</span>
+              <span class="text-slate-200 font-medium">${hs.nameTe} (W-${hs.ward})</span>
+            </div>
+            <span class="text-rose-400 font-bold">${hs.maxWaterDepthM}m</span>
+          `;
+          overviewContainer.appendChild(ovItem);
+        }
+      });
+    }
+
+    function focusHotspotOnMap(hs) {
+      if (!map) return;
+      map.flyTo([hs.lat, hs.lon], 16, { animate: true, duration: 1.2 });
+      // Open popup on that hotspot
+      layerGroups.hotspots.eachLayer(layer => {
+        const latLng = layer.getLatLng();
+        if (Math.abs(latLng.lat - hs.lat) < 0.0001 && Math.abs(latLng.lng - hs.lon) < 0.0001) {
+          setTimeout(() => layer.openPopup(), 1300);
+        }
+      });
+    }
+
+    function populateWardsTable() {
+      const tbody = document.getElementById('wardsTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+      BHIMAVARAM_52_WARDS_FLOOD_DATA.forEach(w => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-800/60 transition cursor-pointer";
+        tr.onclick = () => focusWardOnMap(w.id);
+        tr.innerHTML = `
+          <td class="p-2 font-bold text-cyan-400">#${w.id}</td>
+          <td class="p-2 font-medium text-slate-200">${w.nameTe} <span class="text-[9px] text-slate-400 block">${w.nameEn}</span></td>
+          <td class="p-2 text-center text-slate-300">${w.avgElev}m</td>
+          <td class="p-2 text-center ${w.lowLyingPct >= 50 ? 'text-rose-400 font-bold' : 'text-slate-300'}">${w.lowLyingPct}%</td>
+          <td class="p-2 text-right">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold" style="background:${w.riskColor}22; color:${w.riskColor}; border:1px solid ${w.riskColor}44">
+              ${w.riskCategory}
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function focusWardOnMap(wardId) {
+      if (typeof BHIMAVARAM_39_WARDS !== 'undefined') {
+        const wardObj = BHIMAVARAM_39_WARDS.find(w => w.number === wardId);
+        if (wardObj && wardObj.center) {
+          map.flyTo(wardObj.center, 15, { animate: true, duration: 1.0 });
+        }
+      }
+    }
+
+    function filterWardTable(query) {
+      const q = (query || "").toLowerCase();
+      const rows = document.querySelectorAll('#wardsTableBody tr');
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+
+    function filterWardZone(zone) {
+      const rows = document.querySelectorAll('#wardsTableBody tr');
+      if (zone === 'all') {
+        rows.forEach(r => r.style.display = '');
+        return;
+      }
+      BHIMAVARAM_52_WARDS_FLOOD_DATA.forEach((w, idx) => {
+        if (rows[idx]) {
+          rows[idx].style.display = w.zone.includes(zone) ? '' : 'none';
+        }
+      });
+    }
+
+    function populateWardSelectOptions() {
+      const select = document.getElementById('rptWard');
+      if (!select) return;
+      select.innerHTML = '';
+      BHIMAVARAM_52_WARDS_FLOOD_DATA.forEach(w => {
+        const opt = document.createElement('option');
+        opt.value = w.id;
+        opt.innerText = `వార్డు ${w.id} - ${w.nameTe} (${w.zone})`;
+        select.appendChild(opt);
+      });
+    }
+
+    // ==========================================
+    // 11. AI FLOODFLOW AGENT INTERACTIONS
+    // ==========================================
+    function toggleAiDrawer() {
+      const drawer = document.getElementById('aiAgentDrawer');
+      if (!drawer) return;
+      const isClosed = drawer.classList.contains('translate-y-[120%]');
+      if (isClosed) {
+        drawer.classList.remove('translate-y-[120%]', 'opacity-0', 'pointer-events-none');
+        document.getElementById('aiPromptInput').focus();
+      } else {
+        drawer.classList.add('translate-y-[120%]', 'opacity-0', 'pointer-events-none');
+      }
+    }
+
+    function submitAiPrompt(promptText) {
+      const input = document.getElementById('aiPromptInput');
+      if (input) input.value = promptText;
+      handleAiSend();
+    }
+
+    function handleAiSend() {
+      const input = document.getElementById('aiPromptInput');
+      const query = input.value.trim();
+      if (!query) return;
+
+      appendChatMessage('user', query);
+      input.value = '';
+
+      // Process query with BHIMAVARAM_AI_AGENT
+      setTimeout(() => {
+        const result = BHIMAVARAM_AI_AGENT.processQuery(query, simState);
+        appendChatMessage('agent', result.responseTe);
+
+        // Execute action triggers if returned
+        if (result.actionTrigger) {
+          executeAgentAction(result.actionTrigger);
+        }
+      }, 400);
+    }
+
+    function appendChatMessage(sender, text) {
+      const log = document.getElementById('aiChatLog');
+      if (!log) return;
+
+      const div = document.createElement('div');
+      div.className = "flex items-start gap-2.5 " + (sender === 'user' ? 'justify-end' : '');
+
+      if (sender === 'user') {
+        div.innerHTML = `
+          <div class="bg-purple-600 text-white rounded-2xl rounded-tr-none p-2.5 max-w-[85%] shadow-sm">
+            ${text}
+          </div>
+          <div class="w-7 h-7 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-xs shrink-0 mt-0.5">
+            👤
+          </div>
+        `;
+      } else {
+        // Convert markdown bold and bullets to HTML
+        let formatted = text
+          .replace(/### (.*?)\n/g, '<div class="font-bold text-cyan-300 text-xs mb-1">$1</div>')
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\n- /g, '<br>• ')
+          .replace(/\n1\. /g, '<br>1. ')
+          .replace(/\n2\. /g, '<br>2. ')
+          .replace(/\n3\. /g, '<br>3. ')
+          .replace(/\n4\. /g, '<br>4. ')
+          .replace(/\n5\. /g, '<br>5. ');
+
+        div.innerHTML = `
+          <div class="w-7 h-7 rounded-lg bg-purple-700/50 border border-purple-400/40 flex items-center justify-center text-xs shrink-0 mt-0.5">
+            🤖
+          </div>
+          <div class="bg-slate-800/95 border border-slate-700 rounded-2xl rounded-tl-none p-3 text-slate-200 text-[11px] leading-relaxed shadow-sm max-w-[90%]">
+            ${formatted}
+          </div>
+        `;
+      }
+
+      log.appendChild(div);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function executeAgentAction(trigger) {
+      if (!trigger) return;
+
+      if (trigger.tab) {
+        switchTab('tab-' + trigger.tab);
+      }
+
+      if (trigger.type === "SET_CANAL_STAGE") {
+        handleCanalStage(trigger.stage);
+        const stageSlider = document.getElementById('simCanalStageSlider');
+        if (stageSlider) stageSlider.value = trigger.stage;
+      } else if (trigger.type === "RUN_SIMULATION") {
+        setScenario(trigger.rainfall, trigger.duration, `${trigger.rainfall}mm Storm`);
+        simState.timeT = 3.0; // Show peak
+        updateSimTimeDisplay();
+        renderSimulationInundation();
+      } else if (trigger.type === "HIGHLIGHT_HOTSPOTS") {
+        focusHotspotOnMap(BHIMAVARAM_HOTSPOTS[0]);
+      } else if (trigger.type === "SHOW_INFRASTRUCTURE") {
+        const infraLayer = document.getElementById('layerInfra');
+        if (infraLayer && !infraLayer.checked) {
+          infraLayer.checked = true;
+          toggleMapLayer('infra');
+        }
+        map.flyTo([16.54541, 81.53158], 16); // Area hospital on Google Maps
+      }
+    }
+
+    // ==========================================
+    // 12. COMPLAINT MODAL & CITIZEN REPORT
+    // ==========================================
+    function openComplaintModal() {
+      document.getElementById('complaintModal').classList.remove('hidden');
+    }
+    function closeComplaintModal() {
+      document.getElementById('complaintModal').classList.add('hidden');
+    }
+    function captureLocation() {
+      alert("GPS స్థానం విజయవంతంగా సంగ్రహించబడింది: 16.5425° N, 81.5253° E (Google Maps accuracy ±3m)");
+    }
+    function submitComplaint() {
+      const ward = document.getElementById('rptWard').value;
+      const cat = document.getElementById('rptCategory').value;
+      const loc = document.getElementById('rptLocation').value || "Mavullamma Road";
+
+      const list = document.getElementById('complaintsList');
+      if (list) {
+        const item = document.createElement('div');
+        item.className = "p-2 rounded bg-slate-900/90 border border-cyan-500/40 space-y-1 animate-pulse";
+        item.innerHTML = `
+          <div class="flex justify-between">
+            <strong class="text-cyan-300">#CMP-${Math.floor(105 + Math.random()*50)}: ${cat}</strong>
+            <span class="px-1.5 py-0.2 rounded text-[9px] bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">Just Reported</span>
+          </div>
+          <p class="text-[10px] text-slate-300">స్థలం: ${loc} | మున్సిపల్ ఇంజనీరింగ్ విభాగం చర్యల కోసం పంపబడింది.</p>
+          <div class="text-[9px] text-slate-500">వార్డు: ${ward} | ఇప్పుడే నమోదు చేయబడింది</div>
+        `;
+        list.prepend(item);
+      }
+
+      closeComplaintModal();
+      alert(`మీ ఫిర్యాదు విజయవంతంగా నమోదు చేయబడింది! మున్సిపల్ సానిటేషన్ మరియు ఇంజనీరింగ్ విభాగాలకు తక్షణ సమాచారం పంపబడింది.`);
+    }
+  </script>
+</body>
+</html>

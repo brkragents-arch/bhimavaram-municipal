@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="te" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>భీమవరం పురపాలక సంఘం – సమగ్ర అర్బన్ ఇంటెలిజెన్స్ & 52 వార్డుల పోర్టల్ (Bhimavaram Municipal Portal)</title>
+  
+  <!-- Comprehensive Site Meta Description depicting Total Functionality -->
+  <meta name="description" content="భీమవరం పురపాలక సంఘం సమగ్ర అర్బన్ ఇంటెలిజెన్స్ & డిజిటల్ గవర్నెన్స్ వేదిక: 52 వార్డుల పునర్విభజన & జనాభా గణాంకాలు, 39 వార్డుల అధికారిక GIS మాస్టర్ ప్లాన్ & APSAC ఉపగ్రహ జలవనరుల పర్యవేక్షణ, ఎనమదుర్రు డ్రైనేజీ వరద ప్రవాహ విశ్లేషణ AI ఏజెంట్, మరియు IRC ప్రమాణాల స్మార్ట్ ట్రాఫిక్ & మొబిలిటీ ప్లానింగ్ సిస్టమ్.">
+  <meta name="keywords" content="భీమవరం పురపాలక సంఘం, Bhimavaram Municipality, 52 Wards, 39 Wards GIS Map, APSAC Waterbodies, Flood Flow Analysis, Drainage Intelligence, Smart Traffic Mobility, Urban AI, Andhra Pradesh">
+  <meta name="author" content="భీమవరం పురపాలక సంఘం అర్బన్ ఇంటెలిజెన్స్ వేదిక">
+  
+  <!-- Open Graph / Social Sharing Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="భీమవరం పురపాలక సంఘం – సమగ్ర అర్బన్ ఇంటెలిజెన్స్ & GIS వేదిక">
+  <meta property="og:description" content="52 వార్డుల పునర్విభజన, 39 వార్డుల GIS శాటిలైట్ అలైన్‌మెంట్, APSAC జలవనరులు, వరద ప్రవాహ హైడ్రాలిక్ AI మరియు స్మార్ట్ ట్రాఫిక్ ప్లానింగ్ సమగ్ర వేదిక.">
+  <meta property="og:site_name" content="Bhimavaram Municipal Urban Intelligence Suite">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Telugu:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', 'Tiro Telugu', sans-serif;
+    }
+    .telugu-font {
+      font-family: 'Tiro Telugu', 'Gautami', 'Nirmala UI', sans-serif;
+    }
+    .ward-polygon {
+      transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+    .ward-polygon:hover {
+      filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.85));
+      stroke: #38bdf8 !important;
+      stroke-width: 3px !important;
+      transform-origin: center;
+    }
+    .canal-flow {
+      stroke-dasharray: 8, 4;
+      animation: canalFlowAnim 25s linear infinite;
+    }
+    @keyframes canalFlowAnim {
+      from { stroke-dashoffset: 200; }
+      to { stroke-dashoffset: 0; }
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col selection:bg-cyan-500 selection:text-white">
+
+  <!-- Top Navigation & Header -->
+  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-40 px-4 py-3 shadow-md">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/20 text-white font-bold text-xl border border-cyan-400/30">
+          🏛️
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg md:text-xl font-bold tracking-tight text-white flex items-center gap-2">
+              భీమవరం పురపాలక సంఘం (Bhimavaram Municipality)
+            </h1>
+            <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+              52 వార్డులు
+            </span>
+          </div>
+          <p class="text-xs text-slate-300 telugu-font">
+            సమగ్ర అర్బన్ ఇంటెలిజెన్స్ వేదిక • 52 వార్డుల డెమోగ్రాఫిక్స్ • 39 వార్డుల GIS పటం • వరద ప్రవాహ AI • స్మార్ట్ ట్రాఫిక్ సిస్టమ్
+          </p>
+        </div>
+      </div>
+
+      <!-- Prominent Buttons to all Integrated Modules & System Overview -->
+      <div class="flex items-center flex-wrap gap-2 text-xs">
+        <button onclick="toggleSystemOverviewModal()" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 hover:text-white font-bold text-xs shadow-md border border-cyan-500/40 transition-all hover:scale-105 active:scale-95" title="మొత్తం వేదిక సమగ్ర కార్యాచరణ వివరణ">
+          <span class="text-sm">ℹ️</span>
+          <span>ప్లాట్‌ఫారమ్ వివరణ</span>
+        </button>
+        <a href="gis-ward-map.html" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold text-xs shadow-md shadow-amber-500/25 border border-amber-300/50 transition-all hover:scale-105 active:scale-95">
+          <span class="text-sm">🗺️</span>
+          <span>GIS వార్డు పటం ➔</span>
+        </a>
+        <a href="gis-ward-map.html?view=waterbodies" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-sky-600 via-blue-600 to-cyan-600 hover:from-sky-500 hover:to-cyan-500 text-white font-bold text-xs shadow-md shadow-sky-600/30 border border-sky-400/50 transition-all hover:scale-105 active:scale-95" title="చెరువులు, కాలువలు & కాలానుగుణ మార్పుల ఉపగ్రహ లేయర్ (APSAC సర్వే)">
+          <span class="text-sm">🌊</span>
+          <span>చెరువులు & కాలువలు (15)</span>
+        </a>
+        <a href="flood-flow-analysis.html" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-xs shadow-lg shadow-cyan-500/30 border border-cyan-300/60 transition-all hover:scale-105 active:scale-95" title="భీమవరం వరద ప్రవాహ విశ్లేషణ, డ్రైనేజీ నెట్‌వర్క్ మోడలింగ్ & AI ఏజెంట్ ఫలితాలు">
+          <span class="text-base">🌊</span>
+          <span>వరద AI విశ్లేషణ ➔</span>
+        </a>
+        <a href="traffic-mobility-system.html" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-orange-600 to-rose-600 hover:from-amber-400 hover:to-rose-500 text-slate-950 font-black text-xs shadow-lg shadow-amber-500/30 border border-amber-300/70 transition-all hover:scale-105 active:scale-95 animate-pulse" title="భీమవరం స్మార్ట్ ట్రాఫిక్ & సస్టైనబుల్ మొబిలిటీ ప్లానింగ్ సిస్టమ్ ఫలితాలు">
+          <span class="text-base">🚦🤖</span>
+          <span>స్మార్ట్ ట్రాఫిక్ AI ఫలితాలు ➔</span>
+        </a>
+        <div class="bg-slate-800/80 border border-slate-700/60 rounded-lg px-3 py-1.5 text-center hidden md:block">
+          <div class="text-slate-400">మొత్తం జనాభా</div>
+          <div class="font-bold text-cyan-400 text-sm" id="header-total-pop">1,68,940</div>
+        </div>
+        <div class="bg-slate-800/80 border border-slate-700/60 rounded-lg px-3 py-1.5 text-center hidden sm:block">
+          <div class="text-slate-400">సగటు వార్డు జనాభా</div>
+          <div class="font-bold text-amber-400 text-sm">~3,248</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Controls Bar -->
+  <div class="bg-slate-900/60 border-b border-slate-800 px-4 py-2.5">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+      
+      <!-- Search Box -->
+      <div class="relative flex-1 min-w-[220px] max-w-md">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">🔍</span>
+        <input 
+          type="text" 
+          id="wardSearch" 
+          placeholder="వార్డు సంఖ్య లేదా ప్రాంతం పేరు వెతకండి (ఉదా: 3, మవుళ్ళమ్మ, రాయలం...)" 
+          class="w-full bg-slate-800/90 border border-slate-700 text-slate-200 pl-9 pr-3 py-1.5 rounded-lg text-xs placeholder:text-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
+          oninput="handleSearch(this.value)"
+        >
+      </div>
+
+      <!-- Zone Filters -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+        <button onclick="filterZone('all')" id="btn-zone-all" class="px-2.5 py-1 rounded-md font-medium text-xs bg-cyan-600 text-white shadow-sm transition">
+          అన్ని వార్డులు (52)
+        </button>
+        <button onclick="filterZone('zone1')" id="btn-zone-1" class="px-2.5 py-1 rounded-md font-medium text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+          వన్ టౌన్ (1-20)
+        </button>
+        <button onclick="filterZone('zone2')" id="btn-zone-2" class="px-2.5 py-1 rounded-md font-medium text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+          టూ టౌన్ (21-40)
+        </button>
+        <button onclick="filterZone('zone3_north')" id="btn-zone-3n" class="px-2.5 py-1 rounded-md font-medium text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+          అమరం నార్త్ (41-45)
+        </button>
+        <button onclick="filterZone('zone3_south')" id="btn-zone-3s" class="px-2.5 py-1 rounded-md font-medium text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+          రాయలం సౌత్ (46-52)
+        </button>
+      </div>
+
+      <!-- Legend Indicator -->
+      <div class="flex items-center gap-3 text-[11px] text-slate-400 font-medium">
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> వన్ టౌన్</span>
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> టూ టౌన్</span>
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> అమరం క్లస్టర్</span>
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> రాయలం జోన్</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-1 bg-sky-400"></span> కాలువ / డ్రెయిన్</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto w-full p-4 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-5">
+    
+    <!-- Left Column: Pure Vector Map Canvas (No Google Satellite Overlay) -->
+    <div class="lg:col-span-8 flex flex-col space-y-3">
+      
+      <!-- Integrated Urban Intelligence Suite: Comprehensive Total Functionality Overview Banner -->
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950/70 to-slate-900 border border-cyan-500/40 rounded-xl p-3.5 shadow-xl relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="flex flex-wrap items-center justify-between gap-3 relative z-10">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-indigo-600 flex items-center justify-center text-xl shadow-lg shadow-cyan-500/20 text-white shrink-0 mt-0.5">
+              🌐
+            </div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h2 class="font-extrabold text-white text-sm sm:text-base tracking-tight">
+                  భీమవరం పురపాలక సంఘం సమగ్ర అర్బన్ ఇంటెలిజెన్స్ వేదిక (Integrated Urban Intelligence Suite)
+                </h2>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+                  4 ప్రధాన వ్యవస్థలు
+                </span>
+              </div>
+              <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+                ఈ వేదిక భీమవరం నగర సమగ్ర పాలన, ప్రణాళిక మరియు పౌరసేవల కోసం రూపొందించబడిన 4 కీలక సాంకేతిక వ్యవస్థల సమాహారం: 
+                <span class="text-emerald-400 font-semibold">① 52 వార్డుల పునర్విభజన & జనాభా డేటాబేస్</span>, 
+                <span class="text-amber-400 font-semibold">② 39 వార్డుల అధికారిక GIS మాస్టర్ ప్లాన్ & APSAC ఉపగ్రహ జలవనరుల పర్యవేక్షణ</span>, 
+                <span class="text-cyan-400 font-semibold">③ ఎనమదుర్రు డ్రైనేజీ వరద ప్రవాహ AI విశ్లేషణ ఇంజిన్</span>, మరియు 
+                <span class="text-rose-400 font-semibold">④ IRC ప్రమాణాల స్మార్ట్ ట్రాఫిక్ & మొబిలిటీ ప్లానింగ్ సిస్టమ్</span>.
+              </p>
+            </div>
+          </div>
+          <button onclick="toggleSystemOverviewModal()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs shadow-md shadow-cyan-600/30 border border-cyan-400/50 transition-all hover:scale-105 active:scale-95 shrink-0 ml-auto sm:ml-0">
+            <span>ℹ️ సమగ్ర ఫంక్షనాలిటీ వివరాలు (System Breakdown) ➔</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dedicated Smart Traffic & Mobility Planning System AI Agent Banner Card -->
+      <div class="bg-gradient-to-r from-amber-950/80 via-slate-900 to-orange-950/80 border border-amber-500/50 rounded-xl p-3 shadow-lg flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-xl shadow-inner text-amber-300">
+            🚦
+          </div>
+          <div>
+            <div class="font-extrabold text-white text-xs sm:text-sm flex items-center gap-2">
+              <span>భీమవరం స్మార్ట్ ట్రాఫిక్ & స్థిరమైన మొబిలిటీ ప్లానింగ్ సిస్టమ్</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30">ITMS AI Agent</span>
+            </div>
+            <p class="text-[11px] text-slate-300">
+              20 రద్దీ హాట్‌స్పాట్లు, వెబ్‌స్టర్ సిగ్నల్ ఇంజనీరింగ్, వన్-వే సర్క్యులేషన్ లూప్, ఈ-బస్సులు & లైవ్ ట్రాఫిక్ సిమ్యులేషన్
+            </p>
+          </div>
+        </div>
+        <a href="traffic-mobility-system.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-xs shadow-md shadow-amber-500/30 transition-all hover:scale-105 active:scale-95">
+          <span>ఫలితాలను వీక్షించండి (View Results) ➔</span>
+        </a>
+      </div>
+
+      <!-- New Dedicated Flood Flow Intelligence AI Agent Banner Card -->
+      <div class="bg-gradient-to-r from-cyan-950 via-slate-900 to-indigo-950 border border-cyan-500/40 rounded-xl p-3 shadow-lg flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-cyan-600/20 border border-cyan-400/40 flex items-center justify-center text-xl shadow-inner">
+            🌊
+          </div>
+          <div>
+            <div class="font-extrabold text-white text-xs sm:text-sm flex items-center gap-2">
+              <span>భీమవరం వరద ప్రవాహ విశ్లేషణ & డ్రైనేజీ ఇంటెలిజెన్స్ AI వేదిక</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30">New AI Agent</span>
+            </div>
+            <p class="text-[11px] text-slate-300">
+              ఎనమదురు కాలువ ప్రవాహం, 20 వాటర్‌లాగింగ్ హాట్‌స్పాట్లు, వర్షపాత రన్-ఆఫ్ మోడలింగ్ & ముందస్తు నిర్వహణ ఫలితాలు
+            </p>
+          </div>
+        </div>
+        <a href="flood-flow-analysis.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-xs shadow-md shadow-cyan-500/20 transition-all hover:scale-105 active:scale-95">
+          <span>ఫలితాలను వీక్షించండి ➔</span>
+        </a>
+      </div>
+
+      <!-- Map Canvas Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 shadow-xl relative overflow-hidden flex flex-col">
+        
+        <!-- Map Header bar -->
+        <div class="flex items-center justify-between mb-2 text-xs text-slate-400 px-1">
+          <div class="flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="font-semibold text-slate-300">వార్డు పై కర్సర్‌ను ఉంచండి (Hover on any ward to inspect)</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-slate-400">దిశ: ⬆️ ఉత్తరం (North)</span>
+            <button onclick="resetMapView()" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 rounded border border-slate-700 text-slate-300 transition">
+              రీసెట్ (Reset)
+            </button>
+          </div>
+        </div>
+
+        <!-- SVG Map Container without Google Satellite tiles -->
+        <div class="relative w-full aspect-[16/11] bg-slate-950/90 rounded-lg border border-slate-800/80 overflow-hidden flex items-center justify-center select-none" id="mapSvgWrapper">
+          
+          <svg id="bhimavaramWardMap" viewBox="0 0 1000 750" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- Canal Gradient -->
+              <linearGradient id="canalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9"/>
+                <stop offset="50%" stop-color="#0284c7" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#0369a1" stop-opacity="0.9"/>
+              </linearGradient>
+
+              <!-- Radial glow for hovered ward -->
+              <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            <!-- Geographic Canvas Base -->
+            <rect width="1000" height="750" fill="#090d16" />
+            
+            <!-- Grid Reference Lines -->
+            <g stroke="#1e293b" stroke-width="0.5" stroke-dasharray="4,8" opacity="0.6">
+              <line x1="0" y1="200" x2="1000" y2="200" />
+              <line x1="0" y1="580" x2="1000" y2="580" />
+              <line x1="500" y1="0" x2="500" y2="750" />
+            </g>
+
+            <!-- Boundary Zone Labels in Background -->
+            <text x="500" y="25" fill="#475569" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="3">▲ ఉత్తరం (NORTH) – అమరం క్లస్టర్</text>
+            <text x="240" y="215" fill="#334155" font-size="13" font-weight="bold" text-anchor="middle" letter-spacing="2">📍 పశ్చిమ మండలం - టూ టౌన్</text>
+            <text x="750" y="215" fill="#334155" font-size="13" font-weight="bold" text-anchor="middle" letter-spacing="2">📍 తూర్పు మండలం - వన్ టౌన్/ గుణుపూడి (ONE TOWN)</text>
+            <text x="500" y="598" fill="#475569" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="3">▼ దక్షిణం & పశ్చిమం (SOUTH) – రాయలం & సరిహద్దు జోన్</text>
+
+            <!-- Eluru Canal & Yenamadurru Drain Central River Flow -->
+            <path id="eluruCanal" d="M 500,20 C 490,120 515,220 495,340 C 480,430 520,530 495,640 C 480,690 490,740 485,750" 
+                  fill="none" stroke="url(#canalGradient)" stroke-width="18" stroke-linecap="round" opacity="0.85" />
+            
+            <path d="M 500,20 C 490,120 515,220 495,340 C 480,430 520,530 495,640 C 480,690 490,740 485,750" 
+                  fill="none" stroke="#e0f2fe" stroke-width="2.5" class="canal-flow" opacity="0.9" />
+
+            <!-- River Flow Label -->
+            <text fill="#7dd3fc" font-size="10" font-weight="bold" opacity="0.9">
+              <textPath href="#eluruCanal" startOffset="38%" text-anchor="middle">
+                🌊 ఏలూరు కాలువ & యనమదుర్రు డ్రెయిన్ (Eluru Canal & Drain) ➔
+              </textPath>
+            </text>
+
+            <!-- Railway Line Schematic representation -->
+            <path d="M 120,440 Q 500,430 920,435" fill="none" stroke="#64748b" stroke-width="3" stroke-dasharray="6,6" opacity="0.5" />
+            <text x="890" y="425" fill="#94a3b8" font-size="9" text-anchor="end">🚆 రైల్వే లైన్ (గుడివాడ - భీమవరం - నరసాపురం)</text>
+
+            <!-- Wards SVG Elements Container -->
+            <g id="wardsGroup">
+              <!-- Dynamically populated by JS for precision -->
+            </g>
+
+          </svg>
+
+          <!-- Floating Hover Card (Tooltip positioned dynamically) -->
+          <div id="wardTooltip" class="absolute pointer-events-none hidden z-50 bg-slate-900/95 border border-cyan-500/80 rounded-xl shadow-2xl p-3 w-80 backdrop-blur transition-all duration-100 text-xs">
+            <!-- Tooltip dynamic content populated via JS -->
+          </div>
+
+        </div>
+
+        <!-- Helper Instructions -->
+        <div class="mt-2.5 flex flex-wrap items-center justify-between text-[11px] text-slate-400 px-1">
+          <div class="flex items-center gap-1.5">
+            <span class="text-cyan-400">💡 చిట్కా:</span> 
+            <span>ఏదైనా వార్డుపై క్లిక్ చేస్తే పక్కన గల పట్టికలో ఆ వార్డు వివరాలు స్థిరంగా ఉంటాయి.</span>
+          </div>
+          <div class="text-slate-500">
+            మొత్తం వార్డులు: <span class="text-slate-300 font-bold">52</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quick Ward Grid Pills (Quick selection bar) -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3">
+        <div class="text-xs font-semibold text-slate-300 mb-2 flex items-center justify-between">
+          <span>🏷️ వార్డు సంఖ్య & పేరు శీఘ్ర సూచిక (Quick Ward Selector 1 - 52):</span>
+          <span class="text-[11px] text-slate-500">క్లిక్ చేయండి</span>
+        </div>
+        <div class="flex flex-wrap gap-2 max-h-36 overflow-y-auto pr-1.5 py-0.5" id="quickPillsContainer">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Dedicated Detailed Ward Table & Stats Panel (4 cols) -->
+    <div class="lg:col-span-4 flex flex-col space-y-4">
+      
+      <!-- General Municipality Demographic Breakdown Card (On Top) -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs shadow-lg">
+        <h3 class="font-bold text-slate-200 mb-2.5 flex items-center gap-1.5">
+          <span class="text-base">🏛️</span>
+          <span class="text-white text-xs">భీమవరం పురపాలక సంఘం ముఖ్యాంశాలు</span>
+        </h3>
+        <div class="grid grid-cols-2 gap-2 text-[11px]">
+          <div class="bg-slate-950/60 p-2 rounded-lg border border-slate-800">
+            <div class="text-slate-400">జిల్లా</div>
+            <div class="font-semibold text-slate-200">పశ్చిమ గోదావరి (West Godavari)</div>
+          </div>
+          <div class="bg-slate-950/60 p-2 rounded-lg border border-slate-800">
+            <div class="text-slate-400">మున్సిపాలిటీ గ్రేడ్</div>
+            <div class="font-semibold text-emerald-400">స్పెషల్ గ్రేడ్ పురపాలక సంఘం</div>
+          </div>
+          <div class="bg-slate-950/60 p-2 rounded-lg border border-slate-800">
+            <div class="text-slate-400">మొత్తం విస్తీర్ణం</div>
+            <div class="font-semibold text-slate-200">26.14 చ.కి.మీ</div>
+          </div>
+          <div class="bg-slate-950/60 p-2 rounded-lg border border-slate-800">
+            <div class="text-slate-400">మొత్తం ఓటర్లు</div>
+            <div class="font-semibold text-cyan-400">~1,24,500 మంది</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ward Details Table Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl flex-1 flex flex-col">
+        
+        <div class="border-b border-slate-800 pb-3 mb-3">
+          <div class="flex items-center justify-between">
+            <span id="detailBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+              వార్డు 3 (ఎంపికైనది)
+            </span>
+            <span id="detailZoneTag" class="text-[11px] text-slate-400 font-medium">
+              వన్ టౌన్ మండలం
+            </span>
+          </div>
+          <h2 id="detailWardName" class="text-base font-bold text-white mt-1 telugu-font leading-snug">
+            శ్రీ మవుళ్ళమ్మ ఆలయ వీధి
+          </h2>
+          <p id="detailWardEngName" class="text-xs text-slate-400">
+            Sri Mavullamma Temple Surroundings
+          </p>
+        </div>
+
+        <!-- Table displaying Ward Demographics and Area Information -->
+        <div class="flex-1 overflow-y-auto">
+          <div class="text-xs font-semibold text-slate-300 mb-2 flex items-center gap-1.5">
+            <span>📊 వార్డు జనాభా & సమగ్ర గణాంకాల పట్టిక</span>
+          </div>
+
+          <div class="rounded-lg border border-slate-800 overflow-hidden bg-slate-950/60">
+            <table class="w-full text-xs text-left">
+              <tbody class="divide-y divide-slate-800/80" id="detailedTableBody">
+                <!-- Populated dynamically via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Key Localities List in Ward -->
+          <div class="mt-3 bg-slate-950/50 rounded-lg p-2.5 border border-slate-800/80">
+            <div class="text-[11px] font-semibold text-slate-400 mb-1 flex items-center gap-1">
+              <span>📍 ఈ వార్డు పరిధిలోని ప్రధాన ప్రాంతాలు & సరిహద్దులు:</span>
+            </div>
+            <p id="detailLocalities" class="text-xs text-slate-300 telugu-font leading-relaxed">
+              శ్రీ మవుళ్ళమ్మ ఆలయ వీధి, మెయిన్ బజార్ రోడ్డు, ఆలయ పుష్కరిణి పరిసరాలు, బూత్‌లు 1-4.
+            </p>
+          </div>
+
+          <!-- Municipal Facilities & Public Services -->
+          <div class="mt-3 bg-slate-950/50 rounded-lg p-2.5 border border-slate-800/80">
+            <div class="text-[11px] font-semibold text-slate-400 mb-1 flex items-center gap-1">
+              <span>🏛️ సచివాలయ & పౌర సేవలు:</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-300 mt-1">
+              <div class="bg-slate-900 p-1.5 rounded border border-slate-800">
+                <span class="text-slate-500 block text-[10px]">సచివాలయం:</span>
+                <span id="detailSecretariat" class="font-medium text-cyan-300">వార్డు సచివాలయం 3</span>
+              </div>
+              <div class="bg-slate-900 p-1.5 rounded border border-slate-800">
+                <span class="text-slate-500 block text-[10px]">పోలింగ్ బూతులు:</span>
+                <span id="detailBooths" class="font-medium text-amber-300">4 బూతులు</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="pt-3 border-t border-slate-800 mt-3 flex items-center gap-2">
+          <button onclick="shareWardInfo()" class="flex-1 bg-cyan-600 hover:bg-cyan-500 text-white font-medium py-1.5 px-3 rounded-lg text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
+            <span>📋 సమాచారం కాపీ చేయండి</span>
+          </button>
+          <button onclick="zoomToWard()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 py-1.5 px-3 rounded-lg text-xs border border-slate-700 transition">
+            🔍 హైలైట్
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Bottom Disclaimer Statement -->
+  <footer class="mt-auto border-t border-slate-800/80 bg-slate-900/95 px-4 py-3 text-center text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-2">
+      <span class="inline-flex items-center gap-1 font-bold text-amber-400">
+        <span>⚠️</span>
+        <span>నిరాకరణ ప్రకటన / Disclaimer:</span>
+      </span>
+      <span>ఈ వెబ్‌సైట్ మరియు GIS మ్యాప్‌లోని వార్డు సరిహద్దులు, వివరాలు కేవలం సమాచార, పరిశీలన అవసరాల కోసం మాత్రమే రూపొందించబడ్డాయి. ఇది అధికారిక ప్రభుత్వ పత్రం కాదు (Not an official document).</span>
+    </div>
+  </footer>
+
+  <!-- Ward Data Script & Interactive Engine -->
+  <script>
+    // 52 Wards Comprehensive Official Data matching user specification
+    const wardsData = [
+      // ZONE 1: ONE TOWN (1 - 20)
+      { id: 1, name: "దుర్గాపురం", nameEng: "Durgapuram", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3410, male: 1690, female: 1720, sexRatio: 1017, houses: 875, voters: 2610, 
+        areas: "దుర్గాపురం మెయిన్ రోడ్డు, ఉత్తర కాలువ వీధి, పాత నీటి తొట్టి సెంటర్", booths: 4, sec: "దుర్గాపురం సచివాలయం" },
+      { id: 2, name: "లంకాపేట", nameEng: "Lankapeta", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3280, male: 1630, female: 1650, sexRatio: 1012, houses: 830, voters: 2510, 
+        areas: "లంకాపేట, శివాలయం వీధి, గొల్ల వీధి, కాపులపాలెం క్రాస్", booths: 3, sec: "లంకాపేట సచివాలయం" },
+      { id: 3, name: "శ్రీ మవుళ్ళమ్మ ఆలయ వీధి", nameEng: "Mavullamma Temple St", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3620, male: 1790, female: 1830, sexRatio: 1022, houses: 920, voters: 2840, 
+        areas: "శ్రీ మవుళ్ళమ్మ అమ్మవారి దేవాలయ ప్రాంగణం, ఆలయ పుష్కరిణి వీధి, మెయిన్ బజార్", booths: 4, sec: "మవుళ్ళమ్మ ఆలయ సచివాలయం" },
+      { id: 4, name: "నరసయ్య అగ్రహారం", nameEng: "Narasaiah Agraharam", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3150, male: 1560, female: 1590, sexRatio: 1019, houses: 810, voters: 2420, 
+        areas: "నరసయ్య అగ్రహారం, పాత చెరువు గట్టు, బ్రాహ్మణ వీధి", booths: 3, sec: "నరసయ్య అగ్రహారం సచివాలయం" },
+      { id: 5, name: "బొక్కవారిపాలెం", nameEng: "Bokkavaripalem", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3340, male: 1660, female: 1680, sexRatio: 1012, houses: 850, voters: 2580, 
+        areas: "బొక్కవారిపాలెం, కాలువ గట్టు నివాసాలు, రజక కాలనీ", booths: 4, sec: "బొక్కవారిపాలెం సచివాలయం" },
+      { id: 6, name: "మెంటేవారి తోట", nameEng: "Mentevari Thota", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3490, male: 1730, female: 1760, sexRatio: 1017, houses: 890, voters: 2690, 
+        areas: "మెంటేవారి తోట, పాత కూరగాయల మార్కెట్, గాంధీ బొమ్మ సెంటర్", booths: 4, sec: "మెంటేవారి తోట సచివాలయం" },
+      { id: 7, name: "కుర్మయ్యపేట", nameEng: "Kurmayyapeta", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3080, male: 1520, female: 1560, sexRatio: 1026, houses: 790, voters: 2360, 
+        areas: "కుర్మయ్యపేట, చాకలి వీధి, రామాలయం దరి", booths: 3, sec: "కుర్మయ్యపేట సచివాలయం" },
+      { id: 8, name: "గాంధీ నగర్", nameEng: "Gandhi Nagar", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3550, male: 1770, female: 1780, sexRatio: 1005, houses: 910, voters: 2740, 
+        areas: "గాంధీ నగర్, పార్కు రోడ్డు, ప్రాథమిక పాఠశాల ప్రాంతం", booths: 4, sec: "గాంధీ నగర్ సచివాలయం" },
+      { id: 9, name: "బి.పి.ఆర్. రోడ్డు", nameEng: "BPR Road", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3220, male: 1600, female: 1620, sexRatio: 1012, houses: 820, voters: 2490, 
+        areas: "బి.పి.ఆర్. రోడ్డు, వర్తక సంఘం వీధి, చంబర్ ఆఫ్ కామర్స్ వీధి", booths: 3, sec: "బి.పి.ఆర్. రోడ్డు సచివాలయం" },
+      { id: 10, name: "సుంకర విజయాల వీధి", nameEng: "Sunkara Vijayala St", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3190, male: 1580, female: 1610, sexRatio: 1018, houses: 815, voters: 2450, 
+        areas: "సుంకర విజయాల వీధి, నరసయ్య కాలువ దరి, కృష్ణుడి గుడి సెంటర్", booths: 3, sec: "సుంకర వీధి సచివాలయం" },
+      { id: 11, name: "చిగిడిలపేట", nameEng: "Chigidilapeta", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 2980, male: 1470, female: 1510, sexRatio: 1027, houses: 760, voters: 2280, 
+        areas: "చిగిడిలపేట, పుంత రోడ్డు, నూతన కాలనీ", booths: 3, sec: "చిగిడిలపేట సచివాలయం" },
+      { id: 12, name: "గంగనమ్మ గుంట", nameEng: "Ganganamma Gunta", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3370, male: 1670, female: 1700, sexRatio: 1017, houses: 860, voters: 2600, 
+        areas: "గంగనమ్మ గుంట, దేవాంగ వీధి, చేనేత సొసైటీ రోడ్డు", booths: 4, sec: "గంగనమ్మ గుంట సచివాలయం" },
+      { id: 13, name: "వీరమ్మ పార్క్ ఏరియా", nameEng: "Veeramma Park Area", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3450, male: 1710, female: 1740, sexRatio: 1017, houses: 880, voters: 2660, 
+        areas: "వీరమ్మ పార్క్ ఏరియా, నెహ్రూ బొమ్మ సెంటర్, మున్సిపల్ కాంప్లెక్స్", booths: 4, sec: "వీరమ్మ పార్క్ సచివాలయం" },
+      { id: 14, name: "గన్నబాతుల వీధి", nameEng: "Gannabathula St", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3120, male: 1550, female: 1570, sexRatio: 1012, houses: 795, voters: 2400, 
+        areas: "గన్నబాతుల వీధి, కోమటి వీధి, ఆంజనేయ స్వామి గుడి వీధి", booths: 3, sec: "గన్నబాతుల వీధి సచివాలయం" },
+      { id: 15, name: "సరాజువారి వీధి", nameEng: "Sarajuvari St", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3310, male: 1640, female: 1670, sexRatio: 1018, houses: 845, voters: 2540, 
+        areas: "సరాజువారి వీధి, హరిజనవాడ, కమ్యూనిటీ హాల్ వీధి", booths: 4, sec: "సరాజువారి వీధి సచివాలయం" },
+      { id: 16, name: "లెక్చరర్స్ వీధి", nameEng: "Lecturers St", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3580, male: 1760, female: 1820, sexRatio: 1034, houses: 915, voters: 2750, 
+        areas: "లెక్చరర్స్ వీధి, డి.ఎన్.ఆర్. మహిళా కళాశాల రోడ్డు, ప్రిన్సిపాల్ క్వార్టర్స్", booths: 4, sec: "లెక్చరర్స్ వీధి సచివాలయం" },
+      { id: 17, name: "బాలుసుముడి", nameEng: "Balusumudi", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3740, male: 1850, female: 1890, sexRatio: 1021, houses: 960, voters: 2890, 
+        areas: "బాలుసుముడి, వై జంక్షన్ ప్రాంతం, సినిమా థియేటర్ల సెంటర్", booths: 4, sec: "బాలుసుముడి సచివాలయం" },
+      { id: 18, name: "ఆకులవారి వీధి", nameEng: "Akulavari St", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3040, male: 1500, female: 1540, sexRatio: 1026, houses: 780, voters: 2320, 
+        areas: "ఆకులవారి వీధి, విశ్వబ్రాహ్మణ వీధి, పాత తపాలా కార్యాలయం", booths: 3, sec: "ఆకులవారి వీధి సచివాలయం" },
+      { id: 19, name: "నాచువారి సెంటర్", nameEng: "Nachuvari Center", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3260, male: 1620, female: 1640, sexRatio: 1012, houses: 835, voters: 2500, 
+        areas: "నాచువారి సెంటర్, పాత టాకీస్ రోడ్డు, మెయిన్ రోడ్డు జంక్షన్", booths: 3, sec: "నాచువారి సెంటర్ సచివాలయం" },
+      { id: 20, name: "భీమేశ్వర స్వామి కాలనీ", nameEng: "Bhimeswara Swamy Colony", zone: "zone1", zoneName: "వన్ టౌన్ & చారిత్రాత్మక కేంద్రం", 
+        pop: 3390, male: 1680, female: 1710, sexRatio: 1017, houses: 870, voters: 2610, 
+        areas: "భీమేశ్వర స్వామి కాలనీ, కాలువ గట్టు రోడ్డు, సోమేశ్వరాలయం దరి", booths: 4, sec: "భీమేశ్వర కాలనీ సచివాలయం" },
+
+      // ZONE 2: GUNUPUDI & TWO TOWN (21 - 40)
+      { id: 21, name: "గుణుపూడి పాత బస్టాండ్", nameEng: "Gunupudi Old Bus Stand", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3650, male: 1810, female: 1840, sexRatio: 1016, houses: 930, voters: 2810, 
+        areas: "గుణుపూడి పాత బస్టాండ్, వారాంతపు సంత సెంటర్, పోస్ట్ ఆఫీస్ దరి", booths: 4, sec: "గుణుపూడి బస్టాండ్ సచివాలయం" },
+      { id: 22, name: "కాశీ విశ్వేశ్వర కోవెల", nameEng: "Kasi Visweswara Temple", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3480, male: 1720, female: 1760, sexRatio: 1023, houses: 890, voters: 2680, 
+        areas: "కాశీ విశ్వేశ్వర స్వామి కోవెల పరిసరాలు, గుణుపూడి మెయిన్, బ్రాహ్మణ వీధి", booths: 4, sec: "విశ్వేశ్వర కోవెల సచివాలయం" },
+      { id: 23, name: "పి.పి. రోడ్డు మెయిన్", nameEng: "PP Road Main", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3820, male: 1910, female: 1910, sexRatio: 1000, houses: 980, voters: 2950, 
+        areas: "పి.పి. రోడ్డు మెయిన్, షాపింగ్ కాంప్లెక్స్ ప్రాంతం, జ్యువెలరీ మార్కెట్", booths: 4, sec: "పి.పి. రోడ్డు సచివాలయం" },
+      { id: 24, name: "బ్యాంక్ కాలనీ", nameEng: "Bank Colony", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3510, male: 1730, female: 1780, sexRatio: 1028, houses: 900, voters: 2700, 
+        areas: "బ్యాంక్ కాలనీ, స్టేట్ బ్యాంక్ వీధి, ఆఫీసర్స్ ఎన్‌క్లేవ్", booths: 4, sec: "బ్యాంక్ కాలనీ సచివాలయం" },
+      { id: 25, name: "గరువుపేట", nameEng: "Garuvupeta", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3290, male: 1630, female: 1660, sexRatio: 1018, houses: 840, voters: 2530, 
+        areas: "గరువుపేట, అంబేద్కరు నగర్, ప్రాథమిక ఆరోగ్య కేంద్రం దరి", booths: 3, sec: "గరువుపేట సచివాలయం" },
+      { id: 26, name: "కాత్రేవుకుంట", nameEng: "Katrevukunta", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3180, male: 1570, female: 1610, sexRatio: 1025, houses: 815, voters: 2440, 
+        areas: "కాత్రేవుకుంట, చెరువు దరి కాలనీ, మత్స్యకార వీధి", booths: 3, sec: "కాత్రేవుకుంట సచివాలయం" },
+      { id: 27, name: "రామరాజు తోట", nameEng: "Ramaraju Thota", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3420, male: 1700, female: 1720, sexRatio: 1011, houses: 875, voters: 2630, 
+        areas: "రామరాజు తోట, కౌన్సిలర్ ఆఫీస్ వీధి, ప్రభుత్వ ఉన్నత పాఠశాల రోడ్డు", booths: 4, sec: "రామరాజు తోట సచివాలయం" },
+      { id: 28, name: "డి.ఎన్.ఆర్. కాలేజీ ఏరియా", nameEng: "DNR College Area", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3950, male: 2010, female: 1940, sexRatio: 965, houses: 1010, voters: 3040, 
+        areas: "డి.ఎన్.ఆర్. కాలేజీ గ్రౌండ్స్, బాలుర వసతి గృహ ప్రాంతం, స్టేడియం రోడ్డు", booths: 4, sec: "డి.ఎన్.ఆర్. కాలేజీ సచివాలయం" },
+      { id: 29, name: "ఆర్టీసీ డిపో సమీప ప్రాంతాలు", nameEng: "RTC Depot Area", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3360, male: 1670, female: 1690, sexRatio: 1011, houses: 860, voters: 2580, 
+        areas: "ఆర్టీసీ డిపో సమీప ప్రాంతాలు, వర్క్‌షాప్ రోడ్డు, లారీ స్టాండ్", booths: 4, sec: "ఆర్టీసీ డిపో సచివాలయం" },
+      { id: 30, name: "మారుతీ నగర్", nameEng: "Maruthi Nagar", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3540, male: 1750, female: 1790, sexRatio: 1022, houses: 905, voters: 2720, 
+        areas: "మారుతీ నగర్, వెంకటేశ్వర స్వామి గుడి వీధి, నూతన కాలనీ", booths: 4, sec: "మారుతీ నగర్ సచివాలయం" },
+      { id: 31, name: "హౌసింగ్ బోర్డు కాలనీ", nameEng: "Housing Board Colony", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3670, male: 1810, female: 1860, sexRatio: 1027, houses: 940, voters: 2820, 
+        areas: "హౌసింగ్ బోర్డు కాలనీ ఫేజ్ 1 & 2, వాటర్ ట్యాంక్ రోడ్డు", booths: 4, sec: "హౌసింగ్ బోర్డు సచివాలయం" },
+      { id: 32, name: "శ్రీరాంపురం", nameEng: "Srirampuram", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3240, male: 1600, female: 1640, sexRatio: 1025, houses: 830, voters: 2490, 
+        areas: "శ్రీరాంపురం, రైల్వే గేట్ దరి, రామాలయం వీధి", booths: 3, sec: "శ్రీరాంపురం సచివాలయం" },
+      { id: 33, name: "టీవీ టవర్ ASR నగర్", nameEng: "TV Tower ASR Nagar", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3480, male: 1720, female: 1760, sexRatio: 1023, houses: 890, voters: 2670, 
+        areas: "టీవీ టవర్ ASR నగర్, బైపాస్ అనుసంధానం, టెలికాం క్వార్టర్స్", booths: 4, sec: "ASR నగర్ సచివాలయం" },
+      { id: 34, name: "సూర్యనారాయణ పురం", nameEng: "Suryanarayana Puram", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3310, male: 1640, female: 1670, sexRatio: 1018, houses: 850, voters: 2540, 
+        areas: "సూర్యనారాయణ పురం, రైతు బజార్ పరిసరాలు, కమ్యూనిటీ సెంటర్", booths: 4, sec: "సూర్యనారాయణపురం సచివాలయం" },
+      { id: 35, name: "శివరావుపేట", nameEng: "Sivaraopeta", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3160, male: 1560, female: 1600, sexRatio: 1025, houses: 810, voters: 2430, 
+        areas: "శివరావుపేట, కాలువ గట్టు సచివాలయం, ప్రాథమిక పాఠశాల రోడ్డు", booths: 3, sec: "శివరావుపేట సచివాలయం" },
+      { id: 36, name: "ఆదర్శ నగర్", nameEng: "Adarsha Nagar", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3430, male: 1690, female: 1740, sexRatio: 1029, houses: 880, voters: 2640, 
+        areas: "ఆదర్శ నగర్, ఎల్ఐసీ ఆఫీస్ రోడ్డు, ప్రైవేట్ స్కూల్ లేన్", booths: 4, sec: "ఆదర్శ నగర్ సచివాలయం" },
+      { id: 37, name: "ఎస్.వి.ఎస్ కాలనీ", nameEng: "SVS Colony", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3270, male: 1620, female: 1650, sexRatio: 1018, houses: 835, voters: 2510, 
+        areas: "ఎస్.వి.ఎస్ కాలనీ, రాయలం రోడ్డు సర్కిల్, పార్క్ రోడ్డు", booths: 3, sec: "ఎస్.వి.ఎస్ కాలనీ సచివాలయం" },
+      { id: 38, name: "ప్రకాశం చౌక్", nameEng: "Prakasam Chowk", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3610, male: 1790, female: 1820, sexRatio: 1016, houses: 925, voters: 2780, 
+        areas: "ప్రకాశం చౌక్, పాత మున్సిపల్ ఆఫీస్ రోడ్డు, క్లాత్ మార్కెట్", booths: 4, sec: "ప్రకాశం చౌక్ సచివాలయం" },
+      { id: 39, name: "బీసీ కాలనీ", nameEng: "BC Colony", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3090, male: 1530, female: 1560, sexRatio: 1019, houses: 790, voters: 2370, 
+        areas: "బీసీ కాలనీ, విశ్వకర్మ వీధి, అంగన్‌వాడీ కేంద్రం దరి", booths: 3, sec: "బీసీ కాలనీ సచివాలయం" },
+      { id: 40, name: "ఎనమదుర్రు డ్రెయిన్ దరి", nameEng: "Yenamadurru Drain Dari", zone: "zone2", zoneName: "టూ టౌన్ వాణిజ్య మండలం", 
+        pop: 3140, male: 1550, female: 1590, sexRatio: 1025, houses: 805, voters: 2410, 
+        areas: "ఎనమదుర్రు డ్రెయిన్ దరి నూతన నివాస ప్రాంతం, వంతెన రోడ్డు", booths: 3, sec: "ఎనమదుర్రు దరి సచివాలయం" },
+
+      // ZONE 3 (NORTH): AMIRAM & EXTENSION (41 - 45)
+      { id: 41, name: "పెద అమరం ఉత్తర కాలనీలు", nameEng: "Peda Amiram North Colonies", zone: "zone3_north", zoneName: "నూతన విలీన ఉత్తర ప్రాంతాలు (అమరం)", 
+        pop: 2890, male: 1430, female: 1460, sexRatio: 1020, houses: 740, voters: 2210, 
+        areas: "పెద అమరం ఉత్తర కాలనీలు, చెరువు గట్టు నివాసాలు", booths: 3, sec: "పెద అమరం 1 సచివాలయం" },
+      { id: 42, name: "పెద అమరం బస్టాండ్ పరిసరాలు", nameEng: "Peda Amiram Bus Stand Area", zone: "zone3_north", zoneName: "నూతన విలీన ఉత్తర ప్రాంతాలు (అమరం)", 
+        pop: 3120, male: 1550, female: 1570, sexRatio: 1012, houses: 795, voters: 2390, 
+        areas: "పెద అమరం బస్టాండ్ పరిసరాలు, కాలువ రోడ్డు, పంచాయతీ పాత భవనం", booths: 3, sec: "పెద అమరం 2 సచివాలయం" },
+      { id: 43, name: "చిన అమరం బైపాస్ ఎన్‌క్లేవ్", nameEng: "China Amiram Bypass Enclave", zone: "zone3_north", zoneName: "నూతన విలీన ఉత్తర ప్రాంతాలు (అమరం)", 
+        pop: 2950, male: 1460, female: 1490, sexRatio: 1020, houses: 755, voters: 2260, 
+        areas: "చిన అమరం బైపాస్ ఎన్‌క్లేవ్, నేషనల్ హైవే సర్వీస్ రోడ్డు", booths: 3, sec: "చిన అమరం 1 సచివాలయం" },
+      { id: 44, name: "చిన అమరం చెరువు వీధి", nameEng: "China Amiram Cheruvu St", zone: "zone3_north", zoneName: "నూతన విలీన ఉత్తర ప్రాంతాలు (అమరం)", 
+        pop: 2840, male: 1400, female: 1440, sexRatio: 1028, houses: 725, voters: 2180, 
+        areas: "చిన అమరం చెరువు వీధి, పాత ఊరు, శివాలయం వీధి", booths: 3, sec: "చిన అమరం 2 సచివాలయం" },
+      { id: 45, name: "చిన అమరం రైతు బజార్ ప్రాంగణం", nameEng: "China Amiram Rythu Bazar", zone: "zone3_north", zoneName: "నూతన విలీన ఉత్తర ప్రాంతాలు (అమరం)", 
+        pop: 3230, male: 1600, female: 1630, sexRatio: 1018, houses: 825, voters: 2470, 
+        areas: "చిన అమరం రైతు బజార్ ప్రాంగణం, విద్యాసంస్థల రోడ్డు, నివాస ప్రాంతం", booths: 3, sec: "చిన అమరం 3 సచివాలయం" },
+
+      // ZONE 3 (SOUTH): RAYALAM & OUTSKIRTS (46 - 52)
+      { id: 46, name: "రాయలం సచివాలయం ఏరియా", nameEng: "Rayalam Secretariat Area", zone: "zone3_south", zoneName: "దక్షిణ & పశ్చిమ విలీన ప్రాంతాలు (రాయలం)", 
+        pop: 3350, male: 1660, female: 1690, sexRatio: 1018, houses: 860, voters: 2570, 
+        areas: "రాయలం సచివాలయం ఏరియా, పంచాయతీ రాజ్ రోడ్డు, ప్రాథమిక పాఠశాల", booths: 4, sec: "రాయలం మెయిన్ సచివాలయం" },
+      { id: 47, name: "రాయలం మెయిన్ రోడ్డు", nameEng: "Rayalam Main Road", zone: "zone3_south", zoneName: "దక్షిణ & పశ్చిమ విలీన ప్రాంతాలు (రాయలం)", 
+        pop: 3180, male: 1570, female: 1610, sexRatio: 1025, houses: 815, voters: 2440, 
+        areas: "రాయలం మెయిన్ రోడ్డు, చెరువు వీధి, వీరభద్ర స్వామి ఆలయం", booths: 3, sec: "రాయలం నార్త్ సచివాలయం" },
+      { id: 48, name: "కోవ్వడ నూతన నివాసాల జోన్", nameEng: "Kovvada Residential Zone", zone: "zone3_south", zoneName: "దక్షిణ & పశ్చిమ విలీన ప్రాంతాలు (రాయలం)", 
+        pop: 2920, male: 1450, female: 1470, sexRatio: 1013, houses: 750, voters: 2240, 
+        areas: "కోవ్వడ నూతన నివాసాల జోన్, అప్రూవ్డ్ లేఅవుట్లు, కాలువ రోడ్డు", booths: 3, sec: "కోవ్వడ సచివాలయం" },
+      { id: 49, name: "విస్సాకోడేరు సరిహద్దు లేఅవుట్లు", nameEng: "Vissakoderu Border Layouts", zone: "zone3_south", zoneName: "దక్షిణ & పశ్చిమ విలీన ప్రాంతాలు (రాయలం)", 
+        pop: 2790, male: 1380, female: 1410, sexRatio: 1021, houses: 715, voters: 2140, 
+        areas: "విస్సాకోడేరు సరిహద్దు లేఅవుట్లు, గ్రీన్ సిటీ రోడ్డు", booths: 3, sec: "విస్సాకోడేరు సరిహద్దు సచివాలయం" },
+      { id: 50, name: "గొల్లలకోడేరు అనుసంధానం", nameEng: "Gollalakoderu Connectivity", zone: "zone3_south", zoneName: "దక్షిణ & పశ్చిమ విలీన ప్రాంతాలు (రాయలం)", 
+        pop: 2850, male: 1410, female: 1440, sexRatio: 1021, houses: 730, voters: 2190, 
+        areas: "గొల్లలకోడేరు అనుసంధాన రోడ్డు ప్రాంతం, రైస్ మిల్స్ సర్కిల్", booths: 3, sec: "గొల్లలకోడేరు లింక్ సచివాలయం" },
+      { id: 51, name: "రాయలం కాలనీ ఏరియా", nameEng: "Rayalam Colony Area", zone: "zone3_south", zoneName: "దక్షిణ & పశ్చిమ విలీన ప్రాంతాలు (రాయలం)", 
+        pop: 3210, male: 1590, female: 1620, sexRatio: 1018, houses: 820, voters: 2460, 
+        areas: "రాయలం కాలనీ ఏరియా, రైల్వే క్రాసింగ్, సుందరయ్య కాలనీ", booths: 3, sec: "రాయలం సౌత్ సచివాలయం" },
+      { id: 52, name: "బైపాస్ జంక్షన్ సరిహద్దు జోన్", nameEng: "Bypass Junction Border Zone", zone: "zone3_south", zoneName: "దక్షిణ & పశ్చిమ విలీన ప్రాంతాలు (రాయలం)", 
+        pop: 3060, male: 1520, female: 1540, sexRatio: 1013, houses: 785, voters: 2350, 
+        areas: "బైపాస్ జంక్షన్ సరిహద్దు విస్తరణ జోన్, ఫ్లైఓవర్ పరిసరాలు, ట్రాన్స్‌పోర్ట్ హబ్", booths: 3, sec: "బైపాస్ జంక్షన్ సచివాలయం" }
+    ];
+
+    const zoneStyles = {
+      zone1: { fill: "#064e3b", stroke: "#10b981", hoverFill: "#047857", text: "#a7f3d0", name: "వన్ టౌన్" },
+      zone2: { fill: "#1e3a8a", stroke: "#3b82f6", hoverFill: "#1d4ed8", text: "#bfdbfe", name: "టూ టౌన్" },
+      zone3_north: { fill: "#78350f", stroke: "#f59e0b", hoverFill: "#b45309", text: "#fde68a", name: "అమరం నార్త్" },
+      zone3_south: { fill: "#581c87", stroke: "#a855f7", hoverFill: "#7e22ce", text: "#e9d5ff", name: "రాయలం సౌత్" }
+    };
+
+    const wardGeometries = {
+      // NORTH (AMIRAM)
+      41: { x: 340, y: 45,  w: 140, h: 60, path: "M 340,45 L 480,45 L 475,105 L 345,105 Z" },
+      42: { x: 495, y: 45,  w: 150, h: 60, path: "M 495,45 L 645,45 L 640,105 L 500,105 Z" },
+      43: { x: 260, y: 115, w: 145, h: 65, path: "M 260,115 L 405,115 L 400,180 L 265,180 Z" },
+      44: { x: 415, y: 115, w: 155, h: 65, path: "M 415,115 L 570,115 L 565,180 L 415,180 Z" },
+      45: { x: 580, y: 115, w: 155, h: 65, path: "M 580,115 L 735,115 L 730,180 L 580,180 Z" },
+
+      // EAST (ONE TOWN / GUNUPUDI 1 - 20) -> Moved to East side of canal
+      1:  { x: 535, y: 230, w: 100, h: 60, path: "M 535,230 L 635,230 L 635,290 L 535,290 Z" },
+      2:  { x: 645, y: 230, w: 100, h: 60, path: "M 645,230 L 745,230 L 745,290 L 645,290 Z" },
+      3:  { x: 755, y: 230, w: 100, h: 60, path: "M 755,230 L 855,230 L 855,290 L 755,290 Z" },
+      4:  { x: 865, y: 230, w: 95,  h: 60, path: "M 865,230 L 960,230 L 955,290 L 865,290 Z" },
+      5:  { x: 535, y: 300, w: 100, h: 60, path: "M 535,300 L 635,300 L 635,360 L 535,360 Z" },
+      6:  { x: 645, y: 300, w: 100, h: 60, path: "M 645,300 L 745,300 L 745,360 L 645,360 Z" },
+      7:  { x: 755, y: 300, w: 100, h: 60, path: "M 755,300 L 855,300 L 855,360 L 755,360 Z" },
+      8:  { x: 865, y: 300, w: 95,  h: 60, path: "M 865,300 L 960,300 L 960,360 L 865,360 Z" },
+      9:  { x: 535, y: 370, w: 100, h: 60, path: "M 535,370 L 635,370 L 635,430 L 535,430 Z" },
+      10: { x: 645, y: 370, w: 100, h: 60, path: "M 645,370 L 745,370 L 745,430 L 645,430 Z" },
+      11: { x: 755, y: 370, w: 100, h: 60, path: "M 755,370 L 855,370 L 855,430 L 755,430 Z" },
+      12: { x: 865, y: 370, w: 95,  h: 60, path: "M 865,370 L 960,370 L 960,430 L 865,430 Z" },
+      13: { x: 535, y: 440, w: 100, h: 60, path: "M 535,440 L 635,440 L 635,500 L 535,500 Z" },
+      14: { x: 645, y: 440, w: 100, h: 60, path: "M 645,440 L 745,440 L 745,500 L 645,500 Z" },
+      15: { x: 755, y: 440, w: 100, h: 60, path: "M 755,440 L 855,440 L 855,500 L 755,500 Z" },
+      16: { x: 865, y: 440, w: 95,  h: 60, path: "M 865,440 L 960,440 L 955,500 L 865,500 Z" },
+      17: { x: 535, y: 510, w: 100, h: 60, path: "M 535,510 L 635,510 L 635,570 L 535,570 Z" },
+      18: { x: 645, y: 510, w: 100, h: 60, path: "M 645,510 L 745,510 L 745,570 L 645,570 Z" },
+      19: { x: 755, y: 510, w: 100, h: 60, path: "M 755,510 L 855,510 L 855,570 L 755,570 Z" },
+      20: { x: 865, y: 510, w: 95,  h: 60, path: "M 865,510 L 960,510 L 955,570 L 865,570 Z" },
+
+      // WEST (TWO TOWN 21 - 40) -> Moved to West side of canal
+      21: { x: 40,  y: 230, w: 95, h: 60, path: "M 40,230 L 135,230 L 130,290 L 45,290 Z" },
+      22: { x: 145, y: 230, w: 95, h: 60, path: "M 145,230 L 240,230 L 235,290 L 145,290 Z" },
+      23: { x: 250, y: 230, w: 105, h: 60, path: "M 250,230 L 355,230 L 350,290 L 250,290 Z" },
+      24: { x: 365, y: 230, w: 100, h: 60, path: "M 365,230 L 465,230 L 460,290 L 365,290 Z" },
+      25: { x: 40,  y: 300, w: 95, h: 60, path: "M 40,300 L 135,300 L 130,360 L 45,360 Z" },
+      26: { x: 145, y: 300, w: 95, h: 60, path: "M 145,300 L 240,300 L 240,360 L 145,360 Z" },
+      27: { x: 250, y: 300, w: 105, h: 60, path: "M 250,300 L 355,300 L 355,360 L 250,360 Z" },
+      28: { x: 365, y: 300, w: 100, h: 60, path: "M 365,300 L 465,300 L 460,360 L 365,360 Z" },
+      29: { x: 40,  y: 370, w: 95, h: 60, path: "M 40,370 L 135,370 L 135,430 L 40,430 Z" },
+      30: { x: 145, y: 370, w: 95, h: 60, path: "M 145,370 L 240,370 L 240,430 L 145,430 Z" },
+      31: { x: 250, y: 370, w: 105, h: 60, path: "M 250,370 L 355,370 L 355,430 L 250,430 Z" },
+      32: { x: 365, y: 370, w: 100, h: 60, path: "M 365,370 L 465,370 L 465,430 L 365,430 Z" },
+      33: { x: 40,  y: 440, w: 95, h: 60, path: "M 40,440 L 135,440 L 130,500 L 45,500 Z" },
+      34: { x: 145, y: 440, w: 95, h: 60, path: "M 145,440 L 240,440 L 240,500 L 145,500 Z" },
+      35: { x: 250, y: 440, w: 105, h: 60, path: "M 250,440 L 355,440 L 355,500 L 250,500 Z" },
+      36: { x: 365, y: 440, w: 100, h: 60, path: "M 365,440 L 465,440 L 460,500 L 365,500 Z" },
+      37: { x: 40,  y: 510, w: 95, h: 60, path: "M 40,510 L 135,510 L 130,570 L 40,570 Z" },
+      38: { x: 145, y: 510, w: 95, h: 60, path: "M 145,510 L 240,510 L 235,570 L 145,570 Z" },
+      39: { x: 250, y: 510, w: 105, h: 60, path: "M 250,510 L 355,510 L 350,570 L 250,570 Z" },
+      40: { x: 365, y: 510, w: 100, h: 60, path: "M 365,510 L 465,510 L 460,570 L 365,570 Z" },
+
+      // SOUTH (RAYALAM & OUTSKIRTS 46 - 52)
+      46: { x: 80,  y: 620, w: 110, h: 75, path: "M 80,620 L 190,620 L 185,695 L 75,695 Z" },
+      47: { x: 200, y: 620, w: 110, h: 75, path: "M 200,620 L 310,620 L 305,695 L 195,695 Z" },
+      48: { x: 320, y: 620, w: 110, h: 75, path: "M 320,620 L 430,620 L 425,695 L 315,695 Z" },
+      49: { x: 440, y: 620, w: 110, h: 75, path: "M 440,620 L 550,620 L 545,695 L 435,695 Z" },
+      50: { x: 560, y: 620, w: 110, h: 75, path: "M 560,620 L 670,620 L 665,695 L 555,695 Z" },
+      51: { x: 680, y: 620, w: 110, h: 75, path: "M 680,620 L 790,620 L 785,695 L 675,695 Z" },
+      52: { x: 800, y: 620, w: 115, h: 75, path: "M 800,620 L 915,620 L 910,695 L 795,695 Z" }
+    };
+
+    let selectedWardId = 3;
+
+    function renderMap() {
+      const container = document.getElementById('wardsGroup');
+      container.innerHTML = '';
+
+      wardsData.forEach(ward => {
+        const geom = wardGeometries[ward.id];
+        if (!geom) return;
+
+        const style = zoneStyles[ward.zone];
+
+        const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        g.setAttribute("id", `ward-elem-${ward.id}`);
+        g.setAttribute("class", "ward-element cursor-pointer");
+        g.setAttribute("data-ward-id", ward.id);
+
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", geom.path);
+        path.setAttribute("class", "ward-polygon");
+        path.setAttribute("fill", style.fill);
+        path.setAttribute("stroke", style.stroke);
+        path.setAttribute("stroke-width", "1.5");
+        path.setAttribute("id", `ward-path-${ward.id}`);
+
+        const centerX = geom.x + (geom.w / 2);
+        const centerY = geom.y + (geom.h / 2);
+
+        const numText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        numText.setAttribute("x", centerX);
+        numText.setAttribute("y", centerY - 4);
+        numText.setAttribute("text-anchor", "middle");
+        numText.setAttribute("fill", "#ffffff");
+        numText.setAttribute("font-size", "13");
+        numText.setAttribute("font-weight", "bold");
+        numText.setAttribute("pointer-events", "none");
+        numText.textContent = `వార్డు ${ward.id}`;
+
+        const nameText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        nameText.setAttribute("x", centerX);
+        nameText.setAttribute("y", centerY + 13);
+        nameText.setAttribute("text-anchor", "middle");
+        nameText.setAttribute("fill", style.text);
+        nameText.setAttribute("font-size", "9.5");
+        nameText.setAttribute("font-family", "'Tiro Telugu', sans-serif");
+        nameText.setAttribute("pointer-events", "none");
+        
+        const shortName = ward.name.length > 10 ? ward.name.substring(0, 9) + "…" : ward.name;
+        nameText.textContent = shortName;
+
+        g.appendChild(path);
+        g.appendChild(numText);
+        g.appendChild(nameText);
+
+        g.addEventListener('mouseenter', (e) => onWardHover(ward, e));
+        g.addEventListener('mousemove', (e) => updateTooltipPosition(e));
+        g.addEventListener('mouseleave', () => onWardLeave());
+        g.addEventListener('click', () => selectWard(ward.id));
+
+        container.appendChild(g);
+      });
+
+      renderQuickPills();
+      selectWard(3);
+    }
+
+    function renderQuickPills() {
+      const pillsContainer = document.getElementById('quickPillsContainer');
+      pillsContainer.innerHTML = '';
+
+      // Sort ward pills strictly in ascending order of ward id (1 - 52)
+      const sortedWards = [...wardsData].sort((a, b) => a.id - b.id);
+      sortedWards.forEach(w => {
+        const btn = document.createElement('button');
+        btn.id = `pill-ward-${w.id}`;
+        const isSelected = w.id === selectedWardId;
+        btn.className = `px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap shadow-sm ${
+          isSelected 
+            ? 'bg-cyan-600 text-white border-cyan-300 ring-2 ring-cyan-400/50 shadow-cyan-900/40 scale-[1.02]' 
+            : 'bg-slate-800/90 text-slate-200 border-slate-700/80 hover:bg-slate-700 hover:text-white hover:border-slate-500'
+        }`;
+        btn.innerHTML = `<span class="font-bold text-amber-300">వార్డు ${w.id}:</span> <span class="telugu-font text-slate-100 font-medium">${w.name}</span>`;
+        // Hover popups disabled for this quick selector area
+        btn.onclick = () => selectWard(w.id);
+        pillsContainer.appendChild(btn);
+      });
+    }
+
+    function onWardHover(ward, event) {
+      const tooltip = document.getElementById('wardTooltip');
+      
+      const path = document.getElementById(`ward-path-${ward.id}`);
+      if (path) {
+        path.setAttribute('stroke', '#38bdf8');
+        path.setAttribute('stroke-width', '3');
+      }
+
+      tooltip.innerHTML = `
+        <div class="border-b border-slate-700 pb-2 mb-2">
+          <div class="flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+              వార్డు సంఖ్య: ${ward.id}
+            </span>
+            <span class="text-[10px] text-slate-400 font-medium">
+              ${ward.zoneName.split(' ')[0]}
+            </span>
+          </div>
+          <div class="font-bold text-sm text-white telugu-font mt-1">
+            ${ward.name}
+          </div>
+          <div class="text-[10px] text-slate-400">
+            ${ward.nameEng}
+          </div>
+        </div>
+
+        <table class="w-full text-[11px] mb-2 border-collapse">
+          <thead>
+            <tr class="text-slate-400 border-b border-slate-800">
+              <th class="py-0.5 text-left font-medium">గణాంకాలు (Parameter)</th>
+              <th class="py-0.5 text-right font-medium">సంఖ్య (Data)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60 text-slate-200">
+            <tr>
+              <td class="py-1 text-slate-300 flex items-center gap-1">
+                <span>👥</span> మొత్తం జనాభా (Total Pop)
+              </td>
+              <td class="py-1 text-right font-bold text-cyan-300">${ward.pop.toLocaleString('en-IN')}</td>
+            </tr>
+            <tr>
+              <td class="py-0.5 text-slate-400">👨 పురుషులు (Male)</td>
+              <td class="py-0.5 text-right font-semibold text-slate-200">${ward.male.toLocaleString('en-IN')}</td>
+            </tr>
+            <tr>
+              <td class="py-0.5 text-slate-400">👩 స్త్రీలు (Female)</td>
+              <td class="py-0.5 text-right font-semibold text-slate-200">${ward.female.toLocaleString('en-IN')}</td>
+            </tr>
+            <tr>
+              <td class="py-0.5 text-slate-400">⚖️ లింగ నిష్పత్తి (Sex Ratio)</td>
+              <td class="py-0.5 text-right font-semibold text-emerald-400">${ward.sexRatio} / 1000</td>
+            </tr>
+            <tr>
+              <td class="py-0.5 text-slate-400">🏠 మొత్తం గృహాలు (Households)</td>
+              <td class="py-0.5 text-right font-semibold text-slate-200">${ward.houses.toLocaleString('en-IN')}</td>
+            </tr>
+            <tr>
+              <td class="py-0.5 text-slate-400">🗳️ నమోదిత ఓటర్లు (Voters)</td>
+              <td class="py-0.5 text-right font-semibold text-amber-400">${ward.voters.toLocaleString('en-IN')}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="bg-slate-950/80 p-1.5 rounded border border-slate-800 text-[10px] text-slate-300 telugu-font line-clamp-2">
+          <span class="text-cyan-400 font-semibold">ముఖ్య ప్రాంతాలు:</span> ${ward.areas}
+        </div>
+      `;
+
+      tooltip.classList.remove('hidden');
+      updateTooltipPosition(event);
+    }
+
+    function updateTooltipPosition(event) {
+      const tooltip = document.getElementById('wardTooltip');
+      const wrapper = document.getElementById('mapSvgWrapper');
+      const rect = wrapper.getBoundingClientRect();
+
+      let x = event.clientX - rect.left + 15;
+      let y = event.clientY - rect.top + 15;
+
+      if (x + 330 > rect.width) {
+        x = event.clientX - rect.left - 335;
+      }
+      if (y + 260 > rect.height) {
+        y = event.clientY - rect.top - 265;
+      }
+
+      if (x < 10) x = 10;
+      if (y < 10) y = 10;
+
+      tooltip.style.left = `${x}px`;
+      tooltip.style.top = `${y}px`;
+    }
+
+    function onWardLeave() {
+      const tooltip = document.getElementById('wardTooltip');
+      tooltip.classList.add('hidden');
+
+      wardsData.forEach(w => {
+        const path = document.getElementById(`ward-path-${w.id}`);
+        if (path) {
+          if (w.id === selectedWardId) {
+            path.setAttribute('stroke', '#38bdf8');
+            path.setAttribute('stroke-width', '3');
+          } else {
+            const style = zoneStyles[w.zone];
+            path.setAttribute('stroke', style.stroke);
+            path.setAttribute('stroke-width', '1.5');
+          }
+        }
+      });
+    }
+
+    function selectWard(wardId) {
+      selectedWardId = wardId;
+      const ward = wardsData.find(w => w.id === wardId);
+      if (!ward) return;
+
+      document.getElementById('detailBadge').textContent = `వార్డు ${ward.id} (ఎంపికైనది)`;
+      document.getElementById('detailZoneTag').textContent = ward.zoneName;
+      document.getElementById('detailWardName').textContent = ward.name;
+      document.getElementById('detailWardEngName').textContent = ward.nameEng;
+      document.getElementById('detailLocalities').textContent = ward.areas;
+      document.getElementById('detailSecretariat').textContent = ward.sec;
+      document.getElementById('detailBooths').textContent = `${ward.booths} పోలింగ్ కేంద్రాలు`;
+
+      const tbody = document.getElementById('detailedTableBody');
+      tbody.innerHTML = `
+        <tr class="bg-cyan-950/20">
+          <td class="py-2 px-3 text-slate-300 font-medium">మొత్తం జనాభా (Total Population)</td>
+          <td class="py-2 px-3 text-right font-bold text-cyan-300 text-sm">${ward.pop.toLocaleString('en-IN')} మంది</td>
+        </tr>
+        <tr>
+          <td class="py-2 px-3 text-slate-400">పురుషుల జనాభా (Male Population)</td>
+          <td class="py-2 px-3 text-right font-semibold text-slate-200">${ward.male.toLocaleString('en-IN')}</td>
+        </tr>
+        <tr>
+          <td class="py-2 px-3 text-slate-400">స్త్రీల జనాభా (Female Population)</td>
+          <td class="py-2 px-3 text-right font-semibold text-slate-200">${ward.female.toLocaleString('en-IN')}</td>
+        </tr>
+        <tr>
+          <td class="py-2 px-3 text-slate-400">లింగ నిష్పత్తి (Sex Ratio)</td>
+          <td class="py-2 px-3 text-right font-semibold text-emerald-400">${ward.sexRatio} / 1000 పురుషులకు</td>
+        </tr>
+        <tr>
+          <td class="py-2 px-3 text-slate-400">మొత్తం గృహాలు (Total Households)</td>
+          <td class="py-2 px-3 text-right font-semibold text-slate-200">${ward.houses.toLocaleString('en-IN')} ఇళ్ళు</td>
+        </tr>
+        <tr>
+          <td class="py-2 px-3 text-slate-400">నమోదిత ఓటర్లు (Voter Count)</td>
+          <td class="py-2 px-3 text-right font-semibold text-amber-400">${ward.voters.toLocaleString('en-IN')} మంది</td>
+        </tr>
+        <tr>
+          <td class="py-2 px-3 text-slate-400">జనాభా వాటా (Percentage of City)</td>
+          <td class="py-2 px-3 text-right font-semibold text-purple-400">${((ward.pop / 168940) * 100).toFixed(2)}%</td>
+        </tr>
+      `;
+
+      document.querySelectorAll('#quickPillsContainer button').forEach(btn => {
+        btn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap shadow-sm bg-slate-800/90 text-slate-200 border-slate-700/80 hover:bg-slate-700 hover:text-white hover:border-slate-500';
+      });
+      const activePill = document.getElementById(`pill-ward-${wardId}`);
+      if (activePill) {
+        activePill.className = 'px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap shadow-sm bg-cyan-600 text-white border-cyan-300 ring-2 ring-cyan-400/50 shadow-cyan-900/40 scale-[1.02]';
+        activePill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+
+      wardsData.forEach(w => {
+        const path = document.getElementById(`ward-path-${w.id}`);
+        if (path) {
+          if (w.id === wardId) {
+            path.setAttribute('stroke', '#38bdf8');
+            path.setAttribute('stroke-width', '3');
+            path.setAttribute('filter', 'url(#glow)');
+          } else {
+            const style = zoneStyles[w.zone];
+            path.setAttribute('stroke', style.stroke);
+            path.setAttribute('stroke-width', '1.5');
+            path.removeAttribute('filter');
+          }
+        }
+      });
+    }
+
+    function handleSearch(query) {
+      const q = query.trim().toLowerCase();
+      if (!q) {
+        wardsData.forEach(w => {
+          const elem = document.getElementById(`ward-elem-${w.id}`);
+          if (elem) elem.style.opacity = '1';
+        });
+        return;
+      }
+
+      wardsData.forEach(w => {
+        const elem = document.getElementById(`ward-elem-${w.id}`);
+        const matches = 
+          w.id.toString() === q ||
+          w.name.toLowerCase().includes(q) ||
+          w.nameEng.toLowerCase().includes(q) ||
+          w.areas.toLowerCase().includes(q);
+
+        if (elem) {
+          elem.style.opacity = matches ? '1' : '0.2';
+          if (matches) {
+            const path = document.getElementById(`ward-path-${w.id}`);
+            path.setAttribute('stroke', '#f59e0b');
+          }
+        }
+      });
+
+      const match = wardsData.find(w => 
+        w.id.toString() === q ||
+        w.name.toLowerCase().includes(q) ||
+        w.nameEng.toLowerCase().includes(q) ||
+        w.areas.toLowerCase().includes(q)
+      );
+      if (match) {
+        selectWard(match.id);
+      }
+    }
+
+    function filterZone(zoneKey) {
+      const btns = ['btn-zone-all', 'btn-zone-1', 'btn-zone-2', 'btn-zone-3n', 'btn-zone-3s'];
+      btns.forEach(b => {
+        const el = document.getElementById(b);
+        el.className = 'px-2.5 py-1 rounded-md font-medium text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 transition';
+      });
+
+      let targetBtn = 'btn-zone-all';
+      if (zoneKey === 'zone1') targetBtn = 'btn-zone-1';
+      else if (zoneKey === 'zone2') targetBtn = 'btn-zone-2';
+      else if (zoneKey === 'zone3_north') targetBtn = 'btn-zone-3n';
+      else if (zoneKey === 'zone3_south') targetBtn = 'btn-zone-3s';
+
+      document.getElementById(targetBtn).className = 'px-2.5 py-1 rounded-md font-medium text-xs bg-cyan-600 text-white shadow-sm transition';
+
+      wardsData.forEach(w => {
+        const elem = document.getElementById(`ward-elem-${w.id}`);
+        if (!elem) return;
+
+        if (zoneKey === 'all' || w.zone === zoneKey) {
+          elem.style.opacity = '1';
+          elem.style.display = 'block';
+        } else {
+          elem.style.opacity = '0.15';
+        }
+      });
+
+      const firstInZone = wardsData.find(w => zoneKey === 'all' || w.zone === zoneKey);
+      if (firstInZone) selectWard(firstInZone.id);
+    }
+
+    function resetMapView() {
+      document.getElementById('wardSearch').value = '';
+      filterZone('all');
+      selectWard(3);
+    }
+
+    function shareWardInfo() {
+      const ward = wardsData.find(w => w.id === selectedWardId);
+      if (!ward) return;
+
+      const summary = `🏛️ భీమవరం పురపాలక సంఘం - వార్డు ${ward.id}: ${ward.name}\n` +
+                      `👥 మొత్తం జనాభా: ${ward.pop.toLocaleString('en-IN')} (పురుషులు: ${ward.male}, స్త్రీలు: ${ward.female})\n` +
+                      `🏠 గృహాలు: ${ward.houses} | 🗳️ ఓటర్లు: ${ward.voters}\n` +
+                      `📍 ప్రధాన ప్రాంతాలు: ${ward.areas}\n` +
+                      `🏛️ సచివాలయం: ${ward.sec}`;
+
+      navigator.clipboard.writeText(summary).then(() => {
+        alert(`వార్డు ${ward.id} వివరాలు క్లిప్‌బోర్డ్‌కు కాపీ చేయబడ్డాయి!`);
+      }).catch(() => {
+        alert(summary);
+      });
+    }
+
+    function zoomToWard() {
+      const path = document.getElementById(`ward-path-${selectedWardId}`);
+      if (!path) return;
+      
+      path.classList.add('animate-pulse');
+      setTimeout(() => {
+        path.classList.remove('animate-pulse');
+      }, 1500);
+    }
+
+    function toggleSystemOverviewModal() {
+      const modal = document.getElementById('systemOverviewModal');
+      if (!modal) return;
+      if (modal.classList.contains('hidden')) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderMap();
+    });
+  </script>
+
+  <!-- Comprehensive System Overview Modal (Total Platform Functionality) -->
+  <div id="systemOverviewModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="bg-slate-900 border border-cyan-500/50 rounded-2xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="p-4 sm:p-5 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border-b border-slate-800 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-xl text-white shadow-lg shadow-cyan-500/25">
+            🏛️
+          </div>
+          <div>
+            <h2 class="text-base sm:text-lg font-extrabold text-white">
+              భీమవరం పురపాలక సంఘం సమగ్ర అర్బన్ ఇంటెలిజెన్స్ వేదిక
+            </h2>
+            <p class="text-xs text-cyan-300">
+              Integrated Urban Intelligence & Governance Platform – Total Functionality Overview
+            </p>
+          </div>
+        </div>
+        <button onclick="toggleSystemOverviewModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Body: The 4 Core Integrated Systems -->
+      <div class="p-4 sm:p-6 overflow-y-auto space-y-5 text-xs text-slate-300">
+        
+        <!-- Platform Introduction -->
+        <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3.5">
+          <p class="leading-relaxed">
+            ఈ డిజిటల్ పోర్టల్ భీమవరం పురపాలక నగర సమగ్ర ప్రణాళిక, పరిపాలన, విపత్తు నిర్వహణ మరియు స్థిరమైన రవాణా మౌలిక వసతుల కోసం రూపొందించబడిన ఒక సమగ్ర ఏకీకృత వేదిక. ఇది 4 కీలక సాంకేతిక స్తంభాలపై నిర్మితమైంది:
+          </p>
+        </div>
+
+        <!-- System Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Pillar 1: 52 Wards -->
+          <div class="bg-slate-950/70 border border-emerald-500/40 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="font-bold text-white text-sm flex items-center gap-1.5">
+                  <span>🏛️</span> 1. 52 వార్డుల పునర్విభజన & డెమోగ్రాఫిక్స్
+                </span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  Live Portal
+                </span>
+              </div>
+              <ul class="space-y-1.5 text-slate-300 list-disc list-inside">
+                <li><strong class="text-white">1,68,940 జనాభా డేటాబేస్:</strong> 44,700+ గృహాలు, 1,22,500+ ఓటర్లు మరియు 52 సచివాలయాల పూర్తి ప్రొఫైల్.</li>
+                <li><strong class="text-white">4 జోనల్ క్లస్టర్లు:</strong> వన్ టౌన్, టూ టౌన్, అమరం నార్త్, రాయలం సౌత్ ఫిల్టరింగ్.</li>
+                <li><strong class="text-white">ఇంటరాక్టివ్ శోధన:</strong> వీధులు, కాలనీలు, దేవాలయాలు, ఆసుపత్రుల పేర్లతో తక్షణ వార్డు గుర్తింపు.</li>
+                <li><strong class="text-white">డిజిటల్ షేరింగ్:</strong> వార్డు నివేదికలను వాట్సాప్ మరియు క్లిప్‌బోర్డ్‌కు కాపీ చేసే సదుపాయం.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end">
+              <span class="text-emerald-400 font-semibold text-[11px]">✓ ప్రస్తుతం ఈ పేజీలో చురుగ్గా ఉంది</span>
+            </div>
+          </div>
+
+          <!-- Pillar 2: 39 Wards GIS & Waterbodies -->
+          <div class="bg-slate-950/70 border border-amber-500/40 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="font-bold text-white text-sm flex items-center gap-1.5">
+                  <span>🗺️</span> 2. 39 వార్డుల GIS & APSAC జలవనరులు
+                </span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  GIS Engine
+                </span>
+              </div>
+              <ul class="space-y-1.5 text-slate-300 list-disc list-inside">
+                <li><strong class="text-white">అధికారిక మాస్టర్ ప్లాన్ ఓవర్‌లే:</strong> 39 వార్డుల స్కాన్ మ్యాప్ గూగుల్ శాటిలైట్, రోడ్లు, OSM & డార్క్ మోడ్‌పై రియల్-వరల్డ్ అలైన్‌మెంట్.</li>
+                <li><strong class="text-white">ఒపాసిటీ & కాలిబ్రేటర్:</strong> పారదర్శకత స్లైడర్ (0-100%) మరియు ఫైన్-ట్యూనింగ్ అలైన్‌మెంట్ టూల్.</li>
+                <li><strong class="text-white">APSAC ఉపగ్రహ జలవనరుల సర్వే:</strong> 15 జలాశయాలు (273.17 ఎకరాలు) మరియు Cartosat/Sentinel-2 కాలానుగుణ మార్పుల పర్యవేక్షణ (Tank 7 ఆక్రమణ విశ్లేషణ).</li>
+                <li><strong class="text-white">GeoJSON ఎగుమతి:</strong> QGIS, ArcGIS లేదా Google Earth లోకి దిగుమతి చేసుకునే సదుపాయం.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end">
+              <a href="gis-ward-map.html" class="text-amber-400 hover:text-amber-300 font-bold text-[11px] hover:underline">
+                GIS పటాన్ని తెరవండి ➔
+              </a>
+            </div>
+          </div>
+
+          <!-- Pillar 3: Flood Flow AI Engine -->
+          <div class="bg-slate-950/70 border border-cyan-500/40 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="font-bold text-white text-sm flex items-center gap-1.5">
+                  <span>🌊</span> 3. వరద ప్రవాహ విశ్లేషణ & డ్రైనేజీ AI
+                </span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                  Hydraulic AI
+                </span>
+              </div>
+              <ul class="space-y-1.5 text-slate-300 list-disc list-inside">
+                <li><strong class="text-white">ఎనమదుర్రు కాలువ బ్యాక్ వాటర్:</strong> 3.8 మీటర్ల మట్టం వద్ద అవుట్‌ఫాల్స్ మూసుకుని రివర్స్ ప్రవాహం ఏర్పడే పరిస్థితి సిమ్యులేషన్.</li>
+                <li><strong class="text-white">20 వాటర్‌లాగింగ్ హాట్‌స్పాట్లు:</strong> మవుళ్ళమ్మ ఆలయం (1.45m), రైల్వే అండర్‌పాస్ (1.80m), సోంపేట మొదలైన క్లిష్ట ప్రాంతాల సమాచారం.</li>
+                <li><strong class="text-white">వర్షపాత మోడలింగ్:</strong> SCS-CN & Rational Method ద్వారా 25mm నుండి 280mm తీవ్ర తుఫాను రన్-ఆఫ్ విశ్లేషణ.</li>
+                <li><strong class="text-white">FloodFlow AI ఏజెంట్:</strong> తెలుగు & ఇంగ్లీషులలో ఇంజనీరింగ్ సమాధానాలు మరియు ముందస్తు పూడికతీత ప్రణాళికలు.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end">
+              <a href="flood-flow-analysis.html" class="text-cyan-400 hover:text-cyan-300 font-bold text-[11px] hover:underline">
+                వరద AI వేదికను తెరవండి ➔
+              </a>
+            </div>
+          </div>
+
+          <!-- Pillar 4: Smart Traffic AI System -->
+          <div class="bg-slate-950/70 border border-rose-500/40 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="font-bold text-white text-sm flex items-center gap-1.5">
+                  <span>🚦</span> 4. స్మార్ట్ ట్రాఫిక్ & మొబిలిటీ ప్లానింగ్
+                </span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                  ITMS AI
+                </span>
+              </div>
+              <ul class="space-y-1.5 text-slate-300 list-disc list-inside">
+                <li><strong class="text-white">IRC ఇంజనీరింగ్ ప్రమాణాలు:</strong> IRC:106 అర్బన్ రోడ్డు కెపాసిటీ & IRC:SP:41 వెబ్‌స్టర్ సిగ్నల్ సైకిల్ ఆప్టిమైజేషన్.</li>
+                <li><strong class="text-white">20 రద్దీ కూడళ్లు:</strong> ప్రకాశం చౌక్, పాత బస్టాండ్, సోమేశ్వర స్వామి రోడ్, ఉండి రోడ్ గేట్ లొకేషన్ల రీ-డిజైనింగ్.</li>
+                <li><strong class="text-white">లైవ్ మైక్రో-సిమ్యులేటర్:</strong> Canvas పై వాహనాలు, సిగ్నళ్లు మరియు రైల్వే గేట్ మూసివేత పరిస్థితుల ప్రత్యక్ష అనుకరణ.</li>
+                <li><strong class="text-white">₹169 కోట్ల 5-సంవత్సరాల ప్రణాళిక:</strong> 3 ప్రత్యామ్నాయ దృశ్యాలు (A, B, C) మరియు CO2/NOx ఉద్గారాల పొదుపు లెక్కింపు.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end">
+              <a href="traffic-mobility-system.html" class="text-rose-400 hover:text-rose-300 font-bold text-[11px] hover:underline">
+                ట్రాఫిక్ AI సిస్టమ్ తెరవండి ➔
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-3 sm:p-4 bg-slate-950 border-t border-slate-800 flex items-center justify-between gap-3 text-xs">
+        <span class="text-slate-400">
+          భీమవరం పురపాలక సంఘం అర్బన్ ఇంటెలిజెన్స్ టెక్నాలజీ వేదిక • 2026
+        </span>
+        <button onclick="toggleSystemOverviewModal()" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-medium transition">
+          మూసివేయండి (Close)
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

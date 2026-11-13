@@ -1,0 +1,2966 @@
+<!DOCTYPE html>
+<html lang="te" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>భీమవరం స్మార్ట్ ట్రాఫిక్ & స్థిరమైన మొబిలిటీ ప్లానింగ్ సిస్టమ్ (Bhimavaram Smart Traffic & Sustainable Urban Mobility System)</title>
+  
+  <!-- Comprehensive Site Meta Description depicting Total Functionality -->
+  <meta name="description" content="భీమవరం స్మార్ట్ ట్రాఫిక్ & స్థిరమైన మొబిలిటీ ప్లానింగ్ సిస్టమ్ (ITMS AI): IRC:106 అర్బన్ కెపాసిటీ & IRC:SP:41 వెబ్‌స్టర్ సిగ్నల్ ఇంజనీరింగ్, టాప్ 20 రద్దీ జంక్షన్ల రీ-డిజైన్, HTML5 Canvas లైవ్ మైక్రో-సిమ్యులేషన్, మరియు ₹169 కోట్ల 5-సంవత్సరాల ఇన్వెస్ట్‌మెంట్ మాస్టర్‌ప్లాన్.">
+  <meta name="keywords" content="భీమవరం ట్రాఫిక్ ప్లానింగ్, Bhimavaram Traffic Mobility, ITMS AI, IRC 106, Webster Signal Optimization, Urban Mobility, Traffic Simulation">
+  <meta property="og:title" content="భీమవరం స్మార్ట్ ట్రాఫిక్ & స్థిరమైన మొబిలిటీ ప్లానింగ్ సిస్టమ్">
+  <meta property="og:description" content="20 ట్రాఫిక్ హాట్‌స్పాట్లు, వెబ్‌స్టర్ సిగ్నల్ టైమింగ్స్, లైవ్ వెహిక్యులర్ సిమ్యులేటర్, ఈ-బస్ నెట్‌వర్క్ మరియు సమగ్ర ట్రాఫిక్ ఇంజనీరింగ్ పరిష్కారాలు.">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Leaflet CSS & JS (Offline first with CDN Fallback) -->
+  <link rel="stylesheet" href="leaflet.css" onerror="this.onerror=null;this.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';" />
+  <script src="leaflet.js" onerror="this.onerror=null;this.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Telugu:ital@0;1&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Core Data Files -->
+  <script src="assets/bhimavaram_39_wards_data.js"></script>
+  <script src="assets/bhimavaram_traffic_data.js"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', 'Tiro Telugu', sans-serif;
+    }
+    .telugu-font {
+      font-family: 'Tiro Telugu', 'Gautami', 'Nirmala UI', sans-serif;
+    }
+    .code-font {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+    .pulse-ring {
+      animation: pulseRingAnim 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulseRingAnim {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 0.2; transform: scale(1.6); }
+    }
+    .traffic-flow-dash {
+      stroke-dasharray: 6, 4;
+      animation: trafficFlowAnim 18s linear infinite;
+    }
+    @keyframes trafficFlowAnim {
+      from { stroke-dashoffset: 200; }
+      to { stroke-dashoffset: 0; }
+    }
+    .leaflet-popup-content-wrapper {
+      background: #0f172a !important;
+      color: #f8fafc !important;
+      border: 1px solid #334155 !important;
+      border-radius: 0.75rem !important;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6) !important;
+    }
+    .leaflet-popup-tip {
+      background: #0f172a !important;
+    }
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printable-report, #printable-report * {
+        visibility: visible;
+      }
+      #printable-report {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col selection:bg-amber-500 selection:text-slate-950">
+
+  <!-- Top Sticky Navigation & Header -->
+  <header class="border-b border-slate-800 bg-slate-900/95 backdrop-blur sticky top-0 z-50 px-4 py-2.5 shadow-xl">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Brand & Title -->
+      <div class="flex items-center space-x-3">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-amber-500 via-orange-600 to-rose-600 flex items-center justify-center shadow-lg shadow-amber-500/25 text-white font-extrabold text-2xl border border-amber-400/40">
+          🚦
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base md:text-lg font-extrabold tracking-tight text-white flex items-center gap-2">
+              భీమవరం స్మార్ట్ ట్రాఫిక్ & మొబిలిటీ ప్లానింగ్ సిస్టమ్
+            </h1>
+            <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
+              ITMS & GIS AI
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 telugu-font">
+            Bhimavaram Smart Urban Traffic Management & Sustainable Mobility Optimization System (IRC:106 / IRC:SP:41)
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Buttons & Navigation links -->
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        
+        <!-- Active Scenario Indicator / Selector -->
+        <div class="flex items-center bg-slate-800/90 border border-slate-700/80 rounded-lg p-1">
+          <span class="text-[10px] uppercase font-bold text-slate-400 px-2 hidden sm:inline">దృశ్యం (Scenario):</span>
+          <select id="header-scenario-select" onchange="onScenarioChange(this.value)" class="bg-slate-900 text-amber-300 text-xs font-bold rounded px-2 py-1 border border-amber-500/30 focus:outline-none focus:ring-1 focus:ring-amber-500">
+            <option value="baseline">బేస్‌లైన్ (Baseline - Existing)</option>
+            <option value="scenario_a" selected>దృశ్యం A: ఆపరేషనల్ వన్-వే & సిగ్నల్స్ (₹5.4 Cr)</option>
+            <option value="scenario_b">దృశ్యం B: సమీకృత నెట్‌వర్క్ & MLCP (₹28.6 Cr)</option>
+            <option value="scenario_c">దృశ్యం C: స్మార్ట్ ITMS & ఈ-బస్సులు (₹64.5 Cr)</option>
+          </select>
+        </div>
+
+        <!-- Quick navigation to other portals -->
+        <a href="index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition" title="ముఖ్య పేజీ (వార్డుల మ్యాప్)">
+          <span>🏠 హోమ్</span>
+        </a>
+
+        <a href="flood-flow-analysis.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-950 hover:bg-cyan-900 text-cyan-300 border border-cyan-700/50 transition" title="వరద AI విశ్లేషణ ప్లాట్‌ఫారమ్">
+          <span>🌊 వరద AI</span>
+        </a>
+
+        <a href="gis-ward-map.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 text-blue-300 border border-blue-700/50 transition" title="GIS వార్డు మ్యాప్">
+          <span>🗺️ GIS మ్యాప్</span>
+        </a>
+
+        <button onclick="window.print()" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-extrabold shadow-md transition" title="మునిసిపల్ కౌన్సిల్ కోసం రిపోర్ట్ ప్రింట్ చేయండి">
+          <span>📄 రిపోర్ట్ ప్రింట్</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Live Metrics Strip -->
+    <div class="max-w-7xl mx-auto mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 overflow-x-auto gap-4 no-scrollbar">
+      <div class="flex items-center gap-4 shrink-0">
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>అధ్యయన వైశాల్యం: <b class="text-white">26.14 చ.కి.మీ</b></span>
+        </span>
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+          <span>రోజువారీ ప్రయాణాలు: <b class="text-white">3.42 లక్షలు/రోజు</b></span>
+        </span>
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+          <span>హాట్‌స్పాట్లు: <b class="text-rose-400">20 గుర్తించబడ్డాయి</b></span>
+        </span>
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+          <span>ప్రధాన కూడళ్లు: <b class="text-amber-300">14 జంక్షన్లు</b></span>
+        </span>
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <span class="text-slate-400">మోడల్ స్థితి: <b class="text-emerald-400">IRC:106 సర్టిఫైడ్</b></span>
+        <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300">52 వార్డుల డీలిమిటేషన్ కవరేజ్</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Navigation Tabs -->
+  <nav class="bg-slate-900 border-b border-slate-800 px-4 py-2 sticky top-[82px] z-30 shadow-md">
+    <div class="max-w-7xl mx-auto flex items-center space-x-1 overflow-x-auto text-xs font-semibold no-scrollbar">
+      <button onclick="switchTab('tab-overview')" id="btn-tab-overview" class="tab-btn px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1.5 shrink-0 transition">
+        <span>🗺️ Dashboard A: సిటీ ట్రాఫిక్ సమీక్ష</span>
+      </button>
+      <button onclick="switchTab('tab-analytics')" id="btn-tab-analytics" class="tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-1.5 shrink-0 transition">
+        <span>📊 Dashboard B: ట్రాఫిక్ & O-D విశ్లేషణ</span>
+      </button>
+      <button onclick="switchTab('tab-junctions')" id="btn-tab-junctions" class="tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-1.5 shrink-0 transition">
+        <span>🚦 Dashboard C: కూడళ్ల ఇంజనీరింగ్ & సిగ్నల్స్</span>
+      </button>
+      <button onclick="switchTab('tab-circulation')" id="btn-tab-circulation" class="tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-1.5 shrink-0 transition">
+        <span>🔄 Dashboard D: వన్-వే & సర్క్యులేషన్ ప్లాన్</span>
+      </button>
+      <button onclick="switchTab('tab-mobility')" id="btn-tab-mobility" class="tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-1.5 shrink-0 transition">
+        <span>🚌 Dashboard E: సస్టైనబుల్ మొబిలిటీ & ఈ-బస్సులు</span>
+      </button>
+      <button onclick="switchTab('tab-environment')" id="btn-tab-environment" class="tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-1.5 shrink-0 transition">
+        <span>🌱 Dashboard F: పర్యావరణం & ఉద్గారాలు</span>
+      </button>
+      <button onclick="switchTab('tab-simulator')" id="btn-tab-simulator" class="tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-1.5 shrink-0 transition">
+        <span>🎮 లైవ్ ట్రాఫిక్ సిమ్యులేటర్ (Live Engine)</span>
+      </button>
+      <button onclick="switchTab('tab-wards')" id="btn-tab-wards" class="tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-1.5 shrink-0 transition">
+        <span>🏙️ వార్డుల ట్రాఫిక్ ర్యాంకింగ్ (52 Wards)</span>
+      </button>
+      <button onclick="switchTab('tab-roadmap')" id="btn-tab-roadmap" class="tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-1.5 shrink-0 transition">
+        <span>📋 Dashboard G: 5-సంవత్సరాల పెట్టుబడుల ప్రణాళిక</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 space-y-4">
+
+    <!-- ============================================================ -->
+    <!-- TAB 1: DASHBOARD A - CITY TRAFFIC OVERVIEW (GIS MAP FIRST) -->
+    <!-- ============================================================ -->
+    <div id="tab-overview" class="tab-content space-y-4">
+      
+      <!-- Top Alert / Notice Banner -->
+      <div class="bg-gradient-to-r from-amber-950/60 via-slate-900 to-slate-900 border border-amber-500/30 rounded-xl p-3 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-xl shrink-0">
+            📍
+          </div>
+          <div>
+            <h2 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>భీమవరం పురపాలక సంఘం ట్రాఫిక్ నెట్‌వర్క్ & హాట్‌స్పాట్ సమీక్ష</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30 font-semibold">20 కీలక రద్దీ ప్రాంతాలు</span>
+            </h2>
+            <p class="text-xs text-slate-300">
+              ప్రకాశం రోడ్డు, మెయిన్ బజార్, టౌన్ రైల్వే అండర్‌పాస్ (RuB), ఆర్టీసీ బస్టాండ్ & కళాశాలల ప్రాంతాల్లో ట్రాఫిక్ ప్రవాహ నిర్వహణకు సమగ్ర GIS విశ్లేషణ.
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 text-xs">
+          <button onclick="fitMapBounds()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+            🔍 మ్యాప్ రీసెట్ (Reset View)
+          </button>
+          <button onclick="toggleHotspotPulse()" class="px-3 py-1.5 rounded-lg bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-800 transition">
+            🚨 హాట్‌స్పాట్ పల్స్
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid: Left Map + Right Detail Drawer -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        
+        <!-- Left Map (8 Cols) -->
+        <div class="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-xl p-3 shadow-xl flex flex-col space-y-3">
+          
+          <!-- Map Layer Controls & Quick Filters -->
+          <div class="flex flex-wrap items-center justify-between gap-2 text-xs border-b border-slate-800 pb-2">
+            
+            <!-- Google Maps Basemap Switcher -->
+            <div class="flex items-center gap-1.5 bg-slate-950/90 p-1 rounded-lg border border-slate-800">
+              <span class="text-slate-400 font-bold px-1 text-[11px]">మ్యాప్:</span>
+              <button onclick="setBaseMap('google_streets')" id="btn-bm-google-streets" class="px-2.5 py-1 rounded bg-cyan-500 text-slate-950 font-black text-xs transition shadow" title="Google Roads & Streets Official Map">
+                🛣️ Google Road Map
+              </button>
+              <button onclick="setBaseMap('google_hybrid')" id="btn-bm-google-hybrid" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition" title="Google Satellite Imagery with Street Names Overlay">
+                🛰️ Satellite (శాటిలైట్)
+              </button>
+              <button onclick="setBaseMap('osm')" id="btn-bm-osm" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition" title="OpenStreetMap">
+                🌍 OSM
+              </button>
+            </div>
+
+            <!-- Layer Toggles -->
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-slate-400 font-bold">లేయర్లు:</span>
+              <label class="flex items-center gap-1 cursor-pointer bg-slate-800/80 px-2 py-1 rounded border border-slate-700 hover:border-slate-500">
+                <input type="checkbox" id="layer-hotspots-chk" checked onchange="toggleLayer('hotspots')" class="rounded accent-rose-500">
+                <span class="text-rose-300 font-semibold">హాట్‌స్పాట్లు (20)</span>
+              </label>
+              <label class="flex items-center gap-1 cursor-pointer bg-slate-800/80 px-2 py-1 rounded border border-slate-700 hover:border-slate-500">
+                <input type="checkbox" id="layer-roads-chk" checked onchange="toggleLayer('roads')" class="rounded accent-cyan-500">
+                <span class="text-cyan-300 font-semibold">రహదారుల నెట్‌వర్క్</span>
+              </label>
+              <label class="flex items-center gap-1 cursor-pointer bg-slate-800/80 px-2 py-1 rounded border border-slate-700 hover:border-slate-500">
+                <input type="checkbox" id="layer-wards-chk" checked onchange="toggleLayer('wards')" class="rounded accent-indigo-500">
+                <span class="text-indigo-300 font-semibold">వార్డు సరిహద్దులు</span>
+              </label>
+              <label class="flex items-center gap-1 cursor-pointer bg-slate-800/80 px-2 py-1 rounded border border-slate-700 hover:border-slate-500">
+                <input type="checkbox" id="layer-transit-chk" onchange="toggleLayer('transit')" class="rounded accent-emerald-500">
+                <span class="text-emerald-300 font-semibold">బస్సు రూట్లు</span>
+              </label>
+              <label class="flex items-center gap-1 cursor-pointer bg-slate-800/80 px-2 py-1 rounded border border-slate-700 hover:border-slate-500">
+                <input type="checkbox" id="layer-parking-chk" checked onchange="toggleLayer('parking')" class="rounded accent-amber-500">
+                <span class="text-amber-300 font-semibold">పార్కింగ్ & ఆటోలు (24)</span>
+              </label>
+              <label class="flex items-center gap-1 cursor-pointer bg-slate-800/80 px-2 py-1 rounded border border-slate-700 hover:border-slate-500">
+                <input type="checkbox" id="layer-loops-chk" onchange="toggleLayer('loops')" class="rounded accent-blue-500">
+                <span class="text-blue-300 font-semibold">🔄 వన్-వే లూప్స్</span>
+              </label>
+            </div>
+
+            <!-- Quick Jump to Location -->
+            <div class="flex items-center gap-1">
+              <span class="text-slate-400 font-semibold">జంప్:</span>
+              <select id="map-quick-jump" onchange="jumpToLocation(this.value)" class="bg-slate-800 text-xs text-slate-200 rounded px-2 py-1 border border-slate-700 focus:outline-none max-w-[200px]">
+                <option value="">లొకేషన్ ఎంచుకోండి...</option>
+                <!-- Populated dynamically with optgroups -->
+              </select>
+            </div>
+          </div>
+
+          <!-- Parking Sub-Category Filter Bar -->
+          <div id="parking-filter-bar" class="flex flex-wrap items-center justify-between gap-1 text-[11px] bg-slate-950/90 p-1.5 rounded-lg border border-slate-800">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-amber-400 font-bold px-1 flex items-center gap-1">🅿️ పార్కింగ్ స్థానాలు:</span>
+              <button onclick="filterParkingMarkers('all')" id="btn-pk-all" class="px-2 py-0.5 rounded bg-amber-500 text-slate-950 font-black text-xs transition">అన్నీ (24)</button>
+              <button onclick="filterParkingMarkers('parking')" id="btn-pk-parking" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 font-medium text-xs transition">🅿️ పార్కింగ్ కాంప్లెక్స్‌లు (14)</button>
+              <button onclick="filterParkingMarkers('auto')" id="btn-pk-auto" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 font-medium text-xs transition">🛺 ఆటో స్టాండ్లు (6)</button>
+              <button onclick="filterParkingMarkers('noparking')" id="btn-pk-noparking" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 font-medium text-xs transition">🚫 నో-పార్కింగ్ జోన్లు (4)</button>
+            </div>
+            <span class="text-emerald-400 text-[10px] hidden sm:inline">మొత్తం సామర్థ్యం: 1,600 కార్లు, 10,800 బైక్‌లు</span>
+          </div>
+
+          <!-- Leaflet Map Container -->
+          <div id="city-traffic-map" class="w-full h-[540px] rounded-lg border border-slate-800 bg-slate-950 relative z-10 shadow-inner">
+            <!-- Map renders here -->
+          </div>
+
+          <!-- Legend Bar below map -->
+          <div class="flex flex-wrap items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800/80 gap-2">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> క్రిటికల్ రద్దీ (LOS F)</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> తీవ్ర రద్దీ (LOS E)</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> మధ్యస్థ రద్దీ (LOS C-D)</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1"><span class="w-3 h-2 rounded bg-blue-600 border border-blue-300"></span> 🅿️ మున్సిపల్ పార్కింగ్</span>
+              <span class="flex items-center gap-1"><span class="w-3 h-2 rounded bg-purple-600 border border-purple-300"></span> 🏢 G+4 MLCP</span>
+              <span class="flex items-center gap-1"><span class="w-3 h-2 rounded bg-amber-600 border border-amber-300"></span> 🛺 ఆటో స్టాండ్</span>
+              <span class="flex items-center gap-1"><span class="w-3 h-2 rounded bg-rose-600 border border-rose-300"></span> 🚫 నో-పార్కింగ్</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Hotspot & Segment Diagnostics (4 Cols) -->
+        <div class="lg:col-span-4 space-y-3 flex flex-col">
+          
+          <!-- Selected Feature Detail Card -->
+          <div id="feature-detail-card" class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                <span id="detail-rank-badge" class="px-2 py-0.5 rounded text-[11px] font-extrabold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                  హాట్‌స్పాట్ #1 (అత్యంత రద్దీ)
+                </span>
+                <span id="detail-los-badge" class="px-2 py-0.5 rounded text-xs font-black bg-rose-600 text-white">
+                  LOS F
+                </span>
+              </div>
+
+              <h3 id="detail-title-te" class="text-base font-bold text-white telugu-font leading-snug">
+                ప్రకాశం చౌక్ & టౌన్ రైల్వే అండర్‌పాస్ కూడలి
+              </h3>
+              <p id="detail-title-en" class="text-xs text-slate-400 mb-3">
+                Prakasham Chowk & Town Railway Underpass (RuB) Junction
+              </p>
+
+              <!-- Diagnostic Metrics Grid -->
+              <div class="grid grid-cols-2 gap-2 text-xs mb-3">
+                <div class="bg-slate-950/80 p-2 rounded-lg border border-slate-800/80">
+                  <span class="text-slate-400 text-[10px] block">పీక్ అవర్ ట్రాఫిక్:</span>
+                  <span id="detail-volume" class="font-extrabold text-amber-400 text-sm">3,840 PCU/hr</span>
+                  <span class="text-[10px] text-slate-400 block">అండర్‌పాస్ సామర్థ్యం: 2,500</span>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded-lg border border-slate-800/80">
+                  <span class="text-slate-400 text-[10px] block">V/C నిష్పత్తి & వేగం:</span>
+                  <span id="detail-vc-speed" class="font-extrabold text-amber-400 text-sm">1.53 | 11.5 km/h</span>
+                  <span class="text-[10px] text-slate-400 block">సగటు ఆలస్యం: 95 సెక.</span>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded-lg border border-slate-800/80">
+                  <span class="text-slate-400 text-[10px] block">పీక్ క్యూ పొడవు:</span>
+                  <span id="detail-queue" class="font-extrabold text-cyan-300 text-sm">280 మీటర్లు</span>
+                  <span class="text-[10px] text-emerald-400 block">గేట్ తొలగించబడింది (RuB)</span>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded-lg border border-slate-800/80">
+                  <span class="text-slate-400 text-[10px] block">వార్డు & లొకేషన్:</span>
+                  <span id="detail-ward" class="font-bold text-slate-200 text-xs">వార్డు 37 (టౌన్ స్టేషన్)</span>
+                  <span class="text-[10px] text-slate-400 block">5-లెగ్ అండర్‌పాస్ కూడలి</span>
+                </div>
+              </div>
+
+              <!-- Vehicle Split Bar -->
+              <div class="mb-3">
+                <div class="flex items-center justify-between text-[10px] text-slate-400 mb-1">
+                  <span>వాహనాల నిష్పత్తి:</span>
+                  <span>ద్విచక్ర (58%) | ఆటో (24%) | కార్ (10%)</span>
+                </div>
+                <div class="w-full h-2 rounded-full overflow-hidden flex bg-slate-800">
+                  <div class="bg-cyan-500 h-full" style="width: 58%" title="2-Wheelers 58%"></div>
+                  <div class="bg-amber-500 h-full" style="width: 24%" title="Auto-Rickshaws 24%"></div>
+                  <div class="bg-blue-500 h-full" style="width: 10%" title="Cars 10%"></div>
+                  <div class="bg-emerald-500 h-full" style="width: 5%" title="Buses 5%"></div>
+                  <div class="bg-rose-500 h-full" style="width: 3%" title="Heavy 3%"></div>
+                </div>
+              </div>
+
+              <!-- Major Causes -->
+              <div class="mb-3">
+                <span class="text-xs font-bold text-slate-300 block mb-1">ప్రస్తుత ట్రాఫిక్ అంశాలు & కారణాలు:</span>
+                <ul id="detail-causes-list" class="space-y-1 text-[11px] text-slate-300">
+                  <li class="flex items-start gap-1.5"><span class="text-emerald-400">✔</span> పాత లెవల్ క్రాసింగ్ గేట్ స్థానంలో రైల్వే అండర్‌పాస్ (RuB) నిర్మించబడి నిరంతరాయ గ్రేడ్-సెపరేటెడ్ ప్రవాహం అమల్లోకి వచ్చింది.</li>
+                  <li class="flex items-start gap-1.5"><span class="text-amber-400">⚠️</span> అండర్‌పాస్ ముఖద్వారం వద్ద 5 ప్రధాన రోడ్ల కలయిక & ర్యాంప్ స్లోప్ వద్ద వేగం మందగించడం.</li>
+                  <li class="flex items-start gap-1.5"><span class="text-rose-400">✖</span> అండర్‌పాస్ ర్యాంప్ పక్కన అస్తవ్యస్తమైన ఆటో రిక్షాల నిలుపుదల.</li>
+                  <li class="flex items-start gap-1.5"><span class="text-cyan-400">ℹ️</span> భారీ వర్షాల సమయంలో అండర్‌పాస్ సంప్ పిట్ వద్ద వాటర్‌లాగింగ్ నివారణకు ఆటోమేటెడ్ పంపింగ్ అవసరం.</li>
+                </ul>
+              </div>
+
+              <!-- Proposed Engineering Interventions -->
+              <div>
+                <span class="text-xs font-bold text-emerald-400 block mb-1">సిఫార్సు చేయబడిన ఇంజనీరింగ్ పరిష్కారాలు:</span>
+                <ul id="detail-interventions-list" class="space-y-1 text-[11px] text-slate-300">
+                  <li class="flex items-start gap-1.5"><span class="text-emerald-400">✔</span> అండర్‌పాస్ ప్రవేశ మార్గాల వద్ద డైరెక్షనల్ ఛానలైజింగ్ ఐలాండ్స్ ద్వారా మలుపుల కాన్‌ఫ్లిక్ట్‌ల నివారణ.</li>
+                  <li class="flex items-start gap-1.5"><span class="text-emerald-400">✔</span> వర్షాకాలంలో అండర్‌పాస్ పూర్తిగా డ్రైగా ఉండేలా 2x15 HP ఆటోమేటెడ్ డీవాటరింగ్ పంపుల నిర్వహణ.</li>
+                  <li class="flex items-start gap-1.5"><span class="text-emerald-400">✔</span> అండర్‌పాస్ ర్యాంప్‌కు 50 మీటర్ల దూరంలో 20-బేల ప్రత్యేక ఆటో పిక్-అప్ టెర్మినల్.</li>
+                  <li class="flex items-start gap-1.5"><span class="text-emerald-400">✔</span> పి.పి. రోడ్ - గాంధీ రోడ్ వన్-వే లూప్ ద్వారా అండర్‌పాస్ లోనికి వాహనాల రాకపోకల క్రమబద్ధీకరణ.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Action button -->
+            <div class="pt-3 border-t border-slate-800 mt-3 flex items-center justify-between">
+              <button onclick="switchTab('tab-junctions')" class="text-xs text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1 transition">
+                <span>కూడలి ఇంజనీరింగ్ మోడల్ చూడండి ➔</span>
+              </button>
+              <button onclick="switchTab('tab-circulation')" class="text-xs text-cyan-400 hover:text-cyan-300 font-bold flex items-center gap-1 transition">
+                <span>వన్-వే సర్క్యులేషన్ ➔</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Quick Hotspot Ranking List preview -->
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 shadow-lg">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-300 mb-2">
+              <span>టాప్ 5 అత్యవసర హాట్‌స్పాట్లు:</span>
+              <button onclick="switchTab('tab-wards')" class="text-[11px] text-cyan-400 hover:underline">అన్నీ చూడండి (20) ➔</button>
+            </div>
+            <div class="space-y-1.5" id="mini-hotspot-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 2: DASHBOARD B - TRAFFIC ANALYTICS & O-D MATRICES -->
+    <!-- ============================================================ -->
+    <div id="tab-analytics" class="tab-content hidden space-y-4">
+      
+      <!-- Top Overview of Counts & Classification -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+        <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl shadow">
+          <span class="text-xs text-slate-400 block">మొత్తం నమోదైన వాహనాలు:</span>
+          <span class="text-xl font-black text-amber-400">1,18,450</span>
+          <span class="text-[10px] text-slate-500 block">వార్షిక వృద్ధి రేటు: ~7.2%</span>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl shadow">
+          <span class="text-xs text-slate-400 block">రోజువారీ ట్రాఫిక్ ప్రయాణాలు:</span>
+          <span class="text-xl font-black text-cyan-400">3,42,000 trips</span>
+          <span class="text-[10px] text-slate-500 block">పీక్ అవర్ వాటా: 32% (ఉదయం/సాయంత్రం)</span>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl shadow">
+          <span class="text-xs text-slate-400 block">ద్విచక్ర & ఆటో వాటా:</span>
+          <span class="text-xl font-black text-rose-400">75.0%</span>
+          <span class="text-[10px] text-slate-500 block">2-వీలర్లు (54.2%) + ఆటోలు (20.8%)</span>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl shadow">
+          <span class="text-xs text-slate-400 block">త్రూ ట్రాఫిక్ (బైపాస్ చేయదగినది):</span>
+          <span class="text-xl font-black text-emerald-400">27.3%</span>
+          <span class="text-[10px] text-slate-500 block">~93,000 trips/రోజు బైపాస్‌కు మళ్లించవచ్చు</span>
+        </div>
+      </div>
+
+      <!-- Vehicle Classification (9 Categories) & Hourly Curve -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        
+        <!-- Left 6 Cols: 9-Class Vehicle Table & Distribution -->
+        <div class="lg:col-span-6 bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>🚗 వాహనాల వర్గీకరణ & PCU కారకాలు (IRC:106)</span>
+            </h3>
+            <span class="text-[10px] text-slate-400 bg-slate-800 px-2 py-0.5 rounded">9 తరగతుల విభజన</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="text-[10px] text-slate-400 uppercase bg-slate-950/60 border-b border-slate-800">
+                <tr>
+                  <th class="p-2">వాహనం రకం</th>
+                  <th class="p-2 text-center">PCU ఫ్యాక్టర్</th>
+                  <th class="p-2 text-right">మోడల్ వాటా %</th>
+                  <th class="p-2 text-right">సగటు వేగం</th>
+                  <th class="p-2 text-right">CO2 (g/km)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/60" id="vehicle-class-tbody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Right 6 Cols: Hourly Traffic Volume Profile & Peak Hours -->
+        <div class="lg:col-span-6 bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <span>📈 24 గంటల ట్రాఫిక్ ప్రవాహం & రద్దీ సమయాలు</span>
+              </h3>
+              <span class="text-[10px] text-amber-300 bg-amber-950/60 border border-amber-800/60 px-2 py-0.5 rounded">2 గరిష్ట పీక్ శిఖరాలు</span>
+            </div>
+
+            <!-- SVG Hourly Traffic Bar Chart -->
+            <div class="h-48 w-full flex items-end gap-1.5 pt-4 pb-2 px-2 bg-slate-950/60 rounded-lg border border-slate-800/80 relative" id="hourly-traffic-chart">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Peak Period Notes -->
+            <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+              <div class="bg-slate-950/80 p-2.5 rounded-lg border border-slate-800">
+                <span class="text-amber-400 font-bold block mb-1">🌅 ఉదయం పీక్ (08:30 - 10:30 AM):</span>
+                <p class="text-[11px] text-slate-300">
+                  పాఠశాలలు (DNR, KGRL), మార్కెట్ తెరుచుకోవడం & ప్రభుత్వ కార్యాలయాల రద్దీ. పీక్ వాల్యూమ్: 14,200 PCU/hr.
+                </p>
+              </div>
+              <div class="bg-slate-950/80 p-2.5 rounded-lg border border-slate-800">
+                <span class="text-rose-400 font-bold block mb-1">🌆 సాయంత్రం పీక్ (17:30 - 20:30 PM):</span>
+                <p class="text-[11px] text-slate-300">
+                  మెయిన్ బజార్ షాపింగ్, ఆర్టీసీ బస్సు ప్రయాణాలు, ఆటోల రద్దీ & అండర్‌పాస్ అప్రోచ్ రోడ్ల రద్దీ తీవ్రత.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3 p-2 rounded bg-slate-800/60 text-[11px] text-slate-400 flex items-center justify-between">
+            <span>ఆదివారం & బుధవారం సంతల రోజుల్లో మార్కెట్ ప్రాంతంలో 35% అదనపు ట్రాఫిక్ నమోదు.</span>
+            <span class="text-cyan-400 font-semibold">ఫీల్డ్ సర్వే డేటా</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Origin-Destination (O-D) Matrix Visualizer -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between mb-3 border-b border-slate-800 pb-2 gap-2">
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>🔄 భీమవరం ఆరిజిన్-డెస్టినేషన్ (O-D) ట్రావెల్ ప్యాటర్న్ మ్యాట్రిక్స్</span>
+            </h3>
+            <p class="text-xs text-slate-400">12 ప్రధాన రవాణా జోన్ల మధ్య ఉదయపు పీక్ ప్రయాణాల సంఖ్య (వాహనాలు/గంటకు)</p>
+          </div>
+          <div class="flex items-center gap-2 text-xs">
+            <span class="text-slate-400">ఫీడర్ రూట్:</span>
+            <select id="od-zone-filter" onchange="highlightODZone(this.value)" class="bg-slate-800 text-xs text-cyan-300 rounded px-2 py-1 border border-slate-700">
+              <option value="all">అన్ని జోన్లు (All 12 Zones)</option>
+              <option value="0">Z1: బలుసుమూడి / పశ్చిమ నివాసం</option>
+              <option value="1">Z2: శ్రీరాంపురం / ఉత్తర నివాసం</option>
+              <option value="2">Z3: మెయిన్ బజార్ & వాణిజ్య కేంద్రం</option>
+              <option value="3">Z4: DNR & SRKR విద్యా హబ్</option>
+              <option value="4">Z5: భీమవరం టౌన్ రైల్వే స్టేషన్</option>
+              <option value="5">Z6: ఆర్టీసీ బస్ స్టేషన్ కాంప్లెక్స్</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto" id="od-matrix-container">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <div class="mt-3 p-3 bg-slate-950/80 rounded-lg border border-slate-800 text-xs text-slate-300 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="text-amber-400 font-bold">కీలక O-D పరిశీలన:</span>
+            <span>బలుసుమూడి & శ్రీరాంపురం నివాస ప్రాంతాల నుండి మెయిన్ బజార్ & కాలేజీలకు 65% కంటే ఎక్కువ ప్రయాణాలు నమోదవుతున్నాయి.</span>
+          </div>
+          <span class="text-emerald-400 font-semibold">బైపాస్ ద్వారా 27% ప్రయాణాల మళ్లింపు సాధ్యం</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 3: DASHBOARD C - JUNCTION ANALYSIS & SIGNAL OPTIMIZATION -->
+    <!-- ============================================================ -->
+    <div id="tab-junctions" class="tab-content hidden space-y-4">
+      
+      <!-- Junction Engineering Overview -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between mb-3 border-b border-slate-800 pb-2 gap-2">
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>🚦 ప్రధాన కూడళ్ల ఇంజనీరింగ్ & వెబ్‌స్టర్ సిగ్నల్ ఆప్టిమైజర్ (IRC:SP:41)</span>
+            </h3>
+            <p class="text-xs text-slate-400">Webster's Optimum Cycle Formula: C₀ = (1.5L + 5) / (1 - Y) ఆధారంగా సిగ్నల్ డిజైన్</p>
+          </div>
+          <div class="flex items-center gap-2 text-xs">
+            <span class="text-slate-400 font-bold">కూడలి ఎంచుకోండి:</span>
+            <select id="junction-select" onchange="renderJunctionAnalysis(this.value)" class="bg-slate-800 text-amber-300 font-bold rounded px-3 py-1.5 border border-slate-700">
+              <!-- Dynamically populated -->
+            </select>
+          </div>
+        </div>
+
+        <!-- 2 Columns: Left Geometry & Metrics, Right Webster Signal Optimizer Simulator -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          
+          <!-- Left: Junction Geometry & Current Performance (6 Cols) -->
+          <div class="lg:col-span-6 space-y-3">
+            <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800/80">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-slate-300" id="jn-title">ప్రకాశం చౌక్ కూడలి</span>
+                <span id="jn-los-badge" class="px-2 py-0.5 rounded text-xs font-black bg-rose-600 text-white">ప్రస్తుత LOS: F ➔ ప్రతిపాదిత: C</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-3" id="jn-control-desc">ప్రస్తుత నియంత్రణ: గ్రేడ్-సెపరేటెడ్ RuB అండర్‌పాస్ & ట్రాఫిక్ సిగ్నల్ వ్యవస్థ</p>
+
+              <!-- Stats Cards -->
+              <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                  <span class="text-slate-400 text-[10px] block">శాచురేషన్ ప్రవాహం:</span>
+                  <span id="jn-sat-flow" class="font-extrabold text-cyan-400 text-sm">4,400 PCU/hr</span>
+                </div>
+                <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                  <span class="text-slate-400 text-[10px] block">పీక్ వాల్యూమ్:</span>
+                  <span id="jn-peak-vol" class="font-extrabold text-amber-400 text-sm">3,840 PCU/hr</span>
+                </div>
+                <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                  <span class="text-slate-400 text-[10px] block">ఆలస్యం తగ్గింపు:</span>
+                  <span id="jn-delay-red" class="font-extrabold text-emerald-400 text-sm">-44.5%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Turning Movement Counts Diagram -->
+            <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800/80">
+              <span class="text-xs font-bold text-slate-300 block mb-2">🔄 టర్నింగ్ మూవ్‌మెంట్ సర్వే గణాంకాలు:</span>
+              <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400 block">లెఫ్ట్ టర్న్ (Left Turn):</span>
+                  <span id="jn-turn-left" class="font-bold text-blue-400 text-sm">820 veh/hr</span>
+                  <span class="text-[9px] text-emerald-400 block">ఫ్రీ స్లిప్ లేన్ ప్రతిపాదితం</span>
+                </div>
+                <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400 block">త్రూ మూవ్‌మెంట్ (Straight):</span>
+                  <span id="jn-turn-thru" class="font-bold text-emerald-400 text-sm">1,940 veh/hr</span>
+                  <span class="text-[9px] text-slate-400 block">ప్రధాన ధమనీ ప్రవాహం</span>
+                </div>
+                <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400 block">రైట్ టర్న్ (Right Turn):</span>
+                  <span id="jn-turn-right" class="font-bold text-rose-400 text-sm">1,080 veh/hr</span>
+                  <span class="text-[9px] text-rose-400 block">ప్రధాన కాన్‌ఫ్లిక్ట్ పాయింట్</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Conflict Point Reduction Comparison -->
+            <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800/80 text-xs">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-slate-300">కాన్‌ఫ్లిక్ట్ పాయింట్లు (Conflict Points):</span>
+                <span class="text-emerald-400 font-bold">24 నుండి 8కి తగ్గింపు (66% సురక్షితం)</span>
+              </div>
+              <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden flex">
+                <div class="bg-rose-500 h-full" style="width: 33%" title="Crossing Conflicts"></div>
+                <div class="bg-amber-500 h-full" style="width: 33%" title="Merging Conflicts"></div>
+                <div class="bg-cyan-500 h-full" style="width: 34%" title="Diverging Conflicts"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right: Interactive Webster Signal Simulator (6 Cols) -->
+          <div class="lg:col-span-6 bg-slate-950/80 rounded-xl p-4 border border-slate-800 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
+                <h4 class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                  <span>⏱️ ఇంటరాక్టివ్ వెబ్‌స్టర్ సైకిల్ టైమ్ సిమ్యులేటర్</span>
+                </h4>
+                <span class="text-[10px] text-slate-400 bg-slate-900 px-2 py-0.5 rounded">లైవ్ ఫార్ములా ఇంజిన్</span>
+              </div>
+
+              <!-- Sliders to dynamically adjust approach flows and see Webster cycle recalculate -->
+              <div class="space-y-3 text-xs">
+                <div>
+                  <div class="flex justify-between text-slate-300 mb-1">
+                    <span>నార్త్-సౌత్ ప్రవాహం (P.P. Road):</span>
+                    <span id="slider-ns-val" class="font-bold text-cyan-400">1,950 PCU/hr</span>
+                  </div>
+                  <input type="range" id="slider-ns-flow" min="800" max="2800" step="50" value="1950" oninput="recalcWebster()" class="w-full accent-cyan-500 cursor-pointer">
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-slate-300 mb-1">
+                    <span>ఈస్ట్-వెస్ట్ ప్రవాహం (Rest House / Station Rd):</span>
+                    <span id="slider-ew-val" class="font-bold text-amber-400">1,450 PCU/hr</span>
+                  </div>
+                  <input type="range" id="slider-ew-flow" min="600" max="2400" step="50" value="1450" oninput="recalcWebster()" class="w-full accent-amber-500 cursor-pointer">
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-slate-300 mb-1">
+                    <span>మొత్తం పోయిన సమయం (Total Lost Time L):</span>
+                    <span id="slider-lost-val" class="font-bold text-slate-200">12 సెకన్లు</span>
+                  </div>
+                  <input type="range" id="slider-lost-time" min="8" max="20" step="1" value="12" oninput="recalcWebster()" class="w-full accent-rose-500 cursor-pointer">
+                </div>
+              </div>
+
+              <!-- Calculated Output Display -->
+              <div class="mt-4 p-3 bg-slate-900 rounded-xl border border-slate-800 grid grid-cols-2 gap-3 text-center">
+                <div>
+                  <span class="text-[10px] text-slate-400 block">ఆప్టిమల్ సైకిల్ సమయం (C₀):</span>
+                  <span id="webster-c0" class="text-2xl font-black text-emerald-400">105 sec</span>
+                  <span class="text-[10px] text-slate-500 block">గతంలో: 140s (ఓవర్‌లాస్)</span>
+                </div>
+                <div>
+                  <span class="text-[10px] text-slate-400 block">గ్రీన్ టైమ్ పంపిణీ:</span>
+                  <span id="webster-green-split" class="text-sm font-extrabold text-cyan-300">NS: 52s | EW: 41s</span>
+                  <span class="text-[10px] text-amber-400 block">అంబర్: 12s | క్లియరెన్స్</span>
+                </div>
+              </div>
+
+              <!-- Visual Signal Phase Bar -->
+              <div class="mt-3">
+                <span class="text-[10px] text-slate-400 block mb-1">సిగ్నల్ ఫేజ్ కేటాయింపు (Signal Phase Allocation):</span>
+                <div class="w-full h-4 rounded-lg overflow-hidden flex text-[10px] font-bold text-slate-950 text-center leading-4" id="phase-bar">
+                  <div class="bg-emerald-500" style="width: 50%">గ్రీన్ NS</div>
+                  <div class="bg-amber-400" style="width: 10%">అంబర్</div>
+                  <div class="bg-blue-500" style="width: 30%">గ్రీన్ EW</div>
+                  <div class="bg-amber-400" style="width: 10%">అంబర్</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom status -->
+            <div class="pt-3 border-t border-slate-800 mt-3 text-[11px] text-slate-400 flex items-center justify-between">
+              <span>గ్రీన్‌వేవ్ సమన్వయంతో క్యూ పొడవు 58% తగ్గుతుంది.</span>
+              <button onclick="applyOptimalTiming()" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded transition">
+                టైమింగ్ వర్తింపజేయండి
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 4: DASHBOARD D - ONE-WAY SYSTEM & CIRCULATION PLANNING -->
+    <!-- ============================================================ -->
+    <div id="tab-circulation" class="tab-content hidden space-y-4">
+      
+      <!-- One-Way Strategy Banner -->
+      <div class="bg-gradient-to-r from-blue-950/70 via-slate-900 to-indigo-950/70 border border-blue-500/30 rounded-xl p-4 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30 mb-1 inline-block">
+              సర్క్యులేషన్ ప్లాన్ & ప్రత్యామ్నాయ మార్గాలు
+            </span>
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              భీమవరం సెంట్రల్ వాణిజ్య ప్రాంత వన్-వే లూప్ సిస్టమ్ (P.P. Road & Gandhi Road Loop)
+            </h3>
+            <p class="text-xs text-slate-300 mt-1 max-w-3xl">
+              ఇరుకైన ప్రకాశం రోడ్డులో ఎదురెదురు ప్రయాణాల వల్ల ఏర్పడే గ్రిడ్‌లాక్‌లను నివారించడానికి, ప్రకాశం రోడ్డును కేవలం దక్షిణ దిశగా (Southbound), మరియు సమాంతర గాంధీ రోడ్డును ఉత్తర దిశగా (Northbound) వన్-వే లూప్‌గా నిర్వహించడం ద్వారా 42% క్యారేజ్‌వే కెపాసిటీ పెంపు.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 text-xs">
+            <button onclick="toggleCirculationMode('existing')" id="btn-circ-existing" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+              ప్రస్తుత ద్విముఖ స్థితి (Two-Way)
+            </button>
+            <button onclick="toggleCirculationMode('proposed')" id="btn-circ-proposed" class="px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-extrabold shadow-lg shadow-blue-500/20 transition">
+              ప్రతిపాదిత వన్-వే లూప్ (Proposed One-Way)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Before vs After Comparison Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        
+        <!-- Left: Current Two-Way Congestion Circulation Card -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <h4 class="text-sm font-bold text-rose-400 flex items-center gap-1.5">
+              <span>❌ ప్రస్తుత స్థితి: అనియంత్రిత ద్విముఖ రాకపోకలు (Existing Two-Way)</span>
+            </h4>
+            <span class="px-2 py-0.5 bg-rose-500/20 text-rose-300 rounded text-[10px] font-bold">తీవ్ర సమస్యలు</span>
+          </div>
+
+          <div class="space-y-2 text-xs text-slate-300">
+            <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800">
+              <b class="text-white block mb-0.5">పి.పి. రోడ్డు (Prakasam Road):</b>
+              రెండు వైపులా ప్రయాణాల వల్ల 12 మీటర్ల రోడ్డులో ఎదురెదురుగా బస్సులు, లారీలు ఆగినప్పుడు పూర్తి ట్రాఫిక్ స్తంభన. సగటు వేగం: కేవలం 8.5 km/h.
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800">
+              <b class="text-white block mb-0.5">రోడ్డుపై అడ్డదిడ్డంగా పార్కింగ్:</b>
+              షాపుల ముందు బైక్‌లు మరియు ఆటోలు క్యారేజ్‌వేలో 45% స్థలాన్ని ఆక్రమిస్తున్నాయి.
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800">
+              <b class="text-white block mb-0.5">అంబులెన్స్ & అత్యవసర వాహనాల ఆటంకం:</b>
+              టౌన్ స్టేషన్ అండర్‌పాస్ ర్యాంప్ వద్ద అస్తవ్యస్తమైన ఆటో పార్కింగ్ వల్ల ఆసుపత్రి రోడ్డుకు వెళ్లే అంబులెన్సులు ట్రాఫిక్‌లో చిక్కుకోకుండా ప్రత్యేక కాంట్రా-ఫ్లో ఎమర్జెన్సీ లేన్ అవసరం.
+            </div>
+          </div>
+
+          <!-- Impact Metrics -->
+          <div class="grid grid-cols-3 gap-2 text-center text-xs pt-2">
+            <div class="bg-slate-950 p-2 rounded border border-rose-900/40">
+              <span class="text-slate-400 text-[10px] block">సగటు ప్రయాణ సమయం:</span>
+              <span class="font-extrabold text-rose-400 text-sm">24.8 నిమిషాలు</span>
+            </div>
+            <div class="bg-slate-950 p-2 rounded border border-rose-900/40">
+              <span class="text-slate-400 text-[10px] block">క్యారేజ్‌వే వినియోగం:</span>
+              <span class="font-extrabold text-amber-400 text-sm">V/C = 1.66 (ఓవర్‌లోడ్)</span>
+            </div>
+            <div class="bg-slate-950 p-2 rounded border border-rose-900/40">
+              <span class="text-slate-400 text-[10px] block">కాన్‌ఫ్లిక్ట్ పాయింట్లు:</span>
+              <span class="font-extrabold text-rose-400 text-sm">32 పాయింట్లు</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Proposed One-Way Loop Circulation Card -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <h4 class="text-sm font-bold text-emerald-400 flex items-center gap-1.5">
+              <span>✔ ప్రతిపాదిత స్థితి: క్లాక్‌వైజ్ వన్-వే లూప్ (Proposed One-Way Loop)</span>
+            </h4>
+            <span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-300 rounded text-[10px] font-bold">ఇంజనీరింగ్ ఆప్టిమైజ్డ్</span>
+          </div>
+
+          <div class="space-y-2 text-xs text-slate-300">
+            <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800">
+              <b class="text-emerald-300 block mb-0.5">పి.పి. రోడ్డు ఏకముఖ ప్రయాణం (Southbound):</b>
+              పాత బస్టాండ్ నుండి ప్రకాశం చౌక్ వైపు మాత్రమే ట్రాఫిక్ అనుమతి. 2 పూర్తి లేన్లు ఒకే దిశలో సాఫీగా సాగుతాయి.
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800">
+              <b class="text-cyan-300 block mb-0.5">గాంధీ రోడ్డు ఏకముఖ ప్రయాణం (Northbound):</b>
+              టౌన్ స్టేషన్ & ప్రకాశం చౌక్ నుండి తిరిగి పాత బస్టాండ్ వైపు ఉత్తర దిశగా వాహనాలు మళ్లుతాయి.
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800">
+              <b class="text-amber-300 block mb-0.5">అంబులెన్స్ కాంట్రా-ఫ్లో ఎమర్జెన్సీ లేన్:</b>
+              ఫ్లెక్సిబుల్ బౌలార్డ్స్ ద్వారా 3.0 మీటర్ల డెడికేటెడ్ ఎమర్జెన్సీ లేన్ ద్వారా ప్రభుత్వ ఆసుపత్రికి నిరంతరాయ ప్రవేశం.
+            </div>
+          </div>
+
+          <!-- Impact Metrics -->
+          <div class="grid grid-cols-3 gap-2 text-center text-xs pt-2">
+            <div class="bg-slate-950 p-2 rounded border border-emerald-900/40">
+              <span class="text-slate-400 text-[10px] block">సగటు ప్రయాణ సమయం:</span>
+              <span class="font-extrabold text-emerald-400 text-sm">14.2 నిమిషాలు (-42%)</span>
+            </div>
+            <div class="bg-slate-950 p-2 rounded border border-emerald-900/40">
+              <span class="text-slate-400 text-[10px] block">క్యారేజ్‌వే కెపాసిటీ గెయిన్:</span>
+              <span class="font-extrabold text-cyan-400 text-sm">+42.0% సామర్థ్యం</span>
+            </div>
+            <div class="bg-slate-950 p-2 rounded border border-emerald-900/40">
+              <span class="text-slate-400 text-[10px] block">కాన్‌ఫ్లిక్ట్ పాయింట్లు:</span>
+              <span class="font-extrabold text-emerald-400 text-sm">12 (-62% ప్రమాదాలు)</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Freight Management & Bypass Diversions -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl">
+        <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <span>🚛 భారీ సరుకు రవాణా (ఆక్వా & వరి లారీలు) నిర్వహణ విధానం</span>
+          </h4>
+          <span class="text-[10px] text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-800/40">నిషేధ సమయాలు అమల్లో ఉంటాయి</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+          <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+            <span class="text-rose-400 font-bold block mb-1">🚫 నగరంలోకి లారీల ప్రవేశ నిషేధం:</span>
+            <p class="text-slate-300 text-[11px]">
+              ఉదయం 08:00 నుండి 12:00 వరకు & సాయంత్రం 16:30 నుండి 20:30 వరకు భారీ లారీలు నగర ఆర్టీరియల్ రోడ్లలోకి ప్రవేశించరాదు.
+            </p>
+          </div>
+          <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+            <span class="text-cyan-400 font-bold block mb-1">🛣️ NH-165 ఔటర్ బైపాస్ డైవర్షన్:</span>
+            <p class="text-slate-300 text-[11px]">
+              తాడేపల్లిగూడెం, పాలకొల్లు మరియు ఆకివీడు వైపు వెళ్లే అన్ని ఆక్వా రీఫర్ కంటైనర్లు మరియు వరి లోడ్లు నగర కేంద్రం వెలుపల బైపాస్ మార్గంలోనే ప్రయాణించాలి.
+            </p>
+          </div>
+          <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+            <span class="text-emerald-400 font-bold block mb-1">📦 లాజిస్టిక్స్ కన్సాలిడేషన్ పార్క్:</span>
+            <p class="text-slate-300 text-[11px]">
+              NH-165 వద్ద 12.5 ఎకరాలలో కొత్త లాజిస్టిక్స్ టెర్మినల్ ఏర్పాటు; అక్కడ నుండి చిన్న ఈ-వాహనాల ద్వారా మాత్రమే మార్కెట్లకు డెలివరీలు.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 5: DASHBOARD E - SUSTAINABLE MOBILITY & PUBLIC TRANSIT -->
+    <!-- ============================================================ -->
+    <div id="tab-mobility" class="tab-content hidden space-y-4">
+      
+      <!-- Multimodal Mobility Vision -->
+      <div class="bg-gradient-to-r from-emerald-950/60 via-slate-900 to-teal-950/60 border border-emerald-500/30 rounded-xl p-4 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 mb-1 inline-block">
+              మల్టీమోడల్ మొబిలిటీ & పబ్లిక్ ట్రాన్స్‌పోర్ట్
+            </span>
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              సమీకృత ప్రజా రవాణా, ఎలక్ట్రిక్ మినీ బస్సులు & సైక్లింగ్ నెట్‌వర్క్
+            </h3>
+            <p class="text-xs text-slate-300 mt-1 max-w-3xl">
+              రోడ్లను నిరంతరం వెడల్పు చేయడం కంటే.. పబ్లిక్ బస్సులు, నాన్-మోటరైజ్డ్ సైకిల్ ట్రాక్‌లు మరియు పాదచారుల నడక మార్గాలను అభివృద్ధి చేయడమే భీమవరం నగరానికి శాశ్వత పరిష్కారం.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 text-xs">
+            <span class="bg-emerald-900/60 text-emerald-300 px-3 py-1.5 rounded-lg border border-emerald-700/60 font-bold">
+              లక్ష్యం: 19.4% పబ్లిక్ ట్రాన్సిట్ వాటా
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Green Feeder e-Bus Loops Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        
+        <!-- Loop 1 -->
+        <div class="bg-slate-900 border border-cyan-500/40 rounded-xl p-3 shadow-lg">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">గ్రీన్ లూప్ 1</span>
+            <span class="text-xs font-bold text-slate-400">7.2 కి.మీ | 8 నిమి.</span>
+          </div>
+          <h4 class="text-xs font-bold text-white mb-1">టౌన్ స్టేషన్ - DNR కాలేజ్ - S.N. పురం</h4>
+          <p class="text-[11px] text-slate-300 mb-2">
+            విద్యార్థులు & ఉద్యోగుల కోసం టౌన్ రైల్వే స్టేషన్ నుండి డి.ఎన్.ఆర్, ఎస్.ఎన్. పురం మీదుగా సర్క్యులర్ సర్వీస్.
+          </p>
+          <div class="text-[10px] text-slate-400 border-t border-slate-800 pt-1.5 flex justify-between">
+            <span>స్టాప్‌లు: 14</span>
+            <span class="text-cyan-400 font-semibold">ఫ్లీట్: 6 ఈ-బస్సులు</span>
+          </div>
+        </div>
+
+        <!-- Loop 2 -->
+        <div class="bg-slate-900 border border-emerald-500/40 rounded-xl p-3 shadow-lg">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">గ్రీన్ లూప్ 2</span>
+            <span class="text-xs font-bold text-slate-400">6.8 కి.మీ | 10 నిమి.</span>
+          </div>
+          <h4 class="text-xs font-bold text-white mb-1">రైల్వే జంక్షన్ - బస్టాండ్ - పి.పి. రోడ్</h4>
+          <p class="text-[11px] text-slate-300 mb-2">
+            జంక్షన్ స్టేషన్ దిగిన ప్రయాణికులు ఆర్టీసీ బస్టాండ్ మరియు సెంట్రల్ మార్కెట్‌కు చేరుకునే ఇంటర్‌మోడల్ కనెక్టర్.
+          </p>
+          <div class="text-[10px] text-slate-400 border-t border-slate-800 pt-1.5 flex justify-between">
+            <span>స్టాప్‌లు: 12</span>
+            <span class="text-emerald-400 font-semibold">ఫ్లీట్: 6 ఈ-బస్సులు</span>
+          </div>
+        </div>
+
+        <!-- Loop 3 -->
+        <div class="bg-slate-900 border border-amber-500/40 rounded-xl p-3 shadow-lg">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">గ్రీన్ లూప్ 3</span>
+            <span class="text-xs font-bold text-slate-400">8.5 కి.మీ | 10 నిమి.</span>
+          </div>
+          <h4 class="text-xs font-bold text-white mb-1">బలుసుమూడి - SRKR ఇంజనీరింగ్ కాలేజ్</h4>
+          <p class="text-[11px] text-slate-300 mb-2">
+            వెస్ట్ రెసిడెన్షియల్ కాలనీల నుండి SRKR కాలేజ్, జేపీ రోడ్ మరియు హాస్టల్స్ బెల్ట్‌కు రోజువారీ రవాణా.
+          </p>
+          <div class="text-[10px] text-slate-400 border-t border-slate-800 pt-1.5 flex justify-between">
+            <span>స్టాప్‌లు: 16</span>
+            <span class="text-amber-400 font-semibold">ఫ్లీట్: 6 ఈ-బస్సులు</span>
+          </div>
+        </div>
+
+        <!-- Loop 4 -->
+        <div class="bg-slate-900 border border-purple-500/40 rounded-xl p-3 shadow-lg">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">గ్రీన్ లూప్ 4</span>
+            <span class="text-xs font-bold text-slate-400">5.4 కి.మీ | 12 నిమి.</span>
+          </div>
+          <h4 class="text-xs font-bold text-white mb-1">ఎనమదుర్రు కెనాల్ బండ్ ఎక్స్‌ప్రెస్</h4>
+          <p class="text-[11px] text-slate-300 mb-2">
+            కాలువ గట్టు వెంట నాన్-మోటరైజ్డ్ మొబిలిటీ & విద్యుత్ ఆటోల కోసం ప్రత్యేక ఎకో-ట్రాఫిక్ కారిడార్.
+          </p>
+          <div class="text-[10px] text-slate-400 border-t border-slate-800 pt-1.5 flex justify-between">
+            <span>స్టాప్‌లు: 10</span>
+            <span class="text-purple-400 font-semibold">ఫ్లీట్: 6 ఈ-బస్సులు</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Active Mobility & Pedestrian Safety Strategy -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        
+        <!-- Pedestrian Infrastructure -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>🚶 పాదచారుల సురక్షిత నెట్‌వర్క్ & స్కూల్ జోన్లు</span>
+            </h4>
+            <span class="text-[10px] text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded">జీరో ఫెటాలిటీ విజన్</span>
+          </div>
+          
+          <ul class="space-y-2 text-xs text-slate-300">
+            <li class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">1.</span>
+              <div>
+                <b class="text-white block">ఎలివేటెడ్ టేబుల్‌టాప్ జీబ్రా క్రాసింగ్‌లు:</b>
+                DNR, KGRL, ARKR హైస్కూల్ & అల్లూరి హాస్పిటల్ వద్ద వాహనాల వేగాన్ని 25 km/h కి తగ్గించే ఎత్తైన పాదచారుల క్రాసింగ్‌లు.
+              </div>
+            </li>
+            <li class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">2.</span>
+              <div>
+                <b class="text-white block">నిరంతరాయ ఫుట్‌పాత్‌లు (Tactile Pavements):</b>
+                దివ్యాంగులకు అనుకూలంగా పి.పి. రోడ్డు, రెస్ట్ హౌస్ రోడ్లలో 1.8 మీటర్ల వెడల్పుతో ఆక్రమణలు లేని సురక్షిత నడక మార్గాలు.
+              </div>
+            </li>
+            <li class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">3.</span>
+              <div>
+                <b class="text-white block">మెయిన్ బజార్ పెడెస్ట్రియన్ ప్రయారిటీ జోన్:</b>
+                ఉదయం 10:00 నుండి రాత్రి 08:30 వరకు 4-వీలర్ల నిషేధం; కేవలం పాదచారులు & చిన్న ఈ-రిక్షాలకు మాత్రమే ప్రవేశం.
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Segregated Cycling Network along Canals -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>🚲 ఎనమదుర్రు కాలువ గ్రీన్ సైకిల్ ట్రాక్ (5.4 కి.మీ)</span>
+            </h4>
+            <span class="text-[10px] text-cyan-400 bg-cyan-950 px-2 py-0.5 rounded">ఎకో కారిడార్</span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-950/80 border border-slate-800 text-xs text-slate-300 space-y-2">
+            <p>
+              గోవిందరావు నగర్ నార్త్ నుండి బ్రిడ్జి పేట వరకు విస్తరించి ఉన్న ఎనమదుర్రు కాలువ గట్టును సుందరీకరించి, 2.5 మీటర్ల వెడల్పుతో ప్రత్యేక సైక్లింగ్ ట్రాక్ నిర్మాణం.
+            </p>
+            <div class="grid grid-cols-2 gap-2 text-[11px] pt-1">
+              <div class="bg-slate-900 p-2 rounded">
+                <span class="text-slate-400 block">ట్రాక్ పొడవు:</span>
+                <span class="font-bold text-white">5.4 కిలోమీటర్లు</span>
+              </div>
+              <div class="bg-slate-900 p-2 rounded">
+                <span class="text-slate-400 block">రోజువారీ సైకిల్ ప్రయాణాలు:</span>
+                <span class="font-bold text-cyan-400">~12,000 ట్రిప్పులు</span>
+              </div>
+            </div>
+            <p class="text-[11px] text-emerald-400 font-semibold">
+              దీనివల్ల పి.పి. రోడ్డు మరియు మెయిన్ బజార్లలో విద్యార్థుల మోటార్ బైకుల రద్దీ గణనీయంగా తగ్గుతుంది.
+            </p>
+          </div>
+
+          <!-- Multi-Modal Hubs -->
+          <div class="border-t border-slate-800 pt-2">
+            <span class="text-xs font-bold text-slate-300 block mb-1">మల్టీమోడల్ మొబిలిటీ హబ్‌లు:</span>
+            <div class="flex items-center gap-2 text-[11px]">
+              <span class="px-2 py-1 rounded bg-slate-800 text-slate-200">🚉 టౌన్ రైల్వే హబ్</span>
+              <span class="px-2 py-1 rounded bg-slate-800 text-slate-200">🚏 ఆర్టీసీ కాంప్లెక్స్ హబ్</span>
+              <span class="px-2 py-1 rounded bg-slate-800 text-slate-200">🚆 జంక్షన్ స్టేషన్ హబ్</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 6: DASHBOARD F - ENVIRONMENTAL EMISSIONS & AIR QUALITY -->
+    <!-- ============================================================ -->
+    <div id="tab-environment" class="tab-content hidden space-y-4">
+      
+      <!-- Environmental Impact Overview -->
+      <div class="bg-gradient-to-r from-teal-950/60 via-slate-900 to-emerald-950/60 border border-teal-500/30 rounded-xl p-4 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30 mb-1 inline-block">
+              పర్యావరణ ఉద్గారాలు & ఇంధన వినియోగ విశ్లేషణ
+            </span>
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              ట్రాఫిక్ రద్దీ నివారణ ద్వారా కర్బన ఉద్గారాలు & ఇంధన పొదుపు అంచనాలు
+            </h3>
+            <p class="text-xs text-slate-300 mt-1 max-w-3xl">
+              ట్రాఫిక్ సిగ్నల్స్ వద్ద వాహనాలు ఐడ్లింగ్‌లో ఉండటం వల్ల భీమవరంలో రోజూ వేలాది లీటర్ల పెట్రోల్/డీజిల్ వృథా అవుతోంది. సరైన ట్రాఫిక్ నిర్వహణ ద్వారా CO2, NOx, PM2.5 ఉద్గారాలను 54% వరకు తగ్గించవచ్చు.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 text-xs">
+            <span class="bg-teal-900/60 text-teal-300 px-3 py-1.5 rounded-lg border border-teal-700/60 font-bold">
+              వార్షిక పొదుపు: ₹41.3 కోట్లు
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Scenarios Environmental Emissions Comparison Table -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl">
+        <h4 class="text-sm font-bold text-white mb-3 flex items-center gap-2 border-b border-slate-800 pb-2">
+          <span>📉 దృశ్యాల వారీగా ఉద్గారాలు & ఇంధన పోలిక పట్టిక</span>
+        </h4>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="text-[10px] text-slate-400 uppercase bg-slate-950/60 border-b border-slate-800">
+              <tr>
+                <th class="p-2.5">దృశ్యం (Scenario)</th>
+                <th class="p-2.5 text-right">CO2 ఉద్గారాలు (టన్నులు/సం.)</th>
+                <th class="p-2.5 text-right">NOx (టన్నులు/సం.)</th>
+                <th class="p-2.5 text-right">PM 2.5 (టన్నులు/సం.)</th>
+                <th class="p-2.5 text-right">వార్షిక ఇంధనం (kL/సం.)</th>
+                <th class="p-2.5 text-right">ట్రాఫిక్ జాప్యం ఆర్థిక నష్టం</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60" id="emissions-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Interactive Green Mobility Slider & Calculator -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl space-y-4">
+          <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-800 pb-2">
+            <span>⚙️ ఇంటరాక్టివ్ ఎకో-మొబిలిటీ సిమ్యులేటర్</span>
+          </h4>
+
+          <div class="space-y-3 text-xs">
+            <div>
+              <div class="flex justify-between text-slate-300 mb-1">
+                <span>విద్యుత్ వాహనాల (EV) వాటా (%):</span>
+                <span id="slider-ev-val" class="font-bold text-cyan-400">25% EVలు</span>
+              </div>
+              <input type="range" id="slider-ev-share" min="0" max="80" step="5" value="25" oninput="recalcEmissions()" class="w-full accent-cyan-500 cursor-pointer">
+            </div>
+
+            <div>
+              <div class="flex justify-between text-slate-300 mb-1">
+                <span>పబ్లిక్ ట్రాన్స్‌పోర్ట్ వైపు మారిన ప్రయాణికులు (%):</span>
+                <span id="slider-pt-val" class="font-bold text-emerald-400">15% బస్సుల వైపు</span>
+              </div>
+              <input type="range" id="slider-pt-share" min="0" max="50" step="5" value="15" oninput="recalcEmissions()" class="w-full accent-emerald-500 cursor-pointer">
+            </div>
+
+            <div>
+              <div class="flex justify-between text-slate-300 mb-1">
+                <span>ఐడ్లింగ్ రద్దీ సమయం తగ్గింపు (%):</span>
+                <span id="slider-idle-val" class="font-bold text-amber-400">40% సమయం ఆదా</span>
+              </div>
+              <input type="range" id="slider-idle-red" min="10" max="75" step="5" value="40" oninput="recalcEmissions()" class="w-full accent-amber-500 cursor-pointer">
+            </div>
+          </div>
+        </div>
+
+        <!-- Calculated Live Savings Results -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl flex flex-col justify-between">
+          <div>
+            <h4 class="text-xs font-bold text-teal-300 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-800 pb-2">
+              <span>🍃 అంచనా వేసిన పర్యావరణ లాభాలు (Eco Benefits)</span>
+            </h4>
+
+            <div class="grid grid-cols-2 gap-3 mt-3 text-center">
+              <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                <span class="text-[10px] text-slate-400 block">రోజువారీ CO2 తగ్గింపు:</span>
+                <span id="calc-co2-save" class="text-xl font-black text-emerald-400">18.4 టన్నులు/రోజు</span>
+                <span class="text-[10px] text-slate-500 block">-38.2% కర్బన ఉద్గారాలు</span>
+              </div>
+              <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                <span class="text-[10px] text-slate-400 block">రోజుకు ఆదా అయ్యే ఇంధనం:</span>
+                <span id="calc-fuel-save" class="text-xl font-black text-cyan-400">8,450 లీటర్లు</span>
+                <span class="text-[10px] text-slate-500 block">~₹8.87 లక్షలు/రోజు ఆదా</span>
+              </div>
+              <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                <span class="text-[10px] text-slate-400 block">PM2.5 కాలుష్య కణాల తగ్గుదల:</span>
+                <span id="calc-pm-save" class="text-base font-black text-teal-300">3.65 కిలోలు/రోజు</span>
+                <span class="text-[10px] text-slate-500 block">శ్వాసకోశ ఆరోగ్య పరిరక్షణ</span>
+              </div>
+              <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                <span class="text-[10px] text-slate-400 block">వార్షిక ఆర్థిక ఆదా:</span>
+                <span id="calc-cost-save" class="text-base font-black text-amber-300">₹32.4 కోట్లు/సం.</span>
+                <span class="text-[10px] text-slate-500 block">ప్రజల ఇంధన వ్యయం ఆదా</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-2 text-[11px] text-slate-400 border-t border-slate-800 mt-2">
+            లెక్కించిన ప్రమాణాలు: CPCB & ARAI 2024 వాహన ఉద్గార కారకాలు (Emission Factors).
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 7: DASHBOARD H - LIVE SUMO-STYLE TRAFFIC SIMULATOR -->
+    <!-- ============================================================ -->
+    <div id="tab-simulator" class="tab-content hidden space-y-4">
+      
+      <!-- Simulator Header & Controls Bar -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 shadow-xl flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center text-xl font-black shadow-md">
+            🚦
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>భీమవరం లైవ్ వెహిక్యులర్ ట్రాఫిక్ సిమ్యులేటర్ (SUMO-Inspired Engine)</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">రియల్-టైమ్ మైక్రో-సిమ్యులేషన్</span>
+            </h3>
+            <p class="text-xs text-slate-400">
+              ప్రకాశం చౌక్ కూడలి & రైల్వే లెవల్ క్రాసింగ్ వద్ద వివిధ దృశ్యాల (Scenarios) ట్రాఫిక్ ప్రవాహాన్ని ప్రత్యక్షంగా పరిశీలించండి.
+            </p>
+          </div>
+        </div>
+
+        <!-- Simulation Control Buttons -->
+        <div class="flex items-center gap-2 text-xs flex-wrap">
+          <button onclick="toggleSimPlay()" id="btn-sim-play" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition flex items-center gap-1 shadow">
+            <span id="sim-play-icon">⏸️</span>
+            <span id="sim-play-text">పాజ్ (Pause)</span>
+          </button>
+          
+          <button onclick="resetSim()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+            🔄 రీసెట్
+          </button>
+
+          <button onclick="toggleUnderpassPump()" id="btn-underpass-pump" class="px-3 py-1.5 rounded-lg bg-cyan-700 hover:bg-cyan-600 text-white font-bold transition flex items-center gap-1.5 shadow-md" title="రైల్వే అండర్‌పాస్ డ్రెయిన్ పంప్ స్థితిని పరీక్షించండి">
+            <span>🚇 అండర్‌పాస్ ప్రవాహం (RuB Flow: Normal)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Controls & Live Canvas Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        
+        <!-- Left Simulation Canvas (8 Cols) -->
+        <div class="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-xl p-3 shadow-xl flex flex-col space-y-2">
+          
+          <!-- Simulation Status Bar above Canvas -->
+          <div class="flex items-center justify-between text-xs text-slate-300 px-1 border-b border-slate-800 pb-2">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>అండర్‌పాస్ స్థితి: <b id="sim-gate-status" class="text-emerald-400">నిరంతరాయ గ్రేడ్-సెపరేషన్ (Smooth Flow)</b></span>
+              </span>
+              <span class="text-slate-400">|</span>
+              <span class="flex items-center gap-1">
+                <span>సిగ్నల్ ఫేజ్: <b id="sim-signal-phase" class="text-cyan-400">నార్త్-సౌత్ గ్రీన్</b></span>
+              </span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span>సజీవ వాహనాలు: <b id="sim-active-veh" class="text-amber-400">48</b></span>
+              <span>వేగం గుణకం: <b id="sim-speed-mult" class="text-slate-200">1.0x</b></span>
+            </div>
+          </div>
+
+          <!-- HTML5 Canvas Element -->
+          <div class="w-full h-[460px] bg-slate-950 rounded-lg border border-slate-800 relative overflow-hidden flex items-center justify-center">
+            <canvas id="trafficSimCanvas" width="800" height="460" class="w-full h-full block"></canvas>
+          </div>
+
+          <!-- Legend Bar below canvas -->
+          <div class="flex flex-wrap items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800 gap-2">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-cyan-400"></span> ద్విచక్ర వాహనాలు</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-amber-400"></span> ఆటో రిక్షాలు</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-blue-500"></span> కార్లు / టాక్సీలు</span>
+              <span class="flex items-center gap-1"><span class="w-3 h-2 rounded bg-emerald-400"></span> బస్సులు</span>
+              <span class="flex items-center gap-1"><span class="w-3 h-2 rounded bg-rose-500"></span> భారీ లారీలు</span>
+            </div>
+            <span class="text-[10px] text-slate-500">సిమ్యులేషన్ ఫ్రేమ్‌రేట్: ~60 FPS</span>
+          </div>
+        </div>
+
+        <!-- Right: Live Telemetry & Scenario Tuning (4 Cols) -->
+        <div class="lg:col-span-4 space-y-3 flex flex-col justify-between">
+          
+          <!-- Live Telemetry Card -->
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 shadow-xl space-y-3">
+            <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider border-b border-slate-800 pb-2">
+              📊 లైవ్ టెలిమెట్రీ గణాంకాలు (Live Telemetry)
+            </h4>
+
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                <span class="text-slate-400 text-[10px] block">సగటు వాహన వేగం:</span>
+                <span id="telemetry-speed" class="font-black text-cyan-400 text-base">14.8 km/h</span>
+                <span class="text-[9px] text-slate-500 block">కారిడార్ సగటు</span>
+              </div>
+              <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                <span class="text-slate-400 text-[10px] block">ప్రస్తుత క్యూ పొడవు:</span>
+                <span id="telemetry-queue" class="font-black text-rose-400 text-base">120 m</span>
+                <span class="text-[9px] text-slate-500 block">ఆగిన వాహనాలు</span>
+              </div>
+              <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                <span class="text-slate-400 text-[10px] block">క్లియరెన్స్ రేటు:</span>
+                <span id="telemetry-throughput" class="font-black text-emerald-400 text-base">42 veh/min</span>
+                <span class="text-[9px] text-slate-500 block">జంక్షన్ దాటినవి</span>
+              </div>
+              <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                <span class="text-slate-400 text-[10px] block">సగటు ఆలస్యం:</span>
+                <span id="telemetry-delay" class="font-black text-amber-300 text-base">64 sec</span>
+                <span class="text-[9px] text-slate-500 block">ప్రతి వాహనానికి</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scenario Switcher for Simulator -->
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 shadow-xl space-y-3">
+            <h4 class="text-xs font-bold text-white uppercase tracking-wider border-b border-slate-800 pb-2">
+              ⚙️ సిమ్యులేషన్ దృశ్యాలు (Simulation Scenarios)
+            </h4>
+
+            <div class="space-y-2 text-xs">
+              <button onclick="setSimScenario('baseline')" id="sim-scen-baseline" class="w-full text-left p-2 rounded-lg bg-slate-800 border border-slate-700 hover:border-slate-500 transition">
+                <b class="text-white block">1. బేస్‌లైన్ (Existing Chaos):</b>
+                <span class="text-[11px] text-slate-400">అస్తవ్యస్త ద్విముఖ రాకపోకలు, పార్కింగ్ అడ్డంకులు, అండర్‌పాస్ అప్రోచ్ వద్ద ట్రాఫిక్ బాటిల్‌నెక్.</span>
+              </button>
+              <button onclick="setSimScenario('scenario_a')" id="sim-scen-scenario_a" class="w-full text-left p-2 rounded-lg bg-amber-950/60 border border-amber-500/50 transition">
+                <b class="text-amber-300 block">2. దృశ్యం A (One-Way + Webster Signals):</b>
+                <span class="text-[11px] text-slate-300">ఏకముఖ ప్రవాహం, సింక్రనైజ్డ్ గ్రీన్-లైట్లు, క్రమబద్ధమైన ఆటో బేలు.</span>
+              </button>
+              <button onclick="setSimScenario('scenario_c')" id="sim-scen-scenario_c" class="w-full text-left p-2 rounded-lg bg-slate-800 border border-slate-700 hover:border-slate-500 transition">
+                <b class="text-cyan-300 block">3. దృశ్యం C (Smart ITMS + Underpass Channelization):</b>
+                <span class="text-[11px] text-slate-400">రైల్వే అండర్‌పాస్ వద్ద ఆటోమేటెడ్ డీవాటరింగ్ పంపులు & గ్రీన్-వేవ్ సిగ్నల్స్ ద్వారా నిరంతరాయ సాఫీ ప్రవాహం.</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Traffic Influx Density Slider -->
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 shadow-xl space-y-2">
+            <div class="flex justify-between text-xs text-slate-300">
+              <span>ట్రాఫిక్ ఇన్‌ఫ్లక్స్ తీవ్రత:</span>
+              <span id="sim-density-val" class="font-bold text-amber-400">100% పీక్ డిమాండ్</span>
+            </div>
+            <input type="range" id="sim-density-slider" min="40" max="220" step="10" value="100" oninput="updateSimDensity(this.value)" class="w-full accent-amber-500 cursor-pointer">
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 8: WARD-WISE TRAFFIC CONGESTION RANKING (ALL WARDS) -->
+    <!-- ============================================================ -->
+    <div id="tab-wards" class="tab-content hidden space-y-4">
+      
+      <!-- Ward Ranking Header -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 mb-1 inline-block">
+            వార్డుల వారీగా సమగ్ర ట్రాఫిక్ విశ్లేషణ
+          </span>
+          <h3 class="text-base font-bold text-white flex items-center gap-2">
+            భీమవరం పురపాలక సంఘం 52 వార్డుల రద్దీ ర్యాంకింగ్ & కార్యాచరణ ప్రణాళిక
+          </h3>
+          <p class="text-xs text-slate-400">
+            రహదారుల పొడవు, హాట్‌స్పాట్‌ల సంఖ్య, సగటు ప్రయాణ వేగం, పార్కింగ్ కొరత & భద్రతా ప్రమాదాల ఆధారంగా రూపొందించిన సమగ్ర సూచిక.
+          </p>
+        </div>
+        
+        <!-- Filter Controls -->
+        <div class="flex items-center gap-2 text-xs">
+          <span class="text-slate-400 font-semibold">ఫిల్టర్:</span>
+          <select id="ward-filter-tier" onchange="filterWardTable(this.value)" class="bg-slate-800 text-slate-200 text-xs rounded px-2.5 py-1.5 border border-slate-700">
+            <option value="all">అన్ని వార్డులు (All Wards)</option>
+            <option value="Immediate Tier-1">తక్షణ శ్రద్ధ (Immediate Tier-1)</option>
+            <option value="Tier-2">రెండవ ప్రాధాన్యత (Tier-2)</option>
+            <option value="Tier-3">మూడవ ప్రాధాన్యత (Tier-3)</option>
+            <option value="Tier-4">సాధారణ ప్రాంతాలు (Tier-4)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Ward Table -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-xl">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="text-[10px] text-slate-400 uppercase bg-slate-950/80 border-b border-slate-800">
+              <tr>
+                <th class="p-3">ర్యాంక్</th>
+                <th class="p-3">వార్డు సంఖ్య & పేరు (Ward Name)</th>
+                <th class="p-3 text-center">రద్దీ స్కోరు (1-100)</th>
+                <th class="p-3 text-right">రోడ్ నెట్‌వర్క్ (కి.మీ)</th>
+                <th class="p-3 text-center">హాట్‌స్పాట్లు</th>
+                <th class="p-3 text-right">సగటు వేగం</th>
+                <th class="p-3 text-center">పార్కింగ్ కొరత</th>
+                <th class="p-3 text-center">భద్రతా రిస్క్</th>
+                <th class="p-3 text-center">ప్రాధాన్యత చర్య</th>
+                <th class="p-3 text-center">మ్యాప్‌లో చూడు</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60" id="ward-ranking-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 9: DASHBOARD G - 5-YEAR INVESTMENT ROADMAP & PROJECTS -->
+    <!-- ============================================================ -->
+    <div id="tab-roadmap" class="tab-content hidden space-y-4">
+      
+      <!-- Investment Roadmap Summary Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+        <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl shadow">
+          <span class="text-xs text-amber-400 font-bold block">1. తక్షణ చర్యలు (0-6 నెలలు):</span>
+          <span class="text-xl font-black text-white">₹5.40 కోట్లు</span>
+          <span class="text-[10px] text-slate-400 block">వన్-వే పైలట్, వెబ్‌స్టర్ సిగ్నల్స్ & మార్కింగ్స్</span>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl shadow">
+          <span class="text-xs text-cyan-400 font-bold block">2. స్వల్పకాలికం (6-18 నెలలు):</span>
+          <span class="text-xl font-black text-white">₹28.60 కోట్లు</span>
+          <span class="text-[10px] text-slate-400 block">ప్రకాశం చౌక్ MLCP, కూడళ్ల పునర్నిర్మాణం</span>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl shadow">
+          <span class="text-xs text-emerald-400 font-bold block">3. మధ్యస్థ కాలికం (18-36 నెలలు):</span>
+          <span class="text-xl font-black text-white">₹64.50 కోట్లు</span>
+          <span class="text-[10px] text-slate-400 block">ITMS కమాండ్ సెంటర్, 24 ఈ-బస్సులు, గ్రీన్ ట్రాక్</span>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl shadow">
+          <span class="text-xs text-purple-400 font-bold block">4. దీర్ఘకాలిక విజన్ (3-5 సం.):</span>
+          <span class="text-xl font-black text-white">₹70.50 కోట్లు</span>
+          <span class="text-[10px] text-slate-400 block">రైల్వే ఓవర్‌బ్రిడ్జి (RoB) & లాజిస్టిక్స్ పార్క్</span>
+        </div>
+      </div>
+
+      <!-- Filter Bar for Projects -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 shadow-xl flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="text-slate-400 font-bold">దశ వారీ ఫిల్టర్:</span>
+          <button onclick="filterProjects('all')" class="proj-filter-btn px-2.5 py-1 rounded bg-amber-500 text-slate-950 font-bold">అన్నీ (12)</button>
+          <button onclick="filterProjects('Immediate')" class="proj-filter-btn px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700">0-6 నెలలు</button>
+          <button onclick="filterProjects('Short Term')" class="proj-filter-btn px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700">6-18 నెలలు</button>
+          <button onclick="filterProjects('Medium Term')" class="proj-filter-btn px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700">18-36 నెలలు</button>
+          <button onclick="filterProjects('Long Term')" class="proj-filter-btn px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700">3-5 సంవత్సరాలు</button>
+        </div>
+
+        <div class="text-slate-400">
+          మొత్తం 5-సంవత్సరాల బడ్జెట్: <b class="text-amber-400">₹169.00 కోట్లు</b> (రైల్వే & రాష్ట్ర భాగస్వామ్యంతో)
+        </div>
+      </div>
+
+      <!-- Projects Table -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-xl">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="text-[10px] text-slate-400 uppercase bg-slate-950/80 border-b border-slate-800">
+              <tr>
+                <th class="p-3">కోడ్ & దశ</th>
+                <th class="p-3">ప్రాజెక్టు పేరు & లక్ష్యం</th>
+                <th class="p-3">బాధ్యత గల శాఖ (Department)</th>
+                <th class="p-3 text-right">మూలధన వ్యయం (CapEx)</th>
+                <th class="p-3 text-center">గడువు</th>
+                <th class="p-3 text-center">ప్రస్తుత స్థితి</th>
+                <th class="p-3">ఆశించిన ప్రయోజనం</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60" id="roadmap-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TECHNICAL EXECUTIVE REPORT CONTAINER (For Print & Review) -->
+    <!-- ============================================================ -->
+    <div id="printable-report" class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl space-y-4">
+      <div class="border-b border-slate-800 pb-4 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <span class="text-[11px] font-bold text-amber-400 uppercase tracking-widest block mb-1">
+            BHIMAVARAM MUNICIPALITY — URBAN MOBILITY ACTION PLAN (2026-2031)
+          </span>
+          <h2 class="text-lg md:text-xl font-black text-white">
+            భీమవరం స్మార్ట్ అర్బన్ ట్రాఫిక్ మేనేజ్‌మెంట్ & మొబిలిటీ ఎగ్జిక్యూటివ్ రిపోర్ట్
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">
+            తయారుచేసిన వారు: అర్బన్ ట్రాఫిక్ ఇంజనీరింగ్ & సస్టైనబుల్ మొబిలిటీ ప్లానింగ్ గ్రూప్ (IRC కోడ్‌ల ప్రకారం)
+          </p>
+        </div>
+        <div class="text-right text-xs text-slate-400">
+          <div class="font-bold text-white">డాక్యుమెంట్ నంబర్: BV-ITMS-2026-V1</div>
+          <div>తేదీ: నవంబర్ 2026 | పశ్చిమ గోదావరి జిల్లా</div>
+        </div>
+      </div>
+
+      <!-- Report Key Highlights Matrix -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+        <div class="p-3 bg-slate-950/80 rounded-lg border border-slate-800">
+          <span class="text-slate-400 block text-[10px]">పీక్ ప్రయాణ సమయం తగ్గుదల:</span>
+          <span class="text-base font-extrabold text-emerald-400">24.8 నిమి. ➔ 10.5 నిమి.</span>
+          <span class="text-[10px] text-slate-500 block">58% సమయం ఆదా</span>
+        </div>
+        <div class="p-3 bg-slate-950/80 rounded-lg border border-slate-800">
+          <span class="text-slate-400 block text-[10px]">కూడళ్ల వద్ద ఆగే ఆలస్యం:</span>
+          <span class="text-base font-extrabold text-cyan-400">148 సెక. ➔ 32 సెకన్లు</span>
+          <span class="text-[10px] text-slate-500 block">78% డిలే తగ్గింపు</span>
+        </div>
+        <div class="p-3 bg-slate-950/80 rounded-lg border border-slate-800">
+          <span class="text-slate-400 block text-[10px]">వార్షిక కర్బన ఉద్గారాలు (CO2):</span>
+          <span class="text-base font-extrabold text-teal-400">17,739 ➔ 8,176 టన్నులు</span>
+          <span class="text-[10px] text-slate-500 block">54% కాలుష్య నియంత్రణ</span>
+        </div>
+        <div class="p-3 bg-slate-950/80 rounded-lg border border-slate-800">
+          <span class="text-slate-400 block text-[10px]">రోడ్డు ప్రమాదాల నివారణ:</span>
+          <span class="text-base font-extrabold text-amber-400">18 ➔ &lt; 2 మరణాలు/సం.</span>
+          <span class="text-[10px] text-slate-500 block">జీరో ఫెటాలిటీ విజన్</span>
+        </div>
+      </div>
+
+      <!-- Executive Recommendations Narrative -->
+      <div class="space-y-3 text-xs text-slate-300 leading-relaxed">
+        <h3 class="font-bold text-white text-sm">మునిసిపల్ అధికారులకు & పోలీస్ విభాగానికి కీలక సిఫార్సులు:</h3>
+        <ol class="list-decimal list-inside space-y-1.5 pl-1">
+          <li><b>తక్షణ వన్-వే లూప్ పైలట్:</b> పి.పి. రోడ్డును సౌత్‌బౌండ్ (Southbound) గాను, గాంధీ రోడ్డును నార్త్‌బౌండ్ (Northbound) గాను మొదటి దశలో ప్రయోగాత్మకంగా 60 రోజులు అమలు చేయడం.</li>
+          <li><b>ప్రకాశం చౌక్ అండర్‌పాస్ నిర్వహణ:</b> పాత గేట్ స్థానంలో నిర్మించిన అండర్‌పాస్ వద్ద 5 రోడ్ల ట్రాఫిక్‌ను క్రమబద్ధీకరించడానికి వెబ్‌స్టర్ సిగ్నల్ సమన్వయం, వర్షాకాలంలో ఆటోమేటెడ్ డీవాటరింగ్ పంపుల నిర్వహణ మరియు అప్రోచ్ రోడ్లలో ప్రత్యేక ఆటో బేలను ఏర్పాటు చేయడం.</li>
+          <li><b>ఆటో స్టాండ్ల కేటాయింపు:</b> టౌన్ రైల్వే స్టేషన్, ఆర్టీసీ బస్టాండ్ వద్ద క్యారేజ్‌వేపై పార్కింగ్ చేయకుండా నిర్దేశిత ఆఫ్-స్ట్రీట్ ఆటో బేలను ఏర్పాటు చేయడం.</li>
+          <li><b>భారీ సరుకు రవాణా నియంత్రణ:</b> పీక్ అవర్లలో (08:00-12:00 & 16:30-20:30) ఆక్వా మరియు వరి లారీల నగర ప్రవేశాన్ని పూర్తిగా నిషేధించి NH-165 బైపాస్ ద్వారా మళ్లించడం.</li>
+          <li><b>మల్టీమోడల్ గ్రీన్ కారిడార్:</b> ఎనమదుర్రు కాలువ గట్టు వెంట 5.4 కి.మీ ప్రత్యేక సైక్లింగ్ & ఎకో-మొబిలిటీ ట్రాక్ నిర్మించి కళాశాలల బైక్ రద్దీని తగ్గించడం.</li>
+        </ol>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 bg-slate-900/80 py-4 px-4 text-center text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-slate-200">భీమవరం పురపాలక సంఘం (Bhimavaram Municipality)</span>
+        <span>•</span>
+        <span>పశ్చిమ గోదావరి జిల్లా, ఆంధ్రప్రదేశ్</span>
+      </div>
+      <div class="flex items-center gap-3 text-slate-400">
+        <a href="index.html" class="hover:text-amber-400 transition">ముఖ్య పేజీ</a>
+        <span>•</span>
+        <a href="flood-flow-analysis.html" class="hover:text-cyan-400 transition">వరద AI విశ్లేషణ</a>
+        <span>•</span>
+        <a href="gis-ward-map.html" class="hover:text-blue-400 transition">GIS వార్డు మ్యాప్</a>
+        <span>•</span>
+        <span>IRC:106 / IRC:SP:41 సర్టిఫైడ్</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================ -->
+  <!-- APPLICATION SCRIPT & INTERACTIVE CONTROLLERS -->
+  <!-- ============================================================ -->
+  <script>
+    // Global State
+    let currentTab = 'tab-overview';
+    let currentScenario = 'scenario_a';
+    let leafletMap = null;
+    let baseLayers = {
+      google_streets: null,
+      google_hybrid: null,
+      osm: null
+    };
+    let currentBaseMap = 'google_streets';
+    let mapLayers = {
+      hotspots: null,
+      roads: null,
+      wards: null,
+      transit: null,
+      parking: null
+    };
+    let activeHotspotMarker = null;
+
+    // Simulation Engine State (Underpass RuB Grade-Separation)
+    let simAnimationId = null;
+    let simIsRunning = true;
+    let simUnderpassWaterlogged = false;
+    let simScenario = 'scenario_a';
+    let simDensityFactor = 1.0;
+    let simVehicles = [];
+    let simTrafficLights = [];
+    let simTimer = 0;
+
+    // Initialize Application
+    document.addEventListener('DOMContentLoaded', () => {
+      initMap();
+      populateDropdowns();
+      renderVehicleClassificationTable();
+      renderHourlyTrafficChart();
+      renderODMatrix();
+      renderJunctionEngineeringSelect();
+      renderEmissionsTable();
+      renderWardRankingTable();
+      renderRoadmapTable();
+      initSimulationEngine();
+    });
+
+    // Tab Switching Controller
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-amber-500/20', 'text-amber-300', 'border-amber-500/40');
+        btn.classList.add('text-slate-400');
+      });
+
+      const target = document.getElementById(tabId);
+      const btn = document.getElementById('btn-' + tabId);
+      if (target) target.classList.remove('hidden');
+      if (btn) {
+        btn.classList.add('bg-amber-500/20', 'text-amber-300', 'border-amber-500/40');
+        btn.classList.remove('text-slate-400');
+      }
+
+      currentTab = tabId;
+
+      if (tabId === 'tab-overview' && leafletMap) {
+        setTimeout(() => leafletMap.invalidateSize(), 200);
+      }
+    }
+
+    // Scenario Switching
+    function onScenarioChange(val) {
+      currentScenario = val;
+      setSimScenario(val);
+      updateScenarioMetrics();
+    }
+
+    function updateScenarioMetrics() {
+      const scen = BHIMAVARAM_TRAFFIC_DATA.scenarios.find(s => s.id === currentScenario);
+      if (!scen) return;
+
+      // Update relevant badges or indicators
+      const headerSelect = document.getElementById('header-scenario-select');
+      if (headerSelect) headerSelect.value = currentScenario;
+    }
+
+    // ============================================================
+    // GIS MAP INITIALIZATION (Dashboard A)
+    // ============================================================
+    function initMap() {
+      const mapContainer = document.getElementById('city-traffic-map');
+      if (!mapContainer || typeof L === 'undefined') return;
+
+      // Center around Bhimavaram
+      leafletMap = L.map('city-traffic-map', {
+        center: [16.5449, 81.5212],
+        zoom: 14,
+        zoomControl: true,
+        attributionControl: false
+      });
+
+      // Google Streets Maps (Official High-Resolution Road Network Map)
+      baseLayers.google_streets = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        maxZoom: 21,
+        attribution: 'Google Road Network Maps'
+      });
+
+      // Google Hybrid Maps (Google Satellite Imagery with Street Names Overlay)
+      baseLayers.google_hybrid = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+        maxZoom: 21,
+        attribution: 'Google Hybrid Maps'
+      });
+
+      // OpenStreetMap standard fallback
+      baseLayers.osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: 'OpenStreetMap'
+      });
+
+      // Embed Google Road Network Map at the background by default
+      baseLayers.google_streets.addTo(leafletMap);
+
+      // Initialize Layer Groups
+      mapLayers.hotspots = L.layerGroup().addTo(leafletMap);
+      mapLayers.roads = L.layerGroup().addTo(leafletMap);
+      mapLayers.wards = L.layerGroup().addTo(leafletMap);
+      mapLayers.transit = L.layerGroup();
+      mapLayers.parking = L.layerGroup().addTo(leafletMap);
+      mapLayers.loops = L.layerGroup();
+
+      // Render Wards Layer
+      renderWardsOnMap();
+
+      // Render Roads Layer
+      renderRoadsOnMap();
+
+      // Render Hotspots Layer
+      renderHotspotsOnMap();
+
+      // Render Transit, Parking & One-Way Loops Layers
+      renderTransitOnMap();
+      renderParkingOnMap();
+      renderLoopsOnMap();
+
+      // Populate Mini Hotspot List
+      renderMiniHotspotList();
+    }
+
+    function renderWardsOnMap() {
+      if (typeof BHIMAVARAM_39_WARDS === 'undefined' || !mapLayers.wards) return;
+
+      BHIMAVARAM_39_WARDS.forEach(w => {
+        if (!w.coords) return;
+
+        // Find ward congestion ranking score
+        const rankInfo = BHIMAVARAM_TRAFFIC_DATA.ward_congestion_ranking.find(r => r.ward === w.number);
+        const score = rankInfo ? rankInfo.score : 40;
+
+        let strokeColor = '#3b82f6';
+        let fillColor = '#1e3a8a';
+        if (score >= 80) { strokeColor = '#f43f5e'; fillColor = '#881337'; }
+        else if (score >= 65) { strokeColor = '#f59e0b'; fillColor = '#78350f'; }
+
+        const poly = L.polygon(w.coords, {
+          color: strokeColor,
+          weight: 1.5,
+          opacity: 0.7,
+          fillColor: fillColor,
+          fillOpacity: 0.15
+        }).addTo(mapLayers.wards);
+
+        poly.bindPopup(`
+          <div class="p-2 text-xs">
+            <div class="font-extrabold text-amber-400 text-sm">వార్డు #${w.number}</div>
+            <div class="font-semibold text-white">${w.nameTe || w.nameEn}</div>
+            <div class="text-[11px] text-slate-400 mt-1">రద్దీ స్కోరు: <b class="text-rose-400">${score}/100</b></div>
+            <div class="text-[10px] text-slate-400">రోడ్ నెట్‌వర్క్: ${rankInfo ? rankInfo.road_km : 4.5} కి.మీ</div>
+          </div>
+        `);
+      });
+    }
+
+    let roadLayers = {};
+
+    function renderRoadsOnMap() {
+      if (!BHIMAVARAM_TRAFFIC_DATA.road_segments || !mapLayers.roads) return;
+      mapLayers.roads.clearLayers();
+      roadLayers = {};
+
+      BHIMAVARAM_TRAFFIC_DATA.road_segments.forEach(r => {
+        let color = '#06b6d4'; // default cyan
+        let weight = 4.5;
+        let dashArray = null;
+
+        if (r.id === 'ROAD-04' || r.type.includes('National Highway')) {
+          color = '#ef4444'; // Red/Crimson for National Highway Bypass
+          weight = 6;
+        } else if (r.id === 'ROAD-08' || r.type.includes('State Highway')) {
+          color = '#f97316'; // Orange for State Highway
+          weight = 5.5;
+        } else if (r.tier === 1 || r.type.includes('Major Arterial')) {
+          color = '#f59e0b'; // Amber for Major Arterials
+          weight = 5;
+        } else if (r.tier === 8 || r.type.includes('Non-Motorized')) {
+          color = '#10b981'; // Emerald for Green NMT Promenade
+          weight = 4;
+          dashArray = '6, 6';
+        } else if (r.type.includes('Collector') || r.type.includes('Terminal')) {
+          color = '#818cf8'; // Indigo for Collectors & Campus links
+          weight = 3.8;
+        }
+
+        const polyline = L.polyline(r.coords, {
+          color: color,
+          weight: weight,
+          opacity: 0.9,
+          dashArray: dashArray
+        }).addTo(mapLayers.roads);
+
+        roadLayers[r.id] = polyline;
+
+        // Interactive hover effects
+        polyline.on('mouseover', function () {
+          this.setStyle({ weight: weight + 3, opacity: 1.0 });
+        });
+        polyline.on('mouseout', function () {
+          this.setStyle({ weight: weight, opacity: 0.9 });
+        });
+
+        polyline.bindPopup(`
+          <div class="p-2 text-xs max-w-[280px]">
+            <div class="flex items-center justify-between mb-1">
+              <span class="px-2 py-0.5 rounded text-[10px] bg-slate-800 text-amber-400 font-extrabold border border-amber-500/30">${r.type}</span>
+              <span class="text-[10px] text-slate-400 font-bold">${r.id}</span>
+            </div>
+            <div class="font-extrabold text-white text-sm mt-1">${r.nameTe}</div>
+            <div class="text-[11px] text-slate-300 mb-2">${r.name}</div>
+            
+            <div class="grid grid-cols-2 gap-1.5 text-[10px] bg-slate-950 p-2 rounded-lg border border-slate-800">
+              <div>క్యారేజ్‌వే వెడల్పు: <b class="text-white">${r.carriageway_width_m} మీ.</b></div>
+              <div>లేన్లు: <b class="text-white">${r.lanes} లేన్లు</b></div>
+              <div>పీక్ వాల్యూమ్: <b class="text-amber-400">${r.traffic_volume_pcu_hr.toLocaleString()} PCU</b></div>
+              <div>సామర్థ్యం: <b class="text-slate-300">${r.capacity_pcu_hr.toLocaleString()} PCU</b></div>
+              <div>V/C నిష్పత్తి: <b class="${r.vc_ratio > 1.3 ? 'text-rose-400' : 'text-emerald-400'} font-bold">${r.vc_ratio}</b></div>
+              <div>పీక్ వేగం: <b class="text-cyan-400">${r.peak_speed_kmh} km/h</b></div>
+            </div>
+
+            <div class="mt-2 text-[10px] text-rose-300 bg-rose-950/40 p-1.5 rounded border border-rose-900/50">
+              <b>బాటిల్‌నెక్:</b> ${r.bottleneck}
+            </div>
+          </div>
+        `);
+      });
+    }
+
+    function renderHotspotsOnMap() {
+      if (!BHIMAVARAM_TRAFFIC_DATA.hotspots || !mapLayers.hotspots) return;
+
+      BHIMAVARAM_TRAFFIC_DATA.hotspots.forEach(hs => {
+        let pinColor = '#f43f5e'; // red
+        if (hs.severity === 'Severe') pinColor = '#f97316';
+        else if (hs.severity === 'Moderate') pinColor = '#eab308';
+
+        const customIcon = L.divIcon({
+          className: 'custom-traffic-pin',
+          html: `
+            <div style="position:relative; width: 28px; height: 28px; display:flex; align-items:center; justify-content:center;">
+              <span class="pulse-ring" style="position:absolute; width: 28px; height: 28px; border-radius:9999px; background:${pinColor}; opacity:0.35;"></span>
+              <div style="width:20px; height:20px; border-radius:9999px; background:${pinColor}; border:2px solid #ffffff; display:flex; align-items:center; justify-content:center; color:#ffffff; font-weight:900; font-size:10px; box-shadow:0 0 10px ${pinColor};">
+                ${hs.rank}
+              </div>
+            </div>
+          `,
+          iconSize: [28, 28],
+          iconAnchor: [14, 14]
+        });
+
+        const marker = L.marker(hs.coords, { icon: customIcon }).addTo(mapLayers.hotspots);
+
+        marker.on('click', () => {
+          showHotspotDetails(hs);
+        });
+
+        marker.bindPopup(`
+          <div class="p-2 text-xs">
+            <span class="px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 font-extrabold border border-rose-500/30">ర్యాంక్ #${hs.rank} • LOS ${hs.los}</span>
+            <div class="font-bold text-white text-sm mt-1">${hs.nameTe}</div>
+            <div class="text-[11px] text-slate-300">${hs.name}</div>
+            <div class="mt-2 text-[11px] text-amber-300">పీక్ క్యూ: <b>${hs.queue_length_m} మీ.</b> | ఆలస్యం: <b>${hs.avg_delay_sec}s</b></div>
+            <button onclick="jumpToHotspot('${hs.id}')" class="mt-2 w-full py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded text-[10px]">
+              పూర్తి వివరాలు చూడండి
+            </button>
+          </div>
+        `);
+      });
+    }
+
+    function renderTransitOnMap() {
+      if (!BHIMAVARAM_TRAFFIC_DATA.public_transport || !mapLayers.transit) return;
+      mapLayers.transit.clearLayers();
+
+      // Render actual bus feeder route polylines following Google Maps streets
+      BHIMAVARAM_TRAFFIC_DATA.public_transport.proposed_electric_feeder_loops.forEach(loop => {
+        if (!loop.route_coords) return;
+
+        const line = L.polyline(loop.route_coords, {
+          color: loop.color,
+          weight: 4.5,
+          opacity: 0.9,
+          dashArray: '8, 6'
+        }).addTo(mapLayers.transit);
+
+        line.bindPopup(`
+          <div class="p-2 text-xs max-w-[260px]">
+            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-950 text-emerald-300 font-extrabold border border-emerald-500/40">🚌 సిటీ ఈ-బస్సు ఫీడర్ లూప్</span>
+            <div class="font-bold text-white text-sm mt-1">${loop.nameTe}</div>
+            <div class="text-[11px] text-slate-300">${loop.name}</div>
+            <div class="grid grid-cols-2 gap-1 mt-2 text-[10px] bg-slate-950 p-1.5 rounded">
+              <div>పొడవు: <b class="text-amber-400">${loop.length_km} కి.మీ</b></div>
+              <div>హెడ్‌వే: <b class="text-cyan-400">${loop.headway_min} నిమిషాలు</b></div>
+              <div>ఫ్లీట్: <b>${loop.fleet_ebuses} ఈ-బస్సులు</b></div>
+              <div>స్టాప్‌లు: <b>${loop.stops} బస్టాండ్‌లు</b></div>
+            </div>
+          </div>
+        `);
+      });
+
+      // Multimodal hubs pins
+      if (BHIMAVARAM_TRAFFIC_DATA.public_transport.multimodal_mobility_hubs) {
+        BHIMAVARAM_TRAFFIC_DATA.public_transport.multimodal_mobility_hubs.forEach(hub => {
+          const hubIcon = L.divIcon({
+            className: 'hub-pin',
+            html: `
+              <div style="width:26px; height:26px; border-radius:9999px; background:#10b981; border:2px solid #ffffff; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px #10b981;">
+                <span style="font-size:12px;">🚏</span>
+              </div>
+            `,
+            iconSize: [26, 26],
+            iconAnchor: [13, 13]
+          });
+
+          const m = L.marker(hub.coords, { icon: hubIcon }).addTo(mapLayers.transit);
+          m.bindPopup(`
+            <div class="p-2 text-xs">
+              <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/20 text-emerald-300 font-bold">మల్టీమోడల్ హబ్</span>
+              <div class="font-bold text-white text-sm mt-1">${hub.nameTe || hub.name}</div>
+              <div class="text-[11px] text-slate-300 mt-1">ఇంటర్‌ఛేంజ్: <b>${hub.interchange_type}</b></div>
+              <div class="text-[11px] text-amber-300">రోజువారీ రద్దీ: <b>${hub.daily_footfall.toLocaleString()} ప్రయాణికులు</b></div>
+            </div>
+          `);
+        });
+      }
+    }
+
+    function renderLoopsOnMap() {
+      if (!BHIMAVARAM_TRAFFIC_DATA.circulation_plan || !mapLayers.loops) return;
+      mapLayers.loops.clearLayers();
+
+      BHIMAVARAM_TRAFFIC_DATA.circulation_plan.one_way_loops.forEach(loop => {
+        if (!loop.loop_coords) return;
+
+        const poly = L.polyline(loop.loop_coords, {
+          color: '#3b82f6',
+          weight: 5,
+          opacity: 0.9,
+          dashArray: '10, 6'
+        }).addTo(mapLayers.loops);
+
+        poly.bindPopup(`
+          <div class="p-2 text-xs max-w-[280px]">
+            <span class="px-2 py-0.5 rounded text-[10px] bg-blue-950 text-blue-300 font-extrabold border border-blue-500/40">🔄 వన్-వే సర్క్యులేషన్ లూప్</span>
+            <div class="font-bold text-white text-sm mt-1">${loop.nameTe}</div>
+            <div class="text-[11px] text-slate-300">${loop.name}</div>
+            <div class="mt-2 text-[10px] bg-slate-950 p-2 rounded border border-slate-800 space-y-1">
+              <div>రోడ్ వెడల్పు లాభం: <b class="text-amber-400">+${loop.width_effective_gain_m || 3.0} మీటర్లు</b></div>
+              <div>క్యారేజ్‌వే సామర్థ్య పెంపు: <b class="text-emerald-400">+${loop.capacity_gain_pct}%</b></div>
+              <div class="text-rose-300"><b>అత్యవసర లేన్:</b> ${loop.emergency_access}</div>
+            </div>
+          </div>
+        `);
+      });
+    }
+
+    let parkingMarkers = {};
+
+    function renderParkingOnMap(filter = 'all') {
+      if (!BHIMAVARAM_TRAFFIC_DATA.parking_logistics || !mapLayers.parking) return;
+      mapLayers.parking.clearLayers();
+      parkingMarkers = {};
+
+      const logistics = BHIMAVARAM_TRAFFIC_DATA.parking_logistics;
+
+      // 1. Off-Street Parking Facilities (14 Locations)
+      if (filter === 'all' || filter === 'parking') {
+        logistics.proposed_facilities.forEach(pk => {
+          const isMlcp = pk.category === 'mlcp';
+          const bg = isMlcp ? '#7e22ce' : '#1d4ed8';
+          const border = isMlcp ? '#d8b4fe' : '#93c5fd';
+          const shadowColor = isMlcp ? 'rgba(168,85,247,0.7)' : 'rgba(37,99,235,0.7)';
+          const iconSymbol = isMlcp ? '🏢' : '🅿️';
+
+          const customIcon = L.divIcon({
+            className: 'custom-pk-divicon',
+            html: `
+              <div style="background:${bg}; border:2px solid ${border}; color:#ffffff; font-weight:900; font-size:12px; width:28px; height:28px; border-radius:6px; display:flex; align-items:center; justify-content:center; box-shadow:0 3px 10px ${shadowColor}; cursor:pointer;" title="${pk.nameTe}">
+                ${iconSymbol}
+              </div>
+            `,
+            iconSize: [28, 28],
+            iconAnchor: [14, 14]
+          });
+
+          const m = L.marker(pk.coords, { icon: customIcon }).addTo(mapLayers.parking);
+          parkingMarkers['PK:' + pk.id] = m;
+
+          m.bindPopup(`
+            <div class="p-2 text-xs min-w-[240px]">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="px-2 py-0.5 rounded text-[10px] font-black ${isMlcp ? 'bg-purple-900/60 text-purple-300 border border-purple-500/40' : 'bg-blue-900/60 text-blue-300 border border-blue-500/40'}">
+                  ${isMlcp ? 'మల్టీ లెవల్ కార్ పార్కింగ్ (G+4)' : 'మున్సిపల్ / పబ్లిక్ పార్కింగ్'}
+                </span>
+                <span class="text-[10px] text-slate-400 font-bold">వార్డు #${pk.ward}</span>
+              </div>
+              <div class="font-extrabold text-white text-sm leading-snug">${pk.nameTe}</div>
+              <div class="text-[11px] text-slate-300 mb-2">${pk.name}</div>
+              <div class="grid grid-cols-2 gap-1.5 bg-slate-950 p-2 rounded-lg border border-slate-800 text-[10px]">
+                <div>కార్ల సామర్థ్యం: <b class="text-cyan-400 text-xs">${pk.capacity_cars}</b></div>
+                <div>బైకుల సామర్థ్యం: <b class="text-amber-400 text-xs">${pk.capacity_tw}</b></div>
+                <div class="col-span-2 flex items-center justify-between border-t border-slate-800/80 pt-1 mt-0.5">
+                  <span class="text-slate-400">రుసుము విధానం:</span>
+                  <b class="text-slate-200">${pk.pay_and_park ? 'చెల్లింపు (Pay & Park)' : 'ఉచిత ప్రవేశం (Free)'}</b>
+                </div>
+                <div class="col-span-2 flex items-center justify-between text-emerald-400 font-semibold">
+                  <span>⚡ EV ఛార్జర్లు:</span>
+                  <b>${pk.ev_chargers || 0} పోర్టులు</b>
+                </div>
+              </div>
+              <div class="mt-2 text-[10px] text-slate-400 italic">${pk.fee_structure || ''}</div>
+            </div>
+          `);
+        });
+      }
+
+      // 2. Designated Auto-Rickshaw Stands (6 Stands)
+      if (filter === 'all' || filter === 'auto') {
+        logistics.designated_auto_stands.forEach(st => {
+          const autoIcon = L.divIcon({
+            className: 'custom-auto-divicon',
+            html: `
+              <div style="background:#d97706; border:2px solid #fde68a; color:#ffffff; font-weight:900; font-size:12px; width:26px; height:26px; border-radius:9999px; display:flex; align-items:center; justify-content:center; box-shadow:0 3px 10px rgba(217,119,6,0.8); cursor:pointer;" title="${st.nameTe}">
+                🛺
+              </div>
+            `,
+            iconSize: [26, 26],
+            iconAnchor: [13, 13]
+          });
+
+          const m = L.marker(st.coords, { icon: autoIcon }).addTo(mapLayers.parking);
+          parkingMarkers['AS:' + st.id] = m;
+
+          m.bindPopup(`
+            <div class="p-2 text-xs min-w-[230px]">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-500/40">
+                  అధీకృత ఆటో-రిక్షా స్టాండ్
+                </span>
+                <span class="text-[10px] text-slate-400 font-bold">వార్డు #${st.ward}</span>
+              </div>
+              <div class="font-extrabold text-white text-sm leading-snug">${st.nameTe}</div>
+              <div class="text-[11px] text-slate-300 mb-2">${st.name}</div>
+              <div class="bg-slate-950 p-2 rounded-lg border border-slate-800 text-[10px] space-y-1">
+                <div class="flex justify-between">
+                  <span class="text-slate-400">ఆటో సామర్థ్యం:</span>
+                  <b class="text-amber-400 text-xs">${st.capacity_autos} ఆటోలు</b>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">షెల్టర్డ్ బేలు:</span>
+                  <b class="text-white">${st.bays} ప్రత్యేక లేన్లు</b>
+                </div>
+                <div class="text-emerald-400 pt-1 border-t border-slate-800 text-[10px]">
+                  ${st.passenger_queues ? '✔ ప్రయాణికుల క్యూయింగ్ బారికేడ్లు అమర్చబడ్డాయి' : 'డ్రాప్-ఆఫ్ జోన్'}
+                </div>
+              </div>
+            </div>
+          `);
+        });
+      }
+
+      // 3. Strict No-Parking Corridors (4 Zones)
+      if (filter === 'all' || filter === 'noparking') {
+        logistics.enforced_no_parking_corridors.forEach(np => {
+          const noPkIcon = L.divIcon({
+            className: 'custom-nopk-divicon',
+            html: `
+              <div style="background:#dc2626; border:2px solid #fecaca; color:#ffffff; font-weight:900; font-size:12px; width:26px; height:26px; border-radius:9999px; display:flex; align-items:center; justify-content:center; box-shadow:0 3px 10px rgba(220,38,38,0.8); cursor:pointer;" title="${np.nameTe}">
+                🚫
+              </div>
+            `,
+            iconSize: [26, 26],
+            iconAnchor: [13, 13]
+          });
+
+          const m = L.marker(np.coords, { icon: noPkIcon }).addTo(mapLayers.parking);
+          parkingMarkers['NP:' + np.id] = m;
+
+          m.bindPopup(`
+            <div class="p-2 text-xs min-w-[240px]">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="px-2 py-0.5 rounded text-[10px] font-black bg-rose-950 text-rose-300 border border-rose-500/40">
+                  స్ట్రిక్ట్ నో-పార్కింగ్ కారిడార్
+                </span>
+                <span class="text-[10px] text-slate-400 font-bold">వార్డు #${np.ward}</span>
+              </div>
+              <div class="font-extrabold text-white text-sm leading-snug">${np.nameTe}</div>
+              <div class="text-[11px] text-slate-300 mb-2">${np.name}</div>
+              <div class="bg-slate-950 p-2 rounded-lg border border-rose-900/40 text-rose-300 text-[10px] leading-relaxed">
+                ${np.regulation}
+              </div>
+              <div class="mt-1 text-[9px] text-slate-400 text-center">
+                నిబంధన ఉల్లంఘిస్తే టో-అవే & రూల్ 15 AP పోలీస్ మోటార్ వెహికల్ యాక్ట్ జరిమానా
+              </div>
+            </div>
+          `);
+        });
+      }
+    }
+
+    function filterParkingMarkers(type) {
+      ['all', 'parking', 'auto', 'noparking'].forEach(cat => {
+        const btn = document.getElementById(`btn-pk-${cat}`);
+        if (!btn) return;
+        if (cat === type) {
+          btn.className = 'px-2 py-0.5 rounded bg-amber-500 text-slate-950 font-black text-xs transition shadow';
+        } else {
+          btn.className = 'px-2 py-0.5 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 font-medium text-xs transition';
+        }
+      });
+
+      renderParkingOnMap(type);
+    }
+
+    function setBaseMap(type) {
+      if (!leafletMap || !baseLayers[type]) return;
+
+      Object.values(baseLayers).forEach(layer => {
+        if (layer && leafletMap.hasLayer(layer)) {
+          leafletMap.removeLayer(layer);
+        }
+      });
+
+      baseLayers[type].addTo(leafletMap);
+      currentBaseMap = type;
+
+      // Update button styling
+      const btnHybrid = document.getElementById('btn-bm-google-hybrid');
+      const btnStreets = document.getElementById('btn-bm-google-streets');
+      const btnOsm = document.getElementById('btn-bm-osm');
+
+      if (btnStreets) btnStreets.className = (type === 'google_streets') ? 'px-2.5 py-1 rounded bg-cyan-500 text-slate-950 font-black text-xs transition shadow' : 'px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition';
+      if (btnHybrid) btnHybrid.className = (type === 'google_hybrid') ? 'px-2.5 py-1 rounded bg-cyan-500 text-slate-950 font-black text-xs transition shadow' : 'px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition';
+      if (btnOsm) btnOsm.className = (type === 'osm') ? 'px-2.5 py-1 rounded bg-cyan-500 text-slate-950 font-black text-xs transition shadow' : 'px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition';
+    }
+
+    function toggleLayer(layerName) {
+      const chk = document.getElementById(`layer-${layerName}-chk`);
+      if (!chk || !mapLayers[layerName] || !leafletMap) return;
+
+      if (chk.checked) {
+        leafletMap.addLayer(mapLayers[layerName]);
+      } else {
+        leafletMap.removeLayer(mapLayers[layerName]);
+      }
+    }
+
+    function jumpToHotspot(hotspotId) {
+      jumpToLocation('HS:' + hotspotId);
+    }
+
+    function jumpToLocation(val) {
+      if (!val || !leafletMap) return;
+
+      if (val.startsWith('HS:')) {
+        const id = val.replace('HS:', '');
+        const hs = BHIMAVARAM_TRAFFIC_DATA.hotspots.find(h => h.id === id);
+        if (hs) {
+          showHotspotDetails(hs);
+          leafletMap.flyTo(hs.coords, 17, { duration: 1.2 });
+        }
+      } else if (val.startsWith('PK:')) {
+        const id = val.replace('PK:', '');
+        const pk = BHIMAVARAM_TRAFFIC_DATA.parking_logistics.proposed_facilities.find(p => p.id === id);
+        if (pk) {
+          const chk = document.getElementById('layer-parking-chk');
+          if (chk && !chk.checked) {
+            chk.checked = true;
+            toggleLayer('parking');
+          }
+          leafletMap.flyTo(pk.coords, 17, { duration: 1.2 });
+          setTimeout(() => {
+            if (parkingMarkers['PK:' + id]) parkingMarkers['PK:' + id].openPopup();
+          }, 700);
+        }
+      } else if (val.startsWith('AS:')) {
+        const id = val.replace('AS:', '');
+        const st = BHIMAVARAM_TRAFFIC_DATA.parking_logistics.designated_auto_stands.find(s => s.id === id);
+        if (st) {
+          const chk = document.getElementById('layer-parking-chk');
+          if (chk && !chk.checked) {
+            chk.checked = true;
+            toggleLayer('parking');
+          }
+          leafletMap.flyTo(st.coords, 17, { duration: 1.2 });
+          setTimeout(() => {
+            if (parkingMarkers['AS:' + id]) parkingMarkers['AS:' + id].openPopup();
+          }, 700);
+        }
+      } else if (val.startsWith('NP:')) {
+        const id = val.replace('NP:', '');
+        const np = BHIMAVARAM_TRAFFIC_DATA.parking_logistics.enforced_no_parking_corridors.find(n => n.id === id);
+        if (np) {
+          const chk = document.getElementById('layer-parking-chk');
+          if (chk && !chk.checked) {
+            chk.checked = true;
+            toggleLayer('parking');
+          }
+          leafletMap.flyTo(np.coords, 17, { duration: 1.2 });
+          setTimeout(() => {
+            if (parkingMarkers['NP:' + id]) parkingMarkers['NP:' + id].openPopup();
+          }, 700);
+        }
+      } else if (val.startsWith('ROAD:')) {
+        const id = val.replace('ROAD:', '');
+        const r = BHIMAVARAM_TRAFFIC_DATA.road_segments.find(x => x.id === id);
+        if (r && roadLayers[id]) {
+          const chk = document.getElementById('layer-roads-chk');
+          if (chk && !chk.checked) {
+            chk.checked = true;
+            toggleLayer('roads');
+          }
+          leafletMap.fitBounds(roadLayers[id].getBounds(), { padding: [50, 50], maxZoom: 16 });
+          setTimeout(() => {
+            roadLayers[id].openPopup();
+          }, 600);
+        }
+      }
+    }
+
+    function showHotspotDetails(hs) {
+      document.getElementById('detail-rank-badge').innerText = `హాట్‌స్పాట్ #${hs.rank} (${hs.severity})`;
+      document.getElementById('detail-los-badge').innerText = `LOS ${hs.los}`;
+      document.getElementById('detail-title-te').innerText = hs.nameTe;
+      document.getElementById('detail-title-en').innerText = hs.name;
+      document.getElementById('detail-volume').innerText = `${hs.peak_pcu_hr.toLocaleString()} PCU/hr`;
+      document.getElementById('detail-vc-speed').innerText = `${hs.vc_ratio} | ${hs.avg_speed_kmh} km/h`;
+      document.getElementById('detail-queue').innerText = `${hs.queue_length_m} మీటర్లు`;
+      document.getElementById('detail-ward').innerText = `వార్డు ${hs.ward} (${hs.ward_name.slice(0, 24)}...)`;
+
+      // Causes
+      const causesEl = document.getElementById('detail-causes-list');
+      causesEl.innerHTML = hs.major_causes.map(c => `
+        <li class="flex items-start gap-1.5"><span class="text-rose-400">✖</span> ${c}</li>
+      `).join('');
+
+      // Interventions
+      const intervEl = document.getElementById('detail-interventions-list');
+      intervEl.innerHTML = hs.proposed_interventions.map(i => `
+        <li class="flex items-start gap-1.5"><span class="text-emerald-400">✔</span> ${i}</li>
+      `).join('');
+    }
+
+    function fitMapBounds() {
+      if (!leafletMap) return;
+      leafletMap.flyTo([16.5449, 81.5212], 14);
+    }
+
+    function toggleHotspotPulse() {
+      const pins = document.querySelectorAll('.pulse-ring');
+      pins.forEach(p => {
+        p.classList.toggle('hidden');
+      });
+    }
+
+    function renderMiniHotspotList() {
+      const container = document.getElementById('mini-hotspot-list');
+      if (!container) return;
+
+      container.innerHTML = BHIMAVARAM_TRAFFIC_DATA.hotspots.slice(0, 5).map(hs => `
+        <div onclick="jumpToHotspot('${hs.id}')" class="p-2 rounded-lg bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 cursor-pointer flex items-center justify-between text-xs transition">
+          <div class="flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-rose-500 text-white font-black text-[10px] flex items-center justify-center shrink-0">
+              ${hs.rank}
+            </span>
+            <div class="truncate max-w-[180px]">
+              <div class="font-bold text-white truncate text-[11px]">${hs.nameTe}</div>
+              <div class="text-[10px] text-slate-400 truncate">${hs.name}</div>
+            </div>
+          </div>
+          <span class="text-[10px] font-black text-rose-400 bg-rose-950/60 px-1.5 py-0.5 rounded">
+            LOS ${hs.los}
+          </span>
+        </div>
+      `).join('');
+    }
+
+    function populateDropdowns() {
+      const jumpSelect = document.getElementById('map-quick-jump');
+      if (!jumpSelect) return;
+
+      const logistics = BHIMAVARAM_TRAFFIC_DATA.parking_logistics;
+      let html = '<option value="">లొకేషన్ ఎంచుకోండి (హాట్‌స్పాట్ / పార్కింగ్)...</option>';
+
+      html += '<optgroup label="🚨 టాప్ 20 రద్దీ హాట్‌స్పాట్లు">';
+      BHIMAVARAM_TRAFFIC_DATA.hotspots.forEach(hs => {
+        html += `<option value="HS:${hs.id}">#${hs.rank}: ${hs.nameTe} (LOS ${hs.los})</option>`;
+      });
+      html += '</optgroup>';
+
+      html += '<optgroup label="🛣️ ప్రధాన 16 రహదారి కారిడార్లు (Road Corridors)">';
+      BHIMAVARAM_TRAFFIC_DATA.road_segments.forEach(r => {
+        html += `<option value="ROAD:${r.id}">${r.id}: ${r.nameTe} (${r.type})</option>`;
+      });
+      html += '</optgroup>';
+
+      html += '<optgroup label="🅿️ 14 మున్సిపల్ & పబ్లిక్ పార్కింగ్ కేంద్రాలు">';
+      logistics.proposed_facilities.forEach(pk => {
+        html += `<option value="PK:${pk.id}">${pk.nameTe} (వార్డు ${pk.ward})</option>`;
+      });
+      html += '</optgroup>';
+
+      html += '<optgroup label="🛺 6 అధీకృత ఆటో-రిక్షా స్టాండ్లు">';
+      logistics.designated_auto_stands.forEach(st => {
+        html += `<option value="AS:${st.id}">${st.nameTe} (వార్డు ${st.ward})</option>`;
+      });
+      html += '</optgroup>';
+
+      html += '<optgroup label="🚫 4 స్ట్రిక్ట్ నో-పార్కింగ్ కారిడార్లు">';
+      logistics.enforced_no_parking_corridors.forEach(np => {
+        html += `<option value="NP:${np.id}">${np.nameTe} (వార్డు ${np.ward})</option>`;
+      });
+      html += '</optgroup>';
+
+      jumpSelect.innerHTML = html;
+    }
+
+    // ============================================================
+    // DASHBOARD B: TRAFFIC & O-D MATRICES
+    // ============================================================
+    function renderVehicleClassificationTable() {
+      const tbody = document.getElementById('vehicle-class-tbody');
+      if (!tbody) return;
+
+      tbody.innerHTML = BHIMAVARAM_TRAFFIC_DATA.vehicle_classification.map(v => `
+        <tr class="hover:bg-slate-800/40 transition">
+          <td class="p-2 font-medium text-white">
+            <div>${v.nameTe}</div>
+            <div class="text-[10px] text-slate-400">${v.name}</div>
+          </td>
+          <td class="p-2 text-center font-bold text-amber-400">${v.pcu}</td>
+          <td class="p-2 text-right font-black text-cyan-400">${v.share_pct}%</td>
+          <td class="p-2 text-right text-slate-300">${v.speed_free_kmh} km/h</td>
+          <td class="p-2 text-right text-slate-300">${v.co2_g_km}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderHourlyTrafficChart() {
+      const container = document.getElementById('hourly-traffic-chart');
+      if (!container) return;
+
+      // 24-hour traffic volume percentages (typical urban profile with 2 peaks)
+      const hourlyFlow = [
+        1.5, 1.0, 0.8, 0.9, 1.8, 3.2, 5.5, 7.8, 9.8, 8.9, 6.5, 5.8,
+        5.2, 4.8, 5.5, 6.8, 8.5, 9.6, 9.2, 8.0, 6.2, 4.5, 3.0, 2.0
+      ];
+
+      container.innerHTML = hourlyFlow.map((pct, idx) => {
+        const heightPct = (pct / 10.0) * 100;
+        const isPeak = (idx >= 8 && idx <= 10) || (idx >= 17 && idx <= 19);
+        const barColor = isPeak ? 'bg-rose-500' : 'bg-cyan-600/80 hover:bg-cyan-400';
+
+        return `
+          <div class="flex-1 flex flex-col items-center h-full justify-end group relative cursor-pointer">
+            <div class="${barColor} w-full rounded-t transition-all duration-300" style="height: ${heightPct}%"></div>
+            <span class="text-[8px] text-slate-500 mt-1">${idx}h</span>
+            <div class="absolute -top-7 hidden group-hover:block bg-slate-800 text-white text-[9px] px-1.5 py-0.5 rounded shadow z-20 whitespace-nowrap">
+              ${idx}:00 - ${pct}% (~${Math.round(pct * 3420)} veh)
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderODMatrix() {
+      const container = document.getElementById('od-matrix-container');
+      if (!container) return;
+
+      const zones = BHIMAVARAM_TRAFFIC_DATA.od_analysis.zones;
+      const matrix = BHIMAVARAM_TRAFFIC_DATA.od_analysis.peak_od_sample_matrix;
+
+      let html = '<table class="w-full text-center text-[10px] border-collapse">';
+      
+      // Header row
+      html += '<tr class="bg-slate-950 text-slate-400 border-b border-slate-800"><th class="p-1.5 text-left">జోన్ (Origin \\ Dest)</th>';
+      zones.forEach(z => {
+        html += `<th class="p-1.5 font-bold" title="${z.nameTe}">${z.id}</th>`;
+      });
+      html += '</tr>';
+
+      // Rows
+      matrix.forEach((row, rIdx) => {
+        html += `<tr class="border-b border-slate-800/40 hover:bg-slate-800/30">`;
+        html += `<td class="p-1.5 text-left font-bold text-white whitespace-nowrap bg-slate-950/60">${zones[rIdx].id}: ${zones[rIdx].nameTe.slice(0, 16)}..</td>`;
+        
+        row.forEach((val, cIdx) => {
+          let cellBg = 'text-slate-400';
+          if (val > 1500) cellBg = 'bg-rose-500/20 text-rose-300 font-extrabold';
+          else if (val > 800) cellBg = 'bg-amber-500/20 text-amber-300 font-bold';
+          else if (val > 300) cellBg = 'text-slate-200';
+
+          html += `<td class="p-1 ${cellBg}">${val === 0 ? '-' : val}</td>`;
+        });
+        html += '</tr>';
+      });
+
+      html += '</table>';
+      container.innerHTML = html;
+    }
+
+    function highlightODZone(zoneIdx) {
+      renderODMatrix(); // can highlight specific row
+    }
+
+    // ============================================================
+    // DASHBOARD C: JUNCTION ANALYSIS & SIGNAL OPTIMIZER
+    // ============================================================
+    function renderJunctionEngineeringSelect() {
+      const sel = document.getElementById('junction-select');
+      if (!sel) return;
+
+      sel.innerHTML = BHIMAVARAM_TRAFFIC_DATA.junctions_engineering.map(j => `
+        <option value="${j.id}">${j.name} (${j.arms} Arms)</option>
+      `).join('');
+
+      renderJunctionAnalysis(BHIMAVARAM_TRAFFIC_DATA.junctions_engineering[0].id);
+    }
+
+    function renderJunctionAnalysis(jId) {
+      const j = BHIMAVARAM_TRAFFIC_DATA.junctions_engineering.find(x => x.id === jId);
+      if (!j) return;
+
+      document.getElementById('jn-title').innerText = j.name;
+      document.getElementById('jn-los-badge').innerText = `ప్రస్తుత LOS: ${j.existing_los} ➔ ప్రతిపాదిత: ${j.improved_los}`;
+      document.getElementById('jn-control-desc').innerText = `ప్రస్తుత నియంత్రణ: ${j.existing_control}`;
+      document.getElementById('jn-sat-flow').innerText = `${j.saturation_flow_pcu_hr.toLocaleString()} PCU/hr`;
+      document.getElementById('jn-peak-vol').innerText = `${j.peak_volume_pcu_hr.toLocaleString()} PCU/hr`;
+      document.getElementById('jn-delay-red').innerText = `-${j.delay_reduction_pct}%`;
+
+      document.getElementById('jn-turn-left').innerText = `${j.turning_movements.left} veh/hr`;
+      document.getElementById('jn-turn-thru').innerText = `${j.turning_movements.thru} veh/hr`;
+      document.getElementById('jn-turn-right').innerText = `${j.turning_movements.right} veh/hr`;
+
+      recalcWebster();
+    }
+
+    function recalcWebster() {
+      const ns = parseFloat(document.getElementById('slider-ns-flow').value);
+      const ew = parseFloat(document.getElementById('slider-ew-flow').value);
+      const L = parseFloat(document.getElementById('slider-lost-time').value);
+
+      document.getElementById('slider-ns-val').innerText = `${ns.toLocaleString()} PCU/hr`;
+      document.getElementById('slider-ew-val').innerText = `${ew.toLocaleString()} PCU/hr`;
+      document.getElementById('slider-lost-val').innerText = `${L} సెకన్లు`;
+
+      // Webster formula:
+      // Saturation flow S assumed ~ 3600 PCU/hr per arm
+      const y1 = Math.min(0.48, ns / 4400);
+      const y2 = Math.min(0.44, ew / 3800);
+      const Y = Math.min(0.92, y1 + y2);
+
+      let c0 = Math.round((1.5 * L + 5) / (1 - Y));
+      if (c0 > 150) c0 = 150;
+      if (c0 < 60) c0 = 60;
+
+      const totalGreen = c0 - L;
+      const g1 = Math.round(totalGreen * (y1 / Y));
+      const g2 = totalGreen - g1;
+
+      document.getElementById('webster-c0').innerText = `${c0} sec`;
+      document.getElementById('webster-green-split').innerText = `NS: ${g1}s | EW: ${g2}s`;
+    }
+
+    function applyOptimalTiming() {
+      alert('వెబ్‌స్టర్ సిగ్నల్ టైమింగ్ భీమవరం ITMS కంట్రోలర్‌కు విజయవంతంగా అనుసంధానించబడింది!');
+    }
+
+    // ============================================================
+    // DASHBOARD D: CIRCULATION PLAN
+    // ============================================================
+    function toggleCirculationMode(mode) {
+      const btnEx = document.getElementById('btn-circ-existing');
+      const btnProp = document.getElementById('btn-circ-proposed');
+
+      if (mode === 'proposed') {
+        btnProp.className = 'px-3 py-2 rounded-lg bg-blue-600 text-white font-extrabold shadow-lg transition';
+        btnEx.className = 'px-3 py-2 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 transition';
+      } else {
+        btnEx.className = 'px-3 py-2 rounded-lg bg-rose-600 text-white font-extrabold shadow-lg transition';
+        btnProp.className = 'px-3 py-2 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 transition';
+      }
+    }
+
+    // ============================================================
+    // DASHBOARD F: ENVIRONMENTAL EMISSIONS
+    // ============================================================
+    function renderEmissionsTable() {
+      const tbody = document.getElementById('emissions-tbody');
+      if (!tbody) return;
+
+      tbody.innerHTML = BHIMAVARAM_TRAFFIC_DATA.environmental_impact.scenario_comparison.map(s => `
+        <tr class="hover:bg-slate-800/40 transition">
+          <td class="p-2.5 font-bold text-white">${s.scenario}</td>
+          <td class="p-2.5 text-right font-black text-emerald-400">${s.co2_tonnes_yr.toLocaleString()}</td>
+          <td class="p-2.5 text-right text-slate-300">${s.nox_tonnes_yr}</td>
+          <td class="p-2.5 text-right text-slate-300">${s.pm25_tonnes_yr}</td>
+          <td class="p-2.5 text-right text-cyan-400 font-bold">${s.fuel_kl_yr.toLocaleString()}</td>
+          <td class="p-2.5 text-right text-rose-400 font-extrabold">₹${s.economic_loss_delay_cr_yr} కోట్లు</td>
+        </tr>
+      `).join('');
+    }
+
+    function recalcEmissions() {
+      const ev = parseFloat(document.getElementById('slider-ev-share').value);
+      const pt = parseFloat(document.getElementById('slider-pt-share').value);
+      const idle = parseFloat(document.getElementById('slider-idle-red').value);
+
+      document.getElementById('slider-ev-val').innerText = `${ev}% EVలు`;
+      document.getElementById('slider-pt-val').innerText = `${pt}% బస్సుల వైపు`;
+      document.getElementById('slider-idle-val').innerText = `${idle}% సమయం ఆదా`;
+
+      // dynamic savings calculation
+      const co2DailyBase = 48.6; // tonnes/day
+      const co2ReductionPct = (ev * 0.45) + (pt * 0.6) + (idle * 0.35);
+      const co2SavedDaily = (co2DailyBase * (co2ReductionPct / 100)).toFixed(1);
+
+      const fuelDailyBase = 22800; // litres/day
+      const fuelSaved = Math.round(fuelDailyBase * (co2ReductionPct / 100));
+
+      const costSavedAnnual = ((fuelSaved * 105 * 365) / 10000000).toFixed(1);
+
+      document.getElementById('calc-co2-save').innerText = `${co2SavedDaily} టన్నులు/రోజు`;
+      document.getElementById('calc-fuel-save').innerText = `${fuelSaved.toLocaleString()} లీటర్లు`;
+      document.getElementById('calc-cost-save').innerText = `₹${costSavedAnnual} కోట్లు/సం.`;
+    }
+
+    // ============================================================
+    // DASHBOARD H: REAL-TIME TRAFFIC SIMULATION ENGINE (CANVAS)
+    // ============================================================
+    function initSimulationEngine() {
+      const canvas = document.getElementById('trafficSimCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      // Create initial simulated vehicles
+      resetSim();
+
+      // Main animation loop
+      function simLoop() {
+        if (simIsRunning) {
+          updateSimState();
+          drawSimCanvas(ctx, canvas.width, canvas.height);
+        }
+        simAnimationId = requestAnimationFrame(simLoop);
+      }
+
+      simLoop();
+    }
+
+    function resetSim() {
+      simVehicles = [];
+      simTimer = 0;
+      simUnderpassWaterlogged = false;
+
+      // Spawn initial fleet of 45 vehicles along corridors
+      for (let i = 0; i < 45; i++) {
+        spawnVehicle(Math.random() * 800);
+      }
+      updateTelemetryUI(14.8, 45, 42, 64);
+    }
+
+    function spawnVehicle(forcedX = 0) {
+      const types = [
+        { type: '2w', width: 6, length: 12, color: '#38bdf8', maxSpd: 2.8 },
+        { type: '3w', width: 8, length: 14, color: '#f59e0b', maxSpd: 2.1 },
+        { type: 'car', width: 10, length: 20, color: '#3b82f6', maxSpd: 3.2 },
+        { type: 'bus', width: 12, length: 36, color: '#10b981', maxSpd: 1.8 },
+        { type: 'truck', width: 13, length: 38, color: '#f43f5e', maxSpd: 1.5 }
+      ];
+
+      const chosen = types[Math.floor(Math.random() * types.length)];
+      const lane = Math.random() > 0.5 ? 1 : 2; // lane 1 or 2
+      const direction = (simScenario === 'scenario_a' || simScenario === 'scenario_c') ? 1 : (Math.random() > 0.4 ? 1 : -1);
+
+      simVehicles.push({
+        x: forcedX || (direction === 1 ? -40 : 840),
+        y: lane === 1 ? 215 : 235,
+        targetY: lane === 1 ? 215 : 235,
+        type: chosen.type,
+        width: chosen.width,
+        length: chosen.length,
+        color: chosen.color,
+        speed: chosen.maxSpd * (0.8 + Math.random() * 0.4),
+        maxSpeed: chosen.maxSpd,
+        dir: direction,
+        stopped: false
+      });
+    }
+
+    function updateSimState() {
+      simTimer++;
+
+      // Traffic Light State Machine: Green (280 frames), Amber (40 frames), Red (180 frames)
+      const cyclePos = simTimer % 500;
+      let lightState = 'green';
+      if (cyclePos > 440) lightState = 'red';
+      else if (cyclePos > 380) lightState = 'amber';
+
+      const phaseEl = document.getElementById('sim-signal-phase');
+      if (phaseEl) {
+        if (lightState === 'green') phaseEl.innerHTML = '<span class="text-emerald-400">నార్త్-సౌత్ గ్రీన్</span>';
+        else if (lightState === 'amber') phaseEl.innerHTML = '<span class="text-amber-400">అంబర్ క్లియరెన్స్</span>';
+        else phaseEl.innerHTML = '<span class="text-rose-400">రెడ్ స్టాప్</span>';
+      }
+
+      // Random vehicle influx
+      if (Math.random() < 0.05 * simDensityFactor && simVehicles.length < 90) {
+        spawnVehicle();
+      }
+
+      // Update vehicle positions
+      let stoppedCount = 0;
+      let totalSpeed = 0;
+
+      for (let i = 0; i < simVehicles.length; i++) {
+        const v = simVehicles[i];
+        let desiredSpeed = v.maxSpeed;
+
+        // Grade-Separated Railway Underpass (RuB) at X = 485 to 565
+        // Continuous flow beneath railway line; if sump waterlogged in monsoon test, crawl speed
+        if (simUnderpassWaterlogged && v.x > 470 && v.x < 570) {
+          desiredSpeed = Math.min(desiredSpeed, v.maxSpeed * 0.35); // Slow crawl through waterlogged sump
+        }
+
+        // Check Traffic Light at X = 320
+        if (lightState === 'red' && v.dir === 1 && v.x > 260 && v.x < 315) {
+          desiredSpeed = 0;
+          v.stopped = true;
+        } else if (lightState === 'amber' && v.dir === 1 && v.x > 240 && v.x < 315) {
+          desiredSpeed = v.maxSpeed * 0.4;
+        }
+
+        // Check vehicle in front (Car following model)
+        for (let j = 0; j < simVehicles.length; j++) {
+          if (i !== j && simVehicles[j].dir === v.dir && Math.abs(simVehicles[j].y - v.y) < 12) {
+            const gap = (simVehicles[j].x - v.x) * v.dir;
+            if (gap > 0 && gap < v.length + 15) {
+              desiredSpeed = Math.min(desiredSpeed, simVehicles[j].speed * 0.7);
+              if (gap < v.length + 6) desiredSpeed = 0;
+            }
+          }
+        }
+
+        v.speed = desiredSpeed;
+        v.x += v.speed * v.dir;
+        totalSpeed += v.speed;
+        if (v.speed < 0.3) stoppedCount++;
+      }
+
+      // Remove offscreen vehicles
+      simVehicles = simVehicles.filter(v => v.x > -60 && v.x < 860);
+
+      // Update active vehicle badge
+      const activeEl = document.getElementById('sim-active-veh');
+      if (activeEl) activeEl.innerText = simVehicles.length;
+
+      // Telemetry update every 30 frames
+      if (simTimer % 30 === 0) {
+        const avgSpdKmh = (totalSpeed / Math.max(1, simVehicles.length) * 8.5).toFixed(1);
+        const queueM = stoppedCount * 6;
+        const throughput = Math.round(simVehicles.length * 0.9);
+        const delay = stoppedCount > 10 ? 95 : 32;
+        updateTelemetryUI(avgSpdKmh, queueM, throughput, delay);
+      }
+    }
+
+    function updateTelemetryUI(speed, queue, tp, delay) {
+      const elSpeed = document.getElementById('telemetry-speed');
+      const elQueue = document.getElementById('telemetry-queue');
+      const elTp = document.getElementById('telemetry-throughput');
+      const elDelay = document.getElementById('telemetry-delay');
+
+      if (elSpeed) elSpeed.innerText = `${speed} km/h`;
+      if (elQueue) elQueue.innerText = `${queue} m`;
+      if (elTp) elTp.innerText = `${tp} veh/min`;
+      if (elDelay) elDelay.innerText = `${delay} sec`;
+    }
+
+    function drawSimCanvas(ctx, W, H) {
+      // Background Road Canvas
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, W, H);
+
+      // Draw Main Arterial Road (P.P. Road) horizontally
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(0, 195, W, 70);
+
+      // Road Edges (white lines)
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, 195);
+      ctx.lineTo(W, 195);
+      ctx.moveTo(0, 265);
+      ctx.lineTo(W, 265);
+      ctx.stroke();
+
+      // Center Lane Divider (Dashed yellow)
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([12, 10]);
+      ctx.beginPath();
+      ctx.moveTo(0, 230);
+      ctx.lineTo(W, 230);
+      ctx.stroke();
+      ctx.setLineDash([]); // reset
+
+      // Cross Road (Rest House Road Crossroads at X = 320)
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(290, 0, 60, H);
+      ctx.strokeStyle = '#475569';
+      ctx.beginPath();
+      ctx.moveTo(290, 0); ctx.lineTo(290, 195);
+      ctx.moveTo(350, 0); ctx.lineTo(350, 195);
+      ctx.moveTo(290, 265); ctx.lineTo(290, H);
+      ctx.moveTo(350, 265); ctx.lineTo(350, H);
+      ctx.stroke();
+
+      // Zebra Crossings
+      ctx.fillStyle = '#f8fafc';
+      for (let z = 200; z < 265; z += 10) {
+        ctx.fillRect(275, z, 8, 5);
+        ctx.fillRect(355, z, 8, 5);
+      }
+
+      // Draw Elevated Railway Bridge Structure at X = 500 to 555
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(500, 0, 55, H);
+
+      // Elevated Railway Tracks passing OVER the road (running north-south across the bridge)
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(515, 0); ctx.lineTo(515, H);
+      ctx.moveTo(538, 0); ctx.lineTo(538, H);
+      ctx.stroke();
+
+      // Railway Sleepers
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1.5;
+      for (let r = 0; r < H; r += 12) {
+        ctx.beginPath();
+        ctx.moveTo(510, r); ctx.lineTo(544, r);
+        ctx.stroke();
+      }
+
+      // Train passing periodically on elevated tracks above roadway
+      const trainY = (simTimer * 4) % (H + 160) - 100;
+      ctx.fillStyle = '#2563eb';
+      ctx.fillRect(512, trainY, 30, 80);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 9px sans-serif';
+      ctx.fillText('🚆 SCR', 513, trainY + 45);
+
+      // Railway Underpass Subway Tunnel (Road passes UNDER the overhead bridge)
+      ctx.fillStyle = simUnderpassWaterlogged ? '#083344' : '#0f172a';
+      ctx.fillRect(490, 195, 75, 70);
+
+      // Underpass Bridge Girders / Portal Ceilings
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(490, 195, 75, 70);
+
+      // Underpass Status Text & Indicators
+      if (simUnderpassWaterlogged) {
+        // Waterlogged sump overlay
+        ctx.fillStyle = 'rgba(6, 182, 212, 0.45)';
+        ctx.fillRect(490, 195, 75, 70);
+        ctx.fillStyle = '#f59e0b';
+        ctx.font = 'bold 10px sans-serif';
+        ctx.fillText('⚠️ సంప్ వాటర్ (Crawl Speed)', 465, 185);
+      } else {
+        ctx.fillStyle = '#10b981';
+        ctx.font = 'bold 10px sans-serif';
+        ctx.fillText('🚇 టౌన్ అండర్‌పాస్ (RuB Flow: OK)', 460, 185);
+      }
+
+      // Draw Traffic Signal Box at Junction (X=280, Y=180)
+      const cyclePos = simTimer % 500;
+      let lightColor = '#10b981';
+      if (cyclePos > 440) lightColor = '#ef4444';
+      else if (cyclePos > 380) lightColor = '#f59e0b';
+
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(270, 160, 18, 32);
+      ctx.strokeStyle = '#334155';
+      ctx.strokeRect(270, 160, 18, 32);
+
+      // Light circle
+      ctx.fillStyle = lightColor;
+      ctx.beginPath();
+      ctx.arc(279, 176, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Road Names Text overlay
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.fillText('పి.పి. రోడ్డు (P.P. Road)', 40, 185);
+      ctx.fillText('ప్రకాశం చౌక్ జంక్షన్', 260, 40);
+      ctx.fillText('టౌన్ స్టేషన్ అండర్‌పాస్ (RuB)', 545, 185);
+
+      // Draw all simulated vehicles (moving continuously through underpass!)
+      simVehicles.forEach(v => {
+        ctx.fillStyle = v.color;
+        ctx.shadowColor = v.color;
+        ctx.shadowBlur = 4;
+        ctx.fillRect(v.x, v.y - v.width / 2, v.length, v.width);
+        ctx.shadowBlur = 0; // reset
+      });
+    }
+
+    function toggleSimPlay() {
+      simIsRunning = !simIsRunning;
+      document.getElementById('sim-play-icon').innerText = simIsRunning ? '⏸️' : '▶️';
+      document.getElementById('sim-play-text').innerText = simIsRunning ? 'పాజ్ (Pause)' : 'రన్ (Resume)';
+    }
+
+    function toggleUnderpassPump() {
+      simUnderpassWaterlogged = !simUnderpassWaterlogged;
+      const statusEl = document.getElementById('sim-gate-status');
+      const btn = document.getElementById('btn-underpass-pump');
+
+      if (simUnderpassWaterlogged) {
+        statusEl.innerHTML = '<span class="text-amber-400 font-bold">వాటర్‌లాగ్డ్ సంప్ (Crawl Speed)</span>';
+        btn.classList.remove('bg-cyan-700', 'hover:bg-cyan-600');
+        btn.classList.add('bg-rose-700', 'hover:bg-rose-600');
+        btn.innerHTML = '<span>🌧️ సంప్ వాటర్ మోడ్ (Pump Clears Flow)</span>';
+      } else {
+        statusEl.innerHTML = '<span class="text-emerald-400 font-bold">నిరంతరాయ గ్రేడ్-సెపరేషన్ (Smooth Flow)</span>';
+        btn.classList.remove('bg-rose-700', 'hover:bg-rose-600');
+        btn.classList.add('bg-cyan-700', 'hover:bg-cyan-600');
+        btn.innerHTML = '<span>🚇 అండర్‌పాస్ ప్రవాహం (RuB Flow: Normal)</span>';
+      }
+    }
+
+    function setSimScenario(scen) {
+      simScenario = scen;
+      const b1 = document.getElementById('sim-scen-baseline');
+      const b2 = document.getElementById('sim-scen-scenario_a');
+      const b3 = document.getElementById('sim-scen-scenario_c');
+
+      if (b1) b1.className = 'w-full text-left p-2 rounded-lg bg-slate-800 border border-slate-700 transition';
+      if (b2) b2.className = 'w-full text-left p-2 rounded-lg bg-slate-800 border border-slate-700 transition';
+      if (b3) b3.className = 'w-full text-left p-2 rounded-lg bg-slate-800 border border-slate-700 transition';
+
+      const activeBtn = document.getElementById(`sim-scen-${scen}`);
+      if (activeBtn) {
+        activeBtn.className = 'w-full text-left p-2 rounded-lg bg-amber-950/70 border border-amber-500/60 shadow transition';
+      }
+
+      resetSim();
+    }
+
+    function updateSimDensity(val) {
+      simDensityFactor = parseFloat(val) / 100;
+      document.getElementById('sim-density-val').innerText = `${val}% పీక్ డిమాండ్`;
+    }
+
+    // ============================================================
+    // TAB 8: WARD-WISE RANKING TABLE
+    // ============================================================
+    function renderWardRankingTable(tierFilter = 'all') {
+      const tbody = document.getElementById('ward-ranking-tbody');
+      if (!tbody) return;
+
+      const wards = BHIMAVARAM_TRAFFIC_DATA.ward_congestion_ranking.filter(w => {
+        if (tierFilter === 'all') return true;
+        return w.priority.includes(tierFilter);
+      });
+
+      tbody.innerHTML = wards.map(w => {
+        let badgeColor = 'bg-rose-500/20 text-rose-300 border border-rose-500/40';
+        if (w.score < 60) badgeColor = 'bg-slate-800 text-slate-300';
+        else if (w.score < 75) badgeColor = 'bg-amber-500/20 text-amber-300 border border-amber-500/40';
+
+        return `
+          <tr class="hover:bg-slate-800/40 transition">
+            <td class="p-3 font-black text-amber-400">#${w.rank}</td>
+            <td class="p-3">
+              <div class="font-bold text-white text-xs">${w.nameTe}</div>
+              <div class="text-[10px] text-slate-400">వార్డు #${w.ward}: ${w.nameEn}</div>
+            </td>
+            <td class="p-3 text-center">
+              <span class="px-2 py-0.5 rounded text-xs font-black ${badgeColor}">
+                ${w.score}/100
+              </span>
+            </td>
+            <td class="p-3 text-right font-semibold text-slate-200">${w.road_km} km</td>
+            <td class="p-3 text-center font-bold ${w.hotspots > 0 ? 'text-rose-400' : 'text-slate-500'}">
+              ${w.hotspots}
+            </td>
+            <td class="p-3 text-right font-bold text-cyan-400">${w.avg_speed} km/h</td>
+            <td class="p-3 text-center text-slate-300 text-[11px]">${w.parking_deficit}</td>
+            <td class="p-3 text-center">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold ${w.safety_risk === 'High' ? 'bg-rose-950 text-rose-300' : 'bg-slate-800 text-slate-400'}">
+                ${w.safety_risk}
+              </span>
+            </td>
+            <td class="p-3 text-center font-semibold text-amber-300 text-[11px]">${w.priority}</td>
+            <td class="p-3 text-center">
+              <button onclick="zoomToWard(${w.ward})" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-cyan-400 font-bold text-[10px] transition">
+                మ్యాప్ ➔
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filterWardTable(tier) {
+      renderWardRankingTable(tier);
+    }
+
+    function zoomToWard(wardNum) {
+      switchTab('tab-overview');
+      if (typeof BHIMAVARAM_39_WARDS !== 'undefined') {
+        const w = BHIMAVARAM_39_WARDS.find(x => x.number === wardNum);
+        if (w && w.center && leafletMap) {
+          leafletMap.flyTo(w.center, 16, { duration: 1.2 });
+        }
+      }
+    }
+
+    // ============================================================
+    // TAB 9: ROADMAP & PROJECTS TABLE
+    // ============================================================
+    function renderRoadmapTable(filterPhase = 'all') {
+      const tbody = document.getElementById('roadmap-tbody');
+      if (!tbody) return;
+
+      const projs = BHIMAVARAM_TRAFFIC_DATA.investment_roadmap.filter(p => {
+        if (filterPhase === 'all') return true;
+        return p.phase.includes(filterPhase);
+      });
+
+      tbody.innerHTML = projs.map(p => `
+        <tr class="hover:bg-slate-800/40 transition">
+          <td class="p-3">
+            <span class="font-extrabold text-amber-400 block">${p.project_code}</span>
+            <span class="text-[10px] text-slate-400">${p.phaseTe}</span>
+          </td>
+          <td class="p-3">
+            <div class="font-bold text-white text-xs">${p.nameTe}</div>
+            <div class="text-[10px] text-slate-400">${p.name}</div>
+          </td>
+          <td class="p-3 text-slate-300 text-xs">${p.dept}</td>
+          <td class="p-3 text-right font-black text-emerald-400 text-sm">₹${p.capex_cr.toFixed(2)} Cr</td>
+          <td class="p-3 text-center text-slate-400 text-[11px]">${p.timeline}</td>
+          <td class="p-3 text-center">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-950 text-cyan-300 border border-cyan-800/60">
+              ${p.status}
+            </span>
+          </td>
+          <td class="p-3 text-slate-300 text-[11px]">${p.expected_impact}</td>
+        </tr>
+      `).join('');
+    }
+
+    function filterProjects(phase) {
+      renderRoadmapTable(phase);
+    }
+  </script>
+</body>
+</html>

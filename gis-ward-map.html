@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="te" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>భీమవరం పురపాలక సంఘం – 39 వార్డుల GIS డిజిటల్ పటం & APSAC జలవనరులు (Bhimavaram 39 Wards GIS Map)</title>
+  
+  <!-- Comprehensive Site Meta Description depicting Total Functionality -->
+  <meta name="description" content="భీమవరం పురపాలక సంఘం 39 వార్డుల అధికారిక GIS మాస్టర్ ప్లాన్ & APSAC ఉపగ్రహ జలవనరుల పర్యవేక్షణ వ్యవస్థ. గూగుల్ శాటిలైట్ అలైన్‌మెంట్, ఒపాసిటీ బ్లెండింగ్, చెరువులు-కాలువల సర్వే (273.17 ఎకరాలు), కాలానుగుణ మార్పుల విశ్లేషణ మరియు GeoJSON ఎగుమతి.">
+  <meta name="keywords" content="భీమవరం మున్సిపాలిటీ, Bhimavaram GIS Map, 39 Wards, APSAC Waterbodies, Google Satellite Alignment, GeoJSON Export, Town Planning">
+  <meta property="og:title" content="భీమవరం పురపాలక సంఘం – 39 వార్డుల GIS పటం & APSAC జలవనరులు">
+  <meta property="og:description" content="స్కాన్ చేసిన అధికారిక టౌన్ ప్లాన్ గూగుల్ శాటిలైట్ మ్యాప్‌పై ప్రత్యక్ష అలైన్‌మెంట్, APSAC జలవనరుల పర్యవేక్షణ మరియు జియో-రిఫరెన్స్డ్ వార్డు సరిహద్దులు.">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Leaflet CSS & JS (Local Offline First with CDN Fallback) -->
+  <link rel="stylesheet" href="leaflet.css" onerror="this.onerror=null;this.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';" />
+  <script src="leaflet.js" onerror="this.onerror=null;this.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Telugu:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- 39 Wards GIS Data (Exact Scanned Map Alignment) -->
+  <script src="assets/bhimavaram_39_wards_data.js"></script>
+  
+  <!-- Waterbodies & Temporal Changes Data (APSAC Satellite Survey) -->
+  <script src="assets/bhimavaram_waterbodies_data.js"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', 'Tiro Telugu', sans-serif;
+    }
+    .telugu-font {
+      font-family: 'Tiro Telugu', 'Gautami', 'Nirmala UI', sans-serif;
+    }
+    #gisMap {
+      width: 100%;
+      height: 100%;
+      background: #090d16;
+    }
+    /* Waterbody Badges & Interactive Styling */
+    .waterbody-marker-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(12, 74, 110, 0.95);
+      border: 1.8px solid #38bdf8;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 10px;
+      border-radius: 9999px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 10px rgba(56, 189, 248, 0.6);
+      width: 28px !important;
+      height: 28px !important;
+      margin-left: -14px !important;
+      margin-top: -14px !important;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: auto;
+    }
+    .waterbody-marker-badge:hover, .waterbody-marker-badge.active {
+      transform: scale(1.3);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.95);
+      z-index: 9999 !important;
+    }
+    .waterbody-marker-badge.changed {
+      background: rgba(159, 18, 57, 0.95) !important;
+      border-color: #f43f5e !important;
+      color: #ffe4e6 !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 14px rgba(244, 63, 94, 0.85);
+      animation: pulseChangedBadge 1.8s infinite;
+    }
+    .waterbody-marker-badge.canal {
+      background: rgba(14, 116, 144, 0.95);
+      border-color: #22d3ee;
+      border-radius: 6px;
+      width: 34px !important;
+      height: 24px !important;
+      margin-left: -17px !important;
+      margin-top: -12px !important;
+    }
+    @keyframes pulseChangedBadge {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 8px rgba(244, 63, 94, 0.8); }
+      50% { transform: scale(1.22); box-shadow: 0 0 18px rgba(244, 63, 94, 1); }
+    }
+    .canal-flow-anim {
+      stroke-dasharray: 8, 5;
+      animation: canalFlow 30s linear infinite;
+    }
+    @keyframes canalFlow {
+      from { stroke-dashoffset: 300; }
+      to { stroke-dashoffset: 0; }
+    }
+    /* Crisp Centered Ward Number Marker */
+    .ward-number-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1.8px solid #38bdf8;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 11px;
+      border-radius: 9999px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 12px rgba(56, 189, 248, 0.6);
+      width: 26px !important;
+      height: 26px !important;
+      margin-left: -13px !important;
+      margin-top: -13px !important;
+      pointer-events: auto;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .ward-number-badge:hover, .ward-number-badge.active {
+      background: #f59e0b;
+      border-color: #ffffff;
+      color: #0f172a;
+      transform: scale(1.35);
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.95);
+      z-index: 9999 !important;
+    }
+    /* Scanned Map Overlay Blend Modes */
+    .blend-multiply {
+      mix-blend-mode: multiply;
+      filter: contrast(1.15) brightness(1.02);
+    }
+    .blend-normal {
+      mix-blend-mode: normal;
+    }
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.7);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #06b6d4;
+    }
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #475569 rgba(15, 23, 42, 0.7);
+    }
+
+    /* Independent Vertical Scrollbar for Right Information Panel */
+    #rightInfoPanel {
+      overflow-y: scroll !important;
+      scrollbar-width: thin !important;
+      scrollbar-color: #0284c7 #0f172a !important;
+      -webkit-overflow-scrolling: touch;
+    }
+    #rightInfoPanel::-webkit-scrollbar {
+      width: 8px !important;
+      display: block !important;
+    }
+    #rightInfoPanel::-webkit-scrollbar-track {
+      background: #0f172a !important;
+      border: 1px solid #1e293b !important;
+      border-radius: 8px !important;
+    }
+    #rightInfoPanel::-webkit-scrollbar-thumb {
+      background: #0284c7 !important;
+      border: 1.5px solid #38bdf8 !important;
+      border-radius: 8px !important;
+    }
+    #rightInfoPanel::-webkit-scrollbar-thumb:hover {
+      background: #38bdf8 !important;
+    }
+    @media (max-width: 1023px) {
+      body {
+        overflow-y: auto !important;
+        height: auto !important;
+        max-height: none !important;
+      }
+      main {
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+      #gisMap {
+        min-height: 420px;
+        height: 55vh;
+      }
+      #rightInfoPanel {
+        max-height: 650px !important;
+        height: auto !important;
+      }
+    }
+    /* Leaflet popup customization */
+    .leaflet-popup-content-wrapper {
+      background: #0f172a !important;
+      color: #e2e8f0 !important;
+      border: 1px solid #334155 !important;
+      border-radius: 10px !important;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7) !important;
+    }
+    .leaflet-popup-tip {
+      background: #0f172a !important;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 h-screen max-h-screen antialiased flex flex-col selection:bg-cyan-500 selection:text-white overflow-hidden">
+
+  <!-- Top Navigation Bar -->
+  <header class="border-b border-slate-800 bg-slate-900/95 backdrop-blur z-30 px-3 sm:px-4 py-2.5 shadow-lg flex-shrink-0">
+    <div class="max-w-[1700px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Logo & Title -->
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 via-orange-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-cyan-500/20 text-white font-bold text-lg border border-white/20">
+          🗺️
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-sm sm:text-base font-bold tracking-tight text-white flex items-center gap-1.5">
+              <span>భీమవరం పురపాలక సంఘం – 39 వార్డుల GIS డిజిటల్ పటం</span>
+            </h1>
+            <span class="px-2 py-0.5 text-[10px] font-semibold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+              Scanned Map & Google Maps Aligned
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 telugu-font hidden sm:block">
+            టౌన్ ప్లాన్ సరిహద్దులతో నూతన GIS పాలిగాన్లు మరియు వార్డు సంఖ్యలు 1 నుండి 39
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex items-center gap-2">
+        <button onclick="toggleWaterbodiesModal()" class="inline-flex items-center gap-1.5 bg-gradient-to-r from-sky-600 via-blue-600 to-cyan-600 hover:from-sky-500 hover:to-cyan-500 text-white font-bold border border-sky-400/50 px-3 py-1.5 rounded-lg text-xs shadow-lg shadow-sky-950/60 transition hover:scale-105 active:scale-95" title="చెరువులు, కాలువలు & కాలానుగుణ మార్పుల సమగ్ర సమాచారం">
+          <span class="text-sm">🌊</span>
+          <span>చెరువులు & కాలువలు</span>
+          <span class="bg-sky-950/80 text-sky-200 text-[10px] px-1.5 py-0.5 rounded border border-sky-400/40">15 లేయర్లు</span>
+        </button>
+        <a href="flood-flow-analysis.html" class="inline-flex items-center gap-1.5 bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white font-bold border border-purple-400/50 px-3 py-1.5 rounded-lg text-xs shadow-lg shadow-purple-950/60 transition hover:scale-105 active:scale-95" title="వరద ప్రవాహ విశ్లేషణ, డ్రైనేజీ మోడలింగ్ & AI ఏజెంట్ ఫలితాలు">
+          <span class="text-sm">🌊🤖</span>
+          <span>వరద AI విశ్లేషణ ➔</span>
+        </a>
+        <a href="traffic-mobility-system.html" class="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 via-orange-600 to-rose-600 hover:from-amber-400 hover:to-rose-500 text-slate-950 font-black border border-amber-300/60 px-3 py-1.5 rounded-lg text-xs shadow-lg shadow-amber-950/60 transition hover:scale-105 active:scale-95" title="భీమవరం స్మార్ట్ ట్రాఫిక్ & సస్టైనబుల్ మొబిలిటీ ప్లానింగ్ సిస్టమ్">
+          <span class="text-sm">🚦🤖</span>
+          <span>స్మార్ట్ ట్రాఫిక్ AI ఫలితాలు ➔</span>
+        </a>
+        <button onclick="toggleCalibratorModal()" class="inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-medium transition" title="స్కాన్ చేసిన పటం అలైన్మెంట్ సర్దుబాటు">
+          <span>⚙️ అలైన్‌మెంట్ టూల్</span>
+        </button>
+        <button onclick="exportGeoJSON()" class="inline-flex items-center gap-1.5 bg-cyan-700/80 hover:bg-cyan-600 text-cyan-100 border border-cyan-500/40 px-3 py-1.5 rounded-lg text-xs font-medium transition" title="GeoJSON ఫైల్ డౌన్‌లోడ్ చేసుకోండి">
+          <span>📥 GeoJSON ఎగుమతి</span>
+        </button>
+        <a href="index.html" class="inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg text-xs border border-slate-700 transition">
+          <span>⬅️ 52 వార్డుల పోర్టల్</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Controls & Layer Toolbar -->
+  <div class="bg-slate-900/90 border-b border-slate-800 px-3 sm:px-4 py-2 flex-shrink-0 z-20">
+    <div class="max-w-[1700px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+      
+      <!-- Left: Search Box -->
+      <div class="relative flex-1 min-w-[200px] max-w-sm">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">🔍</span>
+        <input 
+          type="text" 
+          id="wardSearchInput" 
+          placeholder="వార్డు నెంబర్ (1-39) లేదా ప్రాంతం (DNR, స్టేషన్, రాయలం, జువ్వలపాలెం...)" 
+          class="w-full bg-slate-950/80 border border-slate-700 text-slate-200 pl-9 pr-8 py-1.5 rounded-lg text-xs placeholder:text-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+          oninput="handleWardSearch(this.value)"
+        >
+        <button onclick="clearSearch()" class="absolute inset-y-0 right-0 flex items-center pr-2.5 text-slate-500 hover:text-slate-300" title="Clear">✕</button>
+      </div>
+
+      <!-- Center: View Mode Presets -->
+      <div class="flex items-center bg-slate-950/80 p-1 rounded-lg border border-slate-800">
+        <span class="text-slate-400 text-[11px] px-2 font-medium">వీక్షణ మోడ్:</span>
+        <button onclick="setViewPreset('aligned')" id="btnPreset_aligned" class="px-2.5 py-1 rounded text-xs font-semibold bg-amber-500 text-slate-950 shadow-md transition" title="స్కాన్ చేసిన పటం మరియు Google Maps అనుసంధాన వీక్షణ">
+          🔀 అలైన్మెంట్ మోడ్
+        </button>
+        <button onclick="setViewPreset('waterbodies')" id="btnPreset_waterbodies" class="px-2.5 py-1 rounded text-xs text-sky-400 hover:text-white transition font-semibold" title="చెరువులు, కాలువలు & APSAC శాటిలైట్ మ్యాప్ వీక్షణ">
+          🌊 జలవనరుల మోడ్
+        </button>
+        <button onclick="setViewPreset('scanned_only')" id="btnPreset_scanned_only" class="px-2.5 py-1 rounded text-xs text-slate-400 hover:text-white transition" title="స్కాన్ చేసిన పటం మాత్రమే">
+          📜 స్కాన్ పటం (100%)
+        </button>
+        <button onclick="setViewPreset('satellite')" id="btnPreset_satellite" class="px-2.5 py-1 rounded text-xs text-slate-400 hover:text-white transition" title="Google Satellite వీక్షణ">
+          🛰️ శాటిలైట్ మోడ్
+        </button>
+        <button onclick="setViewPreset('streets')" id="btnPreset_streets" class="px-2.5 py-1 rounded text-xs text-slate-400 hover:text-white transition" title="Google Streets వీక్షణ">
+          🗺️ గూగుల్ రోడ్లు
+        </button>
+      </div>
+
+      <!-- Right: Overlay Sliders & Layer Checkboxes -->
+      <div class="flex flex-wrap items-center gap-3">
+        
+        <!-- Scanned Map Opacity Slider -->
+        <div class="flex items-center gap-2 bg-slate-950/80 px-2.5 py-1 rounded-lg border border-slate-800">
+          <span class="text-amber-400 text-[11px] font-medium">📜 స్కాన్ పటం:</span>
+          <input 
+            type="range" 
+            id="scannedOpacitySlider" 
+            min="0" 
+            max="100" 
+            value="80" 
+            class="w-20 accent-amber-500 cursor-pointer"
+            oninput="changeScannedOpacity(this.value)"
+          >
+          <span id="scannedOpacityLabel" class="text-amber-400 font-mono text-[11px] w-8">80%</span>
+        </div>
+
+        <!-- Ward Polygons Fill Slider -->
+        <div class="flex items-center gap-2 bg-slate-950/80 px-2.5 py-1 rounded-lg border border-slate-800">
+          <span class="text-cyan-400 text-[11px] font-medium">🎨 రంగుల ఫిల్:</span>
+          <input 
+            type="range" 
+            id="wardOpacitySlider" 
+            min="0" 
+            max="90" 
+            value="18" 
+            class="w-16 accent-cyan-500 cursor-pointer"
+            oninput="changeWardOpacity(this.value)"
+          >
+          <span id="wardOpacityLabel" class="text-cyan-400 font-mono text-[11px] w-8">18%</span>
+        </div>
+
+        <!-- Layer Toggles -->
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          <label class="flex items-center gap-1 cursor-pointer bg-slate-950/80 px-2 py-1 rounded border border-slate-800 text-sky-300 hover:border-sky-500/50" title="చెరువులు (T1-T9) మరియు కాలువలు (C1-C6) చూపించు/దాచు">
+            <input type="checkbox" id="chkShowWaterbodies" checked onchange="toggleWaterbodiesLayer(this.checked)" class="accent-sky-500 rounded">
+            <span class="text-sky-300 text-[11px] font-medium">🌊 చెరువులు & కాలువలు</span>
+          </label>
+          <label class="flex items-center gap-1 cursor-pointer bg-slate-950/80 px-2 py-1 rounded border border-slate-800 text-pink-300 hover:border-pink-500/50" title="2011 లో మార్పులకు గురైన ట్యాంక్ 7 (1.42 AC) హైలైట్">
+            <input type="checkbox" id="chkShowChanges" checked onchange="toggleChangesLayer(this.checked)" class="accent-pink-500 rounded">
+            <span class="text-pink-300 text-[11px] font-medium">⚠️ 2011 మార్పులు (T7)</span>
+          </label>
+          <label class="flex items-center gap-1 cursor-pointer bg-slate-950/80 px-2 py-1 rounded border border-slate-800 text-cyan-300 hover:border-cyan-500/50" title="అధికారిక APSAC శాటిలైట్ సర్వే పటాన్ని GIS మ్యాప్‌పై ఓవర్‌లే చేయండి">
+            <input type="checkbox" id="chkShowApsacOverlay" onchange="toggleApsacOverlay(this.checked)" class="accent-cyan-500 rounded">
+            <span class="text-cyan-300 text-[11px] font-medium">🛰️ APSAC మ్యాప్ ఓవర్‌లే</span>
+          </label>
+          <label class="flex items-center gap-1 cursor-pointer bg-slate-950/80 px-2 py-1 rounded border border-slate-800">
+            <input type="checkbox" id="chkShowNumbers" checked onchange="toggleWardNumbers(this.checked)" class="accent-cyan-500 rounded">
+            <span class="text-slate-300 text-[11px]">🔢 వార్డులు (1-39)</span>
+          </label>
+          <label class="flex items-center gap-1 cursor-pointer bg-slate-950/80 px-2 py-1 rounded border border-slate-800">
+            <input type="checkbox" id="chkShowScanned" checked onchange="toggleScannedOverlay(this.checked)" class="accent-amber-500 rounded">
+            <span class="text-slate-300 text-[11px]">📜 స్కాన్ పటం</span>
+          </label>
+          <label class="flex items-center gap-1 cursor-pointer bg-slate-950/80 px-2 py-1 rounded border border-slate-800">
+            <input type="checkbox" id="chkShowLandmarks" checked onchange="toggleLandmarks(this.checked)" class="accent-emerald-500 rounded">
+            <span class="text-slate-300 text-[11px]">📍 గుర్తులు</span>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Main View Area (Map + Side Panel) -->
+  <main class="flex-1 w-full max-w-[1700px] mx-auto p-2 sm:p-3 grid grid-cols-1 lg:grid-cols-12 gap-3 min-h-0 overflow-hidden" style="height: calc(100vh - 125px); max-height: calc(100vh - 125px);">
+    
+    <!-- Left Map View (8 cols) -->
+    <div class="lg:col-span-8 flex flex-col h-full min-h-0 rounded-xl overflow-hidden border border-slate-800 bg-slate-900 shadow-2xl relative">
+      
+      <!-- Leaflet Map Container -->
+      <div id="gisMap" class="w-full flex-1 relative z-10"></div>
+
+      <!-- Floating Waterbodies Quick Button -->
+      <button onclick="toggleWaterbodiesModal()" class="absolute top-3 right-14 z-20 bg-slate-900/95 hover:bg-sky-950 text-sky-300 border border-sky-500/50 rounded-xl px-3 py-1.5 shadow-2xl flex items-center gap-2 text-xs font-semibold backdrop-blur transition hover:scale-105 active:scale-95 group">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span>
+        </span>
+        <span class="group-hover:text-white">🌊 చెరువులు & కాలువలు</span>
+        <span class="bg-sky-500/20 text-sky-200 text-[10px] px-1.5 py-0.5 rounded font-mono border border-sky-400/30">15 APSAC</span>
+      </button>
+
+      <!-- Floating Quick Nudge Bar (Direct Alignment Controls on Screen) -->
+      <div class="absolute top-3 left-14 z-20 bg-slate-900/90 backdrop-blur border border-slate-700/80 rounded-xl p-1.5 shadow-xl flex items-center gap-1.5 text-xs text-slate-300">
+        <span class="text-[11px] font-semibold text-amber-400 pl-1">లైవ్ అలైన్‌మెంట్:</span>
+        <button onclick="nudgeOverlay(0.0003, 0)" class="bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded font-bold border border-slate-700 hover:text-white" title="ఉత్తరానికి జరపండి">⬆️</button>
+        <button onclick="nudgeOverlay(-0.0003, 0)" class="bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded font-bold border border-slate-700 hover:text-white" title="దక్షిణానికి జరపండి">⬇️</button>
+        <button onclick="nudgeOverlay(0, -0.0003)" class="bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded font-bold border border-slate-700 hover:text-white" title="పశ్చిమానికి జరపండి">⬅️</button>
+        <button onclick="nudgeOverlay(0, 0.0003)" class="bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded font-bold border border-slate-700 hover:text-white" title="తూర్పునకు జరపండి">➡️</button>
+        <span class="text-slate-600">|</span>
+        <button onclick="scaleOverlay(1.008)" class="bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded font-bold border border-slate-700 hover:text-white" title="పరిమాణం పెంచండి (Scale Up)">➕</button>
+        <button onclick="scaleOverlay(0.992)" class="bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded font-bold border border-slate-700 hover:text-white" title="పరిమాణం తగ్గించండి (Scale Down)">➖</button>
+        <button onclick="resetAlignment()" class="bg-amber-600/30 text-amber-300 hover:bg-amber-600/50 px-2 py-1 rounded font-semibold text-[10px] border border-amber-500/40" title="రీసెట్ చేయండి">రీసెట్</button>
+      </div>
+
+      <!-- Coordinates & Zoom Status Bar at Bottom -->
+      <div class="bg-slate-950/90 border-t border-slate-800 px-3 py-1.5 flex flex-wrap items-center justify-between text-[11px] text-slate-400 z-20">
+        <div class="flex items-center gap-3">
+          <span class="flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span id="coordsDisplay">అక్షాంశం: 16.5442° N | రేఖాంశం: 81.5284° E</span>
+          </span>
+          <span class="text-slate-600">|</span>
+          <span id="zoomLevelDisplay">జూమ్: 14</span>
+          <span class="text-slate-600">|</span>
+          <span class="text-amber-400">స్కేల్: 1 అంగుళం = 660 అడుగులు (Town Map Plan)</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="resetMapView()" class="text-cyan-400 hover:text-cyan-300 underline text-[11px]">
+            🔄 పూర్తి భీమవరం వీక్షించండి
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right: Ward Demographics & Intelligence Drawer (4 cols with dedicated independent vertical scroll) -->
+    <div id="rightInfoPanel" class="lg:col-span-4 flex flex-col h-full min-h-0 space-y-3 pr-1.5" style="max-height: 100%; height: 100%; overflow-y: scroll !important;">
+      
+      <!-- Scroll Indicator Hint -->
+      <div class="flex items-center justify-between px-2.5 py-1 bg-slate-900/95 border border-cyan-500/30 rounded-lg text-[11px] text-cyan-300 flex-shrink-0 shadow-sm">
+        <span class="flex items-center gap-1.5 font-medium">
+          <span class="animate-pulse text-xs">↕️</span>
+          <span>వార్డు సమగ్ర వివరాల ప్యానెల్ (వర్టికల్ స్క్రోల్)</span>
+        </span>
+        <span class="text-[10px] text-slate-400 font-mono">Scroll ⬇️</span>
+      </div>
+
+      <!-- Selected Ward Details Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl flex flex-col flex-shrink-0">
+        
+        <!-- Header of Card -->
+        <div class="border-b border-slate-800 pb-3 mb-3 flex-shrink-0">
+          <div class="flex items-center justify-between">
+            <span id="sideWardBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+              వార్డు 29
+            </span>
+            <span id="sideWardZone" class="text-[11px] text-slate-400 font-semibold bg-slate-800 px-2 py-0.5 rounded border border-slate-700">
+              South West
+            </span>
+          </div>
+          <h2 id="sideWardNameTe" class="text-base font-bold text-white mt-1.5 telugu-font leading-snug">
+            డి.ఎన్.ఆర్. కాలేజీ & రాయలం సరిహద్దు
+          </h2>
+          <p id="sideWardNameEn" class="text-xs text-slate-400">
+            D.N.R. College & Rayalam Border
+          </p>
+        </div>
+
+        <!-- Intelligence Content -->
+        <div class="space-y-3 text-xs">
+          
+          <!-- Key Metrics Pills -->
+          <div class="grid grid-cols-2 gap-2">
+            <div class="bg-slate-950/70 p-2 rounded-lg border border-slate-800">
+              <span class="text-slate-400 block text-[10px]">👥 అంచనా జనాభా:</span>
+              <span id="sideWardPop" class="text-sm font-bold text-cyan-300">9,240</span>
+            </div>
+            <div class="bg-slate-950/70 p-2 rounded-lg border border-slate-800">
+              <span class="text-slate-400 block text-[10px]">🏠 నివాస గృహాలు:</span>
+              <span id="sideWardHouseholds" class="text-sm font-bold text-emerald-300">2,290</span>
+            </div>
+          </div>
+
+          <!-- Landmarks & Places -->
+          <div class="bg-slate-950/50 rounded-lg p-2.5 border border-slate-800">
+            <div class="text-[11px] font-semibold text-amber-300 mb-1 flex items-center gap-1">
+              <span>🏛️ ఈ వార్డులోని ప్రధాన ల్యాండ్‌మార్క్‌లు:</span>
+            </div>
+            <p id="sideWardLandmarks" class="text-slate-200 telugu-font leading-relaxed">
+              డి.ఎన్.ఆర్. కళాశాల ప్రాంగణం (D.N.R. College Campus), ఆడిటోరియం, స్టేడియం, రాయలం రోడ్డు
+            </p>
+          </div>
+
+          <!-- Roads & Canals Infrastructure -->
+          <div class="bg-slate-950/50 rounded-lg p-2.5 border border-slate-800 space-y-2">
+            <div>
+              <span class="text-slate-400 block text-[10px] font-semibold">🛣️ రహదారి వ్యవస్థ:</span>
+              <span id="sideWardRoads" class="text-slate-200">భీమవరం - దొంగపిండి రోడ్డు, డి.ఎన్.ఆర్. కాలేజీ రోడ్డు</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[10px] font-semibold">🌊 కాలువ / మురుగు నీటి ప్రవాహం:</span>
+              <span id="sideWardCanal" class="text-sky-400">యలమదుర్రు డ్రెయిన్ (తూర్పు సరిహద్దు)</span>
+            </div>
+            <div id="sideWardWaterbodiesContainer" class="pt-2 border-t border-slate-800/80">
+              <span class="text-slate-400 block text-[10px] font-semibold mb-1">🛰️ APSAC జలాశయాల లేయర్ (ఈ వార్డు పరిధిలో):</span>
+              <div id="sideWardWaterbodiesList" class="flex flex-wrap gap-1"></div>
+            </div>
+          </div>
+
+          <!-- Plan Description -->
+          <div class="bg-slate-950/50 rounded-lg p-2.5 border border-slate-800">
+            <div class="text-[11px] font-semibold text-slate-400 mb-1 flex items-center gap-1">
+              <span>📜 మున్సిపల్ పటం ప్రకారం సరిహద్దులు:</span>
+            </div>
+            <p id="sideWardDesc" class="text-slate-300 telugu-font text-[11px] leading-relaxed">
+              ఈ వార్డు మున్సిపల్ ప్లానింగ్ రికార్డుల ప్రకారం వార్డు సంఖ్య 29 గా నమోదు చేయబడింది. తూర్పున యలమదుర్రు డ్రెయిన్ వెంట, పశ్చిమాన రాయలం గ్రామ పంచాయతీ సరిహద్దు వరకు విస్తరించి ఉంది.
+            </p>
+          </div>
+
+          <!-- Original Scanned Map Reference -->
+          <div class="bg-slate-950/80 rounded-lg p-2 border border-amber-500/30">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[10px] font-bold text-amber-400 flex items-center gap-1">
+                <span>📑 స్కాన్ చేసిన పటంలో వార్డు స్థానం:</span>
+              </span>
+              <button onclick="zoomToScannedOverlay()" class="text-[10px] text-cyan-400 hover:underline">
+                పటంపై చూడండి 🔍
+              </button>
+            </div>
+            <div class="w-full h-24 rounded border border-slate-800 overflow-hidden relative bg-black/60 cursor-pointer" onclick="zoomToScannedOverlay()">
+              <img src="assets/bhimavaram_39_wards_official_map.jpg" alt="Scanned Ward Map Reference" class="w-full h-full object-cover object-center opacity-85 hover:opacity-100 transition" />
+              <div class="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/10 transition">
+                <span class="text-[10px] bg-slate-900/90 text-amber-300 px-2 py-0.5 rounded border border-amber-400/40">క్లిక్ చేసి సరిచూడండి</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Quick Zoom / Action Footer -->
+        <div class="pt-2.5 border-t border-slate-800 mt-2 flex items-center gap-2 flex-shrink-0">
+          <button onclick="flyToCurrentWard()" class="flex-1 bg-cyan-600 hover:bg-cyan-500 text-white font-medium py-1.5 px-3 rounded-lg text-xs transition flex items-center justify-center gap-1 shadow-md">
+            <span>🎯 వార్డుపై కేంద్రీకరించండి</span>
+          </button>
+          <button onclick="shareWardInfo()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 py-1.5 px-3 rounded-lg text-xs border border-slate-700 transition" title="సమాచారం కాపీ చేసుకోండి">
+            <span>📋 కాపీ</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Quick Ward Selector Grid (1 to 39) -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 flex-shrink-0">
+        <div class="text-[11px] font-semibold text-slate-300 mb-2 flex items-center justify-between">
+          <span>🏷️ మొత్తం 39 వార్డుల శీఘ్ర సూచిక:</span>
+          <span class="text-[10px] text-slate-500">ఎంచుకోవడానికి క్లిక్ చేయండి</span>
+        </div>
+        <div class="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto pr-1" id="wardPillsGrid">
+          <!-- Injected via JavaScript (1 to 39) -->
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Bottom Disclaimer Statement Footer -->
+  <footer class="bg-slate-900 border-t border-slate-800 px-3 py-2 text-center text-xs text-slate-400 flex-shrink-0 z-20">
+    <div class="max-w-[1700px] mx-auto flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-3">
+      <span class="inline-flex items-center gap-1 font-bold text-amber-400">
+        <span>⚠️</span>
+        <span>నిరాకరణ ప్రకటన / Disclaimer:</span>
+      </span>
+      <span>ఈ GIS పటం మరియు వార్డుల సరిహద్దులు సమాచార, పరిశీలన అవసరాల కోసం మాత్రమే రూపొందించబడ్డాయి. ఇది అధికారిక పత్రం కాదు (Not an official map). చట్టబద్ధమైన లేదా అధికారిక ధృవీకరణ కోసం భీమవరం పురపాలక సంఘం కార్యాలయాన్ని సంప్రదించగలరు.</span>
+    </div>
+  </footer>
+
+  <!-- Waterbodies & Temporal Changes Modal (APSAC Official Survey) -->
+  <div id="waterbodiesModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-4xl w-full p-4 sm:p-6 shadow-2xl space-y-4 max-h-[92vh] flex flex-col my-auto">
+      
+      <!-- Modal Header -->
+      <div class="flex items-start justify-between border-b border-slate-800 pb-3 flex-shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center text-xl shadow-lg shadow-sky-500/20 text-white">
+            🌊
+          </div>
+          <div>
+            <h3 class="font-bold text-white text-base sm:text-lg flex items-center gap-2">
+              <span>భీమవరం పట్టణ చెరువులు, కాలువలు & కాలానుగుణ మార్పులు</span>
+              <span class="text-[10px] font-semibold bg-sky-500/20 text-sky-300 border border-sky-400/30 px-2 py-0.5 rounded-full hidden sm:inline-block">APSAC ఉపగ్రహ సర్వే</span>
+            </h3>
+            <p class="text-xs text-slate-400">
+              ఆంధ్రప్రదేశ్ స్పేస్ అప్లికేషన్స్ సెంటర్ (APSAC), ITE&C శాఖ, AP ప్రభుత్వం అధికారిక డేటా (Cartosat & Sentinel)
+            </p>
+          </div>
+        </div>
+        <button onclick="toggleWaterbodiesModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 text-xl font-bold transition">✕</button>
+      </div>
+
+      <!-- KPI Summary Cards (4 Cards) -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 flex-shrink-0">
+        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
+          <span class="text-slate-400 block text-[11px]">మొత్తం జలాశయాలు</span>
+          <div class="text-lg font-bold text-sky-400 flex items-baseline gap-1 mt-0.5">
+            <span>15</span>
+            <span class="text-[10px] text-slate-400 font-normal">(9 చెరువులు + 6 కాలువలు)</span>
+          </div>
+        </div>
+        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
+          <span class="text-slate-400 block text-[11px]">మొత్తం సర్వే విస్తీర్ణం</span>
+          <div class="text-lg font-bold text-cyan-300 flex items-baseline gap-1 mt-0.5">
+            <span>273.17</span>
+            <span class="text-[10px] text-slate-400 font-normal">ఎకరాలు</span>
+          </div>
+        </div>
+        <div class="bg-slate-950/80 border border-pink-900/40 bg-pink-950/10 p-3 rounded-xl">
+          <span class="text-pink-400 block text-[11px] font-medium">⚠️ 2011 మార్పు / ఆక్రమణ</span>
+          <div class="text-lg font-bold text-pink-400 flex items-baseline gap-1 mt-0.5">
+            <span>1.42</span>
+            <span class="text-[10px] text-pink-300 font-normal">ఎకరాలు (ట్యాంక్ 7)</span>
+          </div>
+        </div>
+        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
+          <span class="text-slate-400 block text-[11px]">మిగిలిన సజీవ జలాశయం</span>
+          <div class="text-lg font-bold text-emerald-400 flex items-baseline gap-1 mt-0.5">
+            <span>271.76</span>
+            <span class="text-[10px] text-emerald-300 font-normal">ఎకరాలు (99.48%)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Buttons -->
+      <div class="flex items-center gap-2 border-b border-slate-800 pb-2 text-xs flex-shrink-0">
+        <button onclick="switchWbTab('table')" id="tabBtn_table" class="px-3 py-1.5 rounded-lg font-semibold bg-sky-600 text-white transition flex items-center gap-1.5 shadow-sm">
+          <span>📋 15 జలవనరుల జాబితా</span>
+        </button>
+        <button onclick="switchWbTab('timeline')" id="tabBtn_timeline" class="px-3 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition flex items-center gap-1.5">
+          <span>🛰️ కాలానుగుణ మార్పుల విశ్లేషణ</span>
+        </button>
+        <button onclick="switchWbTab('mapview')" id="tabBtn_mapview" class="px-3 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition flex items-center gap-1.5">
+          <span>🗺️ అధికారిక APSAC సర్వే పటం</span>
+        </button>
+      </div>
+
+      <!-- Tab Content Area (Scrollable) -->
+      <div class="flex-1 min-h-0 overflow-y-auto space-y-3 pr-1 text-xs">
+        
+        <!-- Tab 1: Comprehensive Waterbodies Table -->
+        <div id="tabContent_table" class="space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <!-- Filter Pills -->
+            <div class="flex items-center gap-1.5 bg-slate-950 p-1 rounded-lg border border-slate-800">
+              <button onclick="filterWbTable('all')" id="wbFilt_all" class="px-2.5 py-1 rounded text-[11px] font-semibold bg-sky-600 text-white">అన్నీ (15)</button>
+              <button onclick="filterWbTable('tanks')" id="wbFilt_tanks" class="px-2.5 py-1 rounded text-[11px] text-slate-400 hover:text-white">చెరువులు (9)</button>
+              <button onclick="filterWbTable('canals')" id="wbFilt_canals" class="px-2.5 py-1 rounded text-[11px] text-slate-400 hover:text-white">కాలువలు (6)</button>
+              <button onclick="filterWbTable('changed')" id="wbFilt_changed" class="px-2.5 py-1 rounded text-[11px] text-pink-400 hover:text-pink-300">మార్పులు (1)</button>
+            </div>
+            <!-- Search -->
+            <input 
+              type="text" 
+              placeholder="చెరువు/కాలువ పేరుతో శోధించండి..." 
+              id="wbSearchInput" 
+              class="bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1 text-xs text-slate-200 placeholder:text-slate-500 w-48 focus:outline-none focus:border-sky-500"
+              oninput="filterWbByText(this.value)"
+            >
+          </div>
+
+          <!-- Table Container -->
+          <div class="border border-slate-800 rounded-xl overflow-hidden bg-slate-950/60">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="bg-slate-900 border-b border-slate-800 text-slate-400 text-[11px]">
+                    <th class="py-2 px-2.5">క్ర.సం.</th>
+                    <th class="py-2 px-2.5">కోడ్</th>
+                    <th class="py-2 px-2.5">జలాశయం పేరు (Waterbody Name)</th>
+                    <th class="py-2 px-2.5">స్థానిక పేరు</th>
+                    <th class="py-2 px-2.5 text-right">మొత్తం (AC)</th>
+                    <th class="py-2 px-2.5 text-right">2011 మార్పు (AC)</th>
+                    <th class="py-2 px-2.5 text-right">మిగిలినది (AC)</th>
+                    <th class="py-2 px-2.5 text-center">చర్య</th>
+                  </tr>
+                </thead>
+                <tbody id="wbTableBody" class="divide-y divide-slate-800/60">
+                  <!-- Injected via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Temporal Changes & Satellite Analysis -->
+        <div id="tabContent_timeline" class="hidden space-y-3">
+          <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800 space-y-2">
+            <h4 class="font-bold text-sky-400 text-sm flex items-center gap-1.5">
+              <span>🛰️ ఉపగ్రహ డేటా ఆధారంగా కాలానుగుణ మార్పుల రికార్డు (2011 - 2024)</span>
+            </h4>
+            <p class="text-slate-300 leading-relaxed text-xs">
+              ఆంధ్రప్రదేశ్ స్పేస్ అప్లికేషన్స్ సెంటర్ (APSAC) భీమవరం పురపాలక సంఘ పరిధిలోని సహజ సిద్ధ జలవనరులు, మురుగు నీటి కాలువలు మరియు చెరువుల స్థితిగతులను విశ్లేషించింది. సర్వే ఆఫ్ ఇండియా టోపోషీట్ మరియు అధునాతన రిమోట్ సెన్సింగ్ ఉపగ్రహాల ద్వారా సేకరించిన ప్రామాణిక వివరాలు:
+            </p>
+          </div>
+
+          <!-- Timeline items -->
+          <div class="space-y-2.5">
+            <!-- 2011 -->
+            <div class="bg-slate-950/60 border-l-4 border-amber-500 p-3 rounded-r-xl border border-slate-800">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-amber-400">2011 బేస్‌లైన్ సర్వే & తొలి మార్పులు (Cartosat+LISS-IV 2.5m)</span>
+                <span class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded border border-amber-500/30">బేస్‌లైన్ డిజిటైజేషన్</span>
+              </div>
+              <p class="text-slate-300 text-[11px] mt-1.5 leading-relaxed">
+                సర్వే ఆఫ్ ఇండియా టోపోషీట్ మరియు 2.5 మీటర్ల రిజల్యూషన్ గల కార్టోశాట్+LISS-IV ఉపగ్రహ చిత్రాల ఆధారంగా 9 చెరువులు (22.84 ఎకరాలు) మరియు 6 ప్రధాన కాలువలు (250.34 ఎకరాలు) కలిపి మొత్తం 273.17 ఎకరాలు గుర్తించబడ్డాయి.
+              </p>
+              <div class="mt-2 bg-pink-950/30 border border-pink-500/30 p-2 rounded text-[11px] text-pink-300">
+                ⚠️ <strong>కీలక మార్పు:</strong> ట్యాంక్ 7 (భీమవరం రైల్వే జంక్షన్ సమీప చెరువు - 1.42 ఎకరాలు) పట్టణీకరణ మరియు నిర్మాణాల ఫలితంగా 2011 నాటికి 100% ఆక్రమణకు గురై 0.00 ఎకరాలకు పడిపోయినట్లు ఉపగ్రహ పరిశీలన ధృవీకరించింది.
+              </div>
+            </div>
+
+            <!-- 2016 -->
+            <div class="bg-slate-950/60 border-l-4 border-cyan-500 p-3 rounded-r-xl border border-slate-800">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-cyan-400">2016 పునఃపరిశీలన (Cartosat+LISS-IV 2.5m)</span>
+                <span class="text-[10px] bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/30">మధ్యంతర పరిశీలన</span>
+              </div>
+              <p class="text-slate-300 text-[11px] mt-1.5 leading-relaxed">
+                2016 సంవత్సరంలో Cartosat+LISS-IV ఉపగ్రహ డేటా ద్వారా యలమదుర్రు డ్రెయిన్ (144.80 AC), గోస్తనది & వేల్పురు కాలువ (48.45 AC) మరియు మిగిలిన 8 చెరువుల సరిహద్దుల స్థిరత్వం పర్యవేక్షించబడింది.
+              </p>
+            </div>
+
+            <!-- 2024 -->
+            <div class="bg-slate-950/60 border-l-4 border-emerald-500 p-3 rounded-r-xl border border-slate-800">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-emerald-400">2024 తాజా ఉపగ్రహ సర్వే (Sentinel-2 Multi-spectral Data, April 2024)</span>
+                <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/30">ప్రస్తుత స్థితి</span>
+              </div>
+              <p class="text-slate-300 text-[11px] mt-1.5 leading-relaxed">
+                యూరోపియన్ స్పేస్ ఏజెన్సీ (ESA) సెంటినెల్-2 ఉపగ్రహం ద్వారా 10 మీటర్ల రిజల్యూషన్‌తో ఏప్రిల్ 2024లో సేకరించిన తాజా చిత్రాల ప్రకారం, మొత్తం 271.76 ఎకరాల జలాశయ విస్తీర్ణం సంరక్షించబడి సురక్షితంగా ఉన్నట్లు నమోదైంది.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Official APSAC Map Image & Overlay -->
+        <div id="tabContent_mapview" class="hidden space-y-3">
+          <div class="flex items-center justify-between bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+            <div>
+              <span class="font-bold text-white block">అధికారిక APSAC శాటిలైట్ మ్యాపింగ్ డాక్యుమెంట్</span>
+              <span class="text-[11px] text-slate-400">Mapping of Urban Tanks / Rivers and Changes (UTM Zone 44N, WGS84)</span>
+            </div>
+            <button onclick="toggleApsacOverlayFromModal()" class="bg-sky-600 hover:bg-sky-500 text-white font-semibold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-md">
+              <span>🗺️ GIS పటంపై ఓవర్‌లే చూడండి</span>
+            </button>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden relative bg-black/80 max-h-[420px] flex items-center justify-center">
+            <img src="assets/bhimavaram_apsac_waterbodies_map.jpg" alt="APSAC Waterbodies Map" class="w-full h-auto max-h-[420px] object-contain">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="flex items-center justify-between border-t border-slate-800 pt-3 text-xs flex-shrink-0">
+        <span class="text-slate-400 text-[11px]">
+          మూలం: ఆంధ్రప్రదేశ్ స్పేస్ అప్లికేషన్స్ సెంటర్ (APSAC), విజయవాడ - 520010
+        </span>
+        <button onclick="toggleWaterbodiesModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-1.5 rounded-lg font-medium transition">
+          మూసివేయండి (Close)
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Fine-Tuning Alignment Calibrator Modal (Drawer) -->
+  <div id="calibratorModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-5 shadow-2xl space-y-4">
+      
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">⚙️</span>
+          <div>
+            <h3 class="font-bold text-white text-sm">స్కాన్ చేసిన పటం & వార్డుల అలైన్‌మెంట్ టూల్</h3>
+            <p class="text-[11px] text-slate-400">Google Maps రోడ్లతో స్కాన్ చేసిన పటాన్ని ఖచ్చితంగా సరిచేయండి</p>
+          </div>
+        </div>
+        <button onclick="toggleCalibratorModal()" class="text-slate-400 hover:text-white text-lg">✕</button>
+      </div>
+
+      <!-- Nudge Controls -->
+      <div class="space-y-3 text-xs">
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
+          <span class="font-semibold text-cyan-400 block">స్థానాన్ని జరపండి (Nudge Offset):</span>
+          <div class="grid grid-cols-3 gap-2 text-center max-w-[200px] mx-auto">
+            <div></div>
+            <button onclick="nudgeOverlay(0.0004, 0)" class="bg-slate-800 hover:bg-slate-700 p-2 rounded font-bold border border-slate-700">⬆️ ఉత్తరం</button>
+            <div></div>
+            <button onclick="nudgeOverlay(0, -0.0004)" class="bg-slate-800 hover:bg-slate-700 p-2 rounded font-bold border border-slate-700">⬅️ పశ్చిమం</button>
+            <button onclick="resetAlignment()" class="bg-amber-600/30 text-amber-300 hover:bg-amber-600/50 p-2 rounded font-semibold text-[10px]">రీసెట్</button>
+            <button onclick="nudgeOverlay(0, 0.0004)" class="bg-slate-800 hover:bg-slate-700 p-2 rounded font-bold border border-slate-700">తూర్పు ➡️</button>
+            <div></div>
+            <button onclick="nudgeOverlay(-0.0004, 0)" class="bg-slate-800 hover:bg-slate-700 p-2 rounded font-bold border border-slate-700">⬇️ దక్షిణం</button>
+            <div></div>
+          </div>
+        </div>
+
+        <!-- Scale Controls -->
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
+          <span class="font-semibold text-cyan-400 block">స్కేల్ విస్తరణ / కుదింపు (Scale Adjust):</span>
+          <div class="flex items-center gap-2">
+            <button onclick="scaleOverlay(1.01)" class="flex-1 bg-slate-800 hover:bg-slate-700 py-1.5 rounded border border-slate-700 font-medium">🔍 పరిమాణం పెంచు (+1%)</button>
+            <button onclick="scaleOverlay(0.99)" class="flex-1 bg-slate-800 hover:bg-slate-700 py-1.5 rounded border border-slate-700 font-medium">🔬 పరిమాణం తగ్గించు (-1%)</button>
+          </div>
+        </div>
+
+        <!-- Current Calibration Values Display -->
+        <div class="bg-slate-950/70 p-2.5 rounded-lg border border-slate-800 text-[11px] font-mono text-slate-400 space-y-1">
+          <div>North: <span id="calibNorth" class="text-cyan-300">16.5806</span> | South: <span id="calibSouth" class="text-cyan-300">16.5079</span></div>
+          <div>West: <span id="calibWest" class="text-cyan-300">81.4922</span> | East: <span id="calibEast" class="text-cyan-300">81.5589</span></div>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-2 border-t border-slate-800">
+        <button onclick="toggleCalibratorModal()" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-4 py-2 rounded-lg font-semibold transition">
+          పూర్తయింది (Close)
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Application Logic JavaScript -->
+  <script>
+    // ----------------------------------------------------
+    // 1. Initial State & Geographic Calibration Constants
+    // ----------------------------------------------------
+    const BHIMAVARAM_CENTER = [16.5442, 81.5284];
+    const DEFAULT_ZOOM = 13.5;
+
+    // Scanned Map Official Plan Calibration Bounds
+    let scannedBounds = [
+      [16.5079, 81.4922], // Southwest [lat, lon]
+      [16.5806, 81.5589]  // Northeast [lat, lon]
+    ];
+
+    let map = null;
+    let baseLayers = {};
+    let scannedOverlay = null;
+    let apsacOverlay = null;
+    let wardPolygonLayers = [];
+    let wardNumberMarkers = [];
+    let landmarkMarkers = [];
+    let waterbodyPolygonLayers = [];
+    let waterbodyPolylineLayers = [];
+    let waterbodyMarkerLayers = [];
+    let isWaterbodiesVisible = true;
+    let isChangesVisible = true;
+    let isApsacOverlayVisible = false;
+    let currentWbFilter = 'all';
+    let activeSelectedWard = 29;
+    let currentPreset = 'aligned';
+
+    // Prominent Real-World Landmarks for Visual Verification
+    const LANDMARKS = [
+      { name: "భీమవరం టౌన్ రైల్వే స్టేషన్", eng: "Bhimavaram Town Rly Station", lat: 16.54722, lon: 81.51956, icon: "🚆", ward: 37 },
+      { name: "భీమవరం రైల్వే జంక్షన్", eng: "Bhimavaram Railway Junction", lat: 16.54439, lon: 81.53764, icon: "🚉", ward: 10 },
+      { name: "డి.ఎన్.ఆర్. కళాశాల (DNR College)", eng: "DNR College Campus", lat: 16.53622, lon: 81.51982, icon: "🎓", ward: 29 },
+      { name: "కె.జి.ఆర్.ఎల్. కళాశాల (KGRL College)", eng: "KGRL College Campus", lat: 16.52749, lon: 81.52425, icon: "🎓", ward: 26 },
+      { name: "శ్రీ సోమేశ్వర స్వామి దేవాలయం (సోమారామం)", eng: "Sri Someswara Swamy Temple", lat: 16.54139, lon: 81.53530, icon: "🛕", ward: 16 },
+      { name: "భీమవరం మున్సిపల్ కార్పొరేషన్ కార్యాలయం", eng: "Municipal Corporation Office", lat: 16.54100, lon: 81.52250, icon: "🏛️", ward: 28 },
+      { name: "ప్రభుత్వ ఏరియా ఆసుపత్రి (Govt. Hospital)", eng: "Government Area Hospital", lat: 16.54350, lon: 81.52400, icon: "🏥", ward: 21 },
+      { name: "ఇండస్ట్రియల్ ఎస్టేట్", eng: "Industrial Estate", lat: 16.55400, lon: 81.55200, icon: "🏭", ward: 6 },
+      { name: "A.P. హౌసింగ్ బోర్డు కాలనీ (APHB)", eng: "AP Housing Board Colony", lat: 16.54580, lon: 81.54395, icon: "🏘️", ward: 9 },
+      { name: "అల్లూరి సీతారామరాజు కళా పరిషత్ (ASR Hall)", eng: "ASR Natya Kala Parishad", lat: 16.54400, lon: 81.51850, icon: "🎭", ward: 33 },
+      { name: "వ్యవసాయ మార్కెట్ యార్డ్", eng: "Ag. Market Committee", lat: 16.55350, lon: 81.54200, icon: "🌾", ward: 5 }
+    ];
+
+    // ----------------------------------------------------
+    // 2. Map Initialization with Custom Depth Panes
+    // ----------------------------------------------------
+    function initMap() {
+      map = L.map('gisMap', {
+        center: BHIMAVARAM_CENTER,
+        zoom: DEFAULT_ZOOM,
+        minZoom: 11,
+        maxZoom: 19,
+        zoomControl: false
+      });
+
+      L.control.zoom({ position: 'topright' }).addTo(map);
+
+      // Create Dedicated Panes to guarantee proper layering
+      map.createPane('apsacMapPane');
+      map.getPane('apsacMapPane').style.zIndex = 340; // Under scanned map (350)
+
+      map.createPane('scannedMapPane');
+      map.getPane('scannedMapPane').style.zIndex = 350; // Above base tiles (200), below vectors (450)
+
+      map.createPane('wardPolygonPane');
+      map.getPane('wardPolygonPane').style.zIndex = 450; // Layer for vector ward boundaries
+
+      map.createPane('waterbodiesPane');
+      map.getPane('waterbodiesPane').style.zIndex = 480; // High clarity above ward boundaries
+
+      map.createPane('wardMarkerPane');
+      map.getPane('wardMarkerPane').style.zIndex = 650; // Centered ward number badges
+
+      map.createPane('waterbodyMarkerPane');
+      map.getPane('waterbodyMarkerPane').style.zIndex = 670; // Waterbody badges above
+
+      // Define Basemap Providers
+      baseLayers.google_hybrid = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+        attribution: '&copy; Google Maps'
+      });
+
+      baseLayers.google_streets = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+        attribution: '&copy; Google Maps'
+      });
+
+      baseLayers.osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+      });
+
+      baseLayers.carto_dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        attribution: '&copy; CartoDB'
+      });
+
+      // Default Basemap: Google Streets / Road Network Map
+      baseLayers.google_streets.addTo(map);
+
+      // ----------------------------------------------------
+      // 3. Add Scanned Official Map Plan Overlay (In Dedicated Pane)
+      // ----------------------------------------------------
+      scannedOverlay = L.imageOverlay('assets/bhimavaram_39_wards_official_map.jpg', scannedBounds, {
+        opacity: 0.80,
+        interactive: false,
+        pane: 'scannedMapPane',
+        className: 'blend-multiply'
+      }).addTo(map);
+
+      // APSAC Satellite & Waterbodies Map Overlay
+      apsacOverlay = L.imageOverlay('assets/bhimavaram_apsac_waterbodies_map.jpg', APSAC_MAP_BOUNDS, {
+        opacity: 0.85,
+        interactive: false,
+        pane: 'apsacMapPane',
+        className: 'blend-multiply'
+      });
+
+      // ----------------------------------------------------
+      // 4. Render 39 Ward Vector Polygons, Centered Badges & Waterbodies
+      // ----------------------------------------------------
+      renderWardPolygons();
+      renderWardNumberMarkers();
+      renderLandmarkMarkers();
+      renderWardPills();
+      renderWaterbodiesLayers();
+      initWaterbodiesModalTable();
+
+      // Fit map tightly to the town bounds
+      map.fitBounds(scannedBounds, { padding: [25, 25] });
+
+      // Default highlight Ward 29 (DNR College)
+      selectWard(29, false);
+
+      // Check URL parameters for direct view switching
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('view') === 'waterbodies' || urlParams.get('layer') === 'waterbodies') {
+        setTimeout(() => setViewPreset('waterbodies'), 300);
+      }
+      if (urlParams.get('waterbody')) {
+        setTimeout(() => locateWaterbody(urlParams.get('waterbody')), 600);
+      }
+
+      // Map Move & Click Listeners
+      map.on('mousemove', function(e) {
+        document.getElementById('coordsDisplay').innerText = 
+          `అక్షాంశం: ${e.latlng.lat.toFixed(4)}° N | రేఖాంశం: ${e.latlng.lng.toFixed(4)}° E`;
+      });
+
+      map.on('zoomend', function() {
+        document.getElementById('zoomLevelDisplay').innerText = `జూమ్: ${map.getZoom()}`;
+      });
+    }
+
+    // ----------------------------------------------------
+    // 5. Synchronized GPS Recalculation Function
+    // ----------------------------------------------------
+    function recalculateWardGPS() {
+      const S = scannedBounds[0][0];
+      const W = scannedBounds[0][1];
+      const N = scannedBounds[1][0];
+      const E = scannedBounds[1][1];
+      
+      BHIMAVARAM_39_WARDS.forEach(ward => {
+        ward.center = [
+          N - (ward.centerPixel[1] / 1024) * (N - S),
+          W + (ward.centerPixel[0] / 710) * (E - W)
+        ];
+        ward.coords = ward.pixelCoords.map(pt => [
+          N - (pt[1] / 1024) * (N - S),
+          W + (pt[0] / 710) * (E - W)
+        ]);
+      });
+      
+      // Update polygons
+      wardPolygonLayers.forEach(poly => {
+        const ward = BHIMAVARAM_39_WARDS.find(w => w.number === poly.wardNumber);
+        if (ward) poly.setLatLngs(ward.coords);
+      });
+
+      // Update number badges
+      wardNumberMarkers.forEach(marker => {
+        const ward = BHIMAVARAM_39_WARDS.find(w => w.number === marker.wardNumber);
+        if (ward) marker.setLatLng(ward.center);
+      });
+    }
+
+    // ----------------------------------------------------
+    // 6. Render Ward Polygons (Pixel-exact to Scanned Map)
+    // ----------------------------------------------------
+    function renderWardPolygons() {
+      wardPolygonLayers.forEach(l => map.removeLayer(l));
+      wardPolygonLayers = [];
+
+      BHIMAVARAM_39_WARDS.forEach(ward => {
+        const polygon = L.polygon(ward.coords, {
+          color: ward.color || '#38bdf8',
+          weight: 2.5,
+          opacity: 0.95,
+          fillColor: ward.color || '#38bdf8',
+          fillOpacity: 0.18,
+          pane: 'wardPolygonPane',
+          className: 'ward-polygon-layer'
+        });
+
+        // Hover Effect
+        polygon.on('mouseover', function() {
+          if (activeSelectedWard !== ward.number) {
+            this.setStyle({
+              weight: 4,
+              color: '#38bdf8',
+              fillOpacity: 0.50
+            });
+          }
+        });
+
+        polygon.on('mouseout', function() {
+          if (activeSelectedWard !== ward.number) {
+            this.setStyle({
+              weight: 2.5,
+              color: ward.color || '#38bdf8',
+              fillOpacity: parseFloat(document.getElementById('wardOpacitySlider').value) / 100
+            });
+          }
+        });
+
+        // Click selection
+        polygon.on('click', function(e) {
+          L.DomEvent.stopPropagation(e);
+          selectWard(ward.number, true);
+        });
+
+        // Tooltip
+        polygon.bindTooltip(`
+          <div class="text-xs font-sans">
+            <div class="font-bold text-amber-300">వార్డు నెంబర్: ${ward.number}</div>
+            <div class="text-white">${ward.nameTe}</div>
+            <div class="text-[10px] text-slate-400">${ward.landmarks.slice(0, 45)}...</div>
+          </div>
+        `, { sticky: true, opacity: 0.95 });
+
+        polygon.wardNumber = ward.number;
+        polygon.addTo(map);
+        wardPolygonLayers.push(polygon);
+      });
+    }
+
+    // ----------------------------------------------------
+    // 7. Centered Ward Number Badges (1 to 39)
+    // ----------------------------------------------------
+    function renderWardNumberMarkers() {
+      wardNumberMarkers.forEach(m => map.removeLayer(m));
+      wardNumberMarkers = [];
+
+      BHIMAVARAM_39_WARDS.forEach(ward => {
+        const customIcon = L.divIcon({
+          className: 'ward-number-badge-container',
+          html: `<div id="badge-ward-${ward.number}" class="ward-number-badge ${ward.number === activeSelectedWard ? 'active' : ''}">${ward.number}</div>`
+        });
+
+        const marker = L.marker(ward.center, { 
+          icon: customIcon, 
+          interactive: true,
+          pane: 'wardMarkerPane'
+        });
+
+        marker.on('click', function(e) {
+          L.DomEvent.stopPropagation(e);
+          selectWard(ward.number, true);
+        });
+        marker.wardNumber = ward.number;
+        marker.addTo(map);
+        wardNumberMarkers.push(marker);
+      });
+    }
+
+    // ----------------------------------------------------
+    // 8. Render Key Landmarks
+    // ----------------------------------------------------
+    function renderLandmarkMarkers() {
+      landmarkMarkers.forEach(m => map.removeLayer(m));
+      landmarkMarkers = [];
+
+      LANDMARKS.forEach(lm => {
+        const icon = L.divIcon({
+          className: 'landmark-icon-container',
+          html: `<div class="flex items-center justify-center w-6 h-6 rounded-full bg-slate-900 border border-amber-400 text-xs shadow-md shadow-black cursor-pointer hover:scale-125 transition" title="${lm.name}">
+                  ${lm.icon}
+                 </div>`
+        });
+
+        const marker = L.marker([lm.lat, lm.lon], { icon: icon });
+        marker.bindPopup(`
+          <div class="text-xs p-1">
+            <div class="font-bold text-amber-400 flex items-center gap-1.5 text-sm">
+              <span>${lm.icon}</span>
+              <span>${lm.name}</span>
+            </div>
+            <div class="text-slate-300 text-[11px] mt-0.5">${lm.eng}</div>
+            <div class="mt-2 pt-1.5 border-t border-slate-700 flex items-center justify-between text-[10px]">
+              <span class="text-cyan-400 font-semibold">వార్డు: ${lm.ward}</span>
+              <button onclick="selectWard(${lm.ward}, true)" class="text-amber-400 hover:underline">ఈ వార్డు చూడండి ➔</button>
+            </div>
+          </div>
+        `);
+        marker.addTo(map);
+        landmarkMarkers.push(marker);
+      });
+    }
+
+    // ----------------------------------------------------
+    // 9. Select Ward & Update Sidebar
+    // ----------------------------------------------------
+    function selectWard(wardNum, fly = true) {
+      activeSelectedWard = wardNum;
+      const ward = BHIMAVARAM_39_WARDS.find(w => w.number === wardNum);
+      if (!ward) return;
+
+      // Update Polygon Highlight
+      wardPolygonLayers.forEach(poly => {
+        if (poly.wardNumber === wardNum) {
+          poly.setStyle({
+            weight: 4.5,
+            color: '#f59e0b',
+            fillColor: '#f59e0b',
+            fillOpacity: 0.60
+          });
+          poly.bringToFront();
+        } else {
+          const w = BHIMAVARAM_39_WARDS.find(item => item.number === poly.wardNumber);
+          poly.setStyle({
+            weight: 2.5,
+            color: w.color || '#38bdf8',
+            fillColor: w.color || '#38bdf8',
+            fillOpacity: parseFloat(document.getElementById('wardOpacitySlider').value) / 100
+          });
+        }
+      });
+
+      // Update Active Badges
+      document.querySelectorAll('.ward-number-badge').forEach(el => el.classList.remove('active'));
+      const activeBadge = document.getElementById(`badge-ward-${wardNum}`);
+      if (activeBadge) activeBadge.classList.add('active');
+
+      // Update Active Pill
+      document.querySelectorAll('.ward-pill-btn').forEach(btn => {
+        if (parseInt(btn.dataset.ward) === wardNum) {
+          btn.className = "ward-pill-btn px-2.5 py-1 rounded-md text-xs font-bold bg-amber-500 text-slate-950 shadow-md shadow-amber-500/30 scale-105 transition";
+        } else {
+          btn.className = "ward-pill-btn px-2 py-0.5 rounded-md text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition";
+        }
+      });
+
+      // Populate Sidebar Details
+      document.getElementById('sideWardBadge').innerText = `వార్డు ${ward.number} (Ward ${ward.number})`;
+      document.getElementById('sideWardZone').innerText = ward.zone;
+      document.getElementById('sideWardNameTe').innerText = ward.nameTe;
+      document.getElementById('sideWardNameEn').innerText = ward.nameEn;
+      document.getElementById('sideWardPop').innerText = ward.population;
+      document.getElementById('sideWardHouseholds').innerText = ward.households;
+      document.getElementById('sideWardLandmarks').innerText = ward.landmarks;
+      document.getElementById('sideWardRoads').innerText = ward.roads;
+      document.getElementById('sideWardCanal').innerText = ward.canal;
+      
+      const descText = `ఈ వార్డు మున్సిపల్ ప్లాన్ ప్రకారం వార్డు సంఖ్య ${ward.number} గా నమోదు చేయబడింది. ప్రధానంగా ${ward.zone} పరిధిలోని ${ward.landmarks} ప్రాంతాలను కలిగి ఉంటుంది. సరిహద్దు రహదారిగా ${ward.roads} మరియు జలవనరుగా ${ward.canal} ఉన్నాయి.`;
+      document.getElementById('sideWardDesc').innerText = descText;
+
+      // Populate Ward Waterbodies List (Tanks / Canals in this Ward)
+      const wbListEl = document.getElementById('sideWardWaterbodiesList');
+      if (wbListEl && typeof BHIMAVARAM_WATERBODIES_DATA !== 'undefined') {
+        wbListEl.innerHTML = '';
+        const relatedWbs = BHIMAVARAM_WATERBODIES_DATA.filter(wb => wb.wards && wb.wards.includes(wardNum));
+        if (relatedWbs.length > 0) {
+          relatedWbs.forEach(wb => {
+            const isChanged = wb.id === 'T7';
+            const pill = document.createElement('button');
+            pill.className = isChanged 
+              ? "px-2 py-0.5 rounded text-[10px] font-bold bg-pink-950/80 text-pink-300 border border-pink-500/50 hover:bg-pink-900 transition flex items-center gap-1 shadow-sm"
+              : "px-2 py-0.5 rounded text-[10px] font-semibold bg-sky-950/80 text-sky-300 border border-sky-500/40 hover:bg-sky-900 transition flex items-center gap-1 shadow-sm";
+            pill.innerHTML = `<span>${isChanged ? '⚠️' : (wb.type.includes('tank') ? '💧' : '〰️')}</span> <span>${wb.code} (${wb.totalAreaAcres} AC)</span>`;
+            pill.title = `${wb.nameTe} - పటంలో చూడటానికి క్లిక్ చేయండి`;
+            pill.onclick = () => locateWaterbody(wb.id);
+            wbListEl.appendChild(pill);
+          });
+        } else {
+          wbListEl.innerHTML = '<span class="text-[11px] text-slate-500 italic">స్థానిక మున్సిపల్ ఫీడర్ డ్రెయిన్లు / భూగర్భ జలాల పరిధి</span>';
+        }
+      }
+
+      // Scroll Right Info Panel to top when a ward is selected
+      const infoPanel = document.getElementById('rightInfoPanel');
+      if (infoPanel && fly) {
+        infoPanel.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Pan/Fly to Ward
+      if (fly) {
+        map.flyTo(ward.center, 15, { duration: 0.8 });
+      }
+    }
+
+    function flyToCurrentWard() {
+      const ward = BHIMAVARAM_39_WARDS.find(w => w.number === activeSelectedWard);
+      if (ward) {
+        map.flyTo(ward.center, 15.5, { duration: 0.8 });
+      }
+    }
+
+    function resetMapView() {
+      map.fitBounds(scannedBounds, { padding: [25, 25], duration: 0.8 });
+    }
+
+    function zoomToScannedOverlay() {
+      map.fitBounds(scannedBounds, { padding: [20, 20], duration: 0.8 });
+    }
+
+    // ----------------------------------------------------
+    // 10. Quick Selector Pills (1 to 39)
+    // ----------------------------------------------------
+    function renderWardPills() {
+      const container = document.getElementById('wardPillsGrid');
+      container.innerHTML = '';
+      BHIMAVARAM_39_WARDS.forEach(w => {
+        const btn = document.createElement('button');
+        btn.dataset.ward = w.number;
+        btn.className = `ward-pill-btn px-2 py-0.5 rounded-md text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition`;
+        btn.innerText = `W-${w.number}`;
+        btn.onclick = () => selectWard(w.number, true);
+        container.appendChild(btn);
+      });
+    }
+
+    // ----------------------------------------------------
+    // 11. View Presets (Instant Switching)
+    // ----------------------------------------------------
+    function setViewPreset(preset) {
+      currentPreset = preset;
+
+      // Update button styles
+      ['aligned', 'waterbodies', 'scanned_only', 'satellite', 'streets'].forEach(k => {
+        const btn = document.getElementById(`btnPreset_${k}`);
+        if (btn) {
+          if (k === preset) {
+            btn.className = "px-2.5 py-1 rounded text-xs font-semibold bg-amber-500 text-slate-950 shadow-md transition";
+          } else {
+            btn.className = "px-2.5 py-1 rounded text-xs text-slate-400 hover:text-white transition";
+          }
+        }
+      });
+
+      if (preset === 'aligned') {
+        setBaseMap('google_hybrid');
+        changeScannedOpacity(80);
+        document.getElementById('scannedOpacitySlider').value = 80;
+        toggleScannedOverlay(true);
+        document.getElementById('chkShowScanned').checked = true;
+        changeWardOpacity(18);
+        document.getElementById('wardOpacitySlider').value = 18;
+      } else if (preset === 'waterbodies') {
+        setBaseMap('google_hybrid');
+        // Activate APSAC Waterbodies Overlay
+        toggleApsacOverlay(true);
+        const chkApsac = document.getElementById('chkShowApsacOverlay');
+        if (chkApsac) chkApsac.checked = true;
+
+        // Reduce scanned ward map opacity so water bodies stand out crisply
+        changeScannedOpacity(20);
+        document.getElementById('scannedOpacitySlider').value = 20;
+
+        // Ensure waterbodies layers are ON
+        toggleWaterbodiesLayer(true);
+        const chkWb = document.getElementById('chkShowWaterbodies');
+        if (chkWb) chkWb.checked = true;
+        toggleChangesLayer(true);
+        const chkCh = document.getElementById('chkShowChanges');
+        if (chkCh) chkCh.checked = true;
+
+        changeWardOpacity(10);
+        document.getElementById('wardOpacitySlider').value = 10;
+        map.flyTo(BHIMAVARAM_CENTER, 13.5, { duration: 0.8 });
+      } else if (preset === 'scanned_only') {
+        setBaseMap('carto_dark');
+        changeScannedOpacity(100);
+        document.getElementById('scannedOpacitySlider').value = 100;
+        toggleScannedOverlay(true);
+        document.getElementById('chkShowScanned').checked = true;
+        changeWardOpacity(12);
+        document.getElementById('wardOpacitySlider').value = 12;
+      } else if (preset === 'satellite') {
+        setBaseMap('google_hybrid');
+        changeScannedOpacity(0);
+        document.getElementById('scannedOpacitySlider').value = 0;
+        changeWardOpacity(30);
+        document.getElementById('wardOpacitySlider').value = 30;
+      } else if (preset === 'streets') {
+        setBaseMap('google_streets');
+        changeScannedOpacity(0);
+        document.getElementById('scannedOpacitySlider').value = 0;
+        changeWardOpacity(30);
+        document.getElementById('wardOpacitySlider').value = 30;
+      }
+    }
+
+    // ----------------------------------------------------
+    // 12. Search Functionality
+    // ----------------------------------------------------
+    function handleWardSearch(val) {
+      val = val.trim().toLowerCase();
+      if (!val) return;
+
+      const numMatch = val.match(/\d+/);
+      if (numMatch) {
+        const targetNum = parseInt(numMatch[0]);
+        if (targetNum >= 1 && targetNum <= 39) {
+          selectWard(targetNum, true);
+          return;
+        }
+      }
+
+      const found = BHIMAVARAM_39_WARDS.find(w => 
+        w.nameTe.toLowerCase().includes(val) ||
+        w.nameEn.toLowerCase().includes(val) ||
+        w.landmarks.toLowerCase().includes(val) ||
+        w.roads.toLowerCase().includes(val)
+      );
+
+      if (found) {
+        selectWard(found.number, true);
+      }
+    }
+
+    function clearSearch() {
+      document.getElementById('wardSearchInput').value = '';
+    }
+
+    // ----------------------------------------------------
+    // 13. Basemap Switcher
+    // ----------------------------------------------------
+    function setBaseMap(type) {
+      Object.keys(baseLayers).forEach(k => map.removeLayer(baseLayers[k]));
+      if (baseLayers[type]) {
+        baseLayers[type].addTo(map);
+      }
+    }
+
+    // ----------------------------------------------------
+    // 14. Slider & Toggle Handlers
+    // ----------------------------------------------------
+    function changeScannedOpacity(val) {
+      document.getElementById('scannedOpacityLabel').innerText = `${val}%`;
+      if (scannedOverlay) {
+        scannedOverlay.setOpacity(val / 100);
+      }
+    }
+
+    function changeWardOpacity(val) {
+      document.getElementById('wardOpacityLabel').innerText = `${val}%`;
+      const op = val / 100;
+      wardPolygonLayers.forEach(poly => {
+        if (poly.wardNumber !== activeSelectedWard) {
+          poly.setStyle({ fillOpacity: op });
+        }
+      });
+    }
+
+    function toggleWardNumbers(show) {
+      wardNumberMarkers.forEach(m => {
+        if (show) {
+          if (!map.hasLayer(m)) map.addLayer(m);
+        } else {
+          if (map.hasLayer(m)) map.removeLayer(m);
+        }
+      });
+    }
+
+    function toggleScannedOverlay(show) {
+      if (scannedOverlay) {
+        if (show) {
+          if (!map.hasLayer(scannedOverlay)) map.addLayer(scannedOverlay);
+        } else {
+          if (map.hasLayer(scannedOverlay)) map.removeLayer(scannedOverlay);
+        }
+      }
+    }
+
+    function toggleLandmarks(show) {
+      landmarkMarkers.forEach(m => {
+        if (show) {
+          if (!map.hasLayer(m)) map.addLayer(m);
+        } else {
+          if (map.hasLayer(m)) map.removeLayer(m);
+        }
+      });
+    }
+
+    // ----------------------------------------------------
+    // 15. Synchronized Calibrator & Alignment Tools
+    // ----------------------------------------------------
+    function toggleCalibratorModal() {
+      const el = document.getElementById('calibratorModal');
+      el.classList.toggle('hidden');
+      updateCalibDisplay();
+    }
+
+    function nudgeOverlay(dLat, dLon) {
+      scannedBounds[0][0] += dLat;
+      scannedBounds[0][1] += dLon;
+      scannedBounds[1][0] += dLat;
+      scannedBounds[1][1] += dLon;
+
+      if (scannedOverlay) {
+        scannedOverlay.setBounds(scannedBounds);
+      }
+      // Keep vector boundaries locked to the scanned map!
+      recalculateWardGPS();
+      updateCalibDisplay();
+    }
+
+    function scaleOverlay(factor) {
+      const centerLat = (scannedBounds[0][0] + scannedBounds[1][0]) / 2;
+      const centerLon = (scannedBounds[0][1] + scannedBounds[1][1]) / 2;
+      const halfH = ((scannedBounds[1][0] - scannedBounds[0][0]) / 2) * factor;
+      const halfW = ((scannedBounds[1][1] - scannedBounds[0][1]) / 2) * factor;
+
+      scannedBounds[0] = [centerLat - halfH, centerLon - halfW];
+      scannedBounds[1] = [centerLat + halfH, centerLon + halfW];
+
+      if (scannedOverlay) {
+        scannedOverlay.setBounds(scannedBounds);
+      }
+      // Keep vector boundaries locked to the scanned map!
+      recalculateWardGPS();
+      updateCalibDisplay();
+    }
+
+    function resetAlignment() {
+      scannedBounds = [
+        [16.5079, 81.4922],
+        [16.5806, 81.5589]
+      ];
+      if (scannedOverlay) {
+        scannedOverlay.setBounds(scannedBounds);
+      }
+      recalculateWardGPS();
+      updateCalibDisplay();
+    }
+
+    function updateCalibDisplay() {
+      const nEl = document.getElementById('calibNorth');
+      const sEl = document.getElementById('calibSouth');
+      const wEl = document.getElementById('calibWest');
+      const eEl = document.getElementById('calibEast');
+      if (nEl) nEl.innerText = scannedBounds[1][0].toFixed(4);
+      if (sEl) sEl.innerText = scannedBounds[0][0].toFixed(4);
+      if (wEl) wEl.innerText = scannedBounds[0][1].toFixed(4);
+      if (eEl) eEl.innerText = scannedBounds[1][1].toFixed(4);
+    }
+
+    // ----------------------------------------------------
+    // 16. Export & Share Tools
+    // ----------------------------------------------------
+    function exportGeoJSON() {
+      const geojson = {
+        type: "FeatureCollection",
+        name: "Bhimavaram_39_Municipal_Wards_Aligned",
+        features: BHIMAVARAM_39_WARDS.map(w => ({
+          type: "Feature",
+          properties: {
+            ward_number: w.number,
+            name_te: w.nameTe,
+            name_en: w.nameEn,
+            zone: w.zone,
+            population: w.population,
+            households: w.households,
+            landmarks: w.landmarks,
+            roads: w.roads,
+            canal: w.canal
+          },
+          geometry: {
+            type: "Polygon",
+            coordinates: [w.coords.map(c => [c[1], c[0]])]
+          }
+        }))
+      };
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(geojson, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "bhimavaram_39_wards_aligned.geojson");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    function shareWardInfo() {
+      const ward = BHIMAVARAM_39_WARDS.find(w => w.number === activeSelectedWard);
+      if (!ward) return;
+      const text = `భీమవరం పురపాలక సంఘం - వార్డు ${ward.number}\nపేరు: ${ward.nameTe} (${ward.nameEn})\nల్యాండ్‌మార్క్‌లు: ${ward.landmarks}\nజనాభా: ${ward.population} | గృహాలు: ${ward.households}`;
+      navigator.clipboard.writeText(text).then(() => {
+        alert(`వార్డు ${ward.number} సమాచారం కాపీ చేయబడింది!`);
+      });
+    }
+
+    // ----------------------------------------------------
+    // 17. Waterbodies & Temporal Changes (APSAC Satellite Survey)
+    // ----------------------------------------------------
+    function renderWaterbodiesLayers() {
+      // Clear existing layers
+      waterbodyPolygonLayers.forEach(l => map.removeLayer(l));
+      waterbodyPolylineLayers.forEach(l => map.removeLayer(l));
+      waterbodyMarkerLayers.forEach(l => map.removeLayer(l));
+      waterbodyPolygonLayers = [];
+      waterbodyPolylineLayers = [];
+      waterbodyMarkerLayers = [];
+
+      if (typeof BHIMAVARAM_WATERBODIES_DATA === 'undefined') return;
+
+      BHIMAVARAM_WATERBODIES_DATA.forEach(item => {
+        const isChanged = item.id === 'T7';
+
+        // 1. Polygon for Tanks
+        if (item.polygon) {
+          const poly = L.polygon(item.polygon, {
+            color: isChanged ? '#f43f5e' : '#0284c7',
+            weight: isChanged ? 3 : 2,
+            dashArray: isChanged ? '5, 4' : null,
+            fillColor: isChanged ? '#f43f5e' : '#38bdf8',
+            fillOpacity: isChanged ? 0.45 : 0.35,
+            pane: 'waterbodiesPane',
+            className: isChanged ? 'waterbody-changed-poly' : 'waterbody-tank-poly'
+          });
+
+          poly.bindTooltip(`
+            <div class="text-xs font-sans">
+              <div class="font-bold ${isChanged ? 'text-pink-400' : 'text-sky-300'}">${item.code}: ${item.nameTe}</div>
+              <div class="text-slate-300">మొత్తం: ${item.totalAreaAcres} ఎకరాలు ${isChanged ? '⚠️ (2011 మార్పు: -1.42 AC)' : ''}</div>
+              <div class="text-[10px] text-slate-400">${item.statusTe}</div>
+            </div>
+          `, { sticky: true, opacity: 0.95 });
+
+          poly.on('click', (e) => {
+            L.DomEvent.stopPropagation(e);
+            openWaterbodyPopup(item);
+          });
+
+          poly.waterbodyId = item.id;
+          poly.isChanged = isChanged;
+          poly.addTo(map);
+          waterbodyPolygonLayers.push(poly);
+        }
+
+        // 2. Polyline for Canals
+        if (item.polyline) {
+          const isMainCanal = item.type === 'canal_main';
+          const line = L.polyline(item.polyline, {
+            color: isMainCanal ? '#2563eb' : '#06b6d4',
+            weight: isMainCanal ? 7 : 4.5,
+            opacity: 0.9,
+            pane: 'waterbodiesPane',
+            className: 'canal-flow-anim'
+          });
+
+          line.bindTooltip(`
+            <div class="text-xs font-sans">
+              <div class="font-bold text-sky-300">${item.code}: ${item.nameTe}</div>
+              <div class="text-slate-300">విస్తీర్ణం: ${item.totalAreaAcres} ఎకరాలు</div>
+              <div class="text-[10px] text-slate-400">${item.statusTe}</div>
+            </div>
+          `, { sticky: true, opacity: 0.95 });
+
+          line.on('click', (e) => {
+            L.DomEvent.stopPropagation(e);
+            openWaterbodyPopup(item);
+          });
+
+          line.waterbodyId = item.id;
+          line.addTo(map);
+          waterbodyPolylineLayers.push(line);
+        }
+
+        // 3. Crisp Interactive Badges
+        const isCanal = item.type.includes('canal');
+        const badgeClass = isChanged ? 'waterbody-marker-badge changed' : (isCanal ? 'waterbody-marker-badge canal' : 'waterbody-marker-badge');
+        const badgeText = isChanged ? '⚠️ T7' : (isCanal ? `〰️ ${item.id}` : `💧 ${item.id}`);
+
+        const markerIcon = L.divIcon({
+          className: 'waterbody-badge-container',
+          html: `<div id="wb-badge-${item.id}" class="${badgeClass}" title="${item.code}: ${item.nameTe}">${badgeText}</div>`
+        });
+
+        const marker = L.marker([item.lat, item.lon], {
+          icon: markerIcon,
+          pane: 'waterbodyMarkerPane'
+        });
+
+        marker.on('click', (e) => {
+          L.DomEvent.stopPropagation(e);
+          openWaterbodyPopup(item);
+        });
+
+        marker.waterbodyId = item.id;
+        marker.isChanged = isChanged;
+        marker.addTo(map);
+        waterbodyMarkerLayers.push(marker);
+      });
+    }
+
+    function openWaterbodyPopup(item) {
+      const isChanged = item.id === 'T7';
+      const isCanal = item.type.includes('canal');
+      const badgeStyle = isChanged ? 'bg-pink-500/20 text-pink-300 border-pink-500/40' : 'bg-sky-500/20 text-sky-300 border-sky-500/40';
+
+      const wardsHtml = item.wards && item.wards.length > 0 
+        ? item.wards.map(w => `<button onclick="selectWard(${w}, true)" class="text-amber-400 hover:underline font-mono">W-${w}</button>`).join(', ')
+        : 'మున్సిపల్ పరిధి';
+
+      const content = `
+        <div class="text-xs p-1 space-y-2 min-w-[260px] max-w-[320px]">
+          <div class="flex items-center justify-between border-b border-slate-700 pb-1.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${badgeStyle}">
+              ${item.code} • ${item.type === 'canal_main' ? 'ప్రధాన నదీ ప్రవాహం' : (isCanal ? 'కాలువ' : 'చెరువు')}
+            </span>
+            <span class="text-[11px] font-bold ${isChanged ? 'text-pink-400' : 'text-sky-300'}">${item.totalAreaAcres} ఎకరాలు</span>
+          </div>
+
+          <div>
+            <div class="font-bold text-sm text-white">${item.nameTe}</div>
+            <div class="text-[11px] text-slate-400">${item.nameEn}</div>
+            <div class="text-[10px] text-slate-500 mt-0.5">స్థానిక పేరు: <span class="text-slate-300 font-medium">${item.localName}</span></div>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-1.5 bg-slate-950/80 p-2 rounded-lg border border-slate-800 text-[11px]">
+            <div>
+              <span class="text-slate-400 block text-[10px]">మొత్తం విస్తీర్ణం:</span>
+              <span class="font-bold text-sky-300">${item.totalAreaAcres} AC</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[10px]">2011 మార్పు:</span>
+              <span class="font-bold ${item.change2011Acres > 0 ? 'text-pink-400' : 'text-emerald-400'}">
+                ${item.change2011Acres > 0 ? '⚠️ -' + item.change2011Acres + ' AC' : '0.00 AC'}
+              </span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[10px]">మిగిలినది:</span>
+              <span class="font-bold text-emerald-300">${item.remainingAreaAcres} AC</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[10px]">వార్డులు:</span>
+              <span class="text-amber-300">${wardsHtml}</span>
+            </div>
+          </div>
+
+          <div class="text-[11px] text-slate-300 bg-slate-900/80 p-2 rounded border border-slate-800 leading-relaxed">
+            ${item.descriptionTe}
+          </div>
+
+          <div class="text-[10px] text-slate-400 flex items-center justify-between border-t border-slate-800 pt-1.5">
+            <span>🛰️ APSAC Cartosat & Sentinel</span>
+            <button onclick="toggleWaterbodiesModal(); switchWbTab('table');" class="text-sky-400 hover:text-sky-300 hover:underline font-semibold">
+              సమగ్ర నివేదిక ➔
+            </button>
+          </div>
+        </div>
+      `;
+
+      L.popup({
+        pane: 'waterbodyMarkerPane',
+        maxWidth: 340,
+        className: 'waterbody-popup-custom'
+      })
+      .setLatLng([item.lat, item.lon])
+      .setContent(content)
+      .openOn(map);
+    }
+
+    function locateWaterbody(id) {
+      if (typeof BHIMAVARAM_WATERBODIES_DATA === 'undefined') return;
+      const item = BHIMAVARAM_WATERBODIES_DATA.find(w => w.id === id);
+      if (!item) return;
+
+      // Close modal if open
+      const modal = document.getElementById('waterbodiesModal');
+      if (modal && !modal.classList.contains('hidden')) {
+        modal.classList.add('hidden');
+      }
+
+      // Ensure layers are visible
+      if (!isWaterbodiesVisible) {
+        toggleWaterbodiesLayer(true);
+        const chk = document.getElementById('chkShowWaterbodies');
+        if (chk) chk.checked = true;
+      }
+      if (item.id === 'T7' && !isChangesVisible) {
+        toggleChangesLayer(true);
+        const chk = document.getElementById('chkShowChanges');
+        if (chk) chk.checked = true;
+      }
+
+      // Fly to waterbody
+      map.flyTo([item.lat, item.lon], 16, { duration: 0.8 });
+
+      setTimeout(() => {
+        openWaterbodyPopup(item);
+      }, 850);
+    }
+
+    function toggleWaterbodiesLayer(show) {
+      isWaterbodiesVisible = show;
+      waterbodyPolygonLayers.forEach(poly => {
+        if (!poly.isChanged) {
+          if (show) { if (!map.hasLayer(poly)) map.addLayer(poly); }
+          else { if (map.hasLayer(poly)) map.removeLayer(poly); }
+        }
+      });
+      waterbodyPolylineLayers.forEach(line => {
+        if (show) { if (!map.hasLayer(line)) map.addLayer(line); }
+        else { if (map.hasLayer(line)) map.removeLayer(line); }
+      });
+      waterbodyMarkerLayers.forEach(marker => {
+        if (!marker.isChanged) {
+          if (show) { if (!map.hasLayer(marker)) map.addLayer(marker); }
+          else { if (map.hasLayer(marker)) map.removeLayer(marker); }
+        }
+      });
+    }
+
+    function toggleChangesLayer(show) {
+      isChangesVisible = show;
+      waterbodyPolygonLayers.forEach(poly => {
+        if (poly.isChanged) {
+          if (show) { if (!map.hasLayer(poly)) map.addLayer(poly); }
+          else { if (map.hasLayer(poly)) map.removeLayer(poly); }
+        }
+      });
+      waterbodyMarkerLayers.forEach(marker => {
+        if (marker.isChanged) {
+          if (show) { if (!map.hasLayer(marker)) map.addLayer(marker); }
+          else { if (map.hasLayer(marker)) map.removeLayer(marker); }
+        }
+      });
+    }
+
+    function toggleApsacOverlay(show) {
+      isApsacOverlayVisible = show;
+      if (apsacOverlay) {
+        if (show) {
+          if (!map.hasLayer(apsacOverlay)) map.addLayer(apsacOverlay);
+        } else {
+          if (map.hasLayer(apsacOverlay)) map.removeLayer(apsacOverlay);
+        }
+      }
+    }
+
+    function toggleApsacOverlayFromModal() {
+      toggleWaterbodiesModal();
+      toggleApsacOverlay(true);
+      const chkApsac = document.getElementById('chkShowApsacOverlay');
+      if (chkApsac) chkApsac.checked = true;
+      setViewPreset('waterbodies');
+    }
+
+    function toggleWaterbodiesModal() {
+      const el = document.getElementById('waterbodiesModal');
+      if (el) el.classList.toggle('hidden');
+    }
+
+    function switchWbTab(tabName) {
+      ['table', 'timeline', 'mapview'].forEach(t => {
+        const btn = document.getElementById(`tabBtn_${t}`);
+        const content = document.getElementById(`tabContent_${t}`);
+        if (btn && content) {
+          if (t === tabName) {
+            btn.className = "px-3 py-1.5 rounded-lg font-semibold bg-sky-600 text-white transition flex items-center gap-1.5 shadow-sm";
+            content.classList.remove('hidden');
+          } else {
+            btn.className = "px-3 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition flex items-center gap-1.5";
+            content.classList.add('hidden');
+          }
+        }
+      });
+    }
+
+    function filterWbTable(type) {
+      currentWbFilter = type;
+      ['all', 'tanks', 'canals', 'changed'].forEach(k => {
+        const btn = document.getElementById(`wbFilt_${k}`);
+        if (btn) {
+          if (k === type) {
+            btn.className = "px-2.5 py-1 rounded text-[11px] font-semibold bg-sky-600 text-white";
+          } else {
+            btn.className = "px-2.5 py-1 rounded text-[11px] text-slate-400 hover:text-white";
+          }
+        }
+      });
+      renderWbTableRows();
+    }
+
+    function filterWbByText(query) {
+      renderWbTableRows(query.trim().toLowerCase());
+    }
+
+    function initWaterbodiesModalTable() {
+      renderWbTableRows();
+    }
+
+    function renderWbTableRows(query = '') {
+      const tbody = document.getElementById('wbTableBody');
+      if (!tbody || typeof BHIMAVARAM_WATERBODIES_DATA === 'undefined') return;
+      tbody.innerHTML = '';
+
+      let items = BHIMAVARAM_WATERBODIES_DATA;
+
+      if (currentWbFilter === 'tanks') {
+        items = items.filter(w => w.type.includes('tank'));
+      } else if (currentWbFilter === 'canals') {
+        items = items.filter(w => w.type.includes('canal'));
+      } else if (currentWbFilter === 'changed') {
+        items = items.filter(w => w.change2011Acres > 0 || w.id === 'T7');
+      }
+
+      if (query) {
+        items = items.filter(w => 
+          w.code.toLowerCase().includes(query) ||
+          w.nameTe.toLowerCase().includes(query) ||
+          w.nameEn.toLowerCase().includes(query) ||
+          w.localName.toLowerCase().includes(query)
+        );
+      }
+
+      items.forEach(item => {
+        const isChanged = item.id === 'T7';
+        const isCanal = item.type.includes('canal');
+        const tr = document.createElement('tr');
+        tr.className = isChanged ? "bg-pink-950/20 hover:bg-pink-950/40 transition" : "hover:bg-slate-900/60 transition";
+
+        tr.innerHTML = `
+          <td class="py-2.5 px-2.5 font-mono text-slate-400 text-center">${item.sno}</td>
+          <td class="py-2.5 px-2.5">
+            <span class="px-2 py-0.5 rounded font-bold font-mono text-[10px] ${isChanged ? 'bg-pink-900/60 text-pink-300 border border-pink-500/50' : (isCanal ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-500/40' : 'bg-sky-950/80 text-sky-300 border border-sky-500/40')}">
+              ${item.code}
+            </span>
+          </td>
+          <td class="py-2.5 px-2.5">
+            <div class="font-bold text-white text-xs">${item.nameTe}</div>
+            <div class="text-[10px] text-slate-400">${item.nameEn}</div>
+          </td>
+          <td class="py-2.5 px-2.5 text-slate-300 font-medium">${item.localName}</td>
+          <td class="py-2.5 px-2.5 text-right font-mono font-bold text-sky-300">${item.totalAreaAcres.toFixed(2)}</td>
+          <td class="py-2.5 px-2.5 text-right font-mono font-bold ${item.change2011Acres > 0 ? 'text-pink-400' : 'text-emerald-400'}">
+            ${item.change2011Acres > 0 ? '⚠️ -' + item.change2011Acres.toFixed(2) : '0.00'}
+          </td>
+          <td class="py-2.5 px-2.5 text-right font-mono font-bold text-emerald-300">${item.remainingAreaAcres.toFixed(2)}</td>
+          <td class="py-2.5 px-2.5 text-center">
+            <button onclick="locateWaterbody('${item.id}')" class="px-2.5 py-1 rounded bg-sky-600/80 hover:bg-sky-500 text-white font-semibold text-[11px] transition shadow-sm" title="ఈ జలాశయంపైకి మ్యాప్ జూమ్ చేయండి">
+              🔍 పటంలో స్థానం
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Initialize when DOM is ready
+    window.addEventListener('DOMContentLoaded', initMap);
+  </script>
+</body>
+</html>
