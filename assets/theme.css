@@ -281,18 +281,41 @@ html.light #wardSearch {
   color: #0f172a !important;
 }
 
-html.light #btn-zone-1,
-html.light #btn-zone-2,
-html.light #btn-zone-3n,
-html.light #btn-zone-3s {
+/* Zone Filter Buttons on Index.html */
+.zone-filter-btn {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  color: #94a3b8;
+  font-weight: 600;
+  transition: all 0.15s ease-in-out;
+}
+.zone-filter-btn:hover {
+  background-color: #334155;
+  color: #ffffff;
+}
+.zone-filter-btn.active {
+  background-color: #0891b2 !important;
+  border-color: #22d3ee !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(6, 182, 212, 0.4) !important;
+}
+
+html.light .zone-filter-btn {
   background-color: #ffffff !important;
   border: 1px solid #cbd5e1 !important;
   color: #334155 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
 }
-
-html.light #btn-zone-all {
+html.light .zone-filter-btn:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #94a3b8 !important;
+  color: #0f172a !important;
+}
+html.light .zone-filter-btn.active {
   background-color: #0284c7 !important;
+  border-color: #0369a1 !important;
   color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35) !important;
 }
 
 /* Quick Ward Pills Grid on Index.html */
