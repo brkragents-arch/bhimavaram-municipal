@@ -1,9 +1,6 @@
 // Bhimavaram Municipality - Complete 52 Wards Official Gazette Boundary Dataset
+// Planar Non-Overlapping Polygon Partition
 // Source: Bhimavaram Municipality Delimitation Order & Gazette Notification (Pages 1 to 17)
-// Cross-referenced with:
-// 1. AP CDMA ULB GIS Map: https://bhimavaram.cdma.ap.gov.in/ulbprofile/bhimavaram/gis-map/
-// 2. ISRO Bhuvan Cadastral Geoportal: https://bhuvan-app1.nrsc.gov.in/cadastral/
-// 3. Google Maps Roads & Street Layer
 
 var BHIMAVARAM_52_WARDS_DATA = [
   {
@@ -40,49 +37,25 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "From the above point and it runs towards west along Natural flow of Miramiya Kodu upto Old Yanamaduru Drain.",
     "west": "Starting from the above point it runs towards North along the center line of yanamudurru drain up to the starting point.",
     "center": [
-      16.5547,
-      81.5246
+      16.556,
+      81.5245
     ],
     "polygon": [
       [
-        16.5682,
-        81.5251
+        16.55808,
+        81.51896
       ],
       [
-        16.5675,
-        81.5288
+        16.56897,
+        81.53479
       ],
       [
-        16.5657,
-        81.5293
+        16.55573,
+        81.53093
       ],
       [
-        16.5636,
-        81.5284
-      ],
-      [
-        16.563,
-        81.5298
-      ],
-      [
-        16.56,
-        81.5307
-      ],
-      [
-        16.5562,
-        81.5273
-      ],
-      [
-        16.554,
-        81.523
-      ],
-      [
-        16.555,
-        81.5215
-      ],
-      [
-        16.562,
-        81.523
+        16.55075,
+        81.52239
       ]
     ]
   },
@@ -126,37 +99,33 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from above Point and it runs towards west along Gudiwada– Bhimavaram Railway line in R.S No: 560 of Bhimavaram Revenue Village upto junction of Gudiwada–Bhimavaram Railway line and mente vari thota under-pass.",
     "west": "The boundary starts from above junction and it runs towards North along the mente vari thota main road upto the D.No.5-6-7 and turns towards west upto the D.No.5-3-61/1 and turns north, it runs towards north upto the D.No.5-8-33/1 and turns east upto the D.No.5-8-33/2 and turns north and runs along the CPM office backside road upto the D.No.5-9-9 and turns west upto the CPM office road and turns north at D.No.5-10-1/14 and runs towards north upto the By-pass road & CPM office road junction and turns east, runs along the By-pass road upto the D.No.5-8-44/1 upto D.No.5-8-44/6 at By-Pass road. It runs from this point towards north along R.S No: 312,326,337,351 and meets at starting point of the ward Boundary.",
     "center": [
-      16.5465,
-      81.5251
+      16.55,
+      81.528
     ],
     "polygon": [
       [
-        16.558,
-        81.5295
+        16.54779,
+        81.5269
       ],
       [
-        16.559,
-        81.5345
+        16.54989,
+        81.52219
       ],
       [
-        16.551,
-        81.535
+        16.55075,
+        81.52239
       ],
       [
-        16.547,
-        81.534
+        16.55573,
+        81.53093
       ],
       [
-        16.546,
-        81.528
+        16.55081,
+        81.53238
       ],
       [
-        16.549,
-        81.5265
-      ],
-      [
-        16.554,
-        81.5275
+        16.54904,
+        81.53125
       ]
     ]
   },
@@ -186,29 +155,33 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from the above junction it runs towards west along P.P Road upto Bhimavaram Nidadavolu railway line.",
     "west": "The boundary starts from above junction and It runs towards North-West direction along Bhimavaram Nidadavolu railway line upto Starting point i.e., Junction of By-Pass Road and Bhimavaram Nidadavolu Railway line at R.S No: 655 of Bhimavaram Revenue village.",
     "center": [
-      16.5472,
-      81.5298
+      16.5465,
+      81.5335
     ],
     "polygon": [
       [
-        16.551,
-        81.534
-      ],
-      [
-        16.5525,
-        81.541
-      ],
-      [
-        16.545,
-        81.5415
+        16.54274,
+        81.53265
       ],
       [
         16.544,
-        81.535
+        81.53125
       ],
       [
-        16.547,
-        81.5335
+        16.54904,
+        81.53125
+      ],
+      [
+        16.55081,
+        81.53238
+      ],
+      [
+        16.54766,
+        81.53869
+      ],
+      [
+        16.54713,
+        81.5385
       ]
     ]
   },
@@ -242,29 +215,37 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "From the above the boundary runs towards west up to turns south at D.No.7-9-33 and runs north upto D.No.7-10-3.",
     "west": "The boundary starts from above point it runs towards North along Bhimavaram– Tanuku upto natural boundary of Miramiya Kodu. Then it turns west upto the junction of Miramiya Kodu canal and Bhimavaram-Nidadavolu Railway line at R.S No: 655. From Here it follows the Bhimavaram Nidadavolu line upto the Municipal limits at R.S No: 651 of Bhimavaram Revenue Village.",
     "center": [
-      16.554,
-      81.5385
+      16.5525,
+      81.5365
     ],
     "polygon": [
       [
-        16.562,
-        81.535
+        16.54882,
+        81.5406
       ],
       [
-        16.563,
-        81.543
+        16.54766,
+        81.53869
       ],
       [
-        16.5535,
-        81.5435
+        16.55081,
+        81.53238
       ],
       [
-        16.552,
-        81.538
+        16.55573,
+        81.53093
       ],
       [
-        16.551,
-        81.5345
+        16.56897,
+        81.53479
+      ],
+      [
+        16.57096,
+        81.53611
+      ],
+      [
+        16.5705,
+        81.5375
       ]
     ]
   },
@@ -305,29 +286,33 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from above point it runs towards west along P.P road upto the Junction of P.P road and Bhimavaram Tanuku road near Kanaka Durga temple.",
     "west": "From the above point the boundary runs north along Bhimavaram – Tanuku road and turns east at D.No;8-7-50 and runs upto D.No.7-10-3/1. Then turns it turns south and runs upto D.No.7-9-33. From here it turns East and runs ASR Statue and Srilanka Road and runs north along the Srilanka Road and meets the starting point.",
     "center": [
-      16.5515,
-      81.5445
+      16.5535,
+      81.5435
     ],
     "polygon": [
       [
-        16.562,
-        81.5435
+        16.5489,
+        81.54869
       ],
       [
-        16.561,
-        81.549
+        16.5479,
+        81.54678
       ],
       [
-        16.5495,
-        81.548
+        16.54882,
+        81.5406
       ],
       [
-        16.546,
-        81.544
+        16.5705,
+        81.5375
       ],
       [
-        16.549,
-        81.541
+        16.568,
+        81.545
+      ],
+      [
+        16.568,
+        81.54532
       ]
     ]
   },
@@ -370,29 +355,29 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The Boundary starts from above junction and runs towards west from D.No.8-1-104 upto Junction of P.P road and kurmayya peta school road at D.No.8-7-41.",
     "west": "From the above point the boundary moves north along Kurmayya Peta School road Upto the 8-4-2/1 and turns east along the road upto D.No.8-7-29/1 of Kandikappu Dibba. From Here it turns north along industrial estate road upto plot number 51 of IALA Layout and runs east along Northern boundary of Eastern power Distribution Center. Then the boundary follows natural flow along western boundary of CSN college and meets at Starting point of the ward at R.S No: 24 of Gunupudi Revenue Village.",
     "center": [
-      16.554,
+      16.555,
       81.552
     ],
     "polygon": [
       [
-        16.566,
-        81.547
+        16.5489,
+        81.54869
       ],
       [
-        16.5665,
-        81.558
+        16.568,
+        81.54532
+      ],
+      [
+        16.568,
+        81.562
       ],
       [
         16.555,
-        81.561
+        81.565
       ],
       [
-        16.547,
-        81.554
-      ],
-      [
-        16.548,
-        81.548
+        16.54632,
+        81.56211
       ]
     ]
   },
@@ -429,29 +414,37 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "From the above junction and turns West and runs along Gandhinagar road upto D.No.9-7-78.",
     "west": "The boundary starts from above point runs towards North along the Western boundary of R.S No: 431 and meets the center of Railway track at R.S No: 726 of Gunupudi Revenue Village. From this point the boundary continue along Railway line upto R.S No:723 of Gunupudi Revenue village and turns North East along G&V canal and follows upto R.S No: 195 of Gunupudi Revenue village i.e., Starting Point.",
     "center": [
-      16.544,
-      81.549
+      16.542,
+      81.5495
     ],
     "polygon": [
       [
-        16.548,
-        81.549
+        16.53365,
+        81.55751
       ],
       [
-        16.5485,
-        81.557
+        16.53831,
+        81.54486
       ],
       [
-        16.539,
-        81.556
+        16.5479,
+        81.54678
       ],
       [
-        16.5385,
-        81.546
+        16.5489,
+        81.54869
       ],
       [
-        16.543,
-        81.5465
+        16.54632,
+        81.56211
+      ],
+      [
+        16.54,
+        81.56
+      ],
+      [
+        16.53453,
+        81.56228
       ]
     ]
   },
@@ -486,29 +479,37 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from above point and it runs in Northwest direction along BVRM-NSP railway line upto FCI godowns road and it turns towards North-East direction along FCI road upto railway quarters road and it turns towards Northwest direction along railway quarters road upto railway quarters road and bandarpuntha road junction and it turns towards east along bandarupuntha road upto bandarupuntha road and chinaranganipalem main road junction in RS.No:374 (Gunupudi revenue village).",
     "west": "The boundary starts from above point runs towards North along Chinaranganipalem main road upto Chinaranganipalem Main Road D.No (10-1-40) in P.P.road junction in RS.No:244 (Gunupudi revenue village) i.e., starting point.",
     "center": [
-      16.543,
-      81.541
+      16.5435,
+      81.542
     ],
     "polygon": [
       [
-        16.5465,
-        81.539
+        16.53745,
+        81.54248
       ],
       [
-        16.5465,
-        81.544
+        16.5405,
+        81.5397
       ],
       [
-        16.54,
-        81.544
+        16.54713,
+        81.5385
       ],
       [
-        16.539,
-        81.5395
+        16.54766,
+        81.53869
       ],
       [
-        16.542,
-        81.538
+        16.54882,
+        81.5406
+      ],
+      [
+        16.5479,
+        81.54678
+      ],
+      [
+        16.53831,
+        81.54486
       ]
     ]
   },
@@ -549,29 +550,25 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from above point it runs towards west along Temple tree Apartment Road and Traffic park South side road and turns towards south upto Geethams school at D.No.10-5-68 and it runs towards west upto D.No.10-5-49 in RS.No:385 (Gunupudi revenue village).",
     "west": "The boundary starts from the above point runs towards North upto junction of APHB road and Aditya school road and turns west upto Aditya school and turns towards north upto D.No.10-5-9 and runs in south west direction along railway line boundary upto junction of APHB road and Junction railway station road and runs towards north upto junction of PP road and Junction railway station road in RS.No:257 (Gunupudi revenue village) i.e., starting point.",
     "center": [
-      16.542,
-      81.535
+      16.5425,
+      81.5365
     ],
     "polygon": [
       [
-        16.546,
-        81.5335
+        16.5405,
+        81.53295
       ],
       [
-        16.546,
-        81.538
+        16.54274,
+        81.53265
       ],
       [
-        16.5395,
-        81.538
+        16.54713,
+        81.5385
       ],
       [
-        16.539,
-        81.533
-      ],
-      [
-        16.5425,
-        81.532
+        16.5405,
+        81.5397
       ]
     ]
   },
@@ -618,24 +615,28 @@ var BHIMAVARAM_52_WARDS_DATA = [
     ],
     "polygon": [
       [
-        16.541,
-        81.533
+        16.53224,
+        81.53919
       ],
       [
-        16.542,
-        81.539
+        16.53268,
+        81.53774
       ],
       [
-        16.535,
-        81.54
+        16.53957,
+        81.53258
       ],
       [
-        16.534,
-        81.5335
+        16.5405,
+        81.53295
       ],
       [
-        16.537,
-        81.5315
+        16.5405,
+        81.5397
+      ],
+      [
+        16.53745,
+        81.54248
       ]
     ]
   },
@@ -681,29 +682,33 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from above point it runs towards west along kandikatla vari street upto D.No.11-13-18/1 and runs North West upto D.No.11-13-11and turns towards North West upto BN Road.",
     "west": "The boundary starts from above point runs in North direction along BN Road at D.No.11-3-20 upto 11-3-30 and runs towards North East along Gunupudi drain at D, No 11- 3-30 upto11-3-48 and runs towards North upto 11-6-1 and turns towards North East along vasanthala vari street upto 12-10-3/1 and turns towards East upto 12-10-1a and runs towards North upto 10-6-14.",
     "center": [
-      16.536,
-      81.532
+      16.5355,
+      81.5325
     ],
     "polygon": [
       [
-        16.54,
-        81.53
+        16.53495,
+        81.53026
       ],
       [
-        16.5405,
-        81.534
+        16.53678,
+        81.52985
       ],
       [
-        16.5325,
-        81.5335
+        16.5383,
+        81.5304
       ],
       [
-        16.532,
-        81.529
+        16.53957,
+        81.53258
       ],
       [
-        16.536,
-        81.529
+        16.53268,
+        81.53774
+      ],
+      [
+        16.53249,
+        81.53641
       ]
     ]
   },
@@ -743,29 +748,29 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "From the above junction it turns West along the natural boundary limits of Gunupudi Revenue village and Taderu Revenue village upto the Bhimavaram Matsyapuri road at R.S No: 624 of Gunupudi Revenue village.",
     "west": "The boundary starts from above point runs towards North along Bhimavaram Matsyapuri road upto turn North East at Bridgepeta At D.No.9-4-22/2 and turns east along R.S No: 463 of Gunupudi Revenue village and turns North West along R.S No: 468 of Gunupudi Revenue Village and meets the meets the junction of Gandhinagar Road and Z bridge. From Here the boundary moves along G&V canal road and meets the starting point i.e., at R.S No:723 of Gunupudi Revenue Village.",
     "center": [
-      16.532,
-      81.545
+      16.5325,
+      81.546
     ],
     "polygon": [
       [
-        16.5385,
-        81.544
+        16.52246,
+        81.54232
       ],
       [
-        16.538,
-        81.552
+        16.53224,
+        81.53919
       ],
       [
-        16.526,
-        81.553
+        16.53745,
+        81.54248
       ],
       [
-        16.525,
-        81.541
+        16.53831,
+        81.54486
       ],
       [
-        16.531,
-        81.54
+        16.53365,
+        81.55751
       ]
     ]
   },
@@ -793,29 +798,33 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from above point it runs towards west along Taderu village limit upto RS.No:448 (Taderu revenue village).",
     "west": "The boundary starts from above point runs towards North along Taderu revenue village limits upto RS.No:1 (Taderu revenue village) i.e., starting point.",
     "center": [
-      16.524,
-      81.555
+      16.523,
+      81.553
     ],
     "polygon": [
       [
-        16.528,
-        81.55
+        16.52246,
+        81.54232
       ],
       [
-        16.529,
+        16.53365,
+        81.55751
+      ],
+      [
+        16.53453,
+        81.56228
+      ],
+      [
+        16.528,
         81.565
       ],
       [
-        16.518,
-        81.564
+        16.516,
+        81.56
       ],
       [
-        16.517,
-        81.548
-      ],
-      [
-        16.523,
-        81.548
+        16.51521,
+        81.54028
       ]
     ]
   },
@@ -855,29 +864,41 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from above point it runs towards South-West along South Canal upto RS No:704 of Gunupudi revenue village and turns towards west along Municipal limits in RS.No:716 of Gunupudi revenue village.",
     "west": "The boundary starts from above point runs towards North from R.S No:716 and meets St. Anns school road and runs along North and turns towards east and runs upto D.No.13-26-25 bethanipeta road and turns towards east upto D.No.13-26-31and turns towards North and ends at D.No.13-26-53/1 i.e., starting point.",
     "center": [
-      16.527,
-      81.534
+      16.5285,
+      81.5335
     ],
     "polygon": [
       [
-        16.531,
-        81.53
+        16.52903,
+        81.52864
       ],
       [
-        16.5315,
-        81.538
+        16.53249,
+        81.53641
       ],
       [
-        16.521,
-        81.537
+        16.53268,
+        81.53774
       ],
       [
-        16.521,
-        81.529
+        16.53224,
+        81.53919
       ],
       [
-        16.526,
-        81.528
+        16.52246,
+        81.54232
+      ],
+      [
+        16.51521,
+        81.54028
+      ],
+      [
+        16.515,
+        81.535
+      ],
+      [
+        16.515,
+        81.53012
       ]
     ]
   },
@@ -914,25 +935,29 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from above junction and it runs towards west along pavurala vari veedhi upto D.No.13-22-15.",
     "west": "The boundary starts from above junction and it runs towards North along drain bund road upto D.No.13-20-20 i.e., starting point.",
     "center": [
-      16.532,
-      81.532
+      16.533,
+      81.5315
     ],
     "polygon": [
       [
-        16.5345,
-        81.5295
+        16.52964,
+        81.5282
       ],
       [
-        16.535,
-        81.535
+        16.53025,
+        81.52825
       ],
       [
-        16.5285,
-        81.5355
+        16.53495,
+        81.53026
       ],
       [
-        16.528,
-        81.5295
+        16.53249,
+        81.53641
+      ],
+      [
+        16.52903,
+        81.52864
       ]
     ]
   },
@@ -967,25 +992,25 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from D-NO : 13-20-41/2 and runs towards west along canal bund road up to D.No.13-10-55/2 and turns towards North up to R S NO:352 and turns towards West up to D-NO :13-15-36.",
     "west": "The boundary starts from D-NO: 13-15-36 and Runs towards North upto Mission Hospital East Compound Wall Road i.e., Starting point.",
     "center": [
-      16.534,
-      81.527
+      16.5345,
+      81.528
     ],
     "polygon": [
       [
-        16.537,
-        81.5245
+        16.53554,
+        81.52613
       ],
       [
-        16.5375,
-        81.5295
+        16.53678,
+        81.52985
       ],
       [
-        16.5315,
-        81.5295
+        16.53495,
+        81.53026
       ],
       [
-        16.531,
-        81.5245
+        16.53025,
+        81.52825
       ]
     ]
   },
@@ -1019,24 +1044,32 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "west": "From the above D.No.13-4-16 at Mission hospital road the boundary runs north upto the junction of mission hospital road and Bhimavaram-Narasapuram road junction (Nachuvari Junction) at D.No.13-1-42 i.e., Starting point.",
     "center": [
       16.5375,
-      81.5265
+      81.527
     ],
     "polygon": [
       [
-        16.54,
-        81.524
+        16.53564,
+        81.52588
       ],
       [
-        16.5405,
-        81.529
+        16.53727,
+        81.52461
       ],
       [
-        16.5355,
-        81.529
+        16.53962,
+        81.52775
       ],
       [
-        16.535,
-        81.524
+        16.5383,
+        81.5304
+      ],
+      [
+        16.53678,
+        81.52985
+      ],
+      [
+        16.53554,
+        81.52613
       ]
     ]
   },
@@ -1095,20 +1128,32 @@ var BHIMAVARAM_52_WARDS_DATA = [
     ],
     "polygon": [
       [
-        16.543,
-        81.523
+        16.53736,
+        81.52436
       ],
       [
-        16.5435,
-        81.5285
+        16.53743,
+        81.5243
       ],
       [
-        16.5365,
-        81.528
+        16.5406,
+        81.52377
       ],
       [
-        16.536,
-        81.5225
+        16.54186,
+        81.52528
+      ],
+      [
+        16.5413,
+        81.5268
+      ],
+      [
+        16.53963,
+        81.52775
+      ],
+      [
+        16.53727,
+        81.52461
       ]
     ]
   },
@@ -1153,25 +1198,41 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from above point it runs South along gunupudi drain at D.No.12-10-1a and turns west up to D.No.12-11-17 and turns South West along Gunupudi drain 12-10-1/1 upto 12-11-10 and runs towards South West at D.No.12-11-14 along Badugu vari street(major drain) up to BN road and runs along BN road upto someswara swamy temple and turns to west upto nachu vari centre at D.No.12-4-1.",
     "west": "The boundary starts from above point runs towards North and turns east along ayyavari street and runs towards north along yamijaalavari street up to railway junction road.",
     "center": [
-      16.541,
-      81.5285
+      16.5415,
+      81.529
     ],
     "polygon": [
       [
+        16.53963,
+        81.52775
+      ],
+      [
+        16.5413,
+        81.5268
+      ],
+      [
         16.544,
-        81.527
+        81.5295
       ],
       [
-        16.5445,
-        81.5315
+        16.544,
+        81.53125
       ],
       [
-        16.5375,
-        81.5315
+        16.54274,
+        81.53265
       ],
       [
-        16.537,
-        81.5265
+        16.5405,
+        81.53295
+      ],
+      [
+        16.53957,
+        81.53258
+      ],
+      [
+        16.5383,
+        81.5304
       ]
     ]
   },
@@ -1216,25 +1277,29 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from above point turns towards west along ayyavari street old bsnl office road at D.No.12-1-25 krishna (temple).",
     "west": "The boundary starts from above point runs towards north old bsnl office road upto Pasupuleti vari street at D.No.15-20-41 and runs along north West of Pasupuleti vari street upto D.No.15-20-32 and turns towards east upto D.No.15-20-29 and runs towards north upto D.No.15-22-10 and towards east upto D.No.15-23-9(3) and runs along north upto D.No.15-23-1 and turns towards west upto D.No.15-6-29 and runs along Nilla vari street upto bandaru apparao street",
     "center": [
-      16.543,
-      81.5265
+      16.5435,
+      81.527
     ],
     "polygon": [
       [
-        16.546,
-        81.5245
+        16.544,
+        81.5295
       ],
       [
-        16.5465,
-        81.529
+        16.5413,
+        81.5268
       ],
       [
-        16.5405,
-        81.529
+        16.54186,
+        81.52528
       ],
       [
-        16.54,
-        81.5245
+        16.54367,
+        81.52483
+      ],
+      [
+        16.54514,
+        81.52779
       ]
     ]
   },
@@ -1281,25 +1346,33 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from the above point and it runs towards West along Rajakula Cheruvu North road upto D.No.15-22-10 and turns towards south along Rajakula Cheruvu West Road upto D.No.15-20-29 and turns towards west and runs upto Pasupuletivari Street at D.No.15-20-26 and turns towards north and it runs along Pasupuleti vari Street Upto D.No.15-20-18 and turns towards west and it runs along Mohammadeeyula Street upto Old Y Drain Road at D.No.15-18-15 and it turns towards North west direction upto Mohammadeeyula Street D.No.15-8-21 and it turns towards west and runs upto junction of Mohammadeeyula Street and Gumasthala vari Street.",
     "west": "The boundary starts from the above point and it runs towards North along junction of RTC Complex east side road and Palakollu- Pamarru Road i.e., Starting Point.",
     "center": [
-      16.545,
+      16.5455,
       81.526
     ],
     "polygon": [
       [
-        16.5485,
-        81.523
+        16.54475,
+        81.52375
       ],
       [
-        16.549,
-        81.528
+        16.54975,
+        81.52208
       ],
       [
-        16.542,
-        81.528
+        16.54989,
+        81.52219
       ],
       [
-        16.5415,
-        81.523
+        16.54779,
+        81.5269
+      ],
+      [
+        16.54514,
+        81.52779
+      ],
+      [
+        16.54367,
+        81.52483
       ]
     ]
   },
@@ -1331,25 +1404,29 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Starting from above point, Runs west from Door No 6-1-49 along PP Road up to Door No 16-12-98.",
     "west": "Starting from above point, turns towards north Upto D.No.16-13-28 and continues along Kamaraju vari veedhi Upto Kamaraju vari veedhi and Bhimavaram Gudivada Railway line junction at D.No.16-13-19 and it turns towards West Upto Bhimavaram–Gudivada Railway line and Bhimavaram–Narsapuram line Junction. i.e., Starting Point.",
     "center": [
-      16.546,
+      16.5465,
       81.529
     ],
     "polygon": [
       [
-        16.5495,
-        81.527
+        16.544,
+        81.5295
       ],
       [
-        16.5505,
-        81.532
+        16.54514,
+        81.52779
       ],
       [
-        16.5435,
-        81.532
+        16.54779,
+        81.5269
       ],
       [
-        16.543,
-        81.527
+        16.54904,
+        81.53125
+      ],
+      [
+        16.544,
+        81.53125
       ]
     ]
   },
@@ -1393,24 +1470,28 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "west": "The boundary starts from above junction and it runs towards North along Padmasri road(Reliance super market backside road) upto the Bhimavaram–Palakollu railway line junction and turns towards west upto the old Yanamuduru Drain- and runs towards north along the old Yanamuduru Drain and meets at starting point of the ward Boundary.",
     "center": [
       16.544,
-      81.521
+      81.5215
     ],
     "polygon": [
       [
-        16.549,
-        81.518
+        16.54813,
+        81.51903
       ],
       [
-        16.549,
-        81.524
+        16.54975,
+        81.52208
       ],
       [
-        16.541,
-        81.524
+        16.54475,
+        81.52375
       ],
       [
-        16.5405,
-        81.5175
+        16.54131,
+        81.52031
+      ],
+      [
+        16.54282,
+        81.5178
       ]
     ]
   },
@@ -1444,24 +1525,32 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "west": "The boundary starts from the above point and it runs towards North along Rest House Road upto Rest House Road and Palakollu Pamarru Road Junction i.e., Starting Point.",
     "center": [
       16.5425,
-      81.5225
+      81.523
     ],
     "polygon": [
       [
-        16.545,
+        16.54107,
         81.5205
       ],
       [
-        16.5455,
-        81.5245
+        16.54131,
+        81.52031
       ],
       [
-        16.54,
-        81.5245
+        16.54475,
+        81.52375
       ],
       [
-        16.5395,
-        81.5205
+        16.54367,
+        81.52483
+      ],
+      [
+        16.54186,
+        81.52528
+      ],
+      [
+        16.5406,
+        81.52377
       ]
     ]
   },
@@ -1500,24 +1589,24 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "west": "The boundary starts from the above point and it runs towards North upto junction of Municipal Office Road and Tatavarthy vari street i.e., Starting Point.",
     "center": [
       16.539,
-      81.523
+      81.5225
     ],
     "polygon": [
       [
-        16.5415,
-        81.521
+        16.5383,
+        81.5205
       ],
       [
-        16.542,
-        81.5255
+        16.54107,
+        81.5205
       ],
       [
-        16.5365,
-        81.525
+        16.5406,
+        81.52377
       ],
       [
-        16.536,
-        81.521
+        16.53743,
+        81.5243
       ]
     ]
   },
@@ -1556,25 +1645,41 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from the above point and it runs towards West along Thatavarthy Vari Street upto Municipal Office Road and Thatavarthy Vari Street Junction at D.No.22-15-97, and it turns towards south and runs along Municipal Office Road upto D.No.23-8-12, and it turns towards west and runs along Rayasam vari Street upto D.No.23- 2-2 and it turns towards south and runs along Edward tank south side road upto D.No.23-3- 15 and it turns towards north and runs upto Government Hospital Road upto D.No.23-3- 20/1 and turns towards west upto D.No.23-2-23 and turns south& runs upto D.No.23-6-77 and turns west along Sarraju vari street upto center line of Yanamadurru Drain.",
     "west": "The boundary starts from the above point and it runs towards North along center line of Yanamadurru Drain upto Junction of Yanamadurru drain and Bhimavaram– Gudiwada Railway Line Junction i.e., Starting Point",
     "center": [
-      16.5385,
+      16.539,
       81.5185
     ],
     "polygon": [
       [
-        16.543,
-        81.515
+        16.54155,
+        81.51545
       ],
       [
-        16.543,
-        81.521
+        16.54282,
+        81.5178
       ],
       [
-        16.535,
-        81.521
+        16.54131,
+        81.52031
       ],
       [
-        16.535,
-        81.515
+        16.54107,
+        81.5205
+      ],
+      [
+        16.5383,
+        81.5205
+      ],
+      [
+        16.53704,
+        81.51971
+      ],
+      [
+        16.53782,
+        81.51428
+      ],
+      [
+        16.5381,
+        81.51397
       ]
     ]
   },
@@ -1618,25 +1723,29 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from the above point and it runs towards west along Akkarabothu Vari Street upto D.No.21-11-29 and it turns towards south and runs along Luthern High School Ground Compound upto Christian Burial Ground West side road at D.No.21-10-2 and turns west upto center line of Yanamadurru Drain.",
     "west": "The boundary starts from the above point and it runs towards North along center line of Yanamadurru Drain upto the junction of center line of Yanamadurru Drain and Sarraju vari street junction and it turns towards East along Sarraju vari street upto D.No.23- 6-77 and it turns towards North and runs upto Government Hospital road D.No.23-3-21 i.e., Starting Point.",
     "center": [
-      16.535,
+      16.5355,
       81.518
     ],
     "polygon": [
       [
-        16.5375,
-        81.515
+        16.53181,
+        81.51695
       ],
       [
-        16.538,
-        81.521
+        16.53782,
+        81.51428
       ],
       [
-        16.531,
-        81.5205
+        16.53704,
+        81.51971
       ],
       [
-        16.5305,
-        81.5145
+        16.5349,
+        81.5204
+      ],
+      [
+        16.5317,
+        81.5172
       ]
     ]
   },
@@ -1666,25 +1775,33 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from above point it runs towards west along Yadhavula vari street -2 upto Rest house junction at D.No.20-9-1.",
     "west": "The boundary starts from above point runs towards North along Rest House Road meets the starting point at D.No.20-11-18.",
     "center": [
-      16.5365,
+      16.5368,
       81.522
     ],
     "polygon": [
       [
-        16.5385,
+        16.53462,
+        81.52162
+      ],
+      [
+        16.5349,
+        81.5204
+      ],
+      [
+        16.53704,
+        81.51971
+      ],
+      [
+        16.5383,
         81.5205
       ],
       [
-        16.539,
-        81.524
+        16.53743,
+        81.5243
       ],
       [
-        16.5345,
-        81.524
-      ],
-      [
-        16.534,
-        81.5205
+        16.53736,
+        81.52436
       ]
     ]
   },
@@ -1719,24 +1836,32 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "west": "The boundary starts from the above point and it runs towards North along S.P.Street upto S.P.Street and Yerragopu vari Street Junction i.e., Starting Point.",
     "center": [
       16.535,
-      81.5235
+      81.5238
     ],
     "polygon": [
       [
-        16.537,
-        81.522
+        16.53275,
+        81.52332
       ],
       [
-        16.5375,
-        81.5255
+        16.53275,
+        81.52329
       ],
       [
-        16.5325,
-        81.5255
+        16.53462,
+        81.52162
       ],
       [
-        16.532,
-        81.522
+        16.53736,
+        81.52436
+      ],
+      [
+        16.53727,
+        81.52461
+      ],
+      [
+        16.53564,
+        81.52588
       ]
     ]
   },
@@ -1773,24 +1898,32 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "west": "The boundary starts from the above point and it runs towards North Old Yanamadurru Drain Road upto D.No.14-8-1 i.e., Starting Point",
     "center": [
       16.5335,
-      81.525
+      81.5255
     ],
     "polygon": [
       [
-        16.536,
-        81.5235
+        16.53013,
+        81.52623
       ],
       [
-        16.5365,
-        81.527
+        16.53275,
+        81.52332
       ],
       [
-        16.5305,
-        81.527
+        16.53564,
+        81.52588
       ],
       [
-        16.53,
-        81.5235
+        16.53554,
+        81.52613
+      ],
+      [
+        16.53025,
+        81.52825
+      ],
+      [
+        16.52964,
+        81.5282
       ]
     ]
   },
@@ -1845,20 +1978,24 @@ var BHIMAVARAM_52_WARDS_DATA = [
     ],
     "polygon": [
       [
-        16.535,
-        81.5185
+        16.5317,
+        81.5172
       ],
       [
-        16.5355,
-        81.5235
+        16.5349,
+        81.5204
       ],
       [
-        16.5295,
-        81.5235
+        16.53462,
+        81.52162
       ],
       [
-        16.529,
-        81.5185
+        16.53275,
+        81.52329
+      ],
+      [
+        16.52893,
+        81.51905
       ]
     ]
   },
@@ -1899,24 +2036,32 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "west": "The boundary starts from the above point runs towards north along Dirsumarru road and enters S.P.street and runs along the same street upto the starting point i.e., D.No.19- 16-99.",
     "center": [
       16.5305,
-      81.5225
+      81.5228
     ],
     "polygon": [
       [
-        16.533,
-        81.52
+        16.52764,
+        81.51999
       ],
       [
-        16.5335,
-        81.525
+        16.52834,
+        81.5192
       ],
       [
-        16.527,
-        81.525
+        16.52893,
+        81.51905
       ],
       [
-        16.5265,
-        81.52
+        16.53275,
+        81.52329
+      ],
+      [
+        16.53275,
+        81.52332
+      ],
+      [
+        16.53013,
+        81.52623
       ]
     ]
   },
@@ -1965,25 +2110,33 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "The boundary starts from RS-No: 629 in municipal limits towards west up to Dirusumarru road along yanamadurru bund road.",
     "west": "The boundary starts from RS-No:634 and runs towards north along yanamadurru drain road upto St. Ann's school road junction at D.No.19-16-112 and turns east along St. Ann's school road upto 19-10-29 and it turns towards north and runs upto kapu kalyana mandapam road at D.No.19-22-5/10 and it turns towards east and runs along Kapu kalyana mandapam road upto D.No.19-10-29 and it turns towards north along Reddy colony street upto D.No.19-26-2/2 and it turns towards west and runs along Reddy colony street upto Reddy colony street and Sri Krishna devaraya function hall west road at D.No.19-26-2 and it turns towards north and runs along Sri Krishna devaraya function hall west road upto M.L.A street and Sri Krishna devaraya function hall west road junction at D.No.19-24-7/1 and it turns towards west along M.L.A street upto M.L.A street and Chinapeta street junction at Chinna Anjaneya swamy temple and it turns towards north and runs along chinapeta street upto chinapeta street and teachers street junction i.e., starting point.",
     "center": [
-      16.528,
+      16.5275,
       81.524
     ],
     "polygon": [
       [
-        16.531,
-        81.522
+        16.52764,
+        81.51999
       ],
       [
-        16.5315,
-        81.528
+        16.53013,
+        81.52623
       ],
       [
-        16.522,
-        81.528
+        16.52964,
+        81.5282
       ],
       [
-        16.5215,
-        81.521
+        16.52903,
+        81.52864
+      ],
+      [
+        16.515,
+        81.53012
+      ],
+      [
+        16.515,
+        81.52583
       ]
     ]
   },
@@ -2016,25 +2169,33 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Starting from the above point it runs towards west along municipal limits up to R.S.No.605 of Bhimavaram revenue village.",
     "west": "Starting from the above point it runs towards north along Bhimavaram revenue village boundary up to door number 25-6-118 i.e., starting point.",
     "center": [
-      16.526,
-      81.517
+      16.5245,
+      81.5175
     ],
     "polygon": [
       [
-        16.529,
-        81.514
+        16.52096,
+        81.51008
       ],
       [
-        16.5295,
-        81.52
+        16.52287,
+        81.51045
       ],
       [
-        16.521,
-        81.52
+        16.52834,
+        81.5192
       ],
       [
-        16.5205,
-        81.5135
+        16.52764,
+        81.51999
+      ],
+      [
+        16.515,
+        81.52583
+      ],
+      [
+        16.515,
+        81.51085
       ]
     ]
   },
@@ -2067,25 +2228,37 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Starting from the above point runs towards West direction along ram Lakshmana nagar colony internal road and crosses B.C. colony layout open space up to door number 25-6-68 and turns in south direction along water tank road upto door number 25-6-118 and turns west direction runs along BC colony south side boundary upto door number 25-6-116.",
     "west": "Starting from the above point runs towards north along D.N.R college road up to komarada road and DNR college ground road junction i.e., starting point.",
     "center": [
-      16.529,
+      16.5285,
       81.515
     ],
     "polygon": [
       [
-        16.532,
-        81.512
+        16.52425,
+        81.51025
       ],
       [
-        16.5325,
-        81.5175
+        16.53042,
+        81.51231
       ],
       [
-        16.5265,
-        81.5175
+        16.53181,
+        81.51695
       ],
       [
-        16.526,
-        81.512
+        16.5317,
+        81.5172
+      ],
+      [
+        16.52893,
+        81.51905
+      ],
+      [
+        16.52834,
+        81.5192
+      ],
+      [
+        16.52287,
+        81.51045
       ]
     ]
   },
@@ -2118,25 +2291,37 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Starting from the above point it runs towards west along D.N.R college ground road up to junction point of Dnr college ground road and komarada road.",
     "west": "Starting from the above point runs towards north up to Karanam gari street junction and turns west direction upto door number 27-3-23/a and runs towards north direction along gundu sagarams street and kompella vari street up to Door No. 27-1-2 i.e., starting point.",
     "center": [
-      16.534,
-      81.514
+      16.5335,
+      81.5135
     ],
     "polygon": [
       [
-        16.5375,
-        81.51
+        16.5329,
+        81.51065
       ],
       [
-        16.538,
-        81.5165
+        16.53367,
+        81.51065
       ],
       [
-        16.5305,
-        81.5165
+        16.53786,
+        81.51298
       ],
       [
-        16.53,
-        81.51
+        16.5381,
+        81.51397
+      ],
+      [
+        16.53782,
+        81.51428
+      ],
+      [
+        16.53181,
+        81.51695
+      ],
+      [
+        16.53042,
+        81.51231
       ]
     ]
   },
@@ -2181,20 +2366,20 @@ var BHIMAVARAM_52_WARDS_DATA = [
     ],
     "polygon": [
       [
-        16.5395,
-        81.5055
+        16.53987,
+        81.50817
       ],
       [
-        16.54,
-        81.512
+        16.53786,
+        81.51298
       ],
       [
-        16.533,
-        81.512
+        16.53367,
+        81.51065
       ],
       [
-        16.5325,
-        81.5055
+        16.53562,
+        81.50658
       ]
     ]
   },
@@ -2233,25 +2418,29 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Starting from the above point it runs towards west along balusunudi mavulamma temple street up to ramalayam temple Y- junction point and turns south direction up to church street junction and turns west direction up to komarada road junction.",
     "west": "Starting from the above point it runs towards north direction up to door number 27- 14-18 and turns west direction and runs along the bhimavaram revenue village boundary up to Rayalam road and karanamgari street i.e., starting point.",
     "center": [
-      16.534,
-      81.508
+      16.5335,
+      81.5078
     ],
     "polygon": [
       [
-        16.5365,
-        81.5045
+        16.53562,
+        81.50658
       ],
       [
-        16.537,
-        81.511
+        16.53367,
+        81.51065
       ],
       [
-        16.5305,
-        81.511
+        16.5329,
+        81.51065
       ],
       [
-        16.53,
-        81.5045
+        16.53073,
+        81.50521
+      ],
+      [
+        16.53238,
+        81.50195
       ]
     ]
   },
@@ -2283,25 +2472,25 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Starting from the above point it runs towards west direction along Rayalam Bhimavaram boundary limits up to door number 26-10-14/1.",
     "west": "Starting from the above point it runs towards north along Komarada road up to komarada road and church street junction i.e., starting point.",
     "center": [
-      16.531,
+      16.5305,
       81.509
     ],
     "polygon": [
       [
-        16.5335,
-        81.505
+        16.53073,
+        81.50521
       ],
       [
-        16.534,
-        81.5125
+        16.5329,
+        81.51065
       ],
       [
-        16.527,
-        81.5125
+        16.53042,
+        81.51231
       ],
       [
-        16.5265,
-        81.505
+        16.52425,
+        81.51025
       ]
     ]
   },
@@ -2336,25 +2525,41 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Komarada Village Boundary",
     "west": "From Naidu Gari Statue, proceed south along the main road via Kamakshamma Temple to the Shiva Temple. From the Shiva Temple, proceed to the R&B Road, then travel west along the R&B Road up to Guttula Satyanarayana Coffee Hotel. From the hotel, proceed south towards Karnam Gari Bodhi.",
     "center": [
-      16.528,
-      81.505
+      16.527,
+      81.5045
     ],
     "polygon": [
       [
-        16.531,
-        81.501
-      ],
-      [
         16.5315,
-        81.508
+        81.49557
       ],
       [
-        16.5235,
-        81.508
+        16.5326,
+        81.49743
       ],
       [
-        16.523,
-        81.501
+        16.53238,
+        81.50195
+      ],
+      [
+        16.53073,
+        81.50521
+      ],
+      [
+        16.52425,
+        81.51025
+      ],
+      [
+        16.52287,
+        81.51045
+      ],
+      [
+        16.52096,
+        81.51008
+      ],
+      [
+        16.52774,
+        81.49787
       ]
     ]
   },
@@ -2388,25 +2593,29 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Komarada Village Boundary.",
     "west": "From Arundhati Street, proceed east along Chabattula Street via Uppugunta Cheruvu Road up to Karnam Gari Bodhi, and from there, continue up to the boundary of Komarada Village.",
     "center": [
-      16.524,
-      81.503
+      16.5225,
+      81.502
     ],
     "polygon": [
       [
-        16.527,
-        81.499
+        16.52774,
+        81.49787
       ],
       [
-        16.5275,
-        81.506
+        16.52096,
+        81.51008
       ],
       [
-        16.52,
-        81.506
+        16.515,
+        81.51085
       ],
       [
-        16.5195,
-        81.499
+        16.515,
+        81.5
+      ],
+      [
+        16.51502,
+        81.49982
       ]
     ]
   },
@@ -2437,25 +2646,29 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Komarada Village Boundary",
     "west": "From the southern side of the northern boundary of Anakoderu Village, proceed along the Anakoderu irrigation canal up to the boundary of Chinamiram Village.",
     "center": [
-      16.522,
-      81.496
+      16.5215,
+      81.4955
     ],
     "polygon": [
       [
-        16.526,
-        81.492
+        16.5315,
+        81.49557
       ],
       [
-        16.5265,
-        81.5
+        16.52774,
+        81.49787
       ],
       [
-        16.518,
-        81.5
+        16.51502,
+        81.49982
       ],
       [
-        16.5175,
-        81.492
+        16.516,
+        81.49
+      ],
+      [
+        16.53164,
+        81.49
       ]
     ]
   },
@@ -2485,25 +2698,49 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Northern Boundary of Anakoderu Village.",
     "west": "Pedamiram Village and Vempadu Village in Kalla Mandal share a common western boundary.",
     "center": [
-      16.542,
-      81.498
+      16.5415,
+      81.496
     ],
     "polygon": [
       [
-        16.548,
+        16.55628,
+        81.49538
+      ],
+      [
+        16.55118,
+        81.49891
+      ],
+      [
+        16.54814,
+        81.49978
+      ],
+      [
+        16.53573,
+        81.49883
+      ],
+      [
+        16.5326,
+        81.49743
+      ],
+      [
+        16.5315,
+        81.49557
+      ],
+      [
+        16.53164,
+        81.49
+      ],
+      [
+        16.535,
+        81.49
+      ],
+      [
+        16.55,
         81.492
       ],
       [
-        16.548,
-        81.503
-      ],
-      [
-        16.536,
-        81.503
-      ],
-      [
-        16.536,
-        81.492
+        16.55666,
+        81.49466
       ]
     ]
   },
@@ -2541,24 +2778,20 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "west": "From S.R.K.R. College, via Bhimavaram Hospital and Ambedkar Centre, up to Patapeta.",
     "center": [
       16.541,
-      81.504
+      81.5025
     ],
     "polygon": [
       [
-        16.546,
-        81.5
+        16.54093,
+        81.5061
       ],
       [
-        16.5465,
-        81.507
+        16.53573,
+        81.49883
       ],
       [
-        16.535,
-        81.507
-      ],
-      [
-        16.5345,
-        81.5
+        16.54814,
+        81.49978
       ]
     ]
   },
@@ -2587,25 +2820,37 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Starting from the above point, it runs towards west direction along bhimavaram revenue village limits up to Chinnamiram revenue village.",
     "west": "Starting from the above point, it runs towards north direction along Chinnamiram road up to J.p Road and Chinaamiram road junction near sir Arthur cotton park i.e., starting point.",
     "center": [
-      16.538,
-      81.5065
+      16.5375,
+      81.505
     ],
     "polygon": [
       [
-        16.541,
-        81.504
+        16.53573,
+        81.49883
       ],
       [
-        16.5415,
-        81.51
+        16.54093,
+        81.5061
       ],
       [
-        16.534,
-        81.51
+        16.54059,
+        81.50767
       ],
       [
-        16.5335,
-        81.504
+        16.53987,
+        81.50817
+      ],
+      [
+        16.53562,
+        81.50658
+      ],
+      [
+        16.53238,
+        81.50195
+      ],
+      [
+        16.5326,
+        81.49743
       ]
     ]
   },
@@ -2638,25 +2883,29 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Starting from the above point, it runs towards west up to Bhimavaram municipal limits chinnamiram and J.P Road junction. From here it continues along J.P road upto canara bank near D.No.7-199.",
     "west": "Starting from the above point, it runs towards north direction along youth club road up to R.S.No.1. (along bhimavaram municipal limits) i.e., starting point.",
     "center": [
-      16.544,
-      81.508
+      16.5445,
+      81.5065
     ],
     "polygon": [
       [
-        16.549,
-        81.504
+        16.54634,
+        81.51054
       ],
       [
-        16.5495,
-        81.5115
+        16.54059,
+        81.50767
       ],
       [
-        16.5405,
-        81.5115
+        16.54093,
+        81.5061
       ],
       [
-        16.54,
-        81.504
+        16.54814,
+        81.49978
+      ],
+      [
+        16.55118,
+        81.49891
       ]
     ]
   },
@@ -2688,24 +2937,36 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "west": "Starting from the above point, it runs towards north direction along cosmopolitan club road up to the door number 1-3-8/15 i.e., starting point.",
     "center": [
       16.542,
-      81.513
+      81.5115
     ],
     "polygon": [
       [
-        16.545,
-        81.51
+        16.54059,
+        81.50767
       ],
       [
-        16.5455,
-        81.516
+        16.54634,
+        81.51054
       ],
       [
-        16.5385,
-        81.516
+        16.54636,
+        81.51064
       ],
       [
-        16.538,
-        81.51
+        16.54155,
+        81.51545
+      ],
+      [
+        16.5381,
+        81.51397
+      ],
+      [
+        16.53786,
+        81.51298
+      ],
+      [
+        16.53987,
+        81.50817
       ]
     ]
   },
@@ -2731,25 +2992,29 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Starting from the above point, travels towards North west along the losari canal up to undi road.",
     "west": "Starting from the above point, travels towards north west along the undi road up to junction of the undi road and Bhimavaram–Gudivada railway line i.e., starting point.",
     "center": [
-      16.545,
-      81.516
+      16.5455,
+      81.515
     ],
     "polygon": [
       [
-        16.549,
-        81.513
+        16.54636,
+        81.51064
       ],
       [
-        16.549,
-        81.5195
+        16.54973,
+        81.51344
       ],
       [
-        16.541,
-        81.5195
+        16.54813,
+        81.51903
       ],
       [
-        16.541,
-        81.513
+        16.54282,
+        81.5178
+      ],
+      [
+        16.54155,
+        81.51545
       ]
     ]
   },
@@ -2777,25 +3042,41 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Starting from the above point, it travels west along Gudivada Bhimavaram railway line up to the Anakoderu canal",
     "west": "Starting from the above point, it travels towards north along the Anakoderu canal up to the bypass road Junction, i.e., the starting point.",
     "center": [
-      16.553,
+      16.5525,
       81.517
     ],
     "polygon": [
       [
-        16.559,
-        81.513
+        16.54973,
+        81.51344
       ],
       [
-        16.56,
-        81.522
+        16.55747,
+        81.51151
       ],
       [
-        16.548,
-        81.522
+        16.55903,
+        81.5135
       ],
       [
-        16.5475,
-        81.513
+        16.55808,
+        81.51896
+      ],
+      [
+        16.55075,
+        81.52239
+      ],
+      [
+        16.54989,
+        81.52219
+      ],
+      [
+        16.54975,
+        81.52208
+      ],
+      [
+        16.54813,
+        81.51903
       ]
     ]
   },
@@ -2825,25 +3106,33 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Starting from the above point, it travels along the old current office road upto rayalam drain and old current office junction.",
     "west": "Starting from the above point, it turns towards north and runs along the Rayalam drain, up to R.S.No.28 (Bhimavaram revenue village) i.e., starting point.",
     "center": [
-      16.549,
+      16.5505,
       81.509
     ],
     "polygon": [
       [
-        16.554,
-        81.505
+        16.55747,
+        81.51151
       ],
       [
-        16.555,
-        81.514
+        16.54973,
+        81.51344
       ],
       [
-        16.545,
-        81.514
+        16.54636,
+        81.51064
       ],
       [
-        16.544,
-        81.505
+        16.54634,
+        81.51054
+      ],
+      [
+        16.55118,
+        81.49891
+      ],
+      [
+        16.55628,
+        81.49538
       ]
     ]
   },
@@ -2878,25 +3167,37 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Starting from the area mentioned above, it travels west along Undi Bypass Road up to the Undi Road and Undi Bypass Road Junction, then northwest along Undi Road up to the Undi Road and Rayalam Drain Junction(in north east corner of R.S. 28 of Bhimavaram Revenue Village).",
     "west": "Starting from the area mentioned above, it travels north along the Kovvada Annavaram village boundaries up to R.S.No.1 (Annavaram Revenue Village).",
     "center": [
-      16.562,
+      16.564,
       81.508
     ],
     "polygon": [
       [
-        16.572,
-        81.502
+        16.574,
+        81.501
       ],
       [
-        16.573,
-        81.516
+        16.574,
+        81.5135
       ],
       [
-        16.553,
-        81.515
+        16.55903,
+        81.5135
       ],
       [
-        16.552,
-        81.503
+        16.55747,
+        81.51151
+      ],
+      [
+        16.55628,
+        81.49538
+      ],
+      [
+        16.55666,
+        81.49466
+      ],
+      [
+        16.565,
+        81.498
       ]
     ]
   },
@@ -2929,25 +3230,33 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "south": "Starting from the above point, and travels west along the road up to Anjaneya Swamy Temple, then continues south along Tadepalligudem Road up to the B.V. Raju statue, and then west along the bypass road up to Anakoderu canal.",
     "west": "Starting from the above point, it travels north up to R.S.No.253 (Bhimavaram Revenue Village) and the Anakoderu canal junction, i.e., Starting point.",
     "center": [
-      16.563,
+      16.564,
       81.519
     ],
     "polygon": [
       [
-        16.572,
-        81.514
+        16.574,
+        81.5135
       ],
       [
-        16.5725,
-        81.526
+        16.574,
+        81.527
       ],
       [
-        16.557,
-        81.5255
+        16.57096,
+        81.53611
       ],
       [
-        16.5565,
-        81.514
+        16.56897,
+        81.53479
+      ],
+      [
+        16.55808,
+        81.51896
+      ],
+      [
+        16.55903,
+        81.5135
       ]
     ]
   }
@@ -3851,16 +4160,19 @@ if (typeof window !== 'undefined') {
 }
 
 var BHIMAVARAM_MUNICIPALITY_METADATA = {
-  ulbName: "Bhimavaram Municipality (భీమవరం పురపాలక సంఘం)",
-  district: "West Godavari (పశ్చిమ గోదావరి జిల్లా)",
-  state: "Andhra Pradesh",
-  totalWards: 52,
-  gisPortalUrl: "https://bhimavaram.cdma.ap.gov.in/ulbprofile/bhimavaram/gis-map/",
-  bhuvanCadastralUrl: "https://bhuvan-app1.nrsc.gov.in/cadastral/",
-  bhuvan2dUrl: "https://bhuvan.nrsc.gov.in/bhuvan_2d.php",
-  bhuvanPanchayatUrl: "https://bhuvan-panchayat.nrsc.gov.in/",
-  centerCoordinates: [16.5449, 81.5212],
-  defaultZoom: 14
+  "ulbName": "Bhimavaram Municipality (భీమవరం పురపాలక సంఘం)",
+  "district": "West Godavari (పశ్చిమ గోదావరి జిల్లా)",
+  "state": "Andhra Pradesh",
+  "totalWards": 52,
+  "gisPortalUrl": "https://bhimavaram.cdma.ap.gov.in/ulbprofile/bhimavaram/gis-map/",
+  "bhuvanCadastralUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+  "bhuvan2dUrl": "https://bhuvan.nrsc.gov.in/bhuvan_2d.php",
+  "bhuvanPanchayatUrl": "https://bhuvan-panchayat.nrsc.gov.in/",
+  "centerCoordinates": [
+    16.5449,
+    81.5212
+  ],
+  "defaultZoom": 14
 };
 if (typeof window !== 'undefined') {
   window.BHIMAVARAM_MUNICIPALITY_METADATA = BHIMAVARAM_MUNICIPALITY_METADATA;
