@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="te" class="dark">
+<html lang="te" class="dark h-full">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
   <title>భీమవరం పురపాలక సంఘం – 52 వార్డుల అధికారిక సరిహద్దులు & Google Streets GIS పోర్టల్ (Bhimavaram 52 Wards Official Boundaries)</title>
   
   <meta name="description" content="భీమవరం పురపాలక సంఘం 52 వార్డుల అధికారిక గెజిట్ సరిహద్దు వివరాలు (Source List as in Notification), Google Streets ఇంటరాక్టివ్ GIS మ్యాప్, ISRO భువన్ Cadastral RS Numbers రిఫరెన్స్ మరియు AP CDMA పోర్టల్ సమగ్ర వేదిక.">
@@ -11,19 +12,34 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Leaflet CSS & JS (Offline first with CDN fallback) -->
+  <!-- Leaflet CSS (Local offline + CDN fallback) -->
   <link rel="stylesheet" href="leaflet.css" onerror="this.onerror=null;this.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  
+  <!-- Leaflet JS (Local offline + CDN fallback) -->
   <script src="leaflet.js" onerror="this.onerror=null;this.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';"></script>
+  <script>
+    if (typeof L === 'undefined') {
+      document.write('<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"><\/script>');
+    }
+  </script>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tiro+Telugu:ital@0;1&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  
-  <!-- 52 Wards Official Dataset & RS Numbers Registry -->
-  <script src="assets/bhimavaram_52_wards_boundaries.js"></script>
 
   <style>
+    /* Strict Full-Height Non-Collapsing Layout */
+    html, body {
+      height: 100% !important;
+      max-height: 100% !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+      background-color: #020617;
+    }
     body {
       font-family: 'Inter', 'Tiro Telugu', sans-serif;
     }
@@ -33,28 +49,89 @@
     .mono-font {
       font-family: 'JetBrains Mono', monospace;
     }
-    #mapContainer {
-      width: 100%;
-      height: 100%;
-      background: #0b1120;
+    
+    #appHeader {
+      height: 56px;
+      flex-shrink: 0;
     }
+    
+    #mainLayout {
+      height: calc(100% - 56px) !important;
+      max-height: calc(100% - 56px) !important;
+      width: 100% !important;
+      display: flex !important;
+      flex-direction: row !important;
+      overflow: hidden !important;
+      min-height: 0 !important;
+    }
+    
+    #sidebarPanel {
+      height: 100% !important;
+      max-height: 100% !important;
+      min-height: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      flex-shrink: 0 !important;
+    }
+    
+    #sidebarHeader {
+      flex-shrink: 0 !important;
+    }
+    
+    #wardsListContainer {
+      flex: 1 1 0% !important;
+      min-height: 0 !important;
+      height: auto !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior: contain;
+    }
+    
+    #sidebarFooter {
+      flex-shrink: 0 !important;
+    }
+    
+    #mapPanel {
+      flex: 1 1 0% !important;
+      height: 100% !important;
+      max-height: 100% !important;
+      min-height: 0 !important;
+      position: relative !important;
+      overflow: hidden !important;
+      background: #090d16;
+    }
+    
+    #mapContainer {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      background: #090d16 !important;
+      z-index: 1;
+    }
+
     /* Centered Ward Badge Marker */
     .ward-num-marker {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(15, 23, 42, 0.92);
-      border: 1.8px solid #38bdf8;
+      background: rgba(15, 23, 42, 0.95);
+      border: 2px solid #38bdf8;
       color: #38bdf8;
       font-weight: 800;
       font-size: 11px;
       font-family: 'JetBrains Mono', monospace;
       border-radius: 9999px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 10px rgba(56, 189, 248, 0.5);
-      width: 26px !important;
-      height: 26px !important;
-      margin-left: -13px !important;
-      margin-top: -13px !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 10px rgba(56, 189, 248, 0.6);
+      width: 28px !important;
+      height: 28px !important;
+      margin-left: -14px !important;
+      margin-top: -14px !important;
       cursor: pointer;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       pointer-events: auto;
@@ -67,27 +144,27 @@
       box-shadow: 0 0 18px rgba(56, 189, 248, 1);
       z-index: 9999 !important;
     }
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+
+    /* Custom Scrollbar for Left List */
+    #wardsListContainer::-webkit-scrollbar {
+      width: 7px;
     }
-    ::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.8);
+    #wardsListContainer::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.9);
     }
-    ::-webkit-scrollbar-thumb {
+    #wardsListContainer::-webkit-scrollbar-thumb {
       background: #334155;
       border-radius: 9999px;
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #475569;
+    #wardsListContainer::-webkit-scrollbar-thumb:hover {
+      background: #06b6d4;
     }
-    /* Pulse for selected card */
+
     .ward-card-highlight {
       border-color: #06b6d4 !important;
-      box-shadow: 0 0 20px rgba(6, 182, 212, 0.35) !important;
+      box-shadow: 0 0 22px rgba(6, 182, 212, 0.4) !important;
     }
-    /* Highlight for RS pills */
+
     .rs-pill {
       transition: all 0.15s ease-in-out;
     }
@@ -96,30 +173,30 @@
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-white antialiased overflow-hidden">
+<body class="bg-slate-950 text-slate-100 flex flex-col selection:bg-cyan-500 selection:text-white antialiased">
 
   <!-- TOP HEADER / PORTAL NAVIGATION -->
-  <header class="border-b border-slate-800 bg-slate-900/95 backdrop-blur z-30 px-3 md:px-5 py-2.5 shadow-md flex-none">
-    <div class="max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-3">
+  <header id="appHeader" class="border-b border-slate-800 bg-slate-900/95 backdrop-blur z-30 px-3 md:px-5 flex items-center justify-between shadow-md">
+    <div class="w-full flex items-center justify-between gap-3">
       
       <!-- Brand & Title -->
       <div class="flex items-center space-x-3">
-        <a href="index.html" class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 via-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 text-white font-black text-lg border border-cyan-400/40 hover:scale-105 transition-transform" title="ముఖ్య వేదికకు వెళ్లండి">
+        <a href="index.html" class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-600 via-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 text-white font-black text-base border border-cyan-400/40 hover:scale-105 transition-transform" title="ముఖ్య వేదికకు వెళ్లండి">
           🏛️
         </a>
         <div>
           <div class="flex items-center gap-2 flex-wrap">
-            <h1 class="text-base md:text-lg font-extrabold tracking-tight text-white flex items-center gap-2">
+            <h1 class="text-sm md:text-base font-extrabold tracking-tight text-white flex items-center gap-2">
               భీమవరం పురపాలక సంఘం – 52 వార్డుల అధికారిక సరిహద్దులు
             </h1>
-            <span class="px-2 py-0.5 text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-              గెజిట్ నోటిఫికేషన్ (Source List)
+            <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+              గెజిట్ నోటిఫికేషన్ (Source)
             </span>
-            <span class="px-2 py-0.5 text-[11px] font-bold rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+            <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
               Google Streets GIS
             </span>
           </div>
-          <p class="text-xs text-slate-400 telugu-font hidden sm:block">
+          <p class="text-[11px] text-slate-400 telugu-font hidden sm:block">
             అధికారిక డీలిమిటేషన్ సరిహద్దులు (Wards 1 to 52) • ISRO భువన్ RS నంబర్ల మ్యాపింగ్ • AP CDMA GIS రిఫరెన్స్
           </p>
         </div>
@@ -128,44 +205,39 @@
       <!-- Quick Portals & Module Switcher Buttons -->
       <div class="flex items-center flex-wrap gap-2 text-xs">
         
-        <!-- AP CDMA GIS Portal External Link -->
+        <!-- AP CDMA GIS Portal Link -->
         <a href="https://bhimavaram.cdma.ap.gov.in/ulbprofile/bhimavaram/gis-map/" target="_blank" rel="noopener noreferrer" 
-           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/40 font-semibold shadow-sm transition hover:scale-105"
+           class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/40 font-semibold shadow-sm transition hover:scale-105"
            title="AP CDMA భీమవరం అధికారిక GIS పోర్టల్ కొత్త ట్యాబ్‌లో తెరవండి">
           <span class="text-sm">🌐</span>
-          <span>CDMA GIS పోర్టల్</span>
+          <span class="hidden md:inline">CDMA GIS పోర్టల్</span>
+          <span class="md:hidden">CDMA</span>
           <span class="text-[10px] text-emerald-400 opacity-75">↗</span>
         </a>
 
-        <!-- ISRO Bhuvan Portal Link / Registry Modal Button -->
+        <!-- ISRO Bhuvan RS Registry Button -->
         <button onclick="openRsRegistryModal()" 
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-950/80 hover:bg-indigo-900 text-indigo-300 border border-indigo-500/40 font-semibold shadow-sm transition hover:scale-105"
+                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-indigo-950/80 hover:bg-indigo-900 text-indigo-300 border border-indigo-500/40 font-semibold shadow-sm transition hover:scale-105"
                 title="ISRO Bhuvan Cadastral RS నంబర్ల రిజిస్ట్రీ మరియు డైరెక్టరీ తెరవండి">
           <span class="text-sm">🛰️</span>
-          <span>ISRO భువన్ RS నంబర్లు (<span id="topRsCount">76</span>)</span>
+          <span>RS నంబర్లు (<span id="topRsCount">76</span>)</span>
         </button>
 
-        <!-- Other Site Modules -->
+        <!-- Navigation back to Home / Other modules -->
         <a href="index.html" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium transition" title="ప్రధాన వేదిక">
           <span>🏠 హోమ్</span>
         </a>
         <a href="gis-ward-map.html" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 font-medium transition" title="39 వార్డుల పాత GIS పటం">
-          <span>🗺️ 39 Wards GIS</span>
-        </a>
-        <a href="flood-flow-analysis.html" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-medium transition" title="వరద ప్రవాహ విశ్లేషణ">
-          <span>🌊 వరద మోడల్</span>
-        </a>
-        <a href="traffic-mobility-system.html" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-orange-300 font-medium transition" title="ట్రాఫిక్ & మొబిలిటీ సిస్టమ్">
-          <span>🚦 ట్రాఫిక్ AI</span>
+          <span>🗺️ 39 Wards</span>
         </a>
 
         <!-- Mobile View Toggle (List vs Map) -->
         <div class="flex lg:hidden bg-slate-800 rounded-lg p-0.5 border border-slate-700 ml-1">
-          <button id="mobileViewListBtn" onclick="setMobileView('list')" class="px-2.5 py-1 rounded-md text-xs font-bold bg-cyan-600 text-white">
-            జాబితా (List)
+          <button id="mobileViewListBtn" onclick="setMobileView('list')" class="px-2 py-1 rounded-md text-xs font-bold bg-cyan-600 text-white">
+            జాబితా
           </button>
-          <button id="mobileViewMapBtn" onclick="setMobileView('map')" class="px-2.5 py-1 rounded-md text-xs font-bold text-slate-300 hover:text-white">
-            మ్యాప్ (Map)
+          <button id="mobileViewMapBtn" onclick="setMobileView('map')" class="px-2 py-1 rounded-md text-xs font-bold text-slate-300 hover:text-white">
+            మ్యాప్
           </button>
         </div>
 
@@ -175,20 +247,20 @@
   </header>
 
   <!-- MAIN APP CONTAINER (SPLIT SCREEN: SIDEBAR LIST & MAP VIEW) -->
-  <main class="flex-1 flex overflow-hidden relative">
+  <main id="mainLayout">
 
     <!-- LEFT SIDEBAR: SOURCE BOUNDARIES DIRECTORY & EXPLORER -->
-    <aside id="sidebarPanel" class="w-full lg:w-[500px] xl:w-[560px] 2xl:w-[620px] flex-none bg-slate-900 border-r border-slate-800 flex flex-col z-20 transition-all duration-300">
+    <aside id="sidebarPanel" class="w-full lg:w-[480px] xl:w-[540px] 2xl:w-[600px] bg-slate-900 border-r border-slate-800">
       
       <!-- Search & Filters Header -->
-      <div class="p-3 md:p-4 border-b border-slate-800 bg-slate-900/90 flex flex-col gap-2.5">
+      <div id="sidebarHeader" class="p-3 md:p-3.5 border-b border-slate-800 bg-slate-900/95 flex flex-col gap-2">
         
         <!-- Live Instant Search Input -->
         <div class="relative">
           <input type="text" id="wardSearchInput" oninput="handleSearch(this.value)" 
-                 placeholder="వార్డు నం, RS No (ఉదా: 651, 302, 100), D.No, లేదా ప్రాంతం సెర్చ్..." 
-                 class="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-950 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition shadow-inner" />
-          <span class="absolute left-3 top-2.5 text-slate-500 text-sm">🔍</span>
+                 placeholder="వార్డు నం, RS No (ఉదా: 651, 302, 100), D.No, లేదా ప్రాంతం..." 
+                 class="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition shadow-inner" />
+          <span class="absolute left-3 top-2.5 text-slate-500 text-xs sm:text-sm">🔍</span>
           <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-2.5 top-2.5 text-slate-400 hover:text-white text-xs bg-slate-800 rounded-full w-4 h-4 flex items-center justify-center">
             ✕
           </button>
@@ -203,16 +275,16 @@
             ఉత్తరం (North)
           </button>
           <button onclick="filterByZone('One Town')" id="zone-chip-OneTown" class="filter-chip px-2.5 py-1 rounded-lg font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap">
-            వన్ టౌన్ (One Town)
+            వన్ టౌన్
           </button>
           <button onclick="filterByZone('Two Town')" id="zone-chip-TwoTown" class="filter-chip px-2.5 py-1 rounded-lg font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap">
-            టూ టౌన్ (Two Town)
+            టూ టౌన్
           </button>
           <button onclick="filterByZone('Gunupudi')" id="zone-chip-Gunupudi" class="filter-chip px-2.5 py-1 rounded-lg font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap">
-            గునుపూడి (Gunupudi)
+            గునుపూడి
           </button>
           <button onclick="filterByZone('Rayalam')" id="zone-chip-Rayalam" class="filter-chip px-2.5 py-1 rounded-lg font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap">
-            రాయలం (Rayalam)
+            రాయలం
           </button>
           <button onclick="filterByZone('Chinamiram')" id="zone-chip-Chinamiram" class="filter-chip px-2.5 py-1 rounded-lg font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap">
             చినమిరం / SRKR
@@ -220,28 +292,28 @@
         </div>
 
         <!-- Statistics & Control Toolbar -->
-        <div class="flex items-center justify-between text-xs text-slate-400 pt-1 border-t border-slate-800/80">
+        <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800/80">
           <div class="flex items-center gap-2">
             <span>చూపిస్తున్న వార్డులు: <strong id="displayedCount" class="text-cyan-400 font-bold">52</strong>/52</span>
             <span class="text-slate-600">|</span>
-            <button onclick="toggleExpandAll()" id="expandAllBtn" class="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
-              అన్నీ విస్తరించు (Expand All)
+            <button onclick="toggleExpandAll()" id="expandAllBtn" class="text-cyan-400 hover:text-cyan-300 underline underline-offset-2 font-medium">
+              అన్నీ విస్తరించు
             </button>
           </div>
           <button onclick="openSourceInfoModal()" class="text-slate-400 hover:text-white flex items-center gap-1 font-medium" title="గెజిట్ నోటిఫికేషన్ వివరాలు">
-            <span>ℹ️ మూలం (Source Info)</span>
+            <span>ℹ️ మూలం (Source)</span>
           </button>
         </div>
 
       </div>
 
-      <!-- Scrollable Wards Boundary Cards List -->
-      <div id="wardsListContainer" class="flex-1 overflow-y-auto p-3 md:p-4 space-y-3">
+      <!-- Scrollable Wards Boundary Cards List (100% Guaranteed Scrollable) -->
+      <div id="wardsListContainer" class="p-3 md:p-3.5 space-y-3">
         <!-- Rendered dynamically by JavaScript -->
       </div>
 
       <!-- Footer Quick Status -->
-      <div class="p-2.5 bg-slate-950 border-t border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
+      <div id="sidebarFooter" class="p-2.5 bg-slate-950 border-t border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
         <span class="truncate">📍 క్లిక్ చేసి మ్యాప్‌లో వార్డు సరిహద్దు వీక్షించండి</span>
         <button onclick="fitAllWardsBounds()" class="text-cyan-400 hover:text-cyan-300 font-bold whitespace-nowrap ml-2">
           ⟲ మొత్తం పట్టణం
@@ -251,13 +323,13 @@
     </aside>
 
     <!-- RIGHT MAIN PANEL: INTERACTIVE GOOGLE STREETS MAP -->
-    <section id="mapPanel" class="flex-1 h-full relative flex flex-col">
+    <section id="mapPanel">
       
-      <!-- Map Controls Overlay Bar -->
+      <!-- Map Controls Floating Overlay Bar -->
       <div class="absolute top-3 left-3 right-3 z-[1000] pointer-events-none flex items-start justify-between gap-2">
         
-        <!-- Active Basemap Selector & Quick Toggles (Pointer Events Enabled) -->
-        <div class="pointer-events-auto bg-slate-900/90 backdrop-blur-md border border-slate-700/80 rounded-xl p-1.5 shadow-xl flex items-center gap-1.5 flex-wrap">
+        <!-- Active Basemap Selector (Pointer Events Enabled) -->
+        <div class="pointer-events-auto bg-slate-900/95 backdrop-blur-md border border-slate-700/80 rounded-xl p-1.5 shadow-xl flex items-center gap-1.5 flex-wrap">
           
           <span class="text-xs font-bold text-slate-300 pl-1.5 pr-1 flex items-center gap-1">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -274,14 +346,14 @@
             🛰️ Satellite & Roads
           </button>
 
-          <button onclick="setBaseLayer('google_terrain')" id="btn-layer-terrain" 
+          <button onclick="setBaseLayer('carto_streets')" id="btn-layer-carto" 
                   class="layer-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
-            ⛰️ Terrain
+            🗺️ Voyager Streets
           </button>
 
           <button onclick="setBaseLayer('osm')" id="btn-layer-osm" 
                   class="layer-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
-            🗺️ OSM
+            🌐 OSM
           </button>
 
         </div>
@@ -291,14 +363,14 @@
           
           <!-- RS Numbers Directory Quick Button -->
           <button onclick="openRsRegistryModal()" 
-                  class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-lg border border-indigo-400/30 flex items-center gap-1.5 transition hover:scale-105 active:scale-95"
+                  class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow-lg border border-indigo-400/30 flex items-center gap-1.5 transition hover:scale-105 active:scale-95"
                   title="ISRO Bhuvan RS నంబర్ల జాబితా">
             <span>🔍 RS Nos డైరెక్టరీ</span>
           </button>
 
           <!-- Reset Zoom to Entire Municipality -->
           <button onclick="fitAllWardsBounds()" 
-                  class="bg-slate-900/90 hover:bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-lg border border-slate-700 flex items-center gap-1.5 transition hover:scale-105 active:scale-95"
+                  class="bg-slate-900/90 hover:bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow-lg border border-slate-700 flex items-center gap-1.5 transition hover:scale-105 active:scale-95"
                   title="భీమవరం మొత్తం 52 వార్డుల వీక్షణ">
             <span>⛶ రీసెట్ వీక్షణ</span>
           </button>
@@ -307,7 +379,7 @@
 
       </div>
 
-      <!-- Floating Map Legend & Summary Card (Bottom Left) -->
+      <!-- Floating Map Legend Card (Bottom Left) -->
       <div class="absolute bottom-4 left-4 z-[1000] pointer-events-none max-w-sm hidden sm:block">
         <div class="pointer-events-auto bg-slate-900/95 backdrop-blur-md border border-slate-700/80 rounded-2xl p-3.5 shadow-2xl text-xs space-y-2">
           <div class="flex items-center justify-between">
@@ -316,7 +388,7 @@
               <span>భీమవరం పురపాలక సంఘం</span>
             </span>
             <span class="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px] font-bold border border-cyan-500/30">
-              52 వార్డులు
+              52 వార్డుల సరిహద్దులు
             </span>
           </div>
 
@@ -333,19 +405,6 @@
               <span class="w-3 h-3 rounded-full bg-slate-900 border border-cyan-400 text-[8px] flex items-center justify-center font-bold text-cyan-300">1</span>
               <span>వార్డు నెంబర్ (Center)</span>
             </div>
-            <div class="flex items-center gap-1.5 text-slate-300">
-              <span class="w-3 h-1 bg-blue-500 rounded"></span>
-              <span>ఏలూరు & యలమదుర్రు డ్రెయిన్</span>
-            </div>
-            <div class="flex items-center gap-1.5 text-slate-300">
-              <span class="w-3 h-1 bg-amber-400 rounded"></span>
-              <span>రైల్వే లైన్లు (SCR)</span>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between pt-1 border-t border-slate-800 text-[10px] text-slate-400">
-            <span>లైవ్ మ్యాప్: Google Roads V4</span>
-            <button onclick="openSourceInfoModal()" class="text-cyan-400 hover:underline">వివరాలు ➔</button>
           </div>
         </div>
       </div>
@@ -363,7 +422,6 @@
   <div id="rsRegistryModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-6">
     <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
       
-      <!-- Modal Header -->
       <div class="p-4 border-b border-slate-800 bg-slate-900/90 flex items-center justify-between flex-wrap gap-2">
         <div class="flex items-center gap-2.5">
           <div class="w-9 h-9 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-indigo-400 text-lg">
@@ -390,7 +448,6 @@
         </div>
       </div>
 
-      <!-- Modal Filter & Search Bar -->
       <div class="p-3 bg-slate-950/60 border-b border-slate-800 flex items-center justify-between gap-3 flex-wrap">
         <div class="relative flex-1 min-w-[200px]">
           <input type="text" id="rsModalSearchInput" oninput="filterRsTable(this.value)" 
@@ -403,7 +460,6 @@
         </div>
       </div>
 
-      <!-- Scrollable Table -->
       <div class="flex-1 overflow-y-auto p-4">
         <table class="w-full text-left text-xs border-collapse">
           <thead>
@@ -420,7 +476,6 @@
         </table>
       </div>
 
-      <!-- Modal Footer -->
       <div class="p-3 bg-slate-950 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
         <span>💡 RS No పై క్లిక్ చేయడం ద్వారా ఆ సర్వే నంబర్ ఉన్న వార్డులని వీక్షించవచ్చు.</span>
         <button onclick="closeRsRegistryModal()" class="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">
@@ -446,52 +501,29 @@
       </div>
 
       <div class="flex-1 overflow-y-auto p-4 space-y-4 text-xs text-slate-300 leading-relaxed">
-        
         <div class="p-3 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1.5">
           <h3 class="font-bold text-cyan-400 text-sm">1. గెజిట్ నోటిఫికేషన్ వివరాలు (Official Gazette Source)</h3>
           <p>
             ఈ వెబ్‌పేజీలోని 52 వార్డుల సరిహద్దు వర్ణనలు (North, East, South, West) భీమవరం పురపాలక సంఘం అధికారిక సరిహద్దు పునర్విభజన గెజిట్ ఆర్డర్ (పేజీలు 1 నుండి 17) నుండి యథాతథంగా సేకరించబడ్డాయి.
           </p>
-          <ul class="list-disc list-inside space-y-1 text-slate-400">
-            <li><strong>పురపాలక సంఘం:</strong> భీమవరం (Bhimavaram Municipality), పశ్చిమ గోదావరి జిల్లా.</li>
-            <li><strong>మొత్తం వార్డులు:</strong> 52 వార్డులు (పునర్విభజన అనంతరం).</li>
-            <li><strong>ముఖ్య ఆధారాలు:</strong> రెవెన్యూ సర్వే నంబర్లు (R.S. Nos), ఇంటి నంబర్లు (Door Numbers), డ్రెయిన్లు, కాలువలు, మరియు రైల్వే సరిహద్దులు.</li>
-          </ul>
         </div>
-
         <div class="p-3 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1.5">
           <h3 class="font-bold text-emerald-400 text-sm">2. AP CDMA GIS పోర్టల్ రిఫరెన్స్</h3>
-          <p>
-            ఆంధ్రప్రదేశ్ పురపాలక పరిపాలన కమిషనర్ & డైరెక్టరేట్ (CDMA) భీమవరం అర్బన్ లోకల్ బాడీ ప్రొఫైల్ మరియు GIS మ్యాపింగ్ పోర్టల్:
-          </p>
           <a href="https://bhimavaram.cdma.ap.gov.in/ulbprofile/bhimavaram/gis-map/" target="_blank" rel="noopener noreferrer" 
              class="inline-flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 font-mono underline break-all">
             https://bhimavaram.cdma.ap.gov.in/ulbprofile/bhimavaram/gis-map/
           </a>
-          <p class="text-slate-400">
-            ఈ పోర్టల్ పట్టణ ప్రణాళిక, ఆస్తి పన్ను అసెస్‌మెంట్లు, తాగునీటి నెట్‌వర్క్ మరియు వార్డు స్థాయి GIS లేయర్లను అందిస్తుంది.
-          </p>
         </div>
-
         <div class="p-3 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1.5">
           <h3 class="font-bold text-indigo-400 text-sm">3. ISRO భువన్ పోర్టల్ (RS Nos & Cadastral Mapping)</h3>
           <p>
-            భారత అంతరిక్ష పరిశోధనా సంస్థ (ISRO) - నేషనల్ రిమోట్ సెన్సింగ్ సెంటర్ (NRSC) ద్వారా నిర్వహించబడుతున్న భువన్ పోర్టల్ ద్వారా ఆంధ్రప్రదేశ్ గ్రామాల రెవెన్యూ సర్వే నంబర్ల (RS Nos) క్యాడస్ట్రల్ సరిహద్దులను సరిచూడవచ్చు:
+            నేషనల్ రిమోట్ సెన్సింగ్ సెంటర్ (NRSC) భువన్ పోర్టల్ ద్వారా రెవెన్యూ సర్వే నంబర్ల (RS Nos) సరిహద్దుల ధృవీకరణ:
           </p>
           <div class="space-y-1 font-mono text-[11px]">
             <div>• <a href="https://bhuvan-app1.nrsc.gov.in/cadastral/" target="_blank" class="text-indigo-400 hover:underline">Bhuvan Cadastral Portal</a></div>
             <div>• <a href="https://bhuvan.nrsc.gov.in/bhuvan_2d.php" target="_blank" class="text-indigo-400 hover:underline">Bhuvan 2D/3D Geoportal</a></div>
-            <div>• <a href="https://bhuvan-panchayat.nrsc.gov.in/" target="_blank" class="text-indigo-400 hover:underline">Bhuvan Panchayat Geospatial Platform</a></div>
           </div>
         </div>
-
-        <div class="p-3 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1.5">
-          <h3 class="font-bold text-amber-400 text-sm">4. Google Streets & Satellite అలైన్‌మెంట్</h3>
-          <p>
-            ఈ అప్లికేషన్‌లో చూపబడిన ప్రతి వార్డు బౌండరీ పాలిగాన్, భీమవరం రహదారులు, కాలువలు, మరియు రైల్వే మార్గాల ఆధారంగా Google Streets మరియు Google Satellite మ్యాపింగ్ సిస్టమ్‌లకు అనుగుణంగా తయారు చేయబడింది.
-          </p>
-        </div>
-
       </div>
 
       <div class="p-3 bg-slate-950 border-t border-slate-800 text-right">
@@ -509,6 +541,3886 @@
     <span id="toastMessage">టెక్స్ట్ కాపీ చేయబడింది!</span>
   </div>
 
+  <!-- ==================== EMBEDDED COMPLETE DATASET ==================== -->
+  <script>
+// Bhimavaram Municipality - Complete 52 Wards Official Gazette Boundary Dataset
+// Source: Bhimavaram Municipality Delimitation Order & Gazette Notification (Pages 1 to 17)
+// Cross-referenced with:
+// 1. AP CDMA ULB GIS Map: https://bhimavaram.cdma.ap.gov.in/ulbprofile/bhimavaram/gis-map/
+// 2. ISRO Bhuvan Cadastral Geoportal: https://bhuvan-app1.nrsc.gov.in/cadastral/
+// 3. Google Maps Roads & Street Layer
+
+var BHIMAVARAM_52_WARDS_DATA = [
+  {
+    "ward": 1,
+    "nameTe": "గోవిందరావు నగర్ & యలమదుర్రు డ్రెయిన్ నార్త్",
+    "nameEn": "Govindarao Nagar & Yanamadurru Drain North",
+    "zone": "North Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [
+      281,
+      302,
+      312,
+      326,
+      337,
+      351
+    ],
+    "dNos": [
+      "5-10-1/14",
+      "5-9-9/7",
+      "5-8-34/2",
+      "5-8-33/1",
+      "5-8-1"
+    ],
+    "landmarks": [
+      "Yanamadurru Drain",
+      "BY-Pass Road Junction",
+      "CPM Office Road",
+      "Miramiya Kodu"
+    ],
+    "north": "The boundary starts from North East corner of central line of yanamadurru drain at the municipal limits i.e., R.S No 281 of Bhimavaram Revenue Village then it runs towards East along the municipal limits and runs as per the natural boundary of the municipal limits at R.S No: 302 of Bhimavaram Revenue Village.",
+    "east": "Starting from the above point it runs towards south along the R.S No's: 312,326,337,351 and meets the existing BY-Pass Road Junction at R.S No:351 of Bhimavaram Revenue village and runs towards west upto BY-Pass road & CPM office road junction and turns towards south, runs upto the D.No.5-10-1/14 and turns east upto the D.No.5-9-9/7 and turns south, runs along the CPM office backside road upto D.No.5-8-34/2 and turns west upto the D.No.5-8-33/1, meets the CPM office road junction and turns south towards the Miramiya Kodu, i.e., D.No.5-8-1.",
+    "south": "From the above point and it runs towards west along Natural flow of Miramiya Kodu upto Old Yanamaduru Drain.",
+    "west": "Starting from the above point it runs towards North along the center line of yanamudurru drain up to the starting point.",
+    "center": [
+      16.5547,
+      81.5246
+    ],
+    "polygon": [
+      [
+        16.5682,
+        81.5251
+      ],
+      [
+        16.5675,
+        81.5288
+      ],
+      [
+        16.5657,
+        81.5293
+      ],
+      [
+        16.5636,
+        81.5284
+      ],
+      [
+        16.563,
+        81.5298
+      ],
+      [
+        16.56,
+        81.5307
+      ],
+      [
+        16.5562,
+        81.5273
+      ],
+      [
+        16.554,
+        81.523
+      ],
+      [
+        16.555,
+        81.5215
+      ],
+      [
+        16.562,
+        81.523
+      ]
+    ]
+  },
+  {
+    "ward": 2,
+    "nameTe": "మెంటేవారి తోట & CPM ఆఫీస్ ఏరియా",
+    "nameEn": "Mentevari Thota & CPM Office Area",
+    "zone": "North-Central Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [
+      302,
+      651,
+      655,
+      560,
+      312,
+      326,
+      337,
+      351
+    ],
+    "dNos": [
+      "5-6-7",
+      "5-3-61/1",
+      "5-8-33/1",
+      "5-8-33/2",
+      "5-9-9",
+      "5-10-1/14",
+      "5-8-44/1",
+      "5-8-44/6"
+    ],
+    "landmarks": [
+      "Bhimavaram-Nidadavolu Railway line",
+      "Gudiwada-Bhimavaram Railway line",
+      "Mentevari thota under-pass",
+      "CPM office backside road",
+      "By-Pass road"
+    ],
+    "north": "The boundary starts from R.S No: 302 of Bhimavaram Revenue Village and then turns towards East upto Bhimavaram-Nidadavolu Railway line at R.S No: 651 of Bhimavaram Revenue Village.",
+    "east": "The boundary starts from above Bhimavaram-Nidadavolu Railway line at R.S No: 651 and then runs towards south along Bhimavaram-Nidadavolu Railway line upto R.S No: 655.",
+    "south": "The boundary starts from above Point and it runs towards west along Gudiwada– Bhimavaram Railway line in R.S No: 560 of Bhimavaram Revenue Village upto junction of Gudiwada–Bhimavaram Railway line and mente vari thota under-pass.",
+    "west": "The boundary starts from above junction and it runs towards North along the mente vari thota main road upto the D.No.5-6-7 and turns towards west upto the D.No.5-3-61/1 and turns north, it runs towards north upto the D.No.5-8-33/1 and turns east upto the D.No.5-8-33/2 and turns north and runs along the CPM office backside road upto the D.No.5-9-9 and turns west upto the CPM office road and turns north at D.No.5-10-1/14 and runs towards north upto the By-pass road & CPM office road junction and turns east, runs along the By-pass road upto the D.No.5-8-44/1 upto D.No.5-8-44/6 at By-Pass road. It runs from this point towards north along R.S No: 312,326,337,351 and meets at starting point of the ward Boundary.",
+    "center": [
+      16.5465,
+      81.5251
+    ],
+    "polygon": [
+      [
+        16.558,
+        81.5295
+      ],
+      [
+        16.559,
+        81.5345
+      ],
+      [
+        16.551,
+        81.535
+      ],
+      [
+        16.547,
+        81.534
+      ],
+      [
+        16.546,
+        81.528
+      ],
+      [
+        16.549,
+        81.5265
+      ],
+      [
+        16.554,
+        81.5275
+      ]
+    ]
+  },
+  {
+    "ward": 3,
+    "nameTe": "కనకదుర్గ గుడి & తణుకు రోడ్డు",
+    "nameEn": "Kanaka Durga Temple & Tanuku Road Junction",
+    "zone": "East Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village",
+      "Gunupudi Revenue Village"
+    ],
+    "rsNos": [
+      655,
+      299
+    ],
+    "dNos": [],
+    "landmarks": [
+      "Miramiya Kodu canal",
+      "Bhimavaram-Nidadavolu Railway line",
+      "By-Pass road & Bhimavaram Tanuku road junction",
+      "P.P road",
+      "Kanaka Durga Temple"
+    ],
+    "north": "The boundary starts from junction of Miramiya Kodu canal and Bhimavaram- Nidadavolu Railway line at R.S No: 655 of Bhimavaram Revenue village and runs towards east upto the junction of By-Pass road and Bhimavaram Tanuku road at R.S No: 299 Gunupudi Revenue Village.",
+    "east": "The boundary starts from above junction it runs towards south along Bhimavaram Tanuku upto Junction of P.P road and Bhimavaram Tanuku road near Kanaka Durga Temple.",
+    "south": "The boundary starts from the above junction it runs towards west along P.P Road upto Bhimavaram Nidadavolu railway line.",
+    "west": "The boundary starts from above junction and It runs towards North-West direction along Bhimavaram Nidadavolu railway line upto Starting point i.e., Junction of By-Pass Road and Bhimavaram Nidadavolu Railway line at R.S No: 655 of Bhimavaram Revenue village.",
+    "center": [
+      16.5472,
+      81.5298
+    ],
+    "polygon": [
+      [
+        16.551,
+        81.534
+      ],
+      [
+        16.5525,
+        81.541
+      ],
+      [
+        16.545,
+        81.5415
+      ],
+      [
+        16.544,
+        81.535
+      ],
+      [
+        16.547,
+        81.5335
+      ]
+    ]
+  },
+  {
+    "ward": 4,
+    "nameTe": "శ్రీలంక రోడ్డు & నరసయ్య అగ్రహారం",
+    "nameEn": "Srilanka Road & Narasayya Agraharam",
+    "zone": "East-North Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village",
+      "Gunupudi Revenue Village"
+    ],
+    "rsNos": [
+      651,
+      100,
+      655
+    ],
+    "dNos": [
+      "7-9-33",
+      "7-10-3"
+    ],
+    "landmarks": [
+      "Bhimavaram Nidadavolu Railway line",
+      "Srilanka road",
+      "ASR Statue",
+      "Narasayya Agraharam Main Road",
+      "Miramiya Kodu canal"
+    ],
+    "north": "The boundary starts from Bhimavaram municipal limits at Bhimavaram Nidadavolu Railway line at R.S No: 651 of Bhimavaram revenue village and runs east along Bhimavaram municipal limits upto R.S No: 100 of Gunupudi Revenue village.",
+    "east": "The boundary starts from the above junction it runs towards south along the Srilanka road upto ASR Statue at the Junction of Srilanka Road and Narasayya Agraharam Main Road.",
+    "south": "From the above the boundary runs towards west up to turns south at D.No.7-9-33 and runs north upto D.No.7-10-3.",
+    "west": "The boundary starts from above point it runs towards North along Bhimavaram– Tanuku upto natural boundary of Miramiya Kodu. Then it turns west upto the junction of Miramiya Kodu canal and Bhimavaram-Nidadavolu Railway line at R.S No: 655. From Here it follows the Bhimavaram Nidadavolu line upto the Municipal limits at R.S No: 651 of Bhimavaram Revenue Village.",
+    "center": [
+      16.554,
+      81.5385
+    ],
+    "polygon": [
+      [
+        16.562,
+        81.535
+      ],
+      [
+        16.563,
+        81.543
+      ],
+      [
+        16.5535,
+        81.5435
+      ],
+      [
+        16.552,
+        81.538
+      ],
+      [
+        16.551,
+        81.5345
+      ]
+    ]
+  },
+  {
+    "ward": 5,
+    "nameTe": "కుర్మయ్యపేట & డాక్టర్ CSN కాలేజీ వెస్ట్",
+    "nameEn": "Kurmayyapeta & Dr CSN College West",
+    "zone": "East Zone",
+    "revenueVillages": [
+      "Gunupudi Revenue Village"
+    ],
+    "rsNos": [
+      100,
+      101,
+      92
+    ],
+    "dNos": [
+      "8-7-29/1",
+      "8-4-2/1",
+      "8-7-41",
+      "8-7-50",
+      "7-10-3/1",
+      "7-9-33"
+    ],
+    "landmarks": [
+      "Dr CSN College",
+      "Eastern Power Distribution center",
+      "IALA Layout plot 51",
+      "Kandikopu Dibba",
+      "Kurmayyapeta School Road",
+      "P.P road",
+      "Kanaka Durga temple",
+      "ASR Statue",
+      "Srilanka Road"
+    ],
+    "north": "The boundary starts from Bhimavaram Municipal limits at R.S No: 100 of Gunupudi Revenue Village and runs towards east along R.S No: 101 and Turns south from R.S No: 92 of Gunupudi Revenue Village.",
+    "east": "The boundary starts from the above point it runs towards south along R.S No: 92 and West Side of Dr CSN College and follows Northern boundary of Eastern Power Distribution center upto plot number 51 of IALA Layout. Then it runs towards south upto D.No: 8-7-29/1 at Kandikopu Dibba. From here it turn west upto D.No: 8-4-2/1 of Kurmayyapeta School Road. Then it turns south and meets P.P road at D.No.8-7-41.",
+    "south": "The boundary starts from above point it runs towards west along P.P road upto the Junction of P.P road and Bhimavaram Tanuku road near Kanaka Durga temple.",
+    "west": "From the above point the boundary runs north along Bhimavaram – Tanuku road and turns east at D.No;8-7-50 and runs upto D.No.7-10-3/1. Then turns it turns south and runs upto D.No.7-9-33. From here it turns East and runs ASR Statue and Srilanka Road and runs north along the Srilanka Road and meets the starting point.",
+    "center": [
+      16.5515,
+      81.5445
+    ],
+    "polygon": [
+      [
+        16.562,
+        81.5435
+      ],
+      [
+        16.561,
+        81.549
+      ],
+      [
+        16.5495,
+        81.548
+      ],
+      [
+        16.546,
+        81.544
+      ],
+      [
+        16.549,
+        81.541
+      ]
+    ]
+  },
+  {
+    "ward": 6,
+    "nameTe": "గునుపూడి ఔటర్ & ఇండస్ట్రియల్ ఎస్టేట్ (IALA)",
+    "nameEn": "Gunupudi Outer & Industrial Estate (IALA)",
+    "zone": "North-East Outer Zone",
+    "revenueVillages": [
+      "Gunupudi Revenue Village"
+    ],
+    "rsNos": [
+      24,
+      23,
+      22,
+      19,
+      18,
+      13,
+      12,
+      1,
+      191
+    ],
+    "dNos": [
+      "8-1-104",
+      "8-7-41",
+      "8-4-2/1",
+      "8-7-29/1"
+    ],
+    "landmarks": [
+      "Natural boundary of Bhimavaram municipality",
+      "P.P road & Bhimavaram Municipal limits junction",
+      "Kurmayya peta school road",
+      "Kandikappu Dibba",
+      "Industrial estate road plot 51 IALA",
+      "Eastern power Distribution Center",
+      "CSN college western boundary"
+    ],
+    "north": "The boundary starts from R.S No: 24 of Gunupudi Revenue village and runs along the natural boundary of Bhimavaram municipality along the R.S No's: 23,22,19,18,13,12 and 1 of Gunupudi Revenue Village.",
+    "east": "The boundary starts from above point and it runs towards south along municipal limit upto RS.No: 191 of Gunupudi revenue village and meets at the Junction of P.P road and Bhimavaram Municipal limits",
+    "south": "The Boundary starts from above junction and runs towards west from D.No.8-1-104 upto Junction of P.P road and kurmayya peta school road at D.No.8-7-41.",
+    "west": "From the above point the boundary moves north along Kurmayya Peta School road Upto the 8-4-2/1 and turns east along the road upto D.No.8-7-29/1 of Kandikappu Dibba. From Here it turns north along industrial estate road upto plot number 51 of IALA Layout and runs east along Northern boundary of Eastern power Distribution Center. Then the boundary follows natural flow along western boundary of CSN college and meets at Starting point of the ward at R.S No: 24 of Gunupudi Revenue Village.",
+    "center": [
+      16.554,
+      81.552
+    ],
+    "polygon": [
+      [
+        16.566,
+        81.547
+      ],
+      [
+        16.5665,
+        81.558
+      ],
+      [
+        16.555,
+        81.561
+      ],
+      [
+        16.547,
+        81.554
+      ],
+      [
+        16.548,
+        81.548
+      ]
+    ]
+  },
+  {
+    "ward": 7,
+    "nameTe": "భారతీయ విద్యాభవన్ రోడ్డు & గాంధీనగర్",
+    "nameEn": "Bharatiya Vidya Bhavans Road & Gandhinagar",
+    "zone": "East Zone",
+    "revenueVillages": [
+      "Gunupudi Revenue Village"
+    ],
+    "rsNos": [
+      195,
+      201,
+      731,
+      489,
+      431,
+      726,
+      723
+    ],
+    "dNos": [
+      "9-7-78"
+    ],
+    "landmarks": [
+      "P.P road",
+      "Bhimavaram municipal limits",
+      "Bharatiya Vidya Bhavans Road",
+      "Railway gate",
+      "Gandhinagar Road",
+      "G&V canal"
+    ],
+    "north": "The boundary starts from junction of P.P road and R.S No: 195 of Gunupudi Revenue Village and runs east along P.P road upto the Bhimavaram municipal limits at R.S No: 201 of Gunupudi Revenue village",
+    "east": "Starting from above point it runs towards south along Bharatiya Vidya Bhavans Road upto natural boundary of Bhimavaram municipality upto R.S No:731 at railway gate of Gunupudi Revenue Village and continues upto to the Gandhinagar Road at R.S No: 489 of Gunupudi Revenue Village.",
+    "south": "From the above junction and turns West and runs along Gandhinagar road upto D.No.9-7-78.",
+    "west": "The boundary starts from above point runs towards North along the Western boundary of R.S No: 431 and meets the center of Railway track at R.S No: 726 of Gunupudi Revenue Village. From this point the boundary continue along Railway line upto R.S No:723 of Gunupudi Revenue village and turns North East along G&V canal and follows upto R.S No: 195 of Gunupudi Revenue village i.e., Starting Point.",
+    "center": [
+      16.544,
+      81.549
+    ],
+    "polygon": [
+      [
+        16.548,
+        81.549
+      ],
+      [
+        16.5485,
+        81.557
+      ],
+      [
+        16.539,
+        81.556
+      ],
+      [
+        16.5385,
+        81.546
+      ],
+      [
+        16.543,
+        81.5465
+      ]
+    ]
+  },
+  {
+    "ward": 8,
+    "nameTe": "చినరంగనిపాలెం & G&V కెనాల్ వెస్ట్ బండ్",
+    "nameEn": "Chinaranganipalem & G&V Canal West Bund",
+    "zone": "East-Central Zone",
+    "revenueVillages": [
+      "Gunupudi Revenue Village"
+    ],
+    "rsNos": [
+      244,
+      236,
+      384,
+      374
+    ],
+    "dNos": [
+      "10-1-40"
+    ],
+    "landmarks": [
+      "PP road",
+      "Chinaranganipalem main road",
+      "G&V Canal West bund road",
+      "BVRM-NSP railway line",
+      "FCI godowns road",
+      "Railway quarters road",
+      "Bandarpuntha road"
+    ],
+    "north": "The boundary starts from junction of PP road and Chinaranganipalem main road (D.No.10-1-40) in RS.No:244 of Gunupudi revenue village and it runs towards East along PP road upto PP road and G&V Canal West bund road junction in RS.No:236 (Gunupudi revenue village).",
+    "east": "Starting from above junction it runs towards south-west along G&V Canal West bund road upto G&V Canal West bund road and BVRM- NSP railway line junction in RS.No:384 (Gunupudi revenue village).",
+    "south": "The boundary starts from above point and it runs in Northwest direction along BVRM-NSP railway line upto FCI godowns road and it turns towards North-East direction along FCI road upto railway quarters road and it turns towards Northwest direction along railway quarters road upto railway quarters road and bandarpuntha road junction and it turns towards east along bandarupuntha road upto bandarupuntha road and chinaranganipalem main road junction in RS.No:374 (Gunupudi revenue village).",
+    "west": "The boundary starts from above point runs towards North along Chinaranganipalem main road upto Chinaranganipalem Main Road D.No (10-1-40) in P.P.road junction in RS.No:244 (Gunupudi revenue village) i.e., starting point.",
+    "center": [
+      16.543,
+      81.541
+    ],
+    "polygon": [
+      [
+        16.5465,
+        81.539
+      ],
+      [
+        16.5465,
+        81.544
+      ],
+      [
+        16.54,
+        81.544
+      ],
+      [
+        16.539,
+        81.5395
+      ],
+      [
+        16.542,
+        81.538
+      ]
+    ]
+  },
+  {
+    "ward": 9,
+    "nameTe": "జంక్షన్ రైల్వే స్టేషన్ రోడ్డు & వెజిటబుల్ మార్కెట్",
+    "nameEn": "Junction Railway Station Road & Veg Market",
+    "zone": "Central-East Zone",
+    "revenueVillages": [
+      "Gunupudi Revenue Village"
+    ],
+    "rsNos": [
+      292,
+      262,
+      250,
+      385,
+      257
+    ],
+    "dNos": [
+      "10-1-55",
+      "MIG 2-126",
+      "10-5-68",
+      "10-5-49",
+      "10-5-9"
+    ],
+    "landmarks": [
+      "PP road",
+      "Junction railway station road",
+      "Vegetable market street road",
+      "APHB road",
+      "Temple Tree Heights Apartment",
+      "Traffic park South side road",
+      "Geethams school",
+      "Aditya school road"
+    ],
+    "north": "The boundary starts from junction of PP road and Junction railway station road in RS.No:292 of Gunupudi revenue village it runs in East direction upto junction of PP road and vegetable market street road at D.No (10-1-55) in RS.No:262 (Gunupudi revenue village).",
+    "east": "Starting from above junction point it runs towards south upto vegetable market street road and APHB road junction at D.No.MIG 2-126 upto Temple Tree Heights Apartment in RS.No:250 (Gunupudi revenue village).",
+    "south": "The boundary starts from above point it runs towards west along Temple tree Apartment Road and Traffic park South side road and turns towards south upto Geethams school at D.No.10-5-68 and it runs towards west upto D.No.10-5-49 in RS.No:385 (Gunupudi revenue village).",
+    "west": "The boundary starts from the above point runs towards North upto junction of APHB road and Aditya school road and turns west upto Aditya school and turns towards north upto D.No.10-5-9 and runs in south west direction along railway line boundary upto junction of APHB road and Junction railway station road and runs towards north upto junction of PP road and Junction railway station road in RS.No:257 (Gunupudi revenue village) i.e., starting point.",
+    "center": [
+      16.542,
+      81.535
+    ],
+    "polygon": [
+      [
+        16.546,
+        81.5335
+      ],
+      [
+        16.546,
+        81.538
+      ],
+      [
+        16.5395,
+        81.538
+      ],
+      [
+        16.539,
+        81.533
+      ],
+      [
+        16.5425,
+        81.532
+      ]
+    ]
+  },
+  {
+    "ward": 10,
+    "nameTe": "APHB కాలనీ & ట్రాఫిక్ పార్క్ సౌత్",
+    "nameEn": "APHB Colony & Traffic Park South",
+    "zone": "Central-East Zone",
+    "revenueVillages": [
+      "Gunupudi Revenue Village"
+    ],
+    "rsNos": [
+      315,
+      262,
+      365
+    ],
+    "dNos": [
+      "10-5-9",
+      "10-5-49",
+      "10-5-68",
+      "10-1-45"
+    ],
+    "landmarks": [
+      "BVRM-NSP railway boundary",
+      "Junction railway station road",
+      "Aditya school",
+      "APHB road",
+      "Geethams school",
+      "Traffic park south road",
+      "Temple tree apartment road",
+      "Vegetable market street",
+      "Chinaranganipalem main road",
+      "Bandaru puntha road",
+      "FCI road",
+      "Railway quarters road"
+    ],
+    "north": "The boundary starts from junction of PP road and BVRM-NSP railway boundary in RS.No:315(Gunupudi revenue village) and runs in East direction upto junction of PP road and Junction railway station road and turns towards south east along railway line boundary upto D.No.10-5-9 and turns towards south upto aditya school and turns towards east upto junction of APHB road and Aditya school road and turns towards north upto D.No.10-5-49 and turns east upto D.No.10-5-68 at geethams school and runs north upto junction of traffic park south road and Temple tree apartment road and turns east upto temple tree apartment road and turns north upto junction of PP road and vegetable market street and turns east upto junction of PP road and chinaranganipalem main road at D.No.10-1-45 in RS.No:262(Gunupudi revenue village).",
+    "east": "Starting from above junction point it runs towards south upto junction of chinaranganipalem main road and bandaru puntha road",
+    "south": "The boundary starts from above point and runs towards west along FCI road upto railway quarters road and runs towards south-east upto BVRM-NSP railway line in RS.No:365(Gunupudi revenue village).",
+    "west": "The boundary starts from above point it runs towards south-west along BVRM-NSP railway boundary upto junction of PP road and Junction railway station west road in RS.No:315(Gunupudi revenue village) i.e., starting point",
+    "center": [
+      16.5385,
+      81.5365
+    ],
+    "polygon": [
+      [
+        16.541,
+        81.533
+      ],
+      [
+        16.542,
+        81.539
+      ],
+      [
+        16.535,
+        81.54
+      ],
+      [
+        16.534,
+        81.5335
+      ],
+      [
+        16.537,
+        81.5315
+      ]
+    ]
+  },
+  {
+    "ward": 11,
+    "nameTe": "కందికట్ల వారి వీధి & Z-బ్రిడ్జి నార్త్",
+    "nameEn": "Kandikatla Vari Street & Z-Bridge North",
+    "zone": "Two Town East",
+    "revenueVillages": [
+      "Gunupudi Revenue Village"
+    ],
+    "rsNos": [
+      367
+    ],
+    "dNos": [
+      "10-6-14/1",
+      "10-6-14",
+      "10-6-14/3",
+      "11-11-11/2",
+      "11-12-5",
+      "11-9-44",
+      "11-14-30/2",
+      "11-13-18/1",
+      "11-13-11",
+      "11-3-20",
+      "11-3-30",
+      "11-3-48",
+      "11-6-1",
+      "12-10-3/1",
+      "12-10-1a"
+    ],
+    "landmarks": [
+      "Railway compound wall",
+      "G&V canal Center line",
+      "Z Bridge",
+      "Kandikatla vari street",
+      "BN Road",
+      "Gunupudi drain",
+      "Vasanthala vari street"
+    ],
+    "north": "The boundary starts at D.No.10-6-14/1 and runs along Railway compound wall upto D.No.10-6-14 and runs towards south upto D.No.10-6-14/3 and turns towards east upto D.No.10-6-14 and turns towards south east along railway compound wall up to D.No.11-11- 11/2 and turns towards north east upto D.No.11-12-5 and turns towards South East upto D.No.11-9-44.",
+    "east": "Starting from above junction point it runs towards South West along G&V canal Center line at R.S No:367 of Gunupudi Revenue village and runs upto the junction of Z Bridge near D.No.11-14-30/2.",
+    "south": "The boundary starts from above point it runs towards west along kandikatla vari street upto D.No.11-13-18/1 and runs North West upto D.No.11-13-11and turns towards North West upto BN Road.",
+    "west": "The boundary starts from above point runs in North direction along BN Road at D.No.11-3-20 upto 11-3-30 and runs towards North East along Gunupudi drain at D, No 11- 3-30 upto11-3-48 and runs towards North upto 11-6-1 and turns towards North East along vasanthala vari street upto 12-10-3/1 and turns towards East upto 12-10-1a and runs towards North upto 10-6-14.",
+    "center": [
+      16.536,
+      81.532
+    ],
+    "polygon": [
+      [
+        16.54,
+        81.53
+      ],
+      [
+        16.5405,
+        81.534
+      ],
+      [
+        16.5325,
+        81.5335
+      ],
+      [
+        16.532,
+        81.529
+      ],
+      [
+        16.536,
+        81.529
+      ]
+    ]
+  },
+  {
+    "ward": 12,
+    "nameTe": "బ్రిడ్జిపేట & AP టిడ్కో హౌసింగ్ కాలనీ",
+    "nameEn": "Bridgepeta & AP TIDCO Housing Colony",
+    "zone": "South-East Zone",
+    "revenueVillages": [
+      "Gunupudi Revenue Village",
+      "Taderu Revenue Village"
+    ],
+    "rsNos": [
+      723,
+      726,
+      431,
+      491,
+      629,
+      624,
+      463,
+      468
+    ],
+    "dNos": [
+      "9-7-78",
+      "9-4-22/2"
+    ],
+    "landmarks": [
+      "G&V canal road",
+      "Gandhinagar road",
+      "Bhimavaram Matsyapuri road",
+      "AP TIDCO housing colony",
+      "Bridgepeta",
+      "Z bridge"
+    ],
+    "north": "The boundary starts from the junction of G&V canal road and Railway line in R.S No: 723 and runs upto the West boundary of R.S No:726 Gunupudi Revenue village.",
+    "east": "Starting from above point it runs towards south along the West boundary of R.S No: 431 Gunupudi Revenue village and meets the junction of Gandhinagar road at D.No.9-7-78. From the above junction the boundary runs west along the Gandhinagar road and meets at R.S No:491 Gunupudi Revenue Village and Taderu Revenue village till the junction of Bhimavaram Matsyapuri road at R.S No: 629 of Gunupudi Revenue Village. From here it follows the natural boundary of Gunupudi revenue village and meets at the junction of Gunupudi Revenue village and Taderu Revenue village at AP TIDCO housing colony.",
+    "south": "From the above junction it turns West along the natural boundary limits of Gunupudi Revenue village and Taderu Revenue village upto the Bhimavaram Matsyapuri road at R.S No: 624 of Gunupudi Revenue village.",
+    "west": "The boundary starts from above point runs towards North along Bhimavaram Matsyapuri road upto turn North East at Bridgepeta At D.No.9-4-22/2 and turns east along R.S No: 463 of Gunupudi Revenue village and turns North West along R.S No: 468 of Gunupudi Revenue Village and meets the meets the junction of Gandhinagar Road and Z bridge. From Here the boundary moves along G&V canal road and meets the starting point i.e., at R.S No:723 of Gunupudi Revenue Village.",
+    "center": [
+      16.532,
+      81.545
+    ],
+    "polygon": [
+      [
+        16.5385,
+        81.544
+      ],
+      [
+        16.538,
+        81.552
+      ],
+      [
+        16.526,
+        81.553
+      ],
+      [
+        16.525,
+        81.541
+      ],
+      [
+        16.531,
+        81.54
+      ]
+    ]
+  },
+  {
+    "ward": 13,
+    "nameTe": "తాడేరు రెవెన్యూ విలేజ్ లిమిట్స్",
+    "nameEn": "Taderu Revenue Village Limits",
+    "zone": "South-East Outer Zone",
+    "revenueVillages": [
+      "Taderu Revenue Village",
+      "Gunupudi Revenue Village"
+    ],
+    "rsNos": [
+      1,
+      508,
+      448
+    ],
+    "dNos": [],
+    "landmarks": [
+      "Gunupudi south drain",
+      "Taderu revenue village limit"
+    ],
+    "north": "The boundary starts from RS.No:1 of Taderu revenue village it runs in North East direction along gunupudi south drain upto RS.No:508 (Gunupudi revenue village).",
+    "east": "Starting from above point it runs towards south along Taderu revenue village limit and turns towards east along Taderu revenue village limit upto RS.No:448 (Taderu revenue village).",
+    "south": "The boundary starts from above point it runs towards west along Taderu village limit upto RS.No:448 (Taderu revenue village).",
+    "west": "The boundary starts from above point runs towards North along Taderu revenue village limits upto RS.No:1 (Taderu revenue village) i.e., starting point.",
+    "center": [
+      16.524,
+      81.555
+    ],
+    "polygon": [
+      [
+        16.528,
+        81.55
+      ],
+      [
+        16.529,
+        81.565
+      ],
+      [
+        16.518,
+        81.564
+      ],
+      [
+        16.517,
+        81.548
+      ],
+      [
+        16.523,
+        81.548
+      ]
+    ]
+  },
+  {
+    "ward": 14,
+    "nameTe": "మిషన్ హాస్పిటల్ సౌత్ & బేతనిపేట",
+    "nameEn": "Mission Hospital South & Bethanipeta",
+    "zone": "South-East Zone",
+    "revenueVillages": [
+      "Gunupudi Revenue Village"
+    ],
+    "rsNos": [
+      629,
+      704,
+      716
+    ],
+    "dNos": [
+      "13-26-53/1",
+      "13-15-32/2",
+      "13-15-36",
+      "13-20-56",
+      "13-26-25",
+      "13-26-31"
+    ],
+    "landmarks": [
+      "Mission Hospital South Road",
+      "Punta road",
+      "Canal Road",
+      "BN road",
+      "Taderu Bridge",
+      "South Canal",
+      "St. Anns school road",
+      "Bethanipeta road"
+    ],
+    "north": "The boundary starts from D.No.13-26-53/1 and runs east along Mission Hospital South Road upto D.No.13-15-32/2 and turns towards south and it runs South Upto D.No.13-15-36 and turns East along Punta road upto D.No.13-20-56 and turns towards south upto Canal Road",
+    "east": "Starting from above junction point it runs towards south along BN road upto Taderu Bridge in RS.No:629 of Gunupudi revenue village.",
+    "south": "The boundary starts from above point it runs towards South-West along South Canal upto RS No:704 of Gunupudi revenue village and turns towards west along Municipal limits in RS.No:716 of Gunupudi revenue village.",
+    "west": "The boundary starts from above point runs towards North from R.S No:716 and meets St. Anns school road and runs along North and turns towards east and runs upto D.No.13-26-25 bethanipeta road and turns towards east upto D.No.13-26-31and turns towards North and ends at D.No.13-26-53/1 i.e., starting point.",
+    "center": [
+      16.527,
+      81.534
+    ],
+    "polygon": [
+      [
+        16.531,
+        81.53
+      ],
+      [
+        16.5315,
+        81.538
+      ],
+      [
+        16.521,
+        81.537
+      ],
+      [
+        16.521,
+        81.529
+      ],
+      [
+        16.526,
+        81.528
+      ]
+    ]
+  },
+  {
+    "ward": 15,
+    "nameTe": "రాజీవ్ గాంధీ & YSR విగ్రహం సెంటర్",
+    "nameEn": "Rajeev Gandhi & YSR Statue Center",
+    "zone": "Central-East Zone",
+    "revenueVillages": [
+      "Gunupudi Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "13-20-20",
+      "11-13-27",
+      "9-9-12",
+      "9-9-3",
+      "13-25-20",
+      "13-22-15"
+    ],
+    "landmarks": [
+      "Rajeev Gandhi statue",
+      "BN road",
+      "YSR statue",
+      "Z-bridge",
+      "G&V canal",
+      "Leprosy colony road",
+      "Bridge peta bridge",
+      "Pavurala vari veedhi",
+      "Drain bund road"
+    ],
+    "north": "The boundary starts from Rajeev Gandhi statue near D.No.13-20-20 and runs towards BN road upto YSR statue and turns south-east upto D.No.11-13-27 and runs towards east upto junction of Z-bridge and G&V canal.",
+    "east": "The boundary starts from above junction then runs towards south along leprosy colony road and turns south upto D.No.9-9-12 and turns west upto D.No.9-9-3 and turns north upto bridge peta bridge and turns north upto D.No.13-25-20.",
+    "south": "The boundary starts from above junction and it runs towards west along pavurala vari veedhi upto D.No.13-22-15.",
+    "west": "The boundary starts from above junction and it runs towards North along drain bund road upto D.No.13-20-20 i.e., starting point.",
+    "center": [
+      16.532,
+      81.532
+    ],
+    "polygon": [
+      [
+        16.5345,
+        81.5295
+      ],
+      [
+        16.535,
+        81.535
+      ],
+      [
+        16.5285,
+        81.5355
+      ],
+      [
+        16.528,
+        81.5295
+      ]
+    ]
+  },
+  {
+    "ward": 16,
+    "nameTe": "రజకుల వీధి & మిషన్ హాస్పిటల్ ఈస్ట్",
+    "nameEn": "Rajakula Veedhi & Mission Hospital East",
+    "zone": "Central Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [
+      352
+    ],
+    "dNos": [
+      "13-15-30",
+      "13-7-23",
+      "13-5-34",
+      "13-10-32",
+      "13-20-41/2",
+      "13-10-55/2",
+      "13-15-36"
+    ],
+    "landmarks": [
+      "Rajiv Gandhi Statue road",
+      "Rajakula veedhi",
+      "Canal bund road",
+      "Mission Hospital East Compound Wall Road"
+    ],
+    "north": "The boundary starts at D-NO: 13-15-30 and runs along East up to D-NO: 13-7-23 and turns towards north up to D-NO: 13-5-34 and turns towards east and runs along East upto D-NO: 13-10-32 near Rajiv Gandhi Statue road.",
+    "east": "Starting from above junction point boundary starts from D-No: 13-10-32 and runs towards south up to rajakula veedhi upto D-NO: 13-20-41/2.",
+    "south": "The boundary starts from D-NO : 13-20-41/2 and runs towards west along canal bund road up to D.No.13-10-55/2 and turns towards North up to R S NO:352 and turns towards West up to D-NO :13-15-36.",
+    "west": "The boundary starts from D-NO: 13-15-36 and Runs towards North upto Mission Hospital East Compound Wall Road i.e., Starting point.",
+    "center": [
+      16.534,
+      81.527
+    ],
+    "polygon": [
+      [
+        16.537,
+        81.5245
+      ],
+      [
+        16.5375,
+        81.5295
+      ],
+      [
+        16.5315,
+        81.5295
+      ],
+      [
+        16.531,
+        81.5245
+      ]
+    ]
+  },
+  {
+    "ward": 17,
+    "nameTe": "నచ్చువారి జంక్షన్ & సోమేశ్వర స్వామి గుడి",
+    "nameEn": "Nachuvari Junction & Someswara Swamy Temple",
+    "zone": "One Town Center",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "13-1-42",
+      "13-1-4/4",
+      "13-25-45",
+      "13-16-45",
+      "13-5-18",
+      "13-4-16"
+    ],
+    "landmarks": [
+      "Mission hospital road",
+      "Bhimavaram-Narasapuram road (Nachuvari Junction)",
+      "Someswara swamy temple",
+      "Telaga vari street",
+      "Gudur anjaneyulu vari street"
+    ],
+    "north": "The boundary starts from mission hospital road and Bhimavaram–Narasapuram road junction (Nachuvari Junction) at D.No.13-1-42 runs towards East along Bhimavaram- Narasapuram road upto someswara swamy temple at D.No.13-1-4/4.",
+    "east": "The boundary starts from above point Runs towards south along Bhimavaram- Narasapuram road upto D.No.13-25-45.",
+    "south": "From the above point the boundary turns west along telaga vari street upto D.NO; 13-16-45 and turns towards south along gudur anjaneyulu vari street upto D.NO; 13-5-18 and turns towards east upto D.No.13-4-16 at Mission Hospital road.",
+    "west": "From the above D.No.13-4-16 at Mission hospital road the boundary runs north upto the junction of mission hospital road and Bhimavaram-Narasapuram road junction (Nachuvari Junction) at D.No.13-1-42 i.e., Starting point.",
+    "center": [
+      16.5375,
+      81.5265
+    ],
+    "polygon": [
+      [
+        16.54,
+        81.524
+      ],
+      [
+        16.5405,
+        81.529
+      ],
+      [
+        16.5355,
+        81.529
+      ],
+      [
+        16.535,
+        81.524
+      ]
+    ]
+  },
+  {
+    "ward": 18,
+    "nameTe": "పెద్ద మసీదు & గుమాస్తాల వారి వీధి",
+    "nameEn": "Pedda Masjid & Gumasthala Vari Street",
+    "zone": "One Town Center",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "15-10-1",
+      "17-9-54",
+      "15-8-21",
+      "15-18-15",
+      "15-11-5",
+      "15-17-14",
+      "13-5-55",
+      "13-17-15",
+      "13-18-6",
+      "13-11-1",
+      "13-8-8",
+      "13-14-31",
+      "14-14-1",
+      "14-10-26",
+      "14-1-28"
+    ],
+    "landmarks": [
+      "Pedda masjid road",
+      "Motupalli vari street",
+      "Gumasthala vari Street",
+      "Mohammadeeyula street",
+      "Old Y.drain",
+      "Pasupuleti vari street",
+      "Raitu bazar road",
+      "Nimmala gunta park street",
+      "BN road",
+      "Mission Hospital road",
+      "Guduri Anjaneyulu street",
+      "Bethani peta street",
+      "Ramaraju Bhusanam street",
+      "Ravururi vari street",
+      "Prayaga vari street",
+      "Rayaprolu vari street",
+      "Veluri vari street"
+    ],
+    "north": "The boundary starts from pedda masjid road and motupalli vari street junction at D.No.15-10-1 and it runs towards east along Gumasthala vari Street and it turns north at D.No.17-9-54 and runs along Gumasthala vari Street upto Gumasthala vari street and Mohammadeeyula street junction and it turns towards east along Mohammadeeyula street upto Old Y.drain & Mohammadeeyula street junction at D.No.15-8-21 and it turns towards south along Old Y.drain road upto D.No.15-18-15 and it turns towards east and runs along Mohammadeeyula street upto Mohammadeeyula street junction & Pasupuleti vari street junction at D.No.15-11-5.",
+    "east": "The boundary starts from above point and it runs towards south along Pasupuleti vari street and Raitu bazar road Nimmala gunta park street upto Nimmala park street & BN road junction at D.No.15-17-14 and it runs towards south along Mission hospital road upto Mission Hospital road & Guduri Anjaneyulu street junction at D.No.13-5-55 and it turns towards east and runs along Guduri Anjaneyulu street upto D.No.13-17-15 and it turns towards south and runs upto D.No.13-18-6.",
+    "south": "The boundary starts from above point and it runs towards west upto Mission Hospital compound east side road at D.No.13-11-1 and it turns towards north along Mission Hospital compound east side road upto D.No.13-8-8 and it turns towards west along Bethani peta street upto D.No.13-14-31 and it turns towards south & runs upto D.No.14-14-1 and it turns towards west and runs along Ramaraju Bhusanam street upto D.No.14-10-26.",
+    "west": "The boundary starts from above point and it runs towards north along Ravururi vari street and Prayaga vari street upto D.No.14-1-28 and it turns towards west and runs along Rayaprolu vari street upto Veluri vari street and Rayaprolu vari street junction and it turns towards north and runs along Veluri vari street upto Veluri vari street and BN road junction and it runs towards north along Pedda Masjid street upto Pedda Masjid street and Motupalli vari street junction and it meets the starting point.",
+    "center": [
+      16.5395,
+      81.5255
+    ],
+    "polygon": [
+      [
+        16.543,
+        81.523
+      ],
+      [
+        16.5435,
+        81.5285
+      ],
+      [
+        16.5365,
+        81.528
+      ],
+      [
+        16.536,
+        81.5225
+      ]
+    ]
+  },
+  {
+    "ward": 19,
+    "nameTe": "గునుపూడి డ్రెయిన్ & అయ్యవారి వీధి",
+    "nameEn": "Gunupudi Drain & Ayyavari Street",
+    "zone": "One Town Central",
+    "revenueVillages": [
+      "Gunupudi Revenue Village",
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "12-5-8",
+      "12-8-48",
+      "12-9-8/4",
+      "12-9-9/2",
+      "12-9-12",
+      "12-10-1a",
+      "12-11-17",
+      "12-10-1/1",
+      "12-11-10",
+      "12-11-14",
+      "12-4-1",
+      "12-5-56"
+    ],
+    "landmarks": [
+      "Railway compound wall",
+      "Gunupudi drain",
+      "Gunupudi Water tank",
+      "Badugu vari street (major drain)",
+      "BN road",
+      "Someswara swamy temple",
+      "Nachu vari centre",
+      "Ayyavari street",
+      "Yamijaalavari street",
+      "Railway junction road"
+    ],
+    "north": "The boundary starts from at D.No.12-5-8 run along the railway compound wall and runs up to 12-8-48 and runs towards South along gunupudi drain upto at D.No.12-9-8/4.",
+    "east": "The boundary starts from above point it runs South along gunupudi drain at D.No.12- 9-9/2 up to Gunupudi Water tank at D.No.12-9-12.",
+    "south": "The boundary starts from above point it runs South along gunupudi drain at D.No.12-10-1a and turns west up to D.No.12-11-17 and turns South West along Gunupudi drain 12-10-1/1 upto 12-11-10 and runs towards South West at D.No.12-11-14 along Badugu vari street(major drain) up to BN road and runs along BN road upto someswara swamy temple and turns to west upto nachu vari centre at D.No.12-4-1.",
+    "west": "The boundary starts from above point runs towards North and turns east along ayyavari street and runs towards north along yamijaalavari street up to railway junction road.",
+    "center": [
+      16.541,
+      81.5285
+    ],
+    "polygon": [
+      [
+        16.544,
+        81.527
+      ],
+      [
+        16.5445,
+        81.5315
+      ],
+      [
+        16.5375,
+        81.5315
+      ],
+      [
+        16.537,
+        81.5265
+      ]
+    ]
+  },
+  {
+    "ward": 20,
+    "nameTe": "ఫైర్ స్టేషన్ & బండారు మల్లేశ్వరరావు వీధి",
+    "nameEn": "Fire Station & Bandaru Malleswarao Street",
+    "zone": "One Town Central",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "15-6-14",
+      "15-19-32",
+      "15-9-20",
+      "12-5-8",
+      "12-5-56",
+      "12-1-25",
+      "15-20-41",
+      "15-20-32",
+      "15-20-29",
+      "15-22-10",
+      "15-23-9(3)",
+      "15-23-1",
+      "15-6-29"
+    ],
+    "landmarks": [
+      "Bandaru Malleswarao street",
+      "Railway junction road",
+      "Fire station road",
+      "Yamijalavari street",
+      "Ayyavari street",
+      "Old BSNL office road",
+      "Krishna temple",
+      "Pasupuleti vari street",
+      "Nilla vari street",
+      "Bandaru apparao street"
+    ],
+    "north": "The boundary starts from D.No.15-6-14 runs East along Bandaru Malleswarao street upto railway junction road and turns towards south- east at D.No.15-19-32 upto fire station road at D.No.15-9-20.",
+    "east": "The boundary starts from above point it runs towards south along yamijalavari street at D.No.12-5-8 upto ayyavari street at D.No.12-5-56.",
+    "south": "The boundary starts from above point turns towards west along ayyavari street old bsnl office road at D.No.12-1-25 krishna (temple).",
+    "west": "The boundary starts from above point runs towards north old bsnl office road upto Pasupuleti vari street at D.No.15-20-41 and runs along north West of Pasupuleti vari street upto D.No.15-20-32 and turns towards east upto D.No.15-20-29 and runs towards north upto D.No.15-22-10 and towards east upto D.No.15-23-9(3) and runs along north upto D.No.15-23-1 and turns towards west upto D.No.15-6-29 and runs along Nilla vari street upto bandaru apparao street",
+    "center": [
+      16.543,
+      81.5265
+    ],
+    "polygon": [
+      [
+        16.546,
+        81.5245
+      ],
+      [
+        16.5465,
+        81.529
+      ],
+      [
+        16.5405,
+        81.529
+      ],
+      [
+        16.54,
+        81.5245
+      ]
+    ]
+  },
+  {
+    "ward": 21,
+    "nameTe": "RTC కాంప్లెక్స్ & గూడ్స్ షెడ్ రోడ్డు",
+    "nameEn": "RTC Complex & Goods Shed Road",
+    "zone": "One Town Central",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "15-19-39",
+      "15-2-15",
+      "15-6-13",
+      "15-6-30",
+      "15-5-17",
+      "15-22-9",
+      "15-22-10",
+      "15-20-29",
+      "15-20-26",
+      "15-20-18",
+      "15-18-15",
+      "15-8-21"
+    ],
+    "landmarks": [
+      "Palakollu-Pamarru road",
+      "RTC Complex East side road",
+      "Railway Compound wall",
+      "Goods Shed road",
+      "Bandela vari Street",
+      "Nilla vari Street",
+      "Paluri vari Street",
+      "Pasupuleti vari Street",
+      "Rajakula Cheruvu North road",
+      "Rajakula Cheruvu West Road",
+      "Mohammadeeyula Street",
+      "Old Y Drain Road",
+      "Gumasthala vari Street"
+    ],
+    "north": "The boundary starts from the junction of Palakollu-Pamarru road and RTC Complex East side road junction and it runs along Palakollu- Pamarru Road upto Railway Compound wall at D.No.15-19-39.",
+    "east": "The boundary starts from the above point and it runs towards South-East direction along Goods Shed road upto Bandela vari Street at D.No.15-2-15 and it runs towards west along Bandela vari Street upto Nilla vari street and Bandela vari Street junction D.No.15-6- 13 and it turns towards south and runs along Nilla vari Street upto Paluri vari Street D.No.15-6-30 and turns towards east and runs along Paluri vari Street upto D.No.15-5-17 and it turns towards south and runs along Pasupuleti vari Street D.No.15-22-9.",
+    "south": "The boundary starts from the above point and it runs towards West along Rajakula Cheruvu North road upto D.No.15-22-10 and turns towards south along Rajakula Cheruvu West Road upto D.No.15-20-29 and turns towards west and runs upto Pasupuletivari Street at D.No.15-20-26 and turns towards north and it runs along Pasupuleti vari Street Upto D.No.15-20-18 and turns towards west and it runs along Mohammadeeyula Street upto Old Y Drain Road at D.No.15-18-15 and it turns towards North west direction upto Mohammadeeyula Street D.No.15-8-21 and it turns towards west and runs upto junction of Mohammadeeyula Street and Gumasthala vari Street.",
+    "west": "The boundary starts from the above point and it runs towards North along junction of RTC Complex east side road and Palakollu- Pamarru Road i.e., Starting Point.",
+    "center": [
+      16.545,
+      81.526
+    ],
+    "polygon": [
+      [
+        16.5485,
+        81.523
+      ],
+      [
+        16.549,
+        81.528
+      ],
+      [
+        16.542,
+        81.528
+      ],
+      [
+        16.5415,
+        81.523
+      ]
+    ]
+  },
+  {
+    "ward": 22,
+    "nameTe": "కామరాజు వారి వీధి & త్రికూట రైల్వే జంక్షన్",
+    "nameEn": "Kamaraju Vari Veedhi & Tri-Junction Railway",
+    "zone": "One Town Railway Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "6-1-49",
+      "16-12-98",
+      "16-13-28",
+      "16-13-19"
+    ],
+    "landmarks": [
+      "Bhimavaram–Gudivada Railway line",
+      "Bhimavaram–Narsapuram line Junction",
+      "Bhimavaram–Tanuku railway line",
+      "Tri-Junction of Bhimavaram–Tanuku, Bhimavaram–Narsapuram and P.P Road",
+      "PP Road",
+      "Kamaraju vari veedhi"
+    ],
+    "north": "Starting from the Junction of Bhimavaram–Gudivada Railway line and Bhimavaram– Narsapuram line Junction and it runs towards North East direction along Bhimavaram– Tanuku railway line upto Bhimavaram–Tanuku and Bhimavaram– Narsapuram Railway junction and it turns towards South East Direction and runs upto Tri-Junction of Bhimavaram–Tanuku Railway line, Bhimavaram–Narsapuram Railway line and P.P Road.",
+    "east": "NA (Railway Tracks Boundary)",
+    "south": "Starting from above point, Runs west from Door No 6-1-49 along PP Road up to Door No 16-12-98.",
+    "west": "Starting from above point, turns towards north Upto D.No.16-13-28 and continues along Kamaraju vari veedhi Upto Kamaraju vari veedhi and Bhimavaram Gudivada Railway line junction at D.No.16-13-19 and it turns towards West Upto Bhimavaram–Gudivada Railway line and Bhimavaram–Narsapuram line Junction. i.e., Starting Point.",
+    "center": [
+      16.546,
+      81.529
+    ],
+    "polygon": [
+      [
+        16.5495,
+        81.527
+      ],
+      [
+        16.5505,
+        81.532
+      ],
+      [
+        16.5435,
+        81.532
+      ],
+      [
+        16.543,
+        81.527
+      ]
+    ]
+  },
+  {
+    "ward": 23,
+    "nameTe": "మోటుపల్లి వారి వీధి & పద్మశ్రీ రోడ్డు",
+    "nameEn": "Motupalli Vari Veedhi & Padmasri Road",
+    "zone": "One Town West",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [
+      363,
+      366,
+      650
+    ],
+    "dNos": [
+      "5-8-58/2",
+      "5-3-58/6",
+      "5-6-7",
+      "16-13-8/1",
+      "16-12-30",
+      "17-1-22",
+      "17-1-57"
+    ],
+    "landmarks": [
+      "Old Yanamaduru Drain",
+      "Miramiya Kodu drain",
+      "Bhimavaram–Nidadavolu Railway line",
+      "Bhimavaram–Palakollu railway line",
+      "Motupalli vari veedhi",
+      "P.P. road junction",
+      "Bus stand road",
+      "Subramanyam swamy temple",
+      "Divya fancy shop",
+      "Padmasri road (Reliance super market backside road)"
+    ],
+    "north": "The boundary starts from R.S No: 363 of Bhimavaram Revenue Village, at the junction of Old Yanamaduru Drain & Miramiya Kodu and and runs along Miramiya Kodu drain through from R.S No: 363,366 of Bhimavaram Revenue Village upto the D.No.5-8- 58/2 and turns towards south upto the D.No.5-3-58/6 and turns towards east and runs upto the D.No.5-6-7 and turns south & runs towards under-pass upto the Bhimavaram– Nidadavolu Railway line at R.S No: 650 and turns east along the Bhimavaram–Palakollu railway line upto the D.No.16-13-8/1, motupalli vari veedhi.",
+    "east": "The boundary starts from above point runs towards south along the Motupalli vari veedhi upto the P.P. road junction i.e., D.No.16-12-30 and runs towards Bus stand road upto the Subramanyam swamy temple i.e., D.No.17-1-22.",
+    "south": "The boundary starts from above Point and it runs towards west along Bus stand road upto the Divya fancy shop i.e., D.No.17-1-57.",
+    "west": "The boundary starts from above junction and it runs towards North along Padmasri road(Reliance super market backside road) upto the Bhimavaram–Palakollu railway line junction and turns towards west upto the old Yanamuduru Drain- and runs towards north along the old Yanamuduru Drain and meets at starting point of the ward Boundary.",
+    "center": [
+      16.544,
+      81.521
+    ],
+    "polygon": [
+      [
+        16.549,
+        81.518
+      ],
+      [
+        16.549,
+        81.524
+      ],
+      [
+        16.541,
+        81.524
+      ],
+      [
+        16.5405,
+        81.5175
+      ]
+    ]
+  },
+  {
+    "ward": 24,
+    "nameTe": "రెస్ట్ హౌస్ రోడ్డు & వీరమ్మ పార్క్",
+    "nameEn": "Rest House Road & Veeramma Park",
+    "zone": "One Town Center",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "17-9-54",
+      "17-9-43/3"
+    ],
+    "landmarks": [
+      "Rest House Road",
+      "Palakollu Pamarru Road",
+      "Indian Bank Road",
+      "RTC Complex south side road",
+      "Anjaneya Swamy Temple Junction",
+      "Pedda Masjid Road",
+      "Veeramma park west side road",
+      "B.N.Road",
+      "Sri Potti Sriramulu statue"
+    ],
+    "north": "The boundary starts from Rest House Road and Palakollu Pamarru Road Junction and it runs towards East along Indian Bank Road upto RTC Complex south side road and Anjaneya Swamy Temple Junction.",
+    "east": "The boundary starts from the above point and it runs towards South along Pedda Masjid Road upto D.No.17-9-54 and turns towards west upto D.No.17-9-43/3 and it turns towards south and runs along veeramma park west side road upto B.N.Road and veeramma park west side road junction.",
+    "south": "The boundary starts from the above point and it runs towards West along upto B.N. Road upto Sri Potti Sriramulu statue at B.N.Road and Rest House Road Junction.",
+    "west": "The boundary starts from the above point and it runs towards North along Rest House Road upto Rest House Road and Palakollu Pamarru Road Junction i.e., Starting Point.",
+    "center": [
+      16.5425,
+      81.5225
+    ],
+    "polygon": [
+      [
+        16.545,
+        81.5205
+      ],
+      [
+        16.5455,
+        81.5245
+      ],
+      [
+        16.54,
+        81.5245
+      ],
+      [
+        16.5395,
+        81.5205
+      ]
+    ]
+  },
+  {
+    "ward": 25,
+    "nameTe": "మున్సిపల్ ఆఫీస్ రోడ్డు & తాటవర్తి వారి వీధి",
+    "nameEn": "Municipal Office Road & Tatavarthy Vari Street",
+    "zone": "Two Town Center",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "22-15-6",
+      "22-16-30",
+      "18-9-4",
+      "19-10-9",
+      "19-3-1",
+      "20-3-1",
+      "22-15-18"
+    ],
+    "landmarks": [
+      "Municipal Office Road",
+      "Tatavarthy vari street",
+      "BN Road",
+      "Veluri vari street",
+      "Rayaprolu vari street",
+      "Old Y drain road",
+      "Yerragopu vari street",
+      "Katari vari street",
+      "Moganti vari street"
+    ],
+    "north": "The boundary starts from D.No.22-15-6 junction of Municipal Office Road and Tatavarthy vari street and runs along Tatavarthy vari street upto D.No.22-16-30 and continue to run along BN Road upto D.No.18-9-4 i.e., junction of Veluri vari street and BN Road.",
+    "east": "The boundary starts from the above point and it turns towards south along Veluri vari street and it turns towards west upto junction of Rayaprolu vari street and Old Y drain road and runs along Old Y drain road upto D.No.19-10-9.",
+    "south": "The boundary starts from the above point and it runs towards West along Yerragopu vari street Rayaprolu vari street upto D.No.19-3-1 and it continue towards west along Katari vari street upto D.No.20-3-1 and turns towards north west and runs along Moganti vari street upto D.No.22-15-18 i.e., junction of Municipal Office Road and Moganti vari street junction.",
+    "west": "The boundary starts from the above point and it runs towards North upto junction of Municipal Office Road and Tatavarthy vari street i.e., Starting Point.",
+    "center": [
+      16.539,
+      81.523
+    ],
+    "polygon": [
+      [
+        16.5415,
+        81.521
+      ],
+      [
+        16.542,
+        81.5255
+      ],
+      [
+        16.5365,
+        81.525
+      ],
+      [
+        16.536,
+        81.521
+      ]
+    ]
+  },
+  {
+    "ward": 26,
+    "nameTe": "ఎడ్వర్డ్ ట్యాంక్ & గవర్నమెంట్ హాస్పిటల్ రోడ్డు",
+    "nameEn": "Edward Tank & Govt Hospital Road",
+    "zone": "Two Town West",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "22-10-15",
+      "22-15-97",
+      "23-8-12",
+      "23-2-2",
+      "23-3-15",
+      "23-3-20/1",
+      "23-2-23",
+      "23-6-77"
+    ],
+    "landmarks": [
+      "Yanamadurru Drain",
+      "Bhimavaram–Gudiwada Railway Line",
+      "Rest House Road",
+      "Thatavarthy Vari Street",
+      "Municipal Office Road",
+      "Rayasam vari Street",
+      "Edward tank south side road",
+      "Government Hospital Road",
+      "Sarraju vari street"
+    ],
+    "north": "The boundary starts from junction of center line of Yanamadurru Drain and Bhimavaram–Gudiwada Railway Line and it runs towards East along Railway Line upto Railway Line and Rest House Road Junction.",
+    "east": "The boundary starts from the above point and it runs towards South along Rest House Road upto Rest House Road and Thatavarthy Vari Street Junction at D.No.22-10-15.",
+    "south": "The boundary starts from the above point and it runs towards West along Thatavarthy Vari Street upto Municipal Office Road and Thatavarthy Vari Street Junction at D.No.22-15-97, and it turns towards south and runs along Municipal Office Road upto D.No.23-8-12, and it turns towards west and runs along Rayasam vari Street upto D.No.23- 2-2 and it turns towards south and runs along Edward tank south side road upto D.No.23-3- 15 and it turns towards north and runs upto Government Hospital Road upto D.No.23-3- 20/1 and turns towards west upto D.No.23-2-23 and turns south& runs upto D.No.23-6-77 and turns west along Sarraju vari street upto center line of Yanamadurru Drain.",
+    "west": "The boundary starts from the above point and it runs towards North along center line of Yanamadurru Drain upto Junction of Yanamadurru drain and Bhimavaram– Gudiwada Railway Line Junction i.e., Starting Point",
+    "center": [
+      16.5385,
+      81.5185
+    ],
+    "polygon": [
+      [
+        16.543,
+        81.515
+      ],
+      [
+        16.543,
+        81.521
+      ],
+      [
+        16.535,
+        81.521
+      ],
+      [
+        16.535,
+        81.515
+      ]
+    ]
+  },
+  {
+    "ward": 27,
+    "nameTe": "హెడ్ పోస్ట్ ఆఫీస్ & లూథరన్ హైస్కూల్ గ్రౌండ్",
+    "nameEn": "Head Post Office & Lutheran High School Ground",
+    "zone": "Two Town West",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "23-3-21",
+      "23-2-15",
+      "23-2-3",
+      "23-2-2",
+      "23-8-11",
+      "22-15-17",
+      "21-1-1",
+      "21-11-30/2",
+      "21-11-29",
+      "21-10-2",
+      "23-6-77"
+    ],
+    "landmarks": [
+      "Rayasam vari street",
+      "Government Hospital road",
+      "Head Post office",
+      "Municipal Office road",
+      "Moganti Vari Street Junction",
+      "Rest house Road",
+      "Akkarabothu Vari Street",
+      "Luthern High School Ground Compound",
+      "Christian Burial Ground West side road",
+      "Yanamadurru Drain",
+      "Sarraju vari street"
+    ],
+    "north": "The boundary starts from the D.No.23-3-21 runs towards east upto Rayasam vari street & Government Hospital road junction and turns towards south and runs along Rayasam vari street upto D.No.23-2-15 and it turns towards east upto Head Post office at D.No.23-2-3 and it turns towards north and runs upto D.No.23-2-2 and runs upto Municipal Office road and Rayasam vari road junction at D.No.23-8-11.",
+    "east": "The boundary starts from the above point and it runs towards South along Municipal Office road upto Municipal Office road & Moganti Vari Street Junction at D.No.22-15-17 and turns towards east and runs along Moganti Vari Street Junction upto Moganti Vari Street and Rest house Road Junction at D.No.21-1-1 and runs along Rest House Road upto Akkarabothu Vari Street and Rest House Road Junction upto D.No.21-11-30/2.",
+    "south": "The boundary starts from the above point and it runs towards west along Akkarabothu Vari Street upto D.No.21-11-29 and it turns towards south and runs along Luthern High School Ground Compound upto Christian Burial Ground West side road at D.No.21-10-2 and turns west upto center line of Yanamadurru Drain.",
+    "west": "The boundary starts from the above point and it runs towards North along center line of Yanamadurru Drain upto the junction of center line of Yanamadurru Drain and Sarraju vari street junction and it turns towards East along Sarraju vari street upto D.No.23- 6-77 and it turns towards North and runs upto Government Hospital road D.No.23-3-21 i.e., Starting Point.",
+    "center": [
+      16.535,
+      81.518
+    ],
+    "polygon": [
+      [
+        16.5375,
+        81.515
+      ],
+      [
+        16.538,
+        81.521
+      ],
+      [
+        16.531,
+        81.5205
+      ],
+      [
+        16.5305,
+        81.5145
+      ]
+    ]
+  },
+  {
+    "ward": 28,
+    "nameTe": "కటారి వారి వీధి & సుంకర ప Peddaయ్య వీధి",
+    "nameEn": "Katari Vari Street & Sunkara Padayya Street",
+    "zone": "Two Town Center",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "20-11-18",
+      "20-15-51",
+      "20-15-12",
+      "20-9-1"
+    ],
+    "landmarks": [
+      "Katari vari street",
+      "Sunkara padayya street",
+      "Yadhavula vari street -2",
+      "Rest house road"
+    ],
+    "north": "The boundary starts from North west corner of Katari vari street from D.No.20-11- 18 and runs towards east along the Katari vari street upto D.No.20-15-51 at Sunkara padayya street junction.",
+    "east": "The boundary starts from above point it runs towards south along Sunkara padayya street upto the D.No.20-15-12.",
+    "south": "The boundary starts from above point it runs towards west along Yadhavula vari street -2 upto Rest house junction at D.No.20-9-1.",
+    "west": "The boundary starts from above point runs towards North along Rest House Road meets the starting point at D.No.20-11-18.",
+    "center": [
+      16.5365,
+      81.522
+    ],
+    "polygon": [
+      [
+        16.5385,
+        81.5205
+      ],
+      [
+        16.539,
+        81.524
+      ],
+      [
+        16.5345,
+        81.524
+      ],
+      [
+        16.534,
+        81.5205
+      ]
+    ]
+  },
+  {
+    "ward": 29,
+    "nameTe": "SP స్ట్రీట్ & ఎర్రగోపు వారి వీధి",
+    "nameEn": "S.P. Street & Yerragopu Vari Street",
+    "zone": "Two Town Center",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "19-3-19",
+      "19-10-26",
+      "19-11-17",
+      "19-8-14",
+      "19-16-29"
+    ],
+    "landmarks": [
+      "S.P.Street",
+      "Yerragopuvari Street",
+      "Old Yanamadurru Drain Road",
+      "Yalla Vari Street",
+      "Baduguvari street",
+      "Chikilevari Street",
+      "Subash Vari Street"
+    ],
+    "north": "The boundary starts from the junction of S.P.Street and Yerragopuvari Street Junction at D.No.19-3-19 and it runs towards east along Yarragopuvari Street upto Old Yanamadurru Drain Road.",
+    "east": "The boundary starts from the above point and it runs towards South along Old Yanamadurru Drain Road upto Yalla Vari Street at D.No.19-10-26.",
+    "south": "The boundary starts from the above point and it runs towards West along Yalla Vari Street upto D.No.19-11-17 an it turns towards south and runs along Baduguvari street upto Chikilevari Street at D.No.19-8-14 and it turns towards west and runs along chikilevari street and Subash Vari Street upto S.P.Street at D.No.19-16-29.",
+    "west": "The boundary starts from the above point and it runs towards North along S.P.Street upto S.P.Street and Yerragopu vari Street Junction i.e., Starting Point.",
+    "center": [
+      16.535,
+      81.5235
+    ],
+    "polygon": [
+      [
+        16.537,
+        81.522
+      ],
+      [
+        16.5375,
+        81.5255
+      ],
+      [
+        16.5325,
+        81.5255
+      ],
+      [
+        16.532,
+        81.522
+      ]
+    ]
+  },
+  {
+    "ward": 30,
+    "nameTe": "రాయప్రోలు వారి వీధి & రావురి వారి వీధి",
+    "nameEn": "Rayaprolu Vari Street & Ravuri Vari Street",
+    "zone": "One Town South",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "14-1-39",
+      "14-1-28",
+      "14-6-12",
+      "13-8-8/11",
+      "13-26-56",
+      "13-26-27",
+      "13-26-26",
+      "14-8-1"
+    ],
+    "landmarks": [
+      "Old Yanamadurru Drain West side Road",
+      "Rayaprolu vari street",
+      "Ravuri Vari Street",
+      "Mission Hospital Compound North Side Road",
+      "Bethanipeta Road",
+      "Old Y Drain east Side Road"
+    ],
+    "north": "The boundary starts from the junction of Old Yanamadurru Drain West side Road and Rayaprolu vari street at D.No.14-1-39, and it turns towards east and runs along Rayaprolu vari street upto D.No.14-1-28.",
+    "east": "The boundary starts from the above point and it runs towards South along Old Yanamadurru Drain East side Road and Ravuri Vari Street upto Mission Hospital Compound North Side Road at D.No.14-6-12 and it turns towards East and runs along Mission Hospital compound Road upto D.No.13-8-8/11and it turns towards south and runs along Mission Hospital compound East Side Road upto Mission Hospital compound East Side Road and South Side Road Junction.",
+    "south": "The boundary starts from the above point and it runs towards West along Bethanipeta Road upto D.No.13-26-56 and it turns towards south upto D.No.13-26-27 and turns towards west along Bethanipeta road upto Old Y Drain east Side Road and Bethanipeta road junction at D.No.13-26-26.",
+    "west": "The boundary starts from the above point and it runs towards North Old Yanamadurru Drain Road upto D.No.14-8-1 i.e., Starting Point",
+    "center": [
+      16.5335,
+      81.525
+    ],
+    "polygon": [
+      [
+        16.536,
+        81.5235
+      ],
+      [
+        16.5365,
+        81.527
+      ],
+      [
+        16.5305,
+        81.527
+      ],
+      [
+        16.53,
+        81.5235
+      ]
+    ]
+  },
+  {
+    "ward": 31,
+    "nameTe": "గంగనమ్మ గుడి & క్రిస్టియన్ బరియల్ గ్రౌండ్",
+    "nameEn": "Ganganamma Gudi & Christian Burial Ground",
+    "zone": "Two Town Central-South",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "20-11-151",
+      "20-15-9",
+      "19-16-38",
+      "19-8-53",
+      "19-8-15",
+      "19-11-24",
+      "19-15-39/3",
+      "19-15-38",
+      "19-15-50/1",
+      "19-16-42",
+      "21-12-59/1",
+      "21-10-15",
+      "21-12-65/4",
+      "21-11-29",
+      "21-11-28/1"
+    ],
+    "landmarks": [
+      "Rest house road",
+      "Yadhavula vari street 2",
+      "SP street",
+      "Subhash gari street",
+      "Chinapeta road",
+      "Chikilevari street",
+      "Old Y.drain junction",
+      "Teachers street",
+      "Degalavari veedhi",
+      "Ganganamma Gudi centre",
+      "Centre line of Yanamadurru Drain",
+      "Christian Burial ground",
+      "Luthern High School Ground Compound"
+    ],
+    "north": "The boundary starts from North west corner of Rest house road from D.No.20-11- 151 and runs towards east along the Yadhavula vari street 2 upto D.No.20-15-9 at SP street junction and turns towards south, running upto D.No.19-16-38 and runs along subhash gari street and again crossing chinapeta road enters Chikilevari street at D.No.19-8-53 and runs along it upto D.No.19-8-15 turns towards north upto D.No.19-11-24 and turns towards east upto the Old Y.drain junction.",
+    "east": "The boundary starts from above point it runs towards south along Old Y.drain road upto D.No.19-15-39/3.",
+    "south": "The boundary starts from above point turns west runs along teachers street upto D.No.19-15-38 and turns towards north & runs along chinapeta road upto D.No.19-15-50/1 and turns west and runs along Degalavari veedhi upto Degalavari veedhi & S.P. street junction point D.No.19-16-42 and turns towards south west and runs along SP street upto Ganganamma Gudi centre and Centre line of Yanamadurru Drain",
+    "west": "The boundary starts from above point runs towards North along Centre line of Yanamadurru Drain and turns towards east at Y Drain road & Christian Burial ground south side road junction at D.No.21-12-59/1 and it runs along Christian Burial ground south side road upto D.No.21-10-15 and it turns towards north and runs along Christian Burial ground west side road upto D.No.21-12-65/4 and it continues along Luthern High School Ground Compound upto D.No.21-11-29 and it turns east and runs upto Rest House Road D.No.21- 11-28/1 and turns towards north and runs along Rest House Road upto the starting point.",
+    "center": [
+      16.5325,
+      81.521
+    ],
+    "polygon": [
+      [
+        16.535,
+        81.5185
+      ],
+      [
+        16.5355,
+        81.5235
+      ],
+      [
+        16.5295,
+        81.5235
+      ],
+      [
+        16.529,
+        81.5185
+      ]
+    ]
+  },
+  {
+    "ward": 32,
+    "nameTe": "శ్రీకృష్ణదేవరాయ ఫంక్షన్ హాల్ & దిరుసుమర్రు రోడ్డు",
+    "nameEn": "Sri Krishnadevaraya Function Hall & Dirusumarru Rd",
+    "zone": "Two Town South",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "19-16-99",
+      "19-15-50/1",
+      "19-15-39",
+      "19-24-7/1",
+      "19-22-4/c",
+      "19-26-2/2",
+      "19-10-29"
+    ],
+    "landmarks": [
+      "S.P.street",
+      "Degalavari veedhi",
+      "Chinapeta street",
+      "Chinna Anjaneya swamy temple",
+      "M.L.A street",
+      "Sri Krishna devaraya function hall west road",
+      "Reddy colony street",
+      "Kapu kalyana mandapam road",
+      "Old Y.Drain",
+      "St. Ann's school road",
+      "Dirsumarru road junction at Fish market"
+    ],
+    "north": "The boundary starts from S.P.street and Degalavari veedhi junction at D.No.19-16- 99 and runs towards east upto D.No.19-15-50/1 and turns towards south along chinapeta street upto D-NO:19-15-39 upto Chinna Anjaneya swamy temple and turns towards east and runs along M.L.A street and Sri Krishna devaraya function hall west road junction upto D.No.19-24-7/1.",
+    "east": "The boundary starts from the above point and runs towards south along the Sri Krishna devaraya function hall west road and runs upto D.No.19-22-4/c and it turns towards east and runs along Reddy colony street upto D.No.19-26-2/2 and it turns towards south and runs upto Kapu kalyana mandapam road and it turns towards west and runs along Kapu kalyana mandapam road and it runs towards south and runs upto Old Y.Drain at D.No.19-10-29 and connect to St. Ann's school road.",
+    "south": "The boundary starts from the above point runs towards west along the St. Ann's school road upto the Dirsumarru road junction at Fish market.",
+    "west": "The boundary starts from the above point runs towards north along Dirsumarru road and enters S.P.street and runs along the same street upto the starting point i.e., D.No.19- 16-99.",
+    "center": [
+      16.5305,
+      81.5225
+    ],
+    "polygon": [
+      [
+        16.533,
+        81.52
+      ],
+      [
+        16.5335,
+        81.525
+      ],
+      [
+        16.527,
+        81.525
+      ],
+      [
+        16.5265,
+        81.52
+      ]
+    ]
+  },
+  {
+    "ward": 33,
+    "nameTe": "రెడ్డీ కాలనీ & కాపు కళ్యాణ మండపం రోడ్డు",
+    "nameEn": "Reddy Colony & Kapu Kalyana Mandapam Road",
+    "zone": "South-Central Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [
+      504,
+      506,
+      517,
+      530,
+      629,
+      634
+    ],
+    "dNos": [
+      "19-15-42",
+      "19-25-10/1",
+      "19-16-112",
+      "19-10-29",
+      "19-22-5/10",
+      "19-26-2/2",
+      "19-26-2",
+      "19-24-7/1"
+    ],
+    "landmarks": [
+      "Chinapeta street",
+      "Teacher street",
+      "Old Y.drain west bund road",
+      "Bhimavaram Municipal boundary limits",
+      "Dirusumarru road",
+      "Yanamadurru bund road",
+      "St. Ann's school road",
+      "Kapu kalyana mandapam road",
+      "Reddy colony street",
+      "Sri Krishna devaraya function hall",
+      "M.L.A street",
+      "Chinna Anjaneya swamy temple"
+    ],
+    "north": "The boundary starts from the Chinapeta street and teacher street junction at D- NO :19-15-42 and runs towards east upto Old Y.drain west bund road junction at D.No.19- 25-10/1.",
+    "east": "The boundary starts from the above point it runs towards south and runs along Old Y.drain road and follows natural boundary drain along the R.S.No. 504,506,517,530 of Bhimavaram revenue village upto Bhimavaram Municipal boundary limits.",
+    "south": "The boundary starts from RS-No: 629 in municipal limits towards west up to Dirusumarru road along yanamadurru bund road.",
+    "west": "The boundary starts from RS-No:634 and runs towards north along yanamadurru drain road upto St. Ann's school road junction at D.No.19-16-112 and turns east along St. Ann's school road upto 19-10-29 and it turns towards north and runs upto kapu kalyana mandapam road at D.No.19-22-5/10 and it turns towards east and runs along Kapu kalyana mandapam road upto D.No.19-10-29 and it turns towards north along Reddy colony street upto D.No.19-26-2/2 and it turns towards west and runs along Reddy colony street upto Reddy colony street and Sri Krishna devaraya function hall west road at D.No.19-26-2 and it turns towards north and runs along Sri Krishna devaraya function hall west road upto M.L.A street and Sri Krishna devaraya function hall west road junction at D.No.19-24-7/1 and it turns towards west along M.L.A street upto M.L.A street and Chinapeta street junction at Chinna Anjaneya swamy temple and it turns towards north and runs along chinapeta street upto chinapeta street and teachers street junction i.e., starting point.",
+    "center": [
+      16.528,
+      81.524
+    ],
+    "polygon": [
+      [
+        16.531,
+        81.522
+      ],
+      [
+        16.5315,
+        81.528
+      ],
+      [
+        16.522,
+        81.528
+      ],
+      [
+        16.5215,
+        81.521
+      ]
+    ]
+  },
+  {
+    "ward": 34,
+    "nameTe": "BC కాలనీ & గొల్లవానితిప్ప రోడ్డు జంక్షన్",
+    "nameEn": "BC Colony & Gollavanitippa Road Junction",
+    "zone": "South Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [
+      605
+    ],
+    "dNos": [
+      "25-6-116",
+      "25-6-118",
+      "25-6-117",
+      "25-9-245"
+    ],
+    "landmarks": [
+      "B.C. colony",
+      "Municipal open space",
+      "DNR college road gollavanitippa road junction",
+      "Yanamadurru drain centre line",
+      "Municipal limits"
+    ],
+    "north": "It starting from the door number 25-6-116 i.e., south west corner of B.C. colony and runs towards east up to door no.25-6-118 i.e., south east corner of B.C. colony and turns north up to door number 25-6-117 and turns towards east direction along municipal open space up to door number 25-9-245 and runs north direction upto DNR college road gollavanitippa road junction and turns towards east upto yanamadurru drain centre line.",
+    "east": "Starting from the above point it runs towards south along yanamadurru canal up to municipal limits.",
+    "south": "Starting from the above point it runs towards west along municipal limits up to R.S.No.605 of Bhimavaram revenue village.",
+    "west": "Starting from the above point it runs towards north along Bhimavaram revenue village boundary up to door number 25-6-118 i.e., starting point.",
+    "center": [
+      16.526,
+      81.517
+    ],
+    "polygon": [
+      [
+        16.529,
+        81.514
+      ],
+      [
+        16.5295,
+        81.52
+      ],
+      [
+        16.521,
+        81.52
+      ],
+      [
+        16.5205,
+        81.5135
+      ]
+    ]
+  },
+  {
+    "ward": 35,
+    "nameTe": "DNR కాలేజీ గ్రౌండ్ & ఇంజనీరింగ్ కాలేజీ రోడ్డు",
+    "nameEn": "DNR College Ground & Engg College Road",
+    "zone": "South-West Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "25-9-245",
+      "25-6-68",
+      "25-6-118",
+      "25-6-116"
+    ],
+    "landmarks": [
+      "D.N.R college ground road",
+      "Komarada road",
+      "D.N.R college internal road",
+      "D.N.R Engineering college road",
+      "Ram Lakshmana nagar colony",
+      "B.C. colony layout open space",
+      "Water tank road"
+    ],
+    "north": "It starting from D.N.R college ground road and komarada road junction and runs towards east along the DNR college internal road up to D.N.R college road junction.",
+    "east": "Starting from the above point it runs towards south along D.N.R Engineering college road up to door number 25-9-245.",
+    "south": "Starting from the above point runs towards West direction along ram Lakshmana nagar colony internal road and crosses B.C. colony layout open space up to door number 25-6-68 and turns in south direction along water tank road upto door number 25-6-118 and turns west direction runs along BC colony south side boundary upto door number 25-6-116.",
+    "west": "Starting from the above point runs towards north along D.N.R college road up to komarada road and DNR college ground road junction i.e., starting point.",
+    "center": [
+      16.529,
+      81.515
+    ],
+    "polygon": [
+      [
+        16.532,
+        81.512
+      ],
+      [
+        16.5325,
+        81.5175
+      ],
+      [
+        16.5265,
+        81.5175
+      ],
+      [
+        16.526,
+        81.512
+      ]
+    ]
+  },
+  {
+    "ward": 36,
+    "nameTe": "శ్రీరాంపురం మెయిన్ రోడ్డు & లోసరి కెనాల్ రోడ్డు",
+    "nameEn": "Srirampuram Main Road & Losari Canal Road",
+    "zone": "West Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "27-1-2",
+      "27-3-23/a"
+    ],
+    "landmarks": [
+      "J.P. road",
+      "Losari canal road",
+      "Srirampuram main road junction",
+      "Yanamadurru canal center line",
+      "D.N.R college ground road",
+      "Komarada road",
+      "Karanam gari street",
+      "Gundu sagarams street",
+      "Kompella vari street"
+    ],
+    "north": "It starts from the door number 27-1-2 in J.P. road runs towards east along J.P. road up to Losari canal road and J.P. Road junction.",
+    "east": "Starting from the above point it runs towards south along Losari canal road up to losari canal road and srirampuram main road junction and turns east upto yanamadurru canal center line and turns south directions runs along yanamadurru canal center line upto D.N.R college ground road junction.",
+    "south": "Starting from the above point it runs towards west along D.N.R college ground road up to junction point of Dnr college ground road and komarada road.",
+    "west": "Starting from the above point runs towards north up to Karanam gari street junction and turns west direction upto door number 27-3-23/a and runs towards north direction along gundu sagarams street and kompella vari street up to Door No. 27-1-2 i.e., starting point.",
+    "center": [
+      16.534,
+      81.514
+    ],
+    "polygon": [
+      [
+        16.5375,
+        81.51
+      ],
+      [
+        16.538,
+        81.5165
+      ],
+      [
+        16.5305,
+        81.5165
+      ],
+      [
+        16.53,
+        81.51
+      ]
+    ]
+  },
+  {
+    "ward": 37,
+    "nameTe": "రాయలవరం రోడ్డు & నేతాజీ స్ట్రీట్",
+    "nameEn": "Rayalam Road & Nethaji Street",
+    "zone": "West Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "27-1-4",
+      "27-8-1",
+      "27-3-26",
+      "27-7-12",
+      "27-4-8",
+      "27-3-68",
+      "27-3-68/15",
+      "27-3-71/1",
+      "27-3-72",
+      "27-3-1"
+    ],
+    "landmarks": [
+      "J.P.Road",
+      "Rayalam Road junction",
+      "Kompalli vari street",
+      "Gundu sagarams street",
+      "Rajarajeswari street",
+      "D.N.R College road junction",
+      "Nethaji street",
+      "Karanamgari street"
+    ],
+    "north": "It starting from the J.P.Road and Rayalam Road junction and travels along the J.P.Road upto D.No.27-1-4.",
+    "east": "Starting from the above point, it runs towards south along kompalli vari street & gundu sagarams street upto Rajarajeswari street & gundu sagarams street road junction i.e., Door number.27-8-1 and turns east direction and runs along rajarajeswari street and D.N.R College road junction. i.e., Door number 27-3-26 and turns south direction upto D.No.27-7-12.",
+    "south": "Starting from the above point, it runs towards west up to door number 27-4-8 and 27-3-68 and turns towards south direction upto D.no,27-3-68/15 and turns towards west direction up to Door No. 27-3-71/1 and turns towards north direction and runs up to Door no. 27-3-72 and travels along nethaji street and karanamgari street junction and turns west direction and runs along karanamgari street upto D.No.27-3-1. Near to Rayalam road and karanamgari street junction.",
+    "west": "Starting from the above point, it runs towards north direction up to JP Road and rayalam road junction.",
+    "center": [
+      16.536,
+      81.509
+    ],
+    "polygon": [
+      [
+        16.5395,
+        81.5055
+      ],
+      [
+        16.54,
+        81.512
+      ],
+      [
+        16.533,
+        81.512
+      ],
+      [
+        16.5325,
+        81.5055
+      ]
+    ]
+  },
+  {
+    "ward": 38,
+    "nameTe": "ప్రశాంతి నగర్ & బాలుసుమూడి మవుళ్ళమ్మ గుడి",
+    "nameEn": "Prasanthi Nagar & Balusumudi Mavullamma Temple",
+    "zone": "West Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "27-3-72",
+      "27-3-71/1",
+      "27-3-68/15",
+      "27-3-68",
+      "27-4-8",
+      "27-14-18"
+    ],
+    "landmarks": [
+      "Rayalam road",
+      "Karanamgari street",
+      "Nethaji street",
+      "Prasanthi nagar street 1 & 3",
+      "D.N.R college road",
+      "Balusumudi mavullamma temple street",
+      "Chandrika enclave apartment",
+      "Ramalayam temple Y-junction",
+      "Church street",
+      "Komarada road",
+      "Bhimavaram revenue village boundary"
+    ],
+    "north": "Starting from the Rayalam road and karanamgari street junction and runs along karanam gari street upto karanam gari street and nethaji street junction and turns south directions and runs along nethaji street up to door number 27-3-72 and turns east direction along prasanthi nagar street 3 up to prasanthi nagar street1 and 3 junction and turns south direction and travels up to door number 27-3-71/1 and turns east and travels up to door number 27-3-68/15 and turns north direction and travels up to door number 27-3-68 and turns east direction travels up to door number 27-4-8",
+    "east": "Starting from the above point it runs towards south direction along D.N.R college road up to D.N.R college road and balusumudi mavullamma temple street junction i.e., Chandrika enclave apartment.",
+    "south": "Starting from the above point it runs towards west along balusunudi mavulamma temple street up to ramalayam temple Y- junction point and turns south direction up to church street junction and turns west direction up to komarada road junction.",
+    "west": "Starting from the above point it runs towards north direction up to door number 27- 14-18 and turns west direction and runs along the bhimavaram revenue village boundary up to Rayalam road and karanamgari street i.e., starting point.",
+    "center": [
+      16.534,
+      81.508
+    ],
+    "polygon": [
+      [
+        16.5365,
+        81.5045
+      ],
+      [
+        16.537,
+        81.511
+      ],
+      [
+        16.5305,
+        81.511
+      ],
+      [
+        16.53,
+        81.5045
+      ]
+    ]
+  },
+  {
+    "ward": 39,
+    "nameTe": "కుమ్మర్ల వీధి & పాత భీమవరం టౌన్ లిమిట్స్",
+    "nameEn": "Kummarla Street & Old Bhimavaram Town Limits",
+    "zone": "South-West Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village",
+      "Rayalam Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "26-10-14/1"
+    ],
+    "landmarks": [
+      "Komarada road",
+      "Church street",
+      "Kummarla street",
+      "Ramalayam temple Y-junction",
+      "Balusumudi mavullamma temple street",
+      "D.N.R college road",
+      "Old Bhimavaram Town Limits",
+      "Rayalam Bhimavaram boundary limits"
+    ],
+    "north": "Starting from the komarada road and church street junction and travels along church street road upto church street and kummarla street junction and turns north direction and travels along kummarla street upto ramalayam temple Y-junction and turns east direction and travels along balusumudi mavullamma temple street upto D.N.R college road junction.",
+    "east": "Starting from the above point it runs towards south along Dnr college road up to old Bhimavaram Town Limits.",
+    "south": "Starting from the above point it runs towards west direction along Rayalam Bhimavaram boundary limits up to door number 26-10-14/1.",
+    "west": "Starting from the above point it runs towards north along Komarada road up to komarada road and church street junction i.e., starting point.",
+    "center": [
+      16.531,
+      81.509
+    ],
+    "polygon": [
+      [
+        16.5335,
+        81.505
+      ],
+      [
+        16.534,
+        81.5125
+      ],
+      [
+        16.527,
+        81.5125
+      ],
+      [
+        16.5265,
+        81.505
+      ]
+    ]
+  },
+  {
+    "ward": 40,
+    "nameTe": "చినమిల్లి నాయుడు విగ్రహం & రాయలవరం ఆర్చ్",
+    "nameEn": "Chinamilli Naidu Statue & Rayalam Arch",
+    "zone": "Rayalam North Zone",
+    "revenueVillages": [
+      "Rayalam Village",
+      "Komarada Village"
+    ],
+    "rsNos": [
+      90,
+      254
+    ],
+    "dNos": [],
+    "landmarks": [
+      "Chinamilli Naidu statue",
+      "Rayalam Arch",
+      "Balusumudi–Komarada Branch Canal",
+      "Ramanayya Kodu",
+      "Komarada Village boundary",
+      "Kamakshamma Temple",
+      "Shiva Temple",
+      "R&B Road",
+      "Guttula Satyanarayana Coffee Hotel",
+      "Karnam Gari Bodhi"
+    ],
+    "north": "The Boundary starts from Chinamilli Naidu statue to Rayalam Arch.",
+    "east": "From the eastern side of Naidu Gari Statue, proceeding towards the west along the Balusumudi–Komarada Branch Canal, then towards the east through Survey No. 90 along Ramanayya Kodu, and thereafter towards the south along the Komarada Village boundary through Survey No. 254 of Rayalam.",
+    "south": "Komarada Village Boundary",
+    "west": "From Naidu Gari Statue, proceed south along the main road via Kamakshamma Temple to the Shiva Temple. From the Shiva Temple, proceed to the R&B Road, then travel west along the R&B Road up to Guttula Satyanarayana Coffee Hotel. From the hotel, proceed south towards Karnam Gari Bodhi.",
+    "center": [
+      16.528,
+      81.505
+    ],
+    "polygon": [
+      [
+        16.531,
+        81.501
+      ],
+      [
+        16.5315,
+        81.508
+      ],
+      [
+        16.5235,
+        81.508
+      ],
+      [
+        16.523,
+        81.501
+      ]
+    ]
+  },
+  {
+    "ward": 41,
+    "nameTe": "రాయలవరం పంచాయతీ ఆఫీస్ & శివాలయం",
+    "nameEn": "Rayalam Panchayat Office & Shiva Temple",
+    "zone": "Rayalam Central Zone",
+    "revenueVillages": [
+      "Rayalam Village",
+      "Komarada Village"
+    ],
+    "rsNos": [],
+    "dNos": [],
+    "landmarks": [
+      "Panchayat Office Main Road",
+      "Brahmam Gari Temple",
+      "Shiva Temple",
+      "Pallapu Street",
+      "R&B Road",
+      "Setti Balija Ramalayam",
+      "Arundhati Street",
+      "Kamakshamma Temple",
+      "Komarada Village Boundary",
+      "Chabattula Street",
+      "Uppugunta Cheruvu Road",
+      "Karnam Gari Bodhi"
+    ],
+    "north": "The Boundary starts from Southern side of Panchayat Office Main Road.",
+    "east": "From Brahmam Gari Temple, proceed south towards Shiva Temple via Pallapu Street and the R&B Road. Then proceed west along the road near Setti Balija Ramalayam, continue through Arundhati Street, and reach Panchayat Office Road. From there, proceed east towards Kamakshamma Temple.",
+    "south": "Komarada Village Boundary.",
+    "west": "From Arundhati Street, proceed east along Chabattula Street via Uppugunta Cheruvu Road up to Karnam Gari Bodhi, and from there, continue up to the boundary of Komarada Village.",
+    "center": [
+      16.524,
+      81.503
+    ],
+    "polygon": [
+      [
+        16.527,
+        81.499
+      ],
+      [
+        16.5275,
+        81.506
+      ],
+      [
+        16.52,
+        81.506
+      ],
+      [
+        16.5195,
+        81.499
+      ]
+    ]
+  },
+  {
+    "ward": 42,
+    "nameTe": "అనకోడేరు ఇరిగేషన్ కెనాల్ & బైపాస్ రోడ్డు",
+    "nameEn": "Anakoderu Irrigation Canal & Bypass Rd",
+    "zone": "Rayalam-Anakoderu Zone",
+    "revenueVillages": [
+      "Rayalam Village",
+      "Anakoderu Village",
+      "Chinamiram Village"
+    ],
+    "rsNos": [],
+    "dNos": [],
+    "landmarks": [
+      "Anakoderu irrigation canal",
+      "Bypass road leading to Rayalam",
+      "Rayudu Gari Statue",
+      "Naidu Gari Statue",
+      "Kamakshamma Temple",
+      "Panchayat Road",
+      "Arundhati Peta",
+      "Chinamiram Village boundary"
+    ],
+    "north": "The Boundary starts from the eastern side of the Anakoderu irrigation canal, proceed along the bypass road leading to Rayalam up to Rayudu Gari Statue.",
+    "east": "From Naidu Gari Statue, proceed west towards Kamakshamma Temple along the Panchayat Road, then proceed south, passing through Arundhati Peta, up to the boundary of Anakoderu.",
+    "south": "Komarada Village Boundary",
+    "west": "From the southern side of the northern boundary of Anakoderu Village, proceed along the Anakoderu irrigation canal up to the boundary of Chinamiram Village.",
+    "center": [
+      16.522,
+      81.496
+    ],
+    "polygon": [
+      [
+        16.526,
+        81.492
+      ],
+      [
+        16.5265,
+        81.5
+      ],
+      [
+        16.518,
+        81.5
+      ],
+      [
+        16.5175,
+        81.492
+      ]
+    ]
+  },
+  {
+    "ward": 43,
+    "nameTe": "SRKR ఇంజనీరింగ్ కాలేజీ & అంబేద్కర్ సెంటర్",
+    "nameEn": "SRKR Engineering College & Ambedkar Centre",
+    "zone": "Chinamiram-Pedamiram Zone",
+    "revenueVillages": [
+      "Pedamiram Village (Kalla Mandal)",
+      "Anakoderu Village",
+      "Vempadu Village"
+    ],
+    "rsNos": [],
+    "dNos": [],
+    "landmarks": [
+      "Pedamiram Village Southern Boundary",
+      "S.R.K.R. College",
+      "Bhimavaram Hospital",
+      "Ambedkar Centre",
+      "Patapeta",
+      "Anakoderu Village Northern Boundary",
+      "Vempadu Village"
+    ],
+    "north": "The Boundary starts from Southern Boundary of Pedamiram Village, Kalla Mandal.",
+    "east": "From S.R.K.R. College, proceed via Bhimavaram Hospital and Ambedkar Centre up to Patapeta.",
+    "south": "Northern Boundary of Anakoderu Village.",
+    "west": "Pedamiram Village and Vempadu Village in Kalla Mandal share a common western boundary.",
+    "center": [
+      16.542,
+      81.498
+    ],
+    "polygon": [
+      [
+        16.548,
+        81.492
+      ],
+      [
+        16.548,
+        81.503
+      ],
+      [
+        16.536,
+        81.503
+      ],
+      [
+        16.536,
+        81.492
+      ]
+    ]
+  },
+  {
+    "ward": 44,
+    "nameTe": "యూత్ క్లబ్ రోడ్డు & చినమిరం విలేజ్ లిమిట్స్",
+    "nameEn": "Youth Club Road & Chinamiram Village Limits",
+    "zone": "Chinamiram Zone",
+    "revenueVillages": [
+      "Chinamiram Village",
+      "Pedamiram Village (Kalla Mandal)"
+    ],
+    "rsNos": [
+      130,
+      146,
+      131
+    ],
+    "dNos": [
+      "7-199"
+    ],
+    "landmarks": [
+      "Southern Boundary of Pedamiram Village",
+      "J.P Road",
+      "Youth club road junction",
+      "Chinamiram road junction",
+      "Chinamiram village limits",
+      "S.R.K.R. College",
+      "Bhimavaram Hospital",
+      "Ambedkar Centre",
+      "Patapeta"
+    ],
+    "north": "The Boundary starts from Southern Boundary of Pedamiram Village, Kalla Mandal.",
+    "east": "Starting from the above point it runs towards South up to J.P Road and Youth club road junction near D.No.7-199. Then it turns East upto J.P road and Chinamiram road junction. From here it turns south and runs along Chinamiram village limits.",
+    "south": "Up to R.S Nos. 130, 146, and 131 of Chinamiram Village.",
+    "west": "From S.R.K.R. College, via Bhimavaram Hospital and Ambedkar Centre, up to Patapeta.",
+    "center": [
+      16.541,
+      81.504
+    ],
+    "polygon": [
+      [
+        16.546,
+        81.5
+      ],
+      [
+        16.5465,
+        81.507
+      ],
+      [
+        16.535,
+        81.507
+      ],
+      [
+        16.5345,
+        81.5
+      ]
+    ]
+  },
+  {
+    "ward": 45,
+    "nameTe": "సర్ ఆర్థర్ కాటన్ పార్క్ & రాయలవరం డ్రెయిన్",
+    "nameEn": "Sir Arthur Cotton Park & Rayalam Drain",
+    "zone": "West Central Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village",
+      "Chinamiram Revenue Village"
+    ],
+    "rsNos": [
+      76
+    ],
+    "dNos": [],
+    "landmarks": [
+      "J.P Road",
+      "Chinaamiram road junction",
+      "Sir Arthur cotton park",
+      "Rayalam Drain Junction",
+      "Bhimavaram revenue village limits"
+    ],
+    "north": "It starting from the J.p Road and Chinaamiram road junction near sir Arthur cotton park (i.e., R.S.No.76 of Bhimavaram Revenue Village runs towards east along J.P. ROAD up to J.P.Road and Rayalam Drain Junction.",
+    "east": "Starting from the above point it runs towards South direction up to Bhimavaram revenue village limits.",
+    "south": "Starting from the above point, it runs towards west direction along bhimavaram revenue village limits up to Chinnamiram revenue village.",
+    "west": "Starting from the above point, it runs towards north direction along Chinnamiram road up to J.p Road and Chinaamiram road junction near sir Arthur cotton park i.e., starting point.",
+    "center": [
+      16.538,
+      81.5065
+    ],
+    "polygon": [
+      [
+        16.541,
+        81.504
+      ],
+      [
+        16.5415,
+        81.51
+      ],
+      [
+        16.534,
+        81.51
+      ],
+      [
+        16.5335,
+        81.504
+      ]
+    ]
+  },
+  {
+    "ward": 46,
+    "nameTe": "కాస్మోపాలిటన్ క్లబ్ రోడ్డు & కెనరా బ్యాంక్",
+    "nameEn": "Cosmopolitan Club Road & Canara Bank",
+    "zone": "West Central Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [
+      1,
+      26,
+      50
+    ],
+    "dNos": [
+      "7-199"
+    ],
+    "landmarks": [
+      "Municipal limits",
+      "Rayalam drain",
+      "Cosmopolitan club road",
+      "J.P. Road junction",
+      "Canara bank near D.No.7-199",
+      "Youth club road"
+    ],
+    "north": "It starting from the northwest corner i.e., municipal limits at R.S.No.01 of Bhimavaram revenue village and runs towards east meets at R.S.No.26 of Bhimavaram revenue village.",
+    "east": "Starting from the above point it runs towards south along Rayalam drain meets R.S. no 50 and again runs towards south along cosmopolitan club road up to J.P. Road junction.",
+    "south": "Starting from the above point, it runs towards west up to Bhimavaram municipal limits chinnamiram and J.P Road junction. From here it continues along J.P road upto canara bank near D.No.7-199.",
+    "west": "Starting from the above point, it runs towards north direction along youth club road up to R.S.No.1. (along bhimavaram municipal limits) i.e., starting point.",
+    "center": [
+      16.544,
+      81.508
+    ],
+    "polygon": [
+      [
+        16.549,
+        81.504
+      ],
+      [
+        16.5495,
+        81.5115
+      ],
+      [
+        16.5405,
+        81.5115
+      ],
+      [
+        16.54,
+        81.504
+      ]
+    ]
+  },
+  {
+    "ward": 47,
+    "nameTe": "పాత కరెంట్ ఆఫీస్ రోడ్డు & ఉండి రోడ్డు జంక్షన్",
+    "nameEn": "Old Current Office Rd & Undi Rd Junction",
+    "zone": "West Central Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [
+      "1-3-8/15",
+      "2-1-58",
+      "1-3-1"
+    ],
+    "landmarks": [
+      "Rayalam drain",
+      "Old current office road",
+      "Anakoderu canal and undi road junction",
+      "Losari canal road",
+      "J.P. road & Losari canal junction",
+      "Cosmopolitan club road"
+    ],
+    "north": "It's starting from the door number 1-3-8/15 (near rayalam drain)and runs towards east along rayalam drain up to old current office road and turns towards east and runs along old current office road up to anakoderu canal and undi road junction.",
+    "east": "Starting from the above point it runs along Losari canal road up to J.P. road & Losari canal junction (i.e., Door number 2-1-58).",
+    "south": "Starting from the above point, it runs towards west along J.P.Road up to cosmopolitan club road and J.P.Road junction (i.e., Door number 1-3-1).",
+    "west": "Starting from the above point, it runs towards north direction along cosmopolitan club road up to the door number 1-3-8/15 i.e., starting point.",
+    "center": [
+      16.542,
+      81.513
+    ],
+    "polygon": [
+      [
+        16.545,
+        81.51
+      ],
+      [
+        16.5455,
+        81.516
+      ],
+      [
+        16.5385,
+        81.516
+      ],
+      [
+        16.538,
+        81.51
+      ]
+    ]
+  },
+  {
+    "ward": 48,
+    "nameTe": "ఉండి రోడ్డు & గుడివాడ రైల్వే లైన్",
+    "nameEn": "Undi Road & Gudivada Railway Line",
+    "zone": "West Central Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [],
+    "landmarks": [
+      "Undi road",
+      "Bhimavaram–Gudivada railway line",
+      "Yanamadduru Drain",
+      "Yanamadurru drain bund road",
+      "Losari canal road"
+    ],
+    "north": "Starting from the junction of the undi road and Bhimavaram–Gudivada railway line, travels east along the Bhimavaram–Gudivada railway line, up to the junction of Bhimavaram–Gudivada railway line and Yanamadduru Drain.",
+    "east": "Starting from the above point, travels south along the center line of Yanamadduru Drain, up to yanamadurru drain bund road and losari canal road junction.",
+    "south": "Starting from the above point, travels towards North west along the losari canal up to undi road.",
+    "west": "Starting from the above point, travels towards north west along the undi road up to junction of the undi road and Bhimavaram–Gudivada railway line i.e., starting point.",
+    "center": [
+      16.545,
+      81.516
+    ],
+    "polygon": [
+      [
+        16.549,
+        81.513
+      ],
+      [
+        16.549,
+        81.5195
+      ],
+      [
+        16.541,
+        81.5195
+      ],
+      [
+        16.541,
+        81.513
+      ]
+    ]
+  },
+  {
+    "ward": 49,
+    "nameTe": "BV రాజు విగ్రహం & తాడేపల్లిగూడెం రోడ్డు",
+    "nameEn": "BV Raju Statue & Tadepalligudem Road",
+    "zone": "North-West Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [],
+    "dNos": [],
+    "landmarks": [
+      "Bypass Road",
+      "Anakoderu Canal junction",
+      "BV Raju statue",
+      "Tadepalligudem Road",
+      "Anjaneyaswami Temple",
+      "Yenamadurru Drain",
+      "Gudivada–Bhimavaram railway line"
+    ],
+    "north": "This ward starts from the Bypass Road and Anakoderu Canal junction, turns east along the Bypass Road up to the BV Raju statue, from there goes north along Tadepalligudem Road to Anjaneyaswami Temple, and travels towards east upto Yenamadurru Drain",
+    "east": "Starting from the above point, it travels south along the Yanamadurru drain centre line up to the Gudivada–Bhimavaram railway line.",
+    "south": "Starting from the above point, it travels west along Gudivada Bhimavaram railway line up to the Anakoderu canal",
+    "west": "Starting from the above point, it travels towards north along the Anakoderu canal up to the bypass road Junction, i.e., the starting point.",
+    "center": [
+      16.553,
+      81.517
+    ],
+    "polygon": [
+      [
+        16.559,
+        81.513
+      ],
+      [
+        16.56,
+        81.522
+      ],
+      [
+        16.548,
+        81.522
+      ],
+      [
+        16.5475,
+        81.513
+      ]
+    ]
+  },
+  {
+    "ward": 50,
+    "nameTe": "ఉండి బైపాస్ రోడ్డు & అనకోడేరు కెనాల్",
+    "nameEn": "Undi Bypass Road & Anakoderu Canal",
+    "zone": "West Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [
+      28
+    ],
+    "dNos": [],
+    "landmarks": [
+      "Bhimavaram village boundary",
+      "Undi Road",
+      "Undi Bypass Road junction",
+      "Anakoderu canal",
+      "Gudivada–Bhimavaram railway line junction",
+      "Old current office road",
+      "Rayalam drain"
+    ],
+    "north": "This ward boundary starts from (South West corner) (R.S.No.28 Bhimavaram Revenue Village), travels northeast along R.S.No.28 (Bhimavaram Revenue Village), and from there travels towards south along Bhimavaram village boundary up to Undi Road and Undi Bypass Road junction and travels in east direction along bypass road upto bypass road and anakoderu canal junction.",
+    "east": "Starting from the above point, travels towards south direction along anakoderu canal up to anakoderu canal and Gudivada–Bhimavaram railway line junction and turns west direction upto undi road and Bhimavaram-Gudivada railway line junction and turns along south east direction and travels along undi road upto anakoderu canal and undi road junction.",
+    "south": "Starting from the above point, it travels along the old current office road upto rayalam drain and old current office junction.",
+    "west": "Starting from the above point, it turns towards north and runs along the Rayalam drain, up to R.S.No.28 (Bhimavaram revenue village) i.e., starting point.",
+    "center": [
+      16.549,
+      81.509
+    ],
+    "polygon": [
+      [
+        16.554,
+        81.505
+      ],
+      [
+        16.555,
+        81.514
+      ],
+      [
+        16.545,
+        81.514
+      ],
+      [
+        16.544,
+        81.505
+      ]
+    ]
+  },
+  {
+    "ward": 51,
+    "nameTe": "అన్నవరం & కొవ్వాడ రెవెన్యూ విలేజ్ సరిహద్దులు",
+    "nameEn": "Annavaram & Kovvada Revenue Village Boundaries",
+    "zone": "North-West Outer Zone",
+    "revenueVillages": [
+      "Annavaram Revenue Village",
+      "Kovvada Revenue Village",
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [
+      1,
+      139,
+      194,
+      78,
+      28
+    ],
+    "dNos": [],
+    "landmarks": [
+      "Annavaram village boundaries",
+      "Kovvada village boundary",
+      "Anakoderu Canal",
+      "Undi Bypass Road Junction",
+      "Undi Road",
+      "Rayalam Drain Junction"
+    ],
+    "north": "This ward boundary starts from R.S.No.1 (Annavaram Revenue Village) and runs eastwards along the boundaries of Annavaram village up to R.S.No.139 (Annavaram Revenue Village).",
+    "east": "Starting from the area mentioned above, it travels south along the boundaries of Annavaram village up to R.S.No.194 (Annavaram Revenue Village), then turns southwest along the Kovvada village boundary up to R.S.No.78 (Kovvada Revenue Village), and from there travels west up to Anakoderu Canal, and then south along Anakoderu Canal to the Undi Bypass Road Junction.",
+    "south": "Starting from the area mentioned above, it travels west along Undi Bypass Road up to the Undi Road and Undi Bypass Road Junction, then northwest along Undi Road up to the Undi Road and Rayalam Drain Junction(in north east corner of R.S. 28 of Bhimavaram Revenue Village).",
+    "west": "Starting from the area mentioned above, it travels north along the Kovvada Annavaram village boundaries up to R.S.No.1 (Annavaram Revenue Village).",
+    "center": [
+      16.562,
+      81.508
+    ],
+    "polygon": [
+      [
+        16.572,
+        81.502
+      ],
+      [
+        16.573,
+        81.516
+      ],
+      [
+        16.553,
+        81.515
+      ],
+      [
+        16.552,
+        81.503
+      ]
+    ]
+  },
+  {
+    "ward": 52,
+    "nameTe": "మున్సిపల్ నార్త్ బౌండరీ & తాడేపల్లిగూడెం బైపాస్",
+    "nameEn": "Municipal North Boundary & Tadepalligudem Bypass",
+    "zone": "North Zone",
+    "revenueVillages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "rsNos": [
+      253,
+      259,
+      278,
+      283
+    ],
+    "dNos": [],
+    "landmarks": [
+      "Municipal boundary",
+      "Yanamadurru drain",
+      "Anjaneya Swamy Temple",
+      "Tadepalligudem Road",
+      "B.V. Raju statue",
+      "Bypass road",
+      "Anakoderu canal junction"
+    ],
+    "north": "This ward boundary starts at R.S.No.253 (Bhimavaram Revenue Village) and travels east along the municipal boundary up to R.S.No.259 (Bhimavaram Revenue Village), then travels northeast along the municipal boundary up to R.S.No.278 (Bhimavaram Revenue Village), and then travels east along the municipal boundary up to R.S.No.283 (Bhimavaram Revenue Village) and the Yanamadurru drain.",
+    "east": "Starting from the above point, it travels south along the Yanamadurru drain center line up to the street junction in front of Anjaneya Swamy Temple.",
+    "south": "Starting from the above point, and travels west along the road up to Anjaneya Swamy Temple, then continues south along Tadepalligudem Road up to the B.V. Raju statue, and then west along the bypass road up to Anakoderu canal.",
+    "west": "Starting from the above point, it travels north up to R.S.No.253 (Bhimavaram Revenue Village) and the Anakoderu canal junction, i.e., Starting point.",
+    "center": [
+      16.563,
+      81.519
+    ],
+    "polygon": [
+      [
+        16.572,
+        81.514
+      ],
+      [
+        16.5725,
+        81.526
+      ],
+      [
+        16.557,
+        81.5255
+      ],
+      [
+        16.5565,
+        81.514
+      ]
+    ]
+  }
+];
+if (typeof window !== 'undefined') {
+  window.BHIMAVARAM_52_WARDS_DATA = BHIMAVARAM_52_WARDS_DATA;
+}
+
+var BHIMAVARAM_RS_NUMBERS_REGISTRY = [
+  {
+    "rsNo": 1,
+    "wards": [
+      6,
+      13,
+      46,
+      51
+    ],
+    "villages": [
+      "Gunupudi Revenue Village",
+      "Taderu Revenue Village",
+      "Bhimavaram Revenue Village",
+      "Annavaram Revenue Village",
+      "Kovvada Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+1+Bhimavaram+Andhra+Pradesh/@16.554,81.552,16z"
+  },
+  {
+    "rsNo": 12,
+    "wards": [
+      6
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+12+Bhimavaram+Andhra+Pradesh/@16.554,81.552,16z"
+  },
+  {
+    "rsNo": 13,
+    "wards": [
+      6
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+13+Bhimavaram+Andhra+Pradesh/@16.554,81.552,16z"
+  },
+  {
+    "rsNo": 18,
+    "wards": [
+      6
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+18+Bhimavaram+Andhra+Pradesh/@16.554,81.552,16z"
+  },
+  {
+    "rsNo": 19,
+    "wards": [
+      6
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+19+Bhimavaram+Andhra+Pradesh/@16.554,81.552,16z"
+  },
+  {
+    "rsNo": 22,
+    "wards": [
+      6
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+22+Bhimavaram+Andhra+Pradesh/@16.554,81.552,16z"
+  },
+  {
+    "rsNo": 23,
+    "wards": [
+      6
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+23+Bhimavaram+Andhra+Pradesh/@16.554,81.552,16z"
+  },
+  {
+    "rsNo": 24,
+    "wards": [
+      6
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+24+Bhimavaram+Andhra+Pradesh/@16.554,81.552,16z"
+  },
+  {
+    "rsNo": 26,
+    "wards": [
+      46
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+26+Bhimavaram+Andhra+Pradesh/@16.544,81.508,16z"
+  },
+  {
+    "rsNo": 28,
+    "wards": [
+      50,
+      51
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village",
+      "Annavaram Revenue Village",
+      "Kovvada Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+28+Bhimavaram+Andhra+Pradesh/@16.549,81.509,16z"
+  },
+  {
+    "rsNo": 50,
+    "wards": [
+      46
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+50+Bhimavaram+Andhra+Pradesh/@16.544,81.508,16z"
+  },
+  {
+    "rsNo": 76,
+    "wards": [
+      45
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village",
+      "Chinamiram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+76+Bhimavaram+Andhra+Pradesh/@16.538,81.5065,16z"
+  },
+  {
+    "rsNo": 78,
+    "wards": [
+      51
+    ],
+    "villages": [
+      "Annavaram Revenue Village",
+      "Kovvada Revenue Village",
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+78+Bhimavaram+Andhra+Pradesh/@16.562,81.508,16z"
+  },
+  {
+    "rsNo": 90,
+    "wards": [
+      40
+    ],
+    "villages": [
+      "Rayalam Village",
+      "Komarada Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+90+Bhimavaram+Andhra+Pradesh/@16.528,81.505,16z"
+  },
+  {
+    "rsNo": 92,
+    "wards": [
+      5
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+92+Bhimavaram+Andhra+Pradesh/@16.5515,81.5445,16z"
+  },
+  {
+    "rsNo": 100,
+    "wards": [
+      4,
+      5
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village",
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+100+Bhimavaram+Andhra+Pradesh/@16.554,81.5385,16z"
+  },
+  {
+    "rsNo": 101,
+    "wards": [
+      5
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+101+Bhimavaram+Andhra+Pradesh/@16.5515,81.5445,16z"
+  },
+  {
+    "rsNo": 130,
+    "wards": [
+      44
+    ],
+    "villages": [
+      "Chinamiram Village",
+      "Pedamiram Village (Kalla Mandal)"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+130+Bhimavaram+Andhra+Pradesh/@16.541,81.504,16z"
+  },
+  {
+    "rsNo": 131,
+    "wards": [
+      44
+    ],
+    "villages": [
+      "Chinamiram Village",
+      "Pedamiram Village (Kalla Mandal)"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+131+Bhimavaram+Andhra+Pradesh/@16.541,81.504,16z"
+  },
+  {
+    "rsNo": 139,
+    "wards": [
+      51
+    ],
+    "villages": [
+      "Annavaram Revenue Village",
+      "Kovvada Revenue Village",
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+139+Bhimavaram+Andhra+Pradesh/@16.562,81.508,16z"
+  },
+  {
+    "rsNo": 146,
+    "wards": [
+      44
+    ],
+    "villages": [
+      "Chinamiram Village",
+      "Pedamiram Village (Kalla Mandal)"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+146+Bhimavaram+Andhra+Pradesh/@16.541,81.504,16z"
+  },
+  {
+    "rsNo": 191,
+    "wards": [
+      6
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+191+Bhimavaram+Andhra+Pradesh/@16.554,81.552,16z"
+  },
+  {
+    "rsNo": 194,
+    "wards": [
+      51
+    ],
+    "villages": [
+      "Annavaram Revenue Village",
+      "Kovvada Revenue Village",
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+194+Bhimavaram+Andhra+Pradesh/@16.562,81.508,16z"
+  },
+  {
+    "rsNo": 195,
+    "wards": [
+      7
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+195+Bhimavaram+Andhra+Pradesh/@16.544,81.549,16z"
+  },
+  {
+    "rsNo": 201,
+    "wards": [
+      7
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+201+Bhimavaram+Andhra+Pradesh/@16.544,81.549,16z"
+  },
+  {
+    "rsNo": 236,
+    "wards": [
+      8
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+236+Bhimavaram+Andhra+Pradesh/@16.543,81.541,16z"
+  },
+  {
+    "rsNo": 244,
+    "wards": [
+      8
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+244+Bhimavaram+Andhra+Pradesh/@16.543,81.541,16z"
+  },
+  {
+    "rsNo": 250,
+    "wards": [
+      9
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+250+Bhimavaram+Andhra+Pradesh/@16.542,81.535,16z"
+  },
+  {
+    "rsNo": 253,
+    "wards": [
+      52
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+253+Bhimavaram+Andhra+Pradesh/@16.563,81.519,16z"
+  },
+  {
+    "rsNo": 254,
+    "wards": [
+      40
+    ],
+    "villages": [
+      "Rayalam Village",
+      "Komarada Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+254+Bhimavaram+Andhra+Pradesh/@16.528,81.505,16z"
+  },
+  {
+    "rsNo": 257,
+    "wards": [
+      9
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+257+Bhimavaram+Andhra+Pradesh/@16.542,81.535,16z"
+  },
+  {
+    "rsNo": 259,
+    "wards": [
+      52
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+259+Bhimavaram+Andhra+Pradesh/@16.563,81.519,16z"
+  },
+  {
+    "rsNo": 262,
+    "wards": [
+      9,
+      10
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+262+Bhimavaram+Andhra+Pradesh/@16.542,81.535,16z"
+  },
+  {
+    "rsNo": 278,
+    "wards": [
+      52
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+278+Bhimavaram+Andhra+Pradesh/@16.563,81.519,16z"
+  },
+  {
+    "rsNo": 281,
+    "wards": [
+      1
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+281+Bhimavaram+Andhra+Pradesh/@16.5547,81.5246,16z"
+  },
+  {
+    "rsNo": 283,
+    "wards": [
+      52
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+283+Bhimavaram+Andhra+Pradesh/@16.563,81.519,16z"
+  },
+  {
+    "rsNo": 292,
+    "wards": [
+      9
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+292+Bhimavaram+Andhra+Pradesh/@16.542,81.535,16z"
+  },
+  {
+    "rsNo": 299,
+    "wards": [
+      3
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village",
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+299+Bhimavaram+Andhra+Pradesh/@16.5472,81.5298,16z"
+  },
+  {
+    "rsNo": 302,
+    "wards": [
+      1,
+      2
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+302+Bhimavaram+Andhra+Pradesh/@16.5547,81.5246,16z"
+  },
+  {
+    "rsNo": 312,
+    "wards": [
+      1,
+      2
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+312+Bhimavaram+Andhra+Pradesh/@16.5547,81.5246,16z"
+  },
+  {
+    "rsNo": 315,
+    "wards": [
+      10
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+315+Bhimavaram+Andhra+Pradesh/@16.5385,81.5365,16z"
+  },
+  {
+    "rsNo": 326,
+    "wards": [
+      1,
+      2
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+326+Bhimavaram+Andhra+Pradesh/@16.5547,81.5246,16z"
+  },
+  {
+    "rsNo": 337,
+    "wards": [
+      1,
+      2
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+337+Bhimavaram+Andhra+Pradesh/@16.5547,81.5246,16z"
+  },
+  {
+    "rsNo": 351,
+    "wards": [
+      1,
+      2
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+351+Bhimavaram+Andhra+Pradesh/@16.5547,81.5246,16z"
+  },
+  {
+    "rsNo": 352,
+    "wards": [
+      16
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+352+Bhimavaram+Andhra+Pradesh/@16.534,81.527,16z"
+  },
+  {
+    "rsNo": 363,
+    "wards": [
+      23
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+363+Bhimavaram+Andhra+Pradesh/@16.544,81.521,16z"
+  },
+  {
+    "rsNo": 365,
+    "wards": [
+      10
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+365+Bhimavaram+Andhra+Pradesh/@16.5385,81.5365,16z"
+  },
+  {
+    "rsNo": 366,
+    "wards": [
+      23
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+366+Bhimavaram+Andhra+Pradesh/@16.544,81.521,16z"
+  },
+  {
+    "rsNo": 367,
+    "wards": [
+      11
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+367+Bhimavaram+Andhra+Pradesh/@16.536,81.532,16z"
+  },
+  {
+    "rsNo": 374,
+    "wards": [
+      8
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+374+Bhimavaram+Andhra+Pradesh/@16.543,81.541,16z"
+  },
+  {
+    "rsNo": 384,
+    "wards": [
+      8
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+384+Bhimavaram+Andhra+Pradesh/@16.543,81.541,16z"
+  },
+  {
+    "rsNo": 385,
+    "wards": [
+      9
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+385+Bhimavaram+Andhra+Pradesh/@16.542,81.535,16z"
+  },
+  {
+    "rsNo": 431,
+    "wards": [
+      7,
+      12
+    ],
+    "villages": [
+      "Gunupudi Revenue Village",
+      "Taderu Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+431+Bhimavaram+Andhra+Pradesh/@16.544,81.549,16z"
+  },
+  {
+    "rsNo": 448,
+    "wards": [
+      13
+    ],
+    "villages": [
+      "Taderu Revenue Village",
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+448+Bhimavaram+Andhra+Pradesh/@16.524,81.555,16z"
+  },
+  {
+    "rsNo": 463,
+    "wards": [
+      12
+    ],
+    "villages": [
+      "Gunupudi Revenue Village",
+      "Taderu Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+463+Bhimavaram+Andhra+Pradesh/@16.532,81.545,16z"
+  },
+  {
+    "rsNo": 468,
+    "wards": [
+      12
+    ],
+    "villages": [
+      "Gunupudi Revenue Village",
+      "Taderu Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+468+Bhimavaram+Andhra+Pradesh/@16.532,81.545,16z"
+  },
+  {
+    "rsNo": 489,
+    "wards": [
+      7
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+489+Bhimavaram+Andhra+Pradesh/@16.544,81.549,16z"
+  },
+  {
+    "rsNo": 491,
+    "wards": [
+      12
+    ],
+    "villages": [
+      "Gunupudi Revenue Village",
+      "Taderu Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+491+Bhimavaram+Andhra+Pradesh/@16.532,81.545,16z"
+  },
+  {
+    "rsNo": 504,
+    "wards": [
+      33
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+504+Bhimavaram+Andhra+Pradesh/@16.528,81.524,16z"
+  },
+  {
+    "rsNo": 506,
+    "wards": [
+      33
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+506+Bhimavaram+Andhra+Pradesh/@16.528,81.524,16z"
+  },
+  {
+    "rsNo": 508,
+    "wards": [
+      13
+    ],
+    "villages": [
+      "Taderu Revenue Village",
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+508+Bhimavaram+Andhra+Pradesh/@16.524,81.555,16z"
+  },
+  {
+    "rsNo": 517,
+    "wards": [
+      33
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+517+Bhimavaram+Andhra+Pradesh/@16.528,81.524,16z"
+  },
+  {
+    "rsNo": 530,
+    "wards": [
+      33
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+530+Bhimavaram+Andhra+Pradesh/@16.528,81.524,16z"
+  },
+  {
+    "rsNo": 560,
+    "wards": [
+      2
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+560+Bhimavaram+Andhra+Pradesh/@16.5465,81.5251,16z"
+  },
+  {
+    "rsNo": 605,
+    "wards": [
+      34
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+605+Bhimavaram+Andhra+Pradesh/@16.526,81.517,16z"
+  },
+  {
+    "rsNo": 624,
+    "wards": [
+      12
+    ],
+    "villages": [
+      "Gunupudi Revenue Village",
+      "Taderu Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+624+Bhimavaram+Andhra+Pradesh/@16.532,81.545,16z"
+  },
+  {
+    "rsNo": 629,
+    "wards": [
+      12,
+      14,
+      33
+    ],
+    "villages": [
+      "Gunupudi Revenue Village",
+      "Taderu Revenue Village",
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+629+Bhimavaram+Andhra+Pradesh/@16.532,81.545,16z"
+  },
+  {
+    "rsNo": 634,
+    "wards": [
+      33
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+634+Bhimavaram+Andhra+Pradesh/@16.528,81.524,16z"
+  },
+  {
+    "rsNo": 650,
+    "wards": [
+      23
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+650+Bhimavaram+Andhra+Pradesh/@16.544,81.521,16z"
+  },
+  {
+    "rsNo": 651,
+    "wards": [
+      2,
+      4
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village",
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+651+Bhimavaram+Andhra+Pradesh/@16.5465,81.5251,16z"
+  },
+  {
+    "rsNo": 655,
+    "wards": [
+      2,
+      3,
+      4
+    ],
+    "villages": [
+      "Bhimavaram Revenue Village",
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+655+Bhimavaram+Andhra+Pradesh/@16.5465,81.5251,16z"
+  },
+  {
+    "rsNo": 704,
+    "wards": [
+      14
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+704+Bhimavaram+Andhra+Pradesh/@16.527,81.534,16z"
+  },
+  {
+    "rsNo": 716,
+    "wards": [
+      14
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+716+Bhimavaram+Andhra+Pradesh/@16.527,81.534,16z"
+  },
+  {
+    "rsNo": 723,
+    "wards": [
+      7,
+      12
+    ],
+    "villages": [
+      "Gunupudi Revenue Village",
+      "Taderu Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+723+Bhimavaram+Andhra+Pradesh/@16.544,81.549,16z"
+  },
+  {
+    "rsNo": 726,
+    "wards": [
+      7,
+      12
+    ],
+    "villages": [
+      "Gunupudi Revenue Village",
+      "Taderu Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+726+Bhimavaram+Andhra+Pradesh/@16.544,81.549,16z"
+  },
+  {
+    "rsNo": 731,
+    "wards": [
+      7
+    ],
+    "villages": [
+      "Gunupudi Revenue Village"
+    ],
+    "bhuvanUrl": "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+    "googleMapsQuery": "https://www.google.com/maps/search/RS+731+Bhimavaram+Andhra+Pradesh/@16.544,81.549,16z"
+  }
+];
+if (typeof window !== 'undefined') {
+  window.BHIMAVARAM_RS_NUMBERS_REGISTRY = BHIMAVARAM_RS_NUMBERS_REGISTRY;
+}
+
+var BHIMAVARAM_MUNICIPALITY_METADATA = {
+  ulbName: "Bhimavaram Municipality (భీమవరం పురపాలక సంఘం)",
+  district: "West Godavari (పశ్చిమ గోదావరి జిల్లా)",
+  state: "Andhra Pradesh",
+  totalWards: 52,
+  gisPortalUrl: "https://bhimavaram.cdma.ap.gov.in/ulbprofile/bhimavaram/gis-map/",
+  bhuvanCadastralUrl: "https://bhuvan-app1.nrsc.gov.in/cadastral/",
+  bhuvan2dUrl: "https://bhuvan.nrsc.gov.in/bhuvan_2d.php",
+  bhuvanPanchayatUrl: "https://bhuvan-panchayat.nrsc.gov.in/",
+  centerCoordinates: [16.5449, 81.5212],
+  defaultZoom: 14
+};
+if (typeof window !== 'undefined') {
+  window.BHIMAVARAM_MUNICIPALITY_METADATA = BHIMAVARAM_MUNICIPALITY_METADATA;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    BHIMAVARAM_52_WARDS_DATA,
+    BHIMAVARAM_RS_NUMBERS_REGISTRY,
+    BHIMAVARAM_MUNICIPALITY_METADATA
+  };
+}
+
+  </script>
+
   <!-- ==================== JAVASCRIPT LOGIC ==================== -->
   <script>
     // Global Application State
@@ -522,23 +4434,48 @@
     let currentFilterZone = 'all';
     let searchQuery = '';
 
-    // Initialize Map and UI when DOM is loaded
-    document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Map and UI when DOM is ready
+    window.addEventListener('DOMContentLoaded', () => {
+      initApp();
+    });
+
+    function initApp() {
       initMap();
       renderWardsList();
       renderRsRegistryTable();
       updateDisplayedCounts();
-    });
 
-    // 1. Initialize Leaflet Map with Google Streets and Other Base Layers
+      // Recalculate map dimensions repeatedly after DOM rendering
+      setTimeout(() => {
+        if (map) {
+          map.invalidateSize();
+          fitAllWardsBounds();
+        }
+      }, 150);
+
+      setTimeout(() => {
+        if (map) map.invalidateSize();
+      }, 500);
+
+      setTimeout(() => {
+        if (map) map.invalidateSize();
+      }, 1200);
+    }
+
+    // 1. Initialize Leaflet Map with Panes and Multiple Basemaps
     function initMap() {
-      const center = BHIMAVARAM_MUNICIPALITY_METADATA.centerCoordinates || [16.5449, 81.5212];
-      const defaultZoom = BHIMAVARAM_MUNICIPALITY_METADATA.defaultZoom || 14;
+      const center = (typeof BHIMAVARAM_MUNICIPALITY_METADATA !== 'undefined' && BHIMAVARAM_MUNICIPALITY_METADATA.centerCoordinates) 
+        ? BHIMAVARAM_MUNICIPALITY_METADATA.centerCoordinates 
+        : [16.5449, 81.5212];
+      
+      const defaultZoom = (typeof BHIMAVARAM_MUNICIPALITY_METADATA !== 'undefined' && BHIMAVARAM_MUNICIPALITY_METADATA.defaultZoom)
+        ? BHIMAVARAM_MUNICIPALITY_METADATA.defaultZoom
+        : 14;
 
       map = L.map('mapContainer', {
         center: center,
         zoom: defaultZoom,
-        minZoom: 12,
+        minZoom: 11,
         maxZoom: 20,
         zoomControl: false
       });
@@ -546,46 +4483,51 @@
       // Add Zoom Control at Top Right
       L.control.zoom({ position: 'topright' }).addTo(map);
 
-      // Define Basemap Providers
-      // Google Streets (Standard Roads & Street labels)
-      baseLayers.google_streets = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+      // Dedicated Panes for Crisp Z-Index Layering
+      map.createPane('wardPolygonPane');
+      map.getPane('wardPolygonPane').style.zIndex = 450; // Vectors above base tiles
+
+      map.createPane('wardMarkerPane');
+      map.getPane('wardMarkerPane').style.zIndex = 650; // Centered badges above vectors
+
+      // Basemap Providers
+      // 1. Google Streets (Standard high-clarity roads & labels)
+      baseLayers.google_streets = L.tileLayer('https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
         maxZoom: 20,
-        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-        attribution: '&copy; Google Maps Streets & Roads'
+        subdomains: ['0', '1', '2', '3'],
+        attribution: '&copy; Google Maps Streets'
       });
 
-      // Google Satellite (Photographic imagery)
-      baseLayers.google_satellite = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+      // 2. Google Hybrid (Satellite + Roads & Labels)
+      baseLayers.google_hybrid = L.tileLayer('https://mt{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
         maxZoom: 20,
-        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-        attribution: '&copy; Google Satellite Imagery'
+        subdomains: ['0', '1', '2', '3'],
+        attribution: '&copy; Google Satellite Hybrid'
       });
 
-      // Google Hybrid (Satellite + Road Network & Labels)
-      baseLayers.google_hybrid = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+      // 3. Carto Voyager Streets (Clean, high-performance streets fallback)
+      baseLayers.carto_streets = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
         maxZoom: 20,
-        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-        attribution: '&copy; Google Hybrid'
+        subdomains: 'abcd',
+        attribution: '&copy; CARTO &copy; OpenStreetMap'
       });
 
-      // Google Terrain (Topographical contours & hill shading)
-      baseLayers.google_terrain = L.tileLayer('https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
-        maxZoom: 20,
-        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-        attribution: '&copy; Google Terrain'
-      });
-
-      // OpenStreetMap (Fallback)
+      // 4. OpenStreetMap
       baseLayers.osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap contributors'
       });
 
-      // Add default base layer: Google Streets
+      // Add Default Active Layer: Google Streets
       baseLayers.google_streets.addTo(map);
 
-      // Draw all 52 Ward Polygons and Center Markers
+      // Render all 52 Ward Polygons & Badges
       renderWardPolygonsOnMap();
+
+      // Listen for window resize
+      window.addEventListener('resize', () => {
+        if (map) map.invalidateSize();
+      });
     }
 
     // Switch Basemap Layer
@@ -607,7 +4549,7 @@
       const btnMap = {
         'google_streets': 'btn-layer-streets',
         'google_hybrid': 'btn-layer-hybrid',
-        'google_terrain': 'btn-layer-terrain',
+        'carto_streets': 'btn-layer-carto',
         'osm': 'btn-layer-osm'
       };
 
@@ -633,16 +4575,19 @@
 
     // 2. Render all 52 Ward Polygons on Leaflet Map
     function renderWardPolygonsOnMap() {
+      if (typeof BHIMAVARAM_52_WARDS_DATA === 'undefined') return;
+
       BHIMAVARAM_52_WARDS_DATA.forEach(ward => {
         const zoneColor = getZoneColor(ward.zone);
 
-        // Polygon
+        // Vector Polygon
         const polygon = L.polygon(ward.polygon, {
+          pane: 'wardPolygonPane',
           color: zoneColor,
-          weight: 2,
-          opacity: 0.85,
+          weight: 2.5,
+          opacity: 0.9,
           fillColor: zoneColor,
-          fillOpacity: 0.22,
+          fillOpacity: 0.28,
           className: `ward-poly-${ward.ward}`
         }).addTo(map);
 
@@ -650,11 +4595,14 @@
         const numberIcon = L.divIcon({
           className: 'custom-div-icon',
           html: `<div class="ward-num-marker" id="ward-marker-${ward.ward}">${ward.ward}</div>`,
-          iconSize: [26, 26],
-          iconAnchor: [13, 13]
+          iconSize: [28, 28],
+          iconAnchor: [14, 14]
         });
 
-        const marker = L.marker(ward.center, { icon: numberIcon }).addTo(map);
+        const marker = L.marker(ward.center, { 
+          pane: 'wardMarkerPane',
+          icon: numberIcon 
+        }).addTo(map);
 
         // Tooltip on Hover
         polygon.bindTooltip(`
@@ -679,11 +4627,11 @@
 
         // Hover Effect
         polygon.on('mouseover', () => {
-          polygon.setStyle({ weight: 3.5, fillOpacity: 0.45 });
+          polygon.setStyle({ weight: 4, fillOpacity: 0.5 });
         });
         polygon.on('mouseout', () => {
           if (activeWardId !== ward.ward) {
-            polygon.setStyle({ weight: 2, fillOpacity: 0.22 });
+            polygon.setStyle({ weight: 2.5, fillOpacity: 0.28 });
           }
         });
 
@@ -736,7 +4684,7 @@
 
           <div class="mt-2.5 pt-2 border-t border-slate-700/80 flex items-center justify-between gap-2">
             <button onclick="selectWard(${ward.ward}, true)" class="px-2.5 py-1 rounded bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-[11px]">
-              📋 పూర్తి సరిహద్దు చదవండి
+              📋 సరిహద్దు చదవండి
             </button>
             <a href="https://www.google.com/maps/search/?api=1&query=${ward.center[0]},${ward.center[1]}" target="_blank" 
                class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-600 text-[11px] flex items-center gap-1">
@@ -750,6 +4698,7 @@
     // 3. Render Wards List on Left Sidebar
     function renderWardsList() {
       const container = document.getElementById('wardsListContainer');
+      if (!container || typeof BHIMAVARAM_52_WARDS_DATA === 'undefined') return;
       container.innerHTML = '';
 
       let filteredWards = BHIMAVARAM_52_WARDS_DATA.filter(w => {
@@ -806,7 +4755,7 @@
         card.id = `ward-card-${ward.ward}`;
         card.className = `p-3.5 rounded-2xl border transition-all duration-200 cursor-pointer ${
           isSelected 
-            ? 'bg-slate-850 border-cyan-500 shadow-lg shadow-cyan-500/10 ward-card-highlight ring-1 ring-cyan-500' 
+            ? 'bg-slate-850 border-cyan-500 shadow-lg shadow-cyan-500/15 ward-card-highlight ring-1 ring-cyan-500' 
             : 'bg-slate-900/90 border-slate-800 hover:border-slate-700 hover:bg-slate-850'
         }`;
 
@@ -971,7 +4920,7 @@
     // 4. Select Ward: Pans Map, Highlights Polygon, and Scrolls Card into View
     function selectWard(wardNum, scrollToList = false) {
       activeWardId = wardNum;
-      expandedWards.add(wardNum); // Automatically expand the selected ward's card
+      expandedWards.add(wardNum);
 
       const ward = BHIMAVARAM_52_WARDS_DATA.find(w => w.ward === wardNum);
       if (!ward) return;
@@ -981,8 +4930,8 @@
         const poly = wardLayers[w.ward];
         if (poly) {
           poly.setStyle({
-            weight: 2,
-            fillOpacity: 0.22,
+            weight: 2.5,
+            fillOpacity: 0.28,
             color: getZoneColor(w.zone)
           });
         }
@@ -994,8 +4943,8 @@
       const activePoly = wardLayers[wardNum];
       if (activePoly) {
         activePoly.setStyle({
-          weight: 4,
-          fillOpacity: 0.55,
+          weight: 4.5,
+          fillOpacity: 0.58,
           color: '#ffffff'
         });
         activePoly.bringToFront();
@@ -1045,10 +4994,10 @@
       allExpanded = !allExpanded;
       if (allExpanded) {
         BHIMAVARAM_52_WARDS_DATA.forEach(w => expandedWards.add(w.ward));
-        document.getElementById('expandAllBtn').textContent = 'అన్నీ కుదించు (Collapse All)';
+        document.getElementById('expandAllBtn').textContent = 'అన్నీ కుదించు';
       } else {
         expandedWards.clear();
-        document.getElementById('expandAllBtn').textContent = 'అన్నీ విస్తరించు (Expand All)';
+        document.getElementById('expandAllBtn').textContent = 'అన్నీ విస్తరించు';
       }
       renderWardsList();
     }
@@ -1095,16 +5044,15 @@
     function searchRs(rsNo) {
       document.getElementById('wardSearchInput').value = rsNo;
       handleSearch(rsNo.toString());
-      // On mobile, switch to list view
       setMobileView('list');
     }
 
     // Reset Map to Whole Municipality
     function fitAllWardsBounds() {
       const allPolygons = Object.values(wardLayers);
-      if (allPolygons.length > 0) {
+      if (allPolygons.length > 0 && map) {
         const group = L.featureGroup(allPolygons);
-        map.fitBounds(group.getBounds(), { padding: [20, 20], animate: true });
+        map.fitBounds(group.getBounds(), { padding: [25, 25], animate: true });
       }
     }
 
@@ -1154,6 +5102,7 @@ ${ward.west}
     // 5. Render RS Numbers Registry Table in Modal
     function renderRsRegistryTable(filter = '') {
       const tbody = document.getElementById('rsTableBody');
+      if (!tbody || typeof BHIMAVARAM_RS_NUMBERS_REGISTRY === 'undefined') return;
       tbody.innerHTML = '';
 
       let list = BHIMAVARAM_RS_NUMBERS_REGISTRY;
@@ -1247,13 +5196,15 @@ ${ward.west}
         listBtn.classList.add('text-slate-300');
 
         setTimeout(() => {
-          map.invalidateSize();
+          if (map) map.invalidateSize();
         }, 100);
       }
     }
 
     function updateDisplayedCounts() {
-      document.getElementById('topRsCount').textContent = BHIMAVARAM_RS_NUMBERS_REGISTRY.length;
+      if (typeof BHIMAVARAM_RS_NUMBERS_REGISTRY !== 'undefined') {
+        document.getElementById('topRsCount').textContent = BHIMAVARAM_RS_NUMBERS_REGISTRY.length;
+      }
     }
   </script>
 </body>

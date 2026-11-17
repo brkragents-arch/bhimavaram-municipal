@@ -982,11 +982,17 @@ const outputContent = `// Bhimavaram Municipality - Complete 52 Wards Official G
 // 2. ISRO Bhuvan Cadastral Geoportal: https://bhuvan-app1.nrsc.gov.in/cadastral/
 // 3. Google Maps Roads & Street Layer
 
-const BHIMAVARAM_52_WARDS_DATA = ${JSON.stringify(rawWards, null, 2)};
+var BHIMAVARAM_52_WARDS_DATA = ${JSON.stringify(rawWards, null, 2)};
+if (typeof window !== 'undefined') {
+  window.BHIMAVARAM_52_WARDS_DATA = BHIMAVARAM_52_WARDS_DATA;
+}
 
-const BHIMAVARAM_RS_NUMBERS_REGISTRY = ${JSON.stringify(rsList, null, 2)};
+var BHIMAVARAM_RS_NUMBERS_REGISTRY = ${JSON.stringify(rsList, null, 2)};
+if (typeof window !== 'undefined') {
+  window.BHIMAVARAM_RS_NUMBERS_REGISTRY = BHIMAVARAM_RS_NUMBERS_REGISTRY;
+}
 
-const BHIMAVARAM_MUNICIPALITY_METADATA = {
+var BHIMAVARAM_MUNICIPALITY_METADATA = {
   ulbName: "Bhimavaram Municipality (భీమవరం పురపాలక సంఘం)",
   district: "West Godavari (పశ్చిమ గోదావరి జిల్లా)",
   state: "Andhra Pradesh",
@@ -998,6 +1004,9 @@ const BHIMAVARAM_MUNICIPALITY_METADATA = {
   centerCoordinates: [16.5449, 81.5212],
   defaultZoom: 14
 };
+if (typeof window !== 'undefined') {
+  window.BHIMAVARAM_MUNICIPALITY_METADATA = BHIMAVARAM_MUNICIPALITY_METADATA;
+}
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
