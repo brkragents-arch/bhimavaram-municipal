@@ -706,37 +706,63 @@
         </div>
       </div>
 
-      <!-- Search & Direct GIS Button -->
-      <div class="flex flex-wrap items-center justify-between gap-2 flex-shrink-0">
-        <input 
-          type="text" 
-          placeholder="చెరువు/కాలువ పేరుతో శోధించండి..." 
-          id="indexWbSearchInput" 
-          class="bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 placeholder:text-slate-500 w-64 focus:outline-none focus:border-sky-500"
-          oninput="renderWaterbodiesTable(this.value)"
-        >
-        <a href="gis-ward-map.html#waterbodies" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-md transition hover:scale-105">
-          <span>🗺️ 39 వార్డుల GIS డిజిటల్ పటంలో చూడండి ➔</span>
-        </a>
+      <!-- Tab Navigation inside Modal -->
+      <div class="flex items-center gap-2 border-b border-slate-800 pb-2 text-xs flex-shrink-0">
+        <button onclick="switchIndexWbTab('table')" id="indexWbTabBtn_table" class="px-3 py-1.5 rounded-lg font-semibold bg-sky-600 text-white transition flex items-center gap-1.5 shadow-sm">
+          <span>📋 15 జలాశయాల పట్టిక</span>
+        </button>
+        <button onclick="switchIndexWbTab('map')" id="indexWbTabBtn_map" class="px-3 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition flex items-center gap-1.5">
+          <span>🗺️ ఉపగ్రహ సర్వే పటం (Map View)</span>
+        </button>
       </div>
 
-      <!-- Table Container -->
-      <div class="flex-1 min-h-0 overflow-y-auto border border-slate-800 rounded-xl bg-slate-950/60 pr-1 text-xs">
-        <table class="w-full text-left border-collapse text-xs">
-          <thead class="sticky top-0 bg-slate-900 z-10 border-b border-slate-800 text-slate-400 text-[11px]">
-            <tr>
-              <th class="py-2 px-2.5">క్ర.సం.</th>
-              <th class="py-2 px-2.5">కోడ్</th>
-              <th class="py-2 px-2.5">జలాశయం పేరు (Waterbody Name)</th>
-              <th class="py-2 px-2.5 text-right">మొత్తం (AC)</th>
-              <th class="py-2 px-2.5 text-right">2011 మార్పు (AC)</th>
-              <th class="py-2 px-2.5 text-center">చర్య</th>
-            </tr>
-          </thead>
-          <tbody id="indexWbTableBody" class="divide-y divide-slate-800/60">
-            <!-- Dynamically populated via JS -->
-          </tbody>
-        </table>
+      <!-- Tab 1: Table Container -->
+      <div id="indexWbTabContent_table" class="flex-1 flex flex-col min-h-0 space-y-2">
+        <!-- Search & Direct GIS Button -->
+        <div class="flex flex-wrap items-center justify-between gap-2 flex-shrink-0">
+          <input 
+            type="text" 
+            placeholder="చెరువు/కాలువ పేరుతో శోధించండి..." 
+            id="indexWbSearchInput" 
+            class="bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 placeholder:text-slate-500 w-64 focus:outline-none focus:border-sky-500"
+            oninput="renderWaterbodiesTable(this.value)"
+          >
+          <a href="gis-ward-map.html?view=waterbodies#waterbodies" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-md transition hover:scale-105">
+            <span>🗺️ 39 వార్డుల GIS డిజిటల్ పటంలో చూడండి ➔</span>
+          </a>
+        </div>
+
+        <!-- Table Container -->
+        <div class="flex-1 min-h-0 overflow-y-auto border border-slate-800 rounded-xl bg-slate-950/60 pr-1 text-xs">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead class="sticky top-0 bg-slate-900 z-10 border-b border-slate-800 text-slate-400 text-[11px]">
+              <tr>
+                <th class="py-2 px-2.5">క్ర.సం.</th>
+                <th class="py-2 px-2.5">కోడ్</th>
+                <th class="py-2 px-2.5">జలాశయం పేరు (Waterbody Name)</th>
+                <th class="py-2 px-2.5 text-right">మొత్తం (AC)</th>
+                <th class="py-2 px-2.5 text-right">2011 మార్పు (AC)</th>
+                <th class="py-2 px-2.5 text-center">చర్య</th>
+              </tr>
+            </thead>
+            <tbody id="indexWbTableBody" class="divide-y divide-slate-800/60">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 2: Map Image View Container -->
+      <div id="indexWbTabContent_map" class="hidden flex-1 flex flex-col min-h-0 space-y-2">
+        <div class="flex items-center justify-between text-xs text-slate-400 flex-shrink-0">
+          <span>🛰️ అధికారిక APSAC సర్వే పటం – కార్టోశాట్ & సెంటినల్ ఉపగ్రహ విశ్లేషణ:</span>
+          <a href="gis-ward-map.html?view=waterbodies#waterbodies" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow transition hover:scale-105">
+            <span>🗺️ ఇంటరాక్టివ్ GIS పటంలో తెరవండి ➔</span>
+          </a>
+        </div>
+        <div class="flex-1 min-h-0 overflow-hidden border border-slate-800 rounded-xl bg-slate-950 flex items-center justify-center p-2">
+          <img src="assets/bhimavaram_apsac_waterbodies_map.jpg" alt="APSAC Waterbodies Survey Map" class="max-w-full max-h-[52vh] object-contain rounded-lg">
+        </div>
       </div>
 
       <div class="flex items-center justify-between pt-2 border-t border-slate-800 flex-shrink-0 text-xs">
@@ -860,9 +886,29 @@
       const isHidden = m.classList.contains('hidden');
       if (isHidden) {
         m.classList.remove('hidden');
+        switchIndexWbTab('table');
         renderWaterbodiesTable(document.getElementById('indexWbSearchInput')?.value || '');
       } else {
         m.classList.add('hidden');
+      }
+    }
+
+    function switchIndexWbTab(tab) {
+      const btnTable = document.getElementById('indexWbTabBtn_table');
+      const btnMap = document.getElementById('indexWbTabBtn_map');
+      const contentTable = document.getElementById('indexWbTabContent_table');
+      const contentMap = document.getElementById('indexWbTabContent_map');
+
+      if (tab === 'table') {
+        if (btnTable) btnTable.className = "px-3 py-1.5 rounded-lg font-semibold bg-sky-600 text-white transition flex items-center gap-1.5 shadow-sm";
+        if (btnMap) btnMap.className = "px-3 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition flex items-center gap-1.5";
+        if (contentTable) contentTable.classList.remove('hidden');
+        if (contentMap) contentMap.classList.add('hidden');
+      } else {
+        if (btnMap) btnMap.className = "px-3 py-1.5 rounded-lg font-semibold bg-sky-600 text-white transition flex items-center gap-1.5 shadow-sm";
+        if (btnTable) btnTable.className = "px-3 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition flex items-center gap-1.5";
+        if (contentMap) contentMap.classList.remove('hidden');
+        if (contentTable) contentTable.classList.add('hidden');
       }
     }
 
@@ -913,7 +959,7 @@
             <td class="py-2 px-2.5 text-right font-bold ${isLight ? 'text-slate-800' : 'text-slate-200'}">${wb.totalAreaAcres.toFixed(2)}</td>
             <td class="py-2 px-2.5 text-right font-medium">${changeBadge}</td>
             <td class="py-2 px-2.5 text-center">
-              <a href="gis-ward-map.html#waterbodies" class="inline-flex items-center px-2.5 py-1 rounded-md bg-sky-600 hover:bg-sky-500 text-white font-bold text-[10px] shadow transition">
+              <a href="gis-ward-map.html?view=waterbodies#waterbodies" class="inline-flex items-center px-2.5 py-1 rounded-md bg-sky-600 hover:bg-sky-500 text-white font-bold text-[10px] shadow transition">
                 పటంలో ➔
               </a>
             </td>

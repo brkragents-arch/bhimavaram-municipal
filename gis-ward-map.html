@@ -908,9 +908,9 @@
       [16.5806, 81.5589]  // Northeast [North, East]
     ];
 
-    const APSAC_MAP_BOUNDS = [
-      [16.5120, 81.4980],
-      [16.5680, 81.5620]
+    let apsacMapBounds = (typeof window.APSAC_MAP_BOUNDS !== 'undefined') ? window.APSAC_MAP_BOUNDS : [
+      [16.50028, 81.48333],
+      [16.58120, 81.56091]
     ];
 
     // Colors for 52 Wards Zones
@@ -1008,7 +1008,7 @@
       }
 
       // APSAC Satellite & Waterbodies Map Overlay
-      apsacOverlay = L.imageOverlay('assets/bhimavaram_apsac_waterbodies_map.jpg', APSAC_MAP_BOUNDS, {
+      apsacOverlay = L.imageOverlay('assets/bhimavaram_apsac_waterbodies_map.jpg', apsacMapBounds, {
         opacity: 0.85,
         interactive: false,
         pane: 'apsacMapPane',
@@ -1684,11 +1684,26 @@
         if (chkSc) chkSc.checked = true;
       } else if (preset === 'waterbodies') {
         setBasemap('google_hybrid');
+        if (map.hasLayer(scannedOverlay)) map.removeLayer(scannedOverlay);
+        const chkSc = document.getElementById('chkShowScanned');
+        if (chkSc) chkSc.checked = false;
         toggleApsacOverlay(true);
         const chk = document.getElementById('chkShowApsacOverlay');
         if (chk) chk.checked = true;
         toggleWaterbodiesLayer(true);
+        const chkWb = document.getElementById('chkShowWaterbodies');
+        if (chkWb) chkWb.checked = true;
         toggleChangesLayer(true);
+        const chkCh = document.getElementById('chkShowChanges');
+        if (chkCh) chkCh.checked = true;
+        changeWardOpacity(15);
+        const wSlider = document.getElementById('wardOpacitySlider');
+        if (wSlider) wSlider.value = 15;
+        const wLbl = document.getElementById('wardOpacityLabel');
+        if (wLbl) wLbl.innerText = '15%';
+        if (typeof apsacMapBounds !== 'undefined') {
+          map.fitBounds(apsacMapBounds, { padding: [20, 20] });
+        }
       } else if (preset === 'scanned_only') {
         setBasemap('google_streets');
         if (!map.hasLayer(scannedOverlay)) scannedOverlay.addTo(map);
