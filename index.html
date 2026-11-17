@@ -67,39 +67,42 @@
   <!-- 52 Wards Boundaries & Candidates Data -->
   <script src="assets/bhimavaram_52_wards_boundaries.js"></script>
   <script src="assets/bhimavaram_election_candidates.js"></script>
+  <script src="assets/bhimavaram_waterbodies_data.js"></script>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col selection:bg-cyan-500 selection:text-white">
 
   <!-- Top Navigation & Header -->
   <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-40 px-4 py-3 shadow-md">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center space-x-3">
-        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/20 text-white font-bold text-xl border border-cyan-400/30">
-          🏛️
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <h1 class="text-lg md:text-xl font-bold tracking-tight text-white flex items-center gap-2">
-              భీమవరం పురపాలక సంఘం (Bhimavaram Municipality)
-            </h1>
-            <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-              52 వార్డులు
-            </span>
+      <div class="flex items-center justify-between w-full lg:w-auto gap-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/20 text-white font-bold text-xl border border-cyan-400/30">
+            🏛️
           </div>
-          <p class="text-xs text-slate-300 telugu-font">
-            సమగ్ర అర్బన్ ఇంటెలిజెన్స్ వేదిక • 52 వార్డుల డెమోగ్రాఫిక్స్ • 39 వార్డుల GIS పటం • వరద ప్రవాహ AI • స్మార్ట్ ట్రాఫిక్ సిస్టమ్
-          </p>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-lg md:text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                భీమవరం పురపాలక సంఘం (Bhimavaram Municipality)
+              </h1>
+              <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                52 వార్డులు
+              </span>
+            </div>
+            <p class="text-xs text-slate-300 telugu-font">
+              సమగ్ర అర్బన్ ఇంటెలిజెన్స్ వేదిక • 52 వార్డుల డెమోగ్రాఫిక్స్ • 39 వార్డుల GIS పటం • వరద ప్రవాహ AI • స్మార్ట్ ట్రాఫిక్ సిస్టమ్
+            </p>
+          </div>
         </div>
+
+        <!-- Universal Theme Toggle Button (Always prominently visible beside title) -->
+        <button onclick="toggleTheme()" id="themeToggleBtn" class="theme-toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-md transition-all hover:scale-105 active:scale-95 shrink-0" title="లైట్ / డార్క్ మోడ్ మార్చండి">
+          <span id="themeToggleIcon" class="theme-toggle-icon text-sm">☀️</span>
+          <span id="themeToggleText" class="theme-toggle-text">లైట్ మోడ్</span>
+        </button>
       </div>
 
       <!-- Prominent Buttons to all Integrated Modules & System Overview -->
       <div class="flex items-center flex-wrap gap-2 text-xs">
-        <!-- Universal Theme Toggle Button -->
-        <button onclick="toggleTheme()" id="themeToggleBtn" class="theme-toggle-btn inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-bold text-xs shadow-md transition-all hover:scale-105 active:scale-95" title="లైట్ / డార్క్ మోడ్ మార్చండి">
-          <span id="themeToggleIcon" class="theme-toggle-icon">☀️</span>
-          <span id="themeToggleText" class="theme-toggle-text">లైట్ మోడ్</span>
-        </button>
-
         <button onclick="toggleSystemOverviewModal()" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 hover:text-white font-bold text-xs shadow-md border border-cyan-500/40 transition-all hover:scale-105 active:scale-95" title="మొత్తం వేదిక సమగ్ర కార్యాచరణ వివరణ">
           <span class="text-sm">ℹ️</span>
           <span>ప్లాట్‌ఫారమ్ వివరణ</span>
@@ -112,14 +115,14 @@
           <span class="text-sm">📜</span>
           <span>52 వార్డుల సరిహద్దులు & Google Streets ➔</span>
         </a>
-        <a href="gis-ward-map.html" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold text-xs shadow-md shadow-amber-500/25 border border-amber-300/50 transition-all hover:scale-105 active:scale-95">
+        <a href="gis-ward-map.html" onclick="navigateToGisMap(event)" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold text-xs shadow-md shadow-amber-500/25 border border-amber-300/50 transition-all hover:scale-105 active:scale-95" title="భీమవరం పురపాలక సంఘం – 39 వార్డుల GIS డిజిటల్ పటం">
           <span class="text-sm">🗺️</span>
           <span>GIS వార్డు పటం ➔</span>
         </a>
-        <a href="gis-ward-map.html?view=waterbodies" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-sky-600 via-blue-600 to-cyan-600 hover:from-sky-500 hover:to-cyan-500 text-white font-bold text-xs shadow-md shadow-sky-600/30 border border-sky-400/50 transition-all hover:scale-105 active:scale-95" title="చెరువులు, కాలువలు & కాలానుగుణ మార్పుల ఉపగ్రహ లేయర్ (APSAC సర్వే)">
+        <button onclick="toggleWaterbodiesModal()" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-sky-600 via-blue-600 to-cyan-600 hover:from-sky-500 hover:to-cyan-500 text-white font-bold text-xs shadow-md shadow-sky-600/30 border border-sky-400/50 transition-all hover:scale-105 active:scale-95" title="చెరువులు, కాలువలు & కాలానుగుణ మార్పుల ఉపగ్రహ లేయర్ (APSAC సర్వే)">
           <span class="text-sm">🌊</span>
           <span>చెరువులు & కాలువలు (15)</span>
-        </a>
+        </button>
         <a href="flood-flow-analysis.html" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-xs shadow-lg shadow-cyan-500/30 border border-cyan-300/60 transition-all hover:scale-105 active:scale-95" title="భీమవరం వరద ప్రవాహ విశ్లేషణ, డ్రైనేజీ నెట్‌వర్క్ మోడలింగ్ & AI ఏజెంట్ ఫలితాలు">
           <span class="text-base">🌊</span>
           <span>వరద AI విశ్లేషణ ➔</span>
@@ -356,20 +359,22 @@
             </defs>
 
             <!-- Geographic Canvas Base -->
-            <rect width="1000" height="750" fill="#090d16" />
+            <rect id="svgMapBg" width="1000" height="750" fill="#090d16" />
             
             <!-- Grid Reference Lines -->
-            <g stroke="#1e293b" stroke-width="0.5" stroke-dasharray="4,8" opacity="0.6">
+            <g id="svgGridLines" stroke="#1e293b" stroke-width="0.5" stroke-dasharray="4,8" opacity="0.6">
               <line x1="0" y1="200" x2="1000" y2="200" />
               <line x1="0" y1="580" x2="1000" y2="580" />
               <line x1="500" y1="0" x2="500" y2="750" />
             </g>
 
             <!-- Boundary Zone Labels in Background -->
-            <text x="500" y="25" fill="#475569" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="3">▲ ఉత్తరం (NORTH) – అమరం క్లస్టర్</text>
-            <text x="240" y="215" fill="#334155" font-size="13" font-weight="bold" text-anchor="middle" letter-spacing="2">📍 పశ్చిమ మండలం - టూ టౌన్</text>
-            <text x="750" y="215" fill="#334155" font-size="13" font-weight="bold" text-anchor="middle" letter-spacing="2">📍 తూర్పు మండలం - వన్ టౌన్/ గుణుపూడి (ONE TOWN)</text>
-            <text x="500" y="598" fill="#475569" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="3">▼ దక్షిణం & పశ్చిమం (SOUTH) – రాయలం & సరిహద్దు జోన్</text>
+            <g id="svgZoneLabels">
+              <text x="500" y="25" fill="#475569" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="3">▲ ఉత్తరం (NORTH) – అమరం క్లస్టర్</text>
+              <text x="240" y="215" fill="#334155" font-size="13" font-weight="bold" text-anchor="middle" letter-spacing="2">📍 పశ్చిమ మండలం - టూ టౌన్</text>
+              <text x="750" y="215" fill="#334155" font-size="13" font-weight="bold" text-anchor="middle" letter-spacing="2">📍 తూర్పు మండలం - వన్ టౌన్/ గుణుపూడి (ONE TOWN)</text>
+              <text x="500" y="598" fill="#475569" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="3">▼ దక్షిణం & పశ్చిమం (SOUTH) – రాయలం & సరిహద్దు జోన్</text>
+            </g>
 
             <!-- Eluru Canal & Yenamadurru Drain Central River Flow -->
             <path id="eluruCanal" d="M 500,20 C 490,120 515,220 495,340 C 480,430 520,530 495,640 C 480,690 490,740 485,750" 
@@ -585,6 +590,165 @@
     </div>
   </footer>
 
+  <!-- Modals: Platform Overview & APSAC Waterbodies Survey -->
+  
+  <!-- 1. System Overview Modal -->
+  <div id="systemOverviewModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-3xl w-full p-5 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col my-auto">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🌐</span>
+          <div>
+            <h3 class="font-extrabold text-white text-base sm:text-lg">భీమవరం పురపాలక సంఘం సమగ్ర అర్బన్ ఇంటెలిజెన్స్ వేదిక</h3>
+            <p class="text-xs text-slate-400">Integrated Urban Intelligence & Smart Governance Suite</p>
+          </div>
+        </div>
+        <button onclick="toggleSystemOverviewModal()" class="text-slate-400 hover:text-white text-lg p-1">✕</button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto space-y-3 pr-1 text-xs text-slate-300 leading-relaxed">
+        <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
+          <h4 class="font-bold text-amber-400 text-sm flex items-center gap-1.5">
+            <span>🏛️</span> <span>1. 52 వార్డుల అధికారిక గెజిట్ సరిహద్దులు & Google Streets GIS</span>
+          </h4>
+          <p>
+            భీమవరం పురపాలక సంఘం అధికారిక గెజిట్ నోటిఫికేషన్ ప్రకారం 52 వార్డుల సరిహద్దులు (ఉత్తరం, తూర్పు, దక్షిణం, పడమర), 76 R.S. నంబర్లు, మరియు డోర్ నంబర్ల ఖచ్చితమైన రికార్డు. ISRO భువన్ Cadastral సర్వే మరియు AP CDMA పోర్టల్ సమన్వయం.
+          </p>
+          <a href="ward-boundaries.html" class="inline-flex items-center gap-1 text-emerald-400 font-bold hover:underline">
+            52 వార్డుల సరిహద్దుల పోర్టల్ తెరవండి ➔
+          </a>
+        </div>
+
+        <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
+          <h4 class="font-bold text-sky-400 text-sm flex items-center gap-1.5">
+            <span>🗺️</span> <span>2. 39 వార్డుల అధికారిక GIS మాస్టర్ ప్లాన్ & APSAC ఉపగ్రహ జలవనరులు</span>
+          </h4>
+          <p>
+            స్కాన్ చేసిన అధికారిక టౌన్ ప్లాన్ మ్యాప్ గూగుల్ శాటిలైట్‌పై ఖచ్చితమైన జియో-రిఫరెన్సింగ్, 15 జలాశయాలు (273.17 ఎకరాలు) మరియు 2011 శాటిలైట్ కాలానుగుణ మార్పుల విశ్లేషణ.
+          </p>
+          <a href="gis-ward-map.html" class="inline-flex items-center gap-1 text-sky-400 font-bold hover:underline">
+            39 వార్డుల GIS డిజిటల్ పటం తెరవండి ➔
+          </a>
+        </div>
+
+        <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
+          <h4 class="font-bold text-rose-400 text-sm flex items-center gap-1.5">
+            <span>🗳️</span> <span>3. 2026 మున్సిపల్ ఎన్నికల అభ్యర్థుల పటం (Live Mouse Hover)</span>
+          </h4>
+          <p>
+            52 వార్డులకు కూటమి అధికారిక అభ్యర్థుల జాబితా (జనసేన 19 + టీడీపీ 24). మ్యాప్‌పై మౌస్ ఉంచినప్పుడు పోటీ చేయు అభ్యర్థి పేరు, ఫోటో, గుర్తు ప్రత్యక్ష వీక్షణ.
+          </p>
+          <a href="elections.html" class="inline-flex items-center gap-1 text-amber-400 font-bold hover:underline">
+            ఎన్నికల అభ్యర్థుల పటం తెరవండి ➔
+          </a>
+        </div>
+
+        <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
+          <h4 class="font-bold text-cyan-400 text-sm flex items-center gap-1.5">
+            <span>🌊</span> <span>4. వరద ప్రవాహ విశ్లేషణ & డ్రైనేజీ ఇంటెలిజెన్స్ AI వేదిక</span>
+          </h4>
+          <p>
+            ఎనమదుర్రు డ్రెయిన్ బ్యాక్‌వాటర్ ప్రభావం, 20 క్రిటికల్ వాటర్‌లాగింగ్ హాట్‌స్పాట్లు, వర్షపాత రన్-ఆఫ్ మోడలింగ్ మరియు ముందస్తు డ్రైనేజీ పూడికతీత ప్రణాళిక.
+          </p>
+          <a href="flood-flow-analysis.html" class="inline-flex items-center gap-1 text-cyan-400 font-bold hover:underline">
+            వరద ప్రవాహ AI వేదిక తెరవండి ➔
+          </a>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-2 border-t border-slate-800">
+        <button onclick="toggleSystemOverviewModal()" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold">
+          పూర్తయింది (Close)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. APSAC Waterbodies & Canals Survey Modal -->
+  <div id="waterbodiesModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-4xl w-full p-4 sm:p-6 shadow-2xl space-y-3.5 max-h-[92vh] flex flex-col my-auto">
+      
+      <div class="flex items-start justify-between border-b border-slate-800 pb-3 flex-shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center text-xl shadow-lg shadow-sky-500/20 text-white">
+            🌊
+          </div>
+          <div>
+            <h3 class="font-bold text-white text-base sm:text-lg flex items-center gap-2">
+              <span>భీమవరం పట్టణ చెరువులు & కాలువలు – APSAC ఉపగ్రహ సర్వే</span>
+              <span class="text-[10px] font-semibold bg-sky-500/20 text-sky-300 border border-sky-400/30 px-2 py-0.5 rounded-full hidden sm:inline-block">15 జలాశయాలు</span>
+            </h3>
+            <p class="text-xs text-slate-400">
+              ఆంధ్రప్రదేశ్ స్పేస్ అప్లికేషన్స్ సెంటర్ (APSAC) కార్టోశాట్ & సెంటినల్ శాటిలైట్ సర్వే డేటా
+            </p>
+          </div>
+        </div>
+        <button onclick="toggleWaterbodiesModal()" class="text-slate-400 hover:text-white p-1 rounded-lg text-xl font-bold">✕</button>
+      </div>
+
+      <!-- KPI Summary Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0 text-xs">
+        <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-xl">
+          <span class="text-slate-400 block text-[10px]">మొత్తం జలాశయాలు</span>
+          <div class="text-base font-bold text-sky-400 mt-0.5">15 <span class="text-[10px] font-normal text-slate-400">(9 చెరువులు + 6 కాలువలు)</span></div>
+        </div>
+        <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-xl">
+          <span class="text-slate-400 block text-[10px]">మొత్తం సర్వే వైశాల్యం</span>
+          <div class="text-base font-bold text-cyan-300 mt-0.5">273.17 <span class="text-[10px] font-normal text-slate-400">ఎకరాలు</span></div>
+        </div>
+        <div class="bg-slate-950/80 border border-pink-900/40 bg-pink-950/10 p-2.5 rounded-xl">
+          <span class="text-pink-400 block text-[10px] font-medium">⚠️ 2011 మార్పు / ఆక్రమణ</span>
+          <div class="text-base font-bold text-pink-400 mt-0.5">1.42 <span class="text-[10px] font-normal text-pink-300">AC (ట్యాంక్ 7)</span></div>
+        </div>
+        <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-xl">
+          <span class="text-slate-400 block text-[10px]">సజీవ జలాశయం నిష్పత్తి</span>
+          <div class="text-base font-bold text-emerald-400 mt-0.5">99.48% <span class="text-[10px] font-normal text-emerald-300">(271.76 AC)</span></div>
+        </div>
+      </div>
+
+      <!-- Search & Direct GIS Button -->
+      <div class="flex flex-wrap items-center justify-between gap-2 flex-shrink-0">
+        <input 
+          type="text" 
+          placeholder="చెరువు/కాలువ పేరుతో శోధించండి..." 
+          id="indexWbSearchInput" 
+          class="bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 placeholder:text-slate-500 w-64 focus:outline-none focus:border-sky-500"
+          oninput="renderWaterbodiesTable(this.value)"
+        >
+        <a href="gis-ward-map.html#waterbodies" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-md transition hover:scale-105">
+          <span>🗺️ 39 వార్డుల GIS డిజిటల్ పటంలో చూడండి ➔</span>
+        </a>
+      </div>
+
+      <!-- Table Container -->
+      <div class="flex-1 min-h-0 overflow-y-auto border border-slate-800 rounded-xl bg-slate-950/60 pr-1 text-xs">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead class="sticky top-0 bg-slate-900 z-10 border-b border-slate-800 text-slate-400 text-[11px]">
+            <tr>
+              <th class="py-2 px-2.5">క్ర.సం.</th>
+              <th class="py-2 px-2.5">కోడ్</th>
+              <th class="py-2 px-2.5">జలాశయం పేరు (Waterbody Name)</th>
+              <th class="py-2 px-2.5 text-right">మొత్తం (AC)</th>
+              <th class="py-2 px-2.5 text-right">2011 మార్పు (AC)</th>
+              <th class="py-2 px-2.5 text-center">చర్య</th>
+            </tr>
+          </thead>
+          <tbody id="indexWbTableBody" class="divide-y divide-slate-800/60">
+            <!-- Dynamically populated via JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="flex items-center justify-between pt-2 border-t border-slate-800 flex-shrink-0 text-xs">
+        <span class="text-slate-400 text-[11px]">మూలం: APSAC, ITE&C శాఖ, ఆంధ్రప్రదేశ్ ప్రభుత్వం</span>
+        <button onclick="toggleWaterbodiesModal()" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-semibold">
+          పూర్తయింది (Close)
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Ward Data Script & Interactive Engine -->
   <script>
     // Project all 52 Wards from official boundaries into SVG viewBox="0 0 1000 750"
@@ -606,8 +770,8 @@
       return [Number(x.toFixed(1)), Number(y.toFixed(1))];
     }
 
-    // Zone Styling Definitions
-    const zoneStyles = {
+    // Zone Styling Definitions for Dark and Light Modes
+    const zoneStylesDark = {
       zone1: {
         fill: "rgba(14, 165, 233, 0.22)",
         stroke: "#38bdf8",
@@ -641,6 +805,122 @@
         name: "రాయలం & సౌత్"
       }
     };
+
+    const zoneStylesLight = {
+      zone1: {
+        fill: "rgba(14, 165, 233, 0.20)",
+        stroke: "#0284c7",
+        hover: "#38bdf8",
+        text: "#0369a1",
+        badge: "bg-sky-100 text-sky-800 border-sky-300",
+        name: "వన్ టౌన్ & నార్త్"
+      },
+      zone2: {
+        fill: "rgba(16, 185, 129, 0.20)",
+        stroke: "#059669",
+        hover: "#34d399",
+        text: "#047857",
+        badge: "bg-emerald-100 text-emerald-800 border-emerald-300",
+        name: "గుణుపూడి & ఈస్ట్"
+      },
+      zone3: {
+        fill: "rgba(245, 158, 11, 0.20)",
+        stroke: "#d97706",
+        hover: "#fbbf24",
+        text: "#b45309",
+        badge: "bg-amber-100 text-amber-800 border-amber-300",
+        name: "టూ టౌన్ & వెస్ట్"
+      },
+      zone4: {
+        fill: "rgba(168, 85, 247, 0.20)",
+        stroke: "#9333ea",
+        hover: "#c084fc",
+        text: "#7e22ce",
+        badge: "bg-purple-100 text-purple-800 border-purple-300",
+        name: "రాయలం & సౌత్"
+      }
+    };
+
+    function getZoneStyle(zKey) {
+      const isLight = document.documentElement.classList.contains('light');
+      const set = isLight ? zoneStylesLight : zoneStylesDark;
+      return set[zKey] || set.zone1;
+    }
+
+    // Direct Navigation to GIS Ward Map
+    function navigateToGisMap(e) {
+      if (e) e.preventDefault();
+      window.location.href = 'gis-ward-map.html';
+    }
+
+    // Waterbodies Modal Management & Rendering
+    function toggleWaterbodiesModal() {
+      const m = document.getElementById('waterbodiesModal');
+      if (!m) return;
+      const isHidden = m.classList.contains('hidden');
+      if (isHidden) {
+        m.classList.remove('hidden');
+        renderWaterbodiesTable(document.getElementById('indexWbSearchInput')?.value || '');
+      } else {
+        m.classList.add('hidden');
+      }
+    }
+
+    function renderWaterbodiesTable(filterText = '') {
+      const tbody = document.getElementById('indexWbTableBody');
+      if (!tbody) return;
+      if (typeof BHIMAVARAM_WATERBODIES_DATA === 'undefined') {
+        tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-slate-400">డేటా లోడ్ అవుతోంది...</td></tr>';
+        return;
+      }
+      
+      const q = (filterText || '').trim().toLowerCase();
+      const list = BHIMAVARAM_WATERBODIES_DATA.filter(wb => {
+        if (!q) return true;
+        return wb.code.toLowerCase().includes(q) ||
+               wb.nameTe.toLowerCase().includes(q) ||
+               wb.nameEn.toLowerCase().includes(q) ||
+               wb.type.toLowerCase().includes(q);
+      });
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">ఫలితాలు కనుగొనబడలేదు</td></tr>`;
+        return;
+      }
+
+      const isLight = document.documentElement.classList.contains('light');
+
+      tbody.innerHTML = list.map(wb => {
+        const isEncroached = wb.change2011Acres > 0;
+        const changeBadge = isEncroached
+          ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-pink-500/20 text-pink-400 border border-pink-500/30">⚠️ ${wb.change2011Acres.toFixed(2)} AC</span>`
+          : `<span class="text-slate-400 text-[10px]">0.00</span>`;
+
+        const typeBadge = wb.type === 'tank'
+          ? `<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-sky-500/15 text-sky-400 border border-sky-500/20">చెరువు</span>`
+          : `<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-cyan-500/15 text-cyan-400 border border-cyan-500/20">కాలువ</span>`;
+
+        return `
+          <tr class="${isLight ? 'hover:bg-slate-100 text-slate-800' : 'hover:bg-slate-900/80 text-slate-200'} transition">
+            <td class="py-2 px-2.5 font-mono text-[11px] text-slate-400">${wb.sno}</td>
+            <td class="py-2 px-2.5 font-bold ${wb.type === 'tank' ? 'text-sky-500' : 'text-cyan-400'} whitespace-nowrap">
+              ${typeBadge} ${wb.code}
+            </td>
+            <td class="py-2 px-2.5">
+              <div class="font-semibold ${isLight ? 'text-slate-900' : 'text-slate-100'} telugu-font leading-tight">${wb.nameTe}</div>
+              <div class="text-[10px] text-slate-400">${wb.nameEn}</div>
+            </td>
+            <td class="py-2 px-2.5 text-right font-bold ${isLight ? 'text-slate-800' : 'text-slate-200'}">${wb.totalAreaAcres.toFixed(2)}</td>
+            <td class="py-2 px-2.5 text-right font-medium">${changeBadge}</td>
+            <td class="py-2 px-2.5 text-center">
+              <a href="gis-ward-map.html#waterbodies" class="inline-flex items-center px-2.5 py-1 rounded-md bg-sky-600 hover:bg-sky-500 text-white font-bold text-[10px] shadow transition">
+                పటంలో ➔
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
 
     // Combine official 52 wards boundaries data with demographic estimation & candidates
     const wardsData = (typeof BHIMAVARAM_52_WARDS_DATA !== 'undefined' ? BHIMAVARAM_52_WARDS_DATA : []).map(w => {
@@ -676,7 +956,7 @@
         name: w.nameTe,
         nameEng: w.nameEn,
         zone: zKey,
-        zoneName: zoneStyles[zKey].name,
+        zoneName: zoneStylesDark[zKey].name,
         centerSvg: centerSvg,
         pathD: pathD,
         north: w.north,
@@ -707,10 +987,24 @@
       if (!container) return;
       container.innerHTML = '';
 
+      const isLight = document.documentElement.classList.contains('light');
+
+      // Update background and grid for SVG Canvas
+      const svgBg = document.getElementById('svgMapBg');
+      if (svgBg) svgBg.setAttribute('fill', isLight ? '#f8fafc' : '#090d16');
+
+      const gridLines = document.getElementById('svgGridLines');
+      if (gridLines) gridLines.setAttribute('stroke', isLight ? '#cbd5e1' : '#1e293b');
+
+      const zoneTexts = document.querySelectorAll('#svgZoneLabels text');
+      zoneTexts.forEach(t => {
+        t.setAttribute('fill', isLight ? '#64748b' : '#475569');
+      });
+
       wardsData.forEach(ward => {
         if (!ward.pathD) return;
 
-        const style = zoneStyles[ward.zone] || zoneStyles.zone1;
+        const style = getZoneStyle(ward.zone);
 
         const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
         g.setAttribute("id", `ward-elem-${ward.id}`);
@@ -721,12 +1015,11 @@
         path.setAttribute("d", ward.pathD);
         path.setAttribute("class", "ward-polygon");
         
-        // Candidate colored subtle tint if candidate present
         let fill = style.fill;
         let stroke = style.stroke;
         if (ward.candidate) {
-          if (ward.candidate.party === 'JSP') stroke = '#ef4444';
-          else if (ward.candidate.party === 'TDP') stroke = '#eab308';
+          if (ward.candidate.party === 'JSP') stroke = isLight ? '#dc2626' : '#ef4444';
+          else if (ward.candidate.party === 'TDP') stroke = isLight ? '#d97706' : '#eab308';
         }
 
         path.setAttribute("fill", fill);
@@ -741,7 +1034,8 @@
         numText.setAttribute("x", centerX);
         numText.setAttribute("y", centerY - 3);
         numText.setAttribute("text-anchor", "middle");
-        numText.setAttribute("fill", "#ffffff");
+        numText.setAttribute("class", "ward-num-text");
+        numText.setAttribute("fill", isLight ? "#0f172a" : "#ffffff");
         numText.setAttribute("font-size", "12");
         numText.setAttribute("font-weight", "bold");
         numText.setAttribute("pointer-events", "none");
@@ -751,7 +1045,8 @@
         nameText.setAttribute("x", centerX);
         nameText.setAttribute("y", centerY + 11);
         nameText.setAttribute("text-anchor", "middle");
-        nameText.setAttribute("fill", style.text);
+        nameText.setAttribute("class", "ward-name-text");
+        nameText.setAttribute("fill", isLight ? style.text : style.text);
         nameText.setAttribute("font-size", "8.5");
         nameText.setAttribute("font-family", "'Tiro Telugu', sans-serif");
         nameText.setAttribute("pointer-events", "none");
@@ -778,6 +1073,8 @@
       if (!container) return;
       container.innerHTML = '';
 
+      const isLight = document.documentElement.classList.contains('light');
+
       wardsData.forEach(ward => {
         const btn = document.createElement('button');
         btn.id = `pill-ward-${ward.id}`;
@@ -789,9 +1086,19 @@
           candIcon = `<span class="text-[10px]">${ward.candidate.symbol}</span>`;
         }
 
-        btn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap shadow-sm bg-slate-800/90 text-slate-200 border-slate-700/80 hover:bg-slate-700 hover:text-white hover:border-slate-500';
+        const isSelected = (ward.id === selectedWardId);
+        const style = getZoneStyle(ward.zone);
+
+        if (isSelected) {
+          btn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap shadow-sm bg-cyan-600 text-white border-cyan-400 ring-2 ring-cyan-400/50 scale-[1.02]';
+        } else {
+          btn.className = isLight
+            ? 'px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap shadow-sm bg-white text-slate-800 border-slate-300 hover:bg-slate-100 hover:border-slate-400'
+            : 'px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap shadow-sm bg-slate-800/90 text-slate-200 border-slate-700/80 hover:bg-slate-700 hover:text-white hover:border-slate-500';
+        }
+
         btn.innerHTML = `
-          <span class="w-2 h-2 rounded-full" style="background-color: ${zoneStyles[ward.zone].stroke}"></span>
+          <span class="w-2 h-2 rounded-full" style="background-color: ${style.stroke}"></span>
           <span>వార్డు ${ward.id}</span>
           ${candIcon}
         `;
@@ -803,36 +1110,37 @@
       const tooltip = document.getElementById('wardTooltip');
       if (!tooltip) return;
 
-      const style = zoneStyles[ward.zone];
+      const isLight = document.documentElement.classList.contains('light');
+      const style = getZoneStyle(ward.zone);
 
       let candidateHtml = '';
       if (ward.candidate) {
         candidateHtml = `
-          <div class="mt-2 p-1.5 rounded bg-slate-950/80 border" style="border-color: ${ward.candidate.partyBorder}">
+          <div class="mt-2 p-1.5 rounded ${isLight ? 'bg-slate-50 border-slate-300' : 'bg-slate-950/80 border'}" style="border-color: ${ward.candidate.partyBorder}">
             <div class="flex items-center justify-between text-[11px]">
               <span class="font-bold flex items-center gap-1" style="color:${ward.candidate.partyColor}">
                 <span>${ward.candidate.symbol}</span>
                 <span>${ward.candidate.party} అభ్యర్థి:</span>
               </span>
-              <span class="text-white font-semibold">${ward.candidate.candidateTe}</span>
+              <span class="${isLight ? 'text-slate-900' : 'text-white'} font-semibold">${ward.candidate.candidateTe}</span>
             </div>
           </div>
         `;
       }
 
       tooltip.innerHTML = `
-        <div class="border-b border-slate-700 pb-1.5 mb-1.5 flex items-center justify-between">
-          <span class="font-bold text-white text-sm">వార్డు నెంబర్: ${ward.id}</span>
+        <div class="border-b ${isLight ? 'border-slate-200' : 'border-slate-700'} pb-1.5 mb-1.5 flex items-center justify-between">
+          <span class="font-bold ${isLight ? 'text-slate-900' : 'text-white'} text-sm">వార్డు నెంబర్: ${ward.id}</span>
           <span class="text-[10px] px-2 py-0.5 rounded-full font-bold ${style.badge}">${ward.zoneName}</span>
         </div>
-        <div class="font-bold text-cyan-300 text-xs mb-1 telugu-font">${ward.name}</div>
+        <div class="font-bold ${isLight ? 'text-cyan-700' : 'text-cyan-300'} text-xs mb-1 telugu-font">${ward.name}</div>
         <div class="text-[10px] text-slate-400 mb-1.5">${ward.nameEng}</div>
-        <div class="text-[11px] text-slate-300 space-y-0.5">
-          <div>👥 జనాభా: <span class="font-semibold text-white">~${ward.pop.toLocaleString('en-IN')}</span> | ఓటర్లు: <span class="font-semibold text-amber-300">${ward.voters.toLocaleString('en-IN')}</span></div>
-          <div>🏛️ ల్యాండ్‌మార్క్‌లు: <span class="text-slate-300">${ward.landmarks.slice(0, 2).join(', ') || 'N/A'}</span></div>
+        <div class="text-[11px] ${isLight ? 'text-slate-700' : 'text-slate-300'} space-y-0.5">
+          <div>👥 జనాభా: <span class="font-semibold ${isLight ? 'text-slate-900' : 'text-white'}">~${ward.pop.toLocaleString('en-IN')}</span> | ఓటర్లు: <span class="font-semibold ${isLight ? 'text-amber-700' : 'text-amber-300'}">${ward.voters.toLocaleString('en-IN')}</span></div>
+          <div>🏛️ ల్యాండ్‌మార్క్‌లు: <span class="${isLight ? 'text-slate-600' : 'text-slate-300'}">${ward.landmarks.slice(0, 2).join(', ') || 'N/A'}</span></div>
         </div>
         ${candidateHtml}
-        <div class="mt-2 text-[10px] text-center text-cyan-400 font-semibold border-t border-slate-800 pt-1">
+        <div class="mt-2 text-[10px] text-center ${isLight ? 'text-cyan-700' : 'text-cyan-400'} font-semibold border-t ${isLight ? 'border-slate-200' : 'border-slate-800'} pt-1">
           👆 క్లిక్ చేసి పూర్తి గెజిట్ సరిహద్దులు చూడండి
         </div>
       `;
@@ -869,18 +1177,20 @@
       const tooltip = document.getElementById('wardTooltip');
       if (tooltip) tooltip.classList.add('hidden');
 
+      const isLight = document.documentElement.classList.contains('light');
+
       wardsData.forEach(w => {
         const path = document.getElementById(`ward-path-${w.id}`);
         if (path) {
           if (w.id === selectedWardId) {
-            path.setAttribute('stroke', '#38bdf8');
+            path.setAttribute('stroke', isLight ? '#0284c7' : '#38bdf8');
             path.setAttribute('stroke-width', '3');
           } else {
-            const style = zoneStyles[w.zone];
+            const style = getZoneStyle(w.zone);
             let stroke = style.stroke;
             if (w.candidate) {
-              if (w.candidate.party === 'JSP') stroke = '#ef4444';
-              else if (w.candidate.party === 'TDP') stroke = '#eab308';
+              if (w.candidate.party === 'JSP') stroke = isLight ? '#dc2626' : '#ef4444';
+              else if (w.candidate.party === 'TDP') stroke = isLight ? '#d97706' : '#eab308';
             }
             path.setAttribute('fill', style.fill);
             path.setAttribute('stroke', stroke);
@@ -895,25 +1205,51 @@
       const ward = wardsData.find(w => w.id === wardId);
       if (!ward) return;
 
-      document.getElementById('detailBadge').textContent = `వార్డు ${ward.id} (ఎంపికైనది)`;
-      document.getElementById('detailZoneTag').textContent = ward.zoneName;
-      document.getElementById('detailWardName').textContent = ward.name;
-      document.getElementById('detailWardEngName').textContent = ward.nameEng;
-      document.getElementById('detailLocalities').textContent = ward.areas;
-      document.getElementById('detailSecretariat').textContent = ward.sec;
-      document.getElementById('detailBooths').textContent = `${ward.booths} పోలింగ్ కేంద్రాలు`;
+      const isLight = document.documentElement.classList.contains('light');
+      const style = getZoneStyle(ward.zone);
+
+      const dBadge = document.getElementById('detailBadge');
+      if (dBadge) dBadge.textContent = `వార్డు ${ward.id} (ఎంపికైనది)`;
+
+      const dZone = document.getElementById('detailZoneTag');
+      if (dZone) dZone.textContent = ward.zoneName;
+
+      const dName = document.getElementById('detailWardName');
+      if (dName) dName.textContent = ward.name;
+
+      const dEng = document.getElementById('detailWardEngName');
+      if (dEng) dEng.textContent = ward.nameEng;
+
+      const dLocal = document.getElementById('detailLocalities');
+      if (dLocal) dLocal.textContent = ward.areas;
+
+      const dSec = document.getElementById('detailSecretariat');
+      if (dSec) dSec.textContent = ward.sec;
+
+      const dBooths = document.getElementById('detailBooths');
+      if (dBooths) dBooths.textContent = `${ward.booths} పోలింగ్ కేంద్రాలు`;
 
       // Gazette boundaries
-      document.getElementById('detailNorth').textContent = ward.north || 'సమాచారం అందుబాటులో లేదు';
-      document.getElementById('detailEast').textContent = ward.east || 'సమాచారం అందుబాటులో లేదు';
-      document.getElementById('detailSouth').textContent = ward.south || 'సమాచారం అందుబాటులో లేదు';
-      document.getElementById('detailWest').textContent = ward.west || 'సమాచారం అందుబాటులో లేదు';
+      const dNorth = document.getElementById('detailNorth');
+      if (dNorth) dNorth.textContent = ward.north || 'సమాచారం అందుబాటులో లేదు';
+      const dEast = document.getElementById('detailEast');
+      if (dEast) dEast.textContent = ward.east || 'సమాచారం అందుబాటులో లేదు';
+      const dSouth = document.getElementById('detailSouth');
+      if (dSouth) dSouth.textContent = ward.south || 'సమాచారం అందుబాటులో లేదు';
+      const dWest = document.getElementById('detailWest');
+      if (dWest) dWest.textContent = ward.west || 'సమాచారం అందుబాటులో లేదు';
 
       // RS & Door numbers
-      const rsStr = (ward.rsNos && ward.rsNos.length) ? ward.rsNos.join(', ') : 'పరిశీలనలో ఉంది';
-      document.getElementById('detailRsNos').textContent = rsStr;
-      const dNosStr = (ward.dNos && ward.dNos.length) ? ward.dNos.join(', ') : 'గెజిట్ రికార్డు';
-      document.getElementById('detailDnos').textContent = dNosStr;
+      const dRs = document.getElementById('detailRsNos');
+      if (dRs) {
+        const rsStr = (ward.rsNos && ward.rsNos.length) ? ward.rsNos.join(', ') : 'పరిశీలనలో ఉంది';
+        dRs.textContent = rsStr;
+      }
+      const dNos = document.getElementById('detailDnos');
+      if (dNos) {
+        const dNosStr = (ward.dNos && ward.dNos.length) ? ward.dNos.join(', ') : 'గెజిట్ రికార్డు';
+        dNos.textContent = dNosStr;
+      }
 
       // Candidate Card
       const candContainer = document.getElementById('detailCandidateContainer');
@@ -921,25 +1257,25 @@
         if (ward.candidate) {
           const c = ward.candidate;
           candContainer.innerHTML = `
-            <div class="p-2.5 rounded-xl border shadow-md flex items-center justify-between" style="background-color: rgba(15, 23, 42, 0.95); border-color: ${c.partyBorder}">
+            <div class="p-2.5 rounded-xl border shadow-md flex items-center justify-between" style="background-color: ${isLight ? '#ffffff' : 'rgba(15, 23, 42, 0.95)'}; border-color: ${c.partyBorder}">
               <div class="flex items-center gap-2.5">
                 <div class="w-9 h-9 rounded-lg flex items-center justify-center text-xl shadow" style="background-color: ${c.partyBg}">
                   ${c.symbol}
                 </div>
                 <div>
                   <div class="text-[10px] font-bold" style="color: ${c.partyColor}">${c.partyNameTe}</div>
-                  <div class="text-sm font-black text-white telugu-font leading-tight">${c.candidateTe}</div>
-                  <div class="text-[10px] text-slate-400 font-medium">${c.candidateEn}</div>
+                  <div class="text-sm font-black ${isLight ? 'text-slate-900' : 'text-white'} telugu-font leading-tight">${c.candidateTe}</div>
+                  <div class="text-[10px] ${isLight ? 'text-slate-500' : 'text-slate-400'} font-medium">${c.candidateEn}</div>
                 </div>
               </div>
-              <a href="elections.html?ward=${ward.id}" class="px-2 py-1 rounded-md text-[10px] font-bold bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 transition">
+              <a href="elections.html?ward=${ward.id}" class="px-2 py-1 rounded-md text-[10px] font-bold ${isLight ? 'bg-slate-100 hover:bg-slate-200 text-amber-800 border border-amber-400/50' : 'bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30'} transition">
                 వివరాలు ➔
               </a>
             </div>
           `;
         } else {
           candContainer.innerHTML = `
-            <div class="p-2 rounded-lg bg-slate-950/40 border border-slate-800/80 text-center text-[11px] text-slate-400">
+            <div class="p-2 rounded-lg ${isLight ? 'bg-slate-100 border-slate-200 text-slate-600' : 'bg-slate-950/40 border-slate-800/80 text-slate-400'} border text-center text-[11px]">
               కూటమి అభ్యర్థి ప్రకటన నిరీక్షణలో ఉంది (Alliance Announcement Pending)
             </div>
           `;
@@ -954,58 +1290,63 @@
 
       // Demographics table
       const tbody = document.getElementById('detailedTableBody');
-      tbody.innerHTML = `
-        <tr class="bg-cyan-950/20">
-          <td class="py-2 px-3 text-slate-300 font-medium">మొత్తం జనాభా (Estimated Population)</td>
-          <td class="py-2 px-3 text-right font-bold text-cyan-300 text-sm">${ward.pop.toLocaleString('en-IN')} మంది</td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3 text-slate-400">పురుషుల జనాభా (Male)</td>
-          <td class="py-2 px-3 text-right font-semibold text-slate-200">${ward.male.toLocaleString('en-IN')}</td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3 text-slate-400">స్త్రీల జనాభా (Female)</td>
-          <td class="py-2 px-3 text-right font-semibold text-slate-200">${ward.female.toLocaleString('en-IN')}</td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3 text-slate-400">లింగ నిష్పత్తి (Sex Ratio)</td>
-          <td class="py-2 px-3 text-right font-semibold text-emerald-400">${ward.sexRatio} / 1000</td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3 text-slate-400">మొత్తం గృహాలు (Households)</td>
-          <td class="py-2 px-3 text-right font-semibold text-slate-200">${ward.houses.toLocaleString('en-IN')} ఇళ్ళు</td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3 text-slate-400">నమోదిత ఓటర్లు (Voters)</td>
-          <td class="py-2 px-3 text-right font-semibold text-amber-400">${ward.voters.toLocaleString('en-IN')} మంది</td>
-        </tr>
-      `;
+      if (tbody) {
+        tbody.innerHTML = `
+          <tr class="${isLight ? 'bg-sky-50' : 'bg-cyan-950/20'}">
+            <td class="py-2 px-3 ${isLight ? 'text-slate-800' : 'text-slate-300'} font-medium">మొత్తం జనాభా (Estimated Population)</td>
+            <td class="py-2 px-3 text-right font-bold ${isLight ? 'text-cyan-700' : 'text-cyan-300'} text-sm">${ward.pop.toLocaleString('en-IN')} మంది</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-3 ${isLight ? 'text-slate-600' : 'text-slate-400'}">పురుషుల జనాభా (Male)</td>
+            <td class="py-2 px-3 text-right font-semibold ${isLight ? 'text-slate-800' : 'text-slate-200'}">${ward.male.toLocaleString('en-IN')}</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-3 ${isLight ? 'text-slate-600' : 'text-slate-400'}">స్త్రీల జనాభా (Female)</td>
+            <td class="py-2 px-3 text-right font-semibold ${isLight ? 'text-slate-800' : 'text-slate-200'}">${ward.female.toLocaleString('en-IN')}</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-3 ${isLight ? 'text-slate-600' : 'text-slate-400'}">లింగ నిష్పత్తి (Sex Ratio)</td>
+            <td class="py-2 px-3 text-right font-semibold ${isLight ? 'text-emerald-700' : 'text-emerald-400'}">${ward.sexRatio} / 1000</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-3 ${isLight ? 'text-slate-600' : 'text-slate-400'}">మొత్తం గృహాలు (Households)</td>
+            <td class="py-2 px-3 text-right font-semibold ${isLight ? 'text-slate-800' : 'text-slate-200'}">${ward.houses.toLocaleString('en-IN')} ఇళ్ళు</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-3 ${isLight ? 'text-slate-600' : 'text-slate-400'}">నమోదిత ఓటర్లు (Voters)</td>
+            <td class="py-2 px-3 text-right font-semibold ${isLight ? 'text-amber-700' : 'text-amber-400'}">${ward.voters.toLocaleString('en-IN')} మంది</td>
+          </tr>
+        `;
+      }
 
       // Update pills
       document.querySelectorAll('#quickPillsContainer button').forEach(btn => {
-        btn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap shadow-sm bg-slate-800/90 text-slate-200 border-slate-700/80 hover:bg-slate-700 hover:text-white hover:border-slate-500';
+        const wId = parseInt(btn.dataset.wardId);
+        if (wId === wardId) {
+          btn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap shadow-sm bg-cyan-600 text-white border-cyan-400 ring-2 ring-cyan-400/50 scale-[1.02]';
+          btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        } else {
+          btn.className = isLight
+            ? 'px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap shadow-sm bg-white text-slate-800 border-slate-300 hover:bg-slate-100 hover:border-slate-400'
+            : 'px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap shadow-sm bg-slate-800/90 text-slate-200 border-slate-700/80 hover:bg-slate-700 hover:text-white hover:border-slate-500';
+        }
       });
-      const activePill = document.getElementById(`pill-ward-${wardId}`);
-      if (activePill) {
-        activePill.className = 'px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap shadow-sm bg-cyan-600 text-white border-cyan-300 ring-2 ring-cyan-400/50 shadow-cyan-900/40 scale-[1.02]';
-        activePill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
 
       // Update polygon styling
       wardsData.forEach(w => {
         const path = document.getElementById(`ward-path-${w.id}`);
         if (path) {
           if (w.id === wardId) {
-            path.setAttribute('stroke', '#38bdf8');
+            path.setAttribute('stroke', isLight ? '#0284c7' : '#38bdf8');
             path.setAttribute('stroke-width', '3.5');
             path.setAttribute('filter', 'url(#glow)');
             path.parentNode.appendChild(path);
           } else {
-            const style = zoneStyles[w.zone];
-            let stroke = style.stroke;
+            const zStyle = getZoneStyle(w.zone);
+            let stroke = zStyle.stroke;
             if (w.candidate) {
-              if (w.candidate.party === 'JSP') stroke = '#ef4444';
-              else if (w.candidate.party === 'TDP') stroke = '#eab308';
+              if (w.candidate.party === 'JSP') stroke = isLight ? '#dc2626' : '#ef4444';
+              else if (w.candidate.party === 'TDP') stroke = isLight ? '#d97706' : '#eab308';
             }
             path.setAttribute('stroke', stroke);
             path.setAttribute('stroke-width', '1.6');
@@ -1037,7 +1378,8 @@
         path.setAttribute('stroke', '#f59e0b');
         path.setAttribute('stroke-width', '4');
         setTimeout(() => {
-          path.setAttribute('stroke', '#38bdf8');
+          const isLight = document.documentElement.classList.contains('light');
+          path.setAttribute('stroke', isLight ? '#0284c7' : '#38bdf8');
           path.setAttribute('stroke-width', '3.5');
         }, 1200);
       }
@@ -1050,30 +1392,54 @@
     // Filter by Zone
     function filterZone(zoneKey) {
       activeFilterZone = zoneKey;
-      document.querySelectorAll('.zone-tab-btn').forEach(b => {
-        b.classList.remove('active', 'border-cyan-400', 'bg-cyan-500/20', 'text-cyan-300');
-        b.classList.add('border-slate-800', 'text-slate-400');
+      ['btn-zone-all', 'btn-zone-1', 'btn-zone-2', 'btn-zone-3n', 'btn-zone-3s'].forEach(id => {
+        const b = document.getElementById(id);
+        if (b) {
+          b.className = 'px-2.5 py-1 rounded-md font-medium text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 transition';
+        }
       });
-      const activeBtn = document.getElementById(`tab-${zoneKey}`);
+      let activeBtnId = 'btn-zone-all';
+      if (zoneKey === 'zone1') activeBtnId = 'btn-zone-1';
+      else if (zoneKey === 'zone2') activeBtnId = 'btn-zone-2';
+      else if (zoneKey === 'zone3_north' || zoneKey === 'zone3') activeBtnId = 'btn-zone-3n';
+      else if (zoneKey === 'zone3_south' || zoneKey === 'zone4') activeBtnId = 'btn-zone-3s';
+
+      const activeBtn = document.getElementById(activeBtnId);
       if (activeBtn) {
-        activeBtn.classList.add('active', 'border-cyan-400', 'bg-cyan-500/20', 'text-cyan-300');
-        activeBtn.classList.remove('border-slate-800', 'text-slate-400');
+        activeBtn.className = 'px-2.5 py-1 rounded-md font-medium text-xs bg-cyan-600 text-white shadow-sm transition';
       }
 
       wardsData.forEach(w => {
         const elem = document.getElementById(`ward-elem-${w.id}`);
         const pill = document.getElementById(`pill-ward-${w.id}`);
-        const visible = (zoneKey === 'all' || w.zone === zoneKey);
+        
+        let visible = false;
+        if (zoneKey === 'all') visible = true;
+        else if (zoneKey === 'zone1') visible = (w.ward >= 1 && w.ward <= 20) || w.zone === 'zone1';
+        else if (zoneKey === 'zone2') visible = (w.ward >= 21 && w.ward <= 40) || w.zone === 'zone2' || w.zone === 'zone3';
+        else if (zoneKey === 'zone3_north' || zoneKey === 'zone3') visible = (w.ward >= 41 && w.ward <= 45);
+        else if (zoneKey === 'zone3_south' || zoneKey === 'zone4') visible = (w.ward >= 46 && w.ward <= 52) || w.zone === 'zone4';
 
-        if (elem) elem.style.opacity = visible ? '1' : '0.15';
+        if (elem) elem.style.opacity = visible ? '1' : '0.12';
         if (pill) pill.style.display = visible ? '' : 'none';
       });
 
-      const firstVisible = wardsData.find(w => zoneKey === 'all' || w.zone === zoneKey);
+      const firstVisible = wardsData.find(w => {
+        if (zoneKey === 'all') return true;
+        if (zoneKey === 'zone1') return (w.ward >= 1 && w.ward <= 20);
+        if (zoneKey === 'zone2') return (w.ward >= 21 && w.ward <= 40);
+        if (zoneKey === 'zone3_north' || zoneKey === 'zone3') return (w.ward >= 41 && w.ward <= 45);
+        if (zoneKey === 'zone3_south' || zoneKey === 'zone4') return (w.ward >= 46 && w.ward <= 52);
+        return false;
+      });
       if (firstVisible) selectWard(firstVisible.id);
     }
 
-    // Search wards
+    // Search wards & RS numbers
+    function handleSearch(val) {
+      handleWardSearch(val);
+    }
+
     function handleWardSearch(val) {
       const q = (val || '').trim().toLowerCase();
       if (!q) {
@@ -1086,12 +1452,17 @@
         const pill = document.getElementById(`pill-ward-${w.id}`);
 
         const candName = w.candidate ? (w.candidate.candidateTe + ' ' + w.candidate.candidateEn).toLowerCase() : '';
+        const rsMatch = (w.rsNos || []).some(rs => rs.toString().toLowerCase().includes(q) || q.includes(rs.toString()));
+        const dNoMatch = (w.dNos || []).some(d => d.toString().toLowerCase().includes(q));
         const match = w.id.toString() === q ||
+                      `వార్డు ${w.id}`.includes(q) ||
+                      `ward ${w.id}`.toLowerCase().includes(q) ||
                       w.name.toLowerCase().includes(q) ||
                       w.nameEng.toLowerCase().includes(q) ||
                       w.areas.toLowerCase().includes(q) ||
                       candName.includes(q) ||
-                      w.rsNos.some(rs => rs.toString() === q);
+                      rsMatch ||
+                      dNoMatch;
 
         if (elem) elem.style.opacity = match ? '1' : '0.12';
         if (pill) pill.style.display = match ? '' : 'none';
@@ -1099,8 +1470,10 @@
 
       const found = wardsData.find(w => 
         w.id.toString() === q ||
+        `వార్డు ${w.id}`.includes(q) ||
         w.name.toLowerCase().includes(q) ||
-        w.nameEng.toLowerCase().includes(q)
+        w.nameEng.toLowerCase().includes(q) ||
+        (w.rsNos || []).some(rs => rs.toString() === q)
       );
       if (found) selectWard(found.id);
     }
@@ -1111,16 +1484,31 @@
       if (m) m.classList.toggle('hidden');
     }
 
+    // Theme Changed Dynamic Listener
+    window.addEventListener('themechanged', () => {
+      renderMap();
+      renderQuickPills();
+      selectWard(selectedWardId);
+      const wbModal = document.getElementById('waterbodiesModal');
+      if (wbModal && !wbModal.classList.contains('hidden')) {
+        renderWaterbodiesTable(document.getElementById('indexWbSearchInput')?.value || '');
+      }
+    });
+
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
       renderMap();
       renderQuickPills();
       selectWard(1);
 
-      // Search input binding
-      const sInput = document.getElementById('wardSearchInput');
-      if (sInput) {
-        sInput.addEventListener('input', (e) => handleWardSearch(e.target.value));
+      // Search input bindings
+      const sInput1 = document.getElementById('wardSearch');
+      if (sInput1) {
+        sInput1.addEventListener('input', (e) => handleWardSearch(e.target.value));
+      }
+      const sInput2 = document.getElementById('wardSearchInput');
+      if (sInput2) {
+        sInput2.addEventListener('input', (e) => handleWardSearch(e.target.value));
       }
 
       // Check URL query param ?ward=X

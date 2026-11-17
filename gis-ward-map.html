@@ -1036,7 +1036,7 @@
       if (qWard) {
         setTimeout(() => selectWard(qWard, true), 300);
       }
-      if (urlParams.get('view') === 'waterbodies' || urlParams.get('layer') === 'waterbodies') {
+      if (urlParams.get('view') === 'waterbodies' || urlParams.get('layer') === 'waterbodies' || window.location.hash.includes('waterbodies')) {
         setTimeout(() => setViewPreset('waterbodies'), 300);
       }
       if (urlParams.get('waterbody')) {

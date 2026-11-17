@@ -164,11 +164,32 @@ html.light .leaflet-popup-tip {
 
 /* Modals */
 html.light #waterbodiesModal > div,
+html.light #systemOverviewModal > div,
 html.light #calibratorModal > div {
   background-color: #ffffff !important;
   border-color: #cbd5e1 !important;
   color: #0f172a !important;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+html.light #systemOverviewModal .bg-slate-950\/70,
+html.light #waterbodiesModal .bg-slate-950\/80,
+html.light #waterbodiesModal .bg-slate-950\/60 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light #waterbodiesModal thead {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+
+html.light #indexWbSearchInput {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
 }
 
 /* Custom Scrollbars in Light Mode */
@@ -192,3 +213,128 @@ html.light #footerDisclaimer {
   border-color: #e2e8f0 !important;
   color: #64748b !important;
 }
+
+/* ====================================================
+   Index.html - Dedicated Light Theme Overrides
+   ==================================================== */
+
+/* SVG Map Wrapper & Canvas in Light Mode */
+html.light #mapSvgWrapper {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light #svgMapBg {
+  fill: #f8fafc !important;
+}
+
+html.light #bhimavaramWardMap rect[fill="#090d16"],
+html.light #bhimavaramWardMap rect:first-child {
+  fill: #f8fafc !important;
+}
+
+html.light #bhimavaramWardMap g[stroke="#1e293b"] {
+  stroke: #cbd5e1 !important;
+  opacity: 0.8 !important;
+}
+
+html.light #bhimavaramWardMap text[fill="#475569"],
+html.light #bhimavaramWardMap text[fill="#334155"] {
+  fill: #64748b !important;
+}
+
+/* Overview Feature Banners on Index.html */
+html.light .from-slate-900.via-indigo-950\/70 {
+  background: linear-gradient(to right, #eff6ff, #f8fafc, #eff6ff) !important;
+  border-color: #bfdbfe !important;
+}
+
+html.light .from-red-950.via-slate-900.to-yellow-950 {
+  background: linear-gradient(to right, #fff1f2, #fffbeb, #fff1f2) !important;
+  border-color: #fecdd3 !important;
+}
+
+html.light .from-emerald-950.via-slate-900.to-teal-950 {
+  background: linear-gradient(to right, #f0fdf4, #f8fafc, #f0fdf4) !important;
+  border-color: #bbf7d0 !important;
+}
+
+html.light .from-amber-950\/80.via-slate-900.to-orange-950\/80 {
+  background: linear-gradient(to right, #fffbeb, #f8fafc, #fffbeb) !important;
+  border-color: #fde68a !important;
+}
+
+html.light .from-cyan-950.via-slate-900.to-indigo-950 {
+  background: linear-gradient(to right, #f0f9ff, #f8fafc, #f0f9ff) !important;
+  border-color: #bae6fd !important;
+}
+
+/* Controls bar & Search */
+html.light .bg-slate-900\/60 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light #wardSearch {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light #btn-zone-1,
+html.light #btn-zone-2,
+html.light #btn-zone-3n,
+html.light #btn-zone-3s {
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+html.light #btn-zone-all {
+  background-color: #0284c7 !important;
+  color: #ffffff !important;
+}
+
+/* Quick Ward Pills Grid on Index.html */
+html.light [id^="pill-ward-"] {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #1e293b !important;
+}
+html.light [id^="pill-ward-"]:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #94a3b8 !important;
+}
+html.light [id^="pill-ward-"].active,
+html.light [id^="pill-ward-"].selected {
+  background-color: #f59e0b !important;
+  border-color: #d97706 !important;
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+
+/* Demographics Panel on Index.html */
+html.light #ward-card,
+html.light #demographics-panel,
+html.light #sideWardDetails,
+html.light .lg\:col-span-4 > div {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light #wardTooltip {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15) !important;
+}
+
+html.light .ward-num-text {
+  fill: #0f172a !important;
+}
+
+html.light .ward-name-text {
+  fill: #334155 !important;
+}
+

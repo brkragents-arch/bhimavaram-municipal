@@ -25,6 +25,11 @@
     localStorage.setItem('bm_theme', theme);
     updateThemeToggleUI(theme);
 
+    // Dispatch theme change event for SVG maps and dynamic components
+    try {
+      window.dispatchEvent(new CustomEvent('themechanged', { detail: { theme } }));
+    } catch(e) {}
+
     // If Leaflet map exists with carto_dark, switch to google_streets or osm in light mode
     try {
       if (typeof map !== 'undefined' && map && typeof baseLayers !== 'undefined') {
