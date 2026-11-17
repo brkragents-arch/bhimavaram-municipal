@@ -25,6 +25,7 @@
 
   <!-- Core Data Files -->
   <script src="assets/bhimavaram_39_wards_data.js"></script>
+  <script src="assets/bhimavaram_52_wards_boundaries.js"></script>
   <script src="assets/bhimavaram_waterbodies_data.js"></script>
   <script src="assets/bhimavaram_flood_intelligence.js"></script>
 
@@ -212,6 +213,10 @@
         <a href="ward-boundaries.html" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/50 font-bold text-xs transition hover:scale-105" title="52 వార్డుల అధికారిక సరిహద్దులు (Source List) & Google Streets GIS">
           <span>📜</span>
           <span>52 వార్డుల సరిహద్దులు</span>
+        </a>
+        <a href="elections.html" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-amber-950/80 hover:bg-amber-900 text-amber-300 border border-amber-500/50 font-bold text-xs transition hover:scale-105" title="52 వార్డుల ఎన్నికల అభ్యర్థుల పటం">
+          <span>🗳️</span>
+          <span>ఎన్నికలు</span>
         </a>
         <a href="gis-ward-map.html" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs transition">
           <span>🗺️</span>
@@ -1435,46 +1440,54 @@
     function load52WardsPolygons() {
       layerGroups.wards.clearLayers();
 
-      // Check if official 39 wards data is loaded from bhimavaram_39_wards_data.js
-      if (typeof BHIMAVARAM_39_WARDS !== 'undefined' && Array.isArray(BHIMAVARAM_39_WARDS)) {
-        BHIMAVARAM_39_WARDS.forEach(w => {
-          // Find matching risk data from 52 wards table
-          const riskInfo = BHIMAVARAM_52_WARDS_FLOOD_DATA.find(d => d.id === w.number) || {
-            riskCategory: "Moderate Risk",
-            riskColor: "#eab308",
-            riskScore: 65,
-            lowLyingPct: 35
-          };
+      const wardsSource = (typeof BHIMAVARAM_52_WARDS_DATA !== 'undefined' && BHIMAVARAM_52_WARDS_DATA.length)
+        ? BHIMAVARAM_52_WARDS_DATA
+        : (typeof BHIMAVARAM_39_WARDS !== 'undefined' ? BHIMAVARAM_39_WARDS : []);
 
-          const polygon = L.polygon(w.coords, {
-            color: riskInfo.riskColor,
-            weight: 2,
-            opacity: 0.85,
-            fillColor: riskInfo.riskColor,
-            fillOpacity: 0.25
-          }).addTo(layerGroups.wards);
+      wardsSource.forEach(w => {
+        const coords = w.polygon || w.coords;
+        if (!coords) return;
+        const wardId = w.ward || w.number;
 
-          // Add interactive hover effect
-          polygon.on('mouseover', function() {
-            this.setStyle({ fillOpacity: 0.55, weight: 3 });
-          });
-          polygon.on('mouseout', function() {
-            this.setStyle({ fillOpacity: 0.25, weight: 2 });
-          });
+        // Find matching risk data from 52 wards table
+        const riskInfo = BHIMAVARAM_52_WARDS_FLOOD_DATA.find(d => d.id === wardId) || {
+          riskCategory: "Moderate Risk",
+          riskColor: "#eab308",
+          riskScore: 65,
+          lowLyingPct: 35
+        };
 
-          polygon.bindPopup(`
-            <div class="p-2 text-xs font-sans text-slate-800">
-              <strong class="text-sm font-bold" style="color:${riskInfo.riskColor}">వార్డు #${w.number}: ${w.nameTe}</strong>
-              <div class="text-[11px] text-slate-600 mt-1 space-y-0.5">
-                <div><strong>ముప్పు స్థాయి:</strong> <span class="font-bold" style="color:${riskInfo.riskColor}">${riskInfo.riskCategory} (స్కోరు: ${riskInfo.riskScore}/100)</span></div>
-                <div><strong>పల్లపు విస్తీర్ణం:</strong> ${riskInfo.lowLyingPct}%</div>
-                <div><strong>జనాభా:</strong> ~${riskInfo.pop || 3200} మంది</div>
-                <div><strong>ప్రభావిత భవనాలు:</strong> ${riskInfo.vulnerableBldgs || 180} భవనాలు</div>
-              </div>
-            </div>
-          `);
+        const polygon = L.polygon(coords, {
+          color: riskInfo.riskColor,
+          weight: 2,
+          opacity: 0.85,
+          fillColor: riskInfo.riskColor,
+          fillOpacity: 0.25
+        }).addTo(layerGroups.wards);
+
+        // Add interactive hover effect
+        polygon.on('mouseover', function() {
+          this.setStyle({ fillOpacity: 0.55, weight: 3 });
         });
-      }
+        polygon.on('mouseout', function() {
+          this.setStyle({ fillOpacity: 0.25, weight: 2 });
+        });
+
+        const landmarksStr = Array.isArray(w.landmarks) ? w.landmarks.slice(0, 3).join(', ') : '';
+
+        polygon.bindPopup(`
+          <div class="p-2 text-xs font-sans text-slate-800">
+            <strong class="text-sm font-bold" style="color:${riskInfo.riskColor}">వార్డు #${wardId}: ${w.nameTe || w.nameEn}</strong>
+            <div class="text-[11px] text-slate-600 mt-1 space-y-0.5">
+              <div><strong>ముప్పు స్థాయి:</strong> <span class="font-bold" style="color:${riskInfo.riskColor}">${riskInfo.riskCategory} (స్కోరు: ${riskInfo.riskScore}/100)</span></div>
+              <div><strong>పల్లపు విస్తీర్ణం:</strong> ${riskInfo.lowLyingPct}%</div>
+              <div><strong>జనాభా:</strong> ~${riskInfo.pop || 3200} మంది</div>
+              <div><strong>ప్రభావిత భవనాలు:</strong> ${riskInfo.vulnerableBldgs || 180} భవనాలు</div>
+              ${landmarksStr ? `<div><strong>ల్యాండ్‌మార్క్‌లు:</strong> ${landmarksStr}</div>` : ''}
+            </div>
+          </div>
+        `);
+      });
     }
 
     // ==========================================
@@ -1807,6 +1820,13 @@
     }
 
     function focusWardOnMap(wardId) {
+      if (typeof BHIMAVARAM_52_WARDS_DATA !== 'undefined') {
+        const wardObj = BHIMAVARAM_52_WARDS_DATA.find(w => w.ward === wardId);
+        if (wardObj && wardObj.center) {
+          map.flyTo(wardObj.center, 15, { animate: true, duration: 1.0 });
+          return;
+        }
+      }
       if (typeof BHIMAVARAM_39_WARDS !== 'undefined') {
         const wardObj = BHIMAVARAM_39_WARDS.find(w => w.number === wardId);
         if (wardObj && wardObj.center) {

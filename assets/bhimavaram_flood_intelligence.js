@@ -835,58 +835,1783 @@ const BHIMAVARAM_CRITICAL_ASSETS = [
 // Flood Risk Index Formula:
 // FRI = 0.30 * ElevationVulnerability + 0.25 * BackwaterSusceptibility + 0.20 * DrainageDeficit + 0.15 * PopDensity + 0.10 * InfrastructureImpact
 const BHIMAVARAM_52_WARDS_FLOOD_DATA = [
-  { id: 1, nameTe: "దుర్గాపురం", nameEn: "Durgapuram", zone: "Town-1", pop: 3410, areaSqKm: 0.44, minElev: 2.6, avgElev: 3.8, lowLyingPct: 38, drainLenKm: 3.8, siltPct: 48, vulnerableBldgs: 245, riskScore: 78, riskCategory: "High Risk", riskColor: "#f97316" },
-  { id: 2, nameTe: "లంకాపేట", nameEn: "Lankapeta", zone: "Town-1", pop: 3280, areaSqKm: 0.38, minElev: 2.3, avgElev: 3.2, lowLyingPct: 62, drainLenKm: 3.2, siltPct: 56, vulnerableBldgs: 390, riskScore: 92, riskCategory: "Critical Risk", riskColor: "#991b1b" },
-  { id: 3, nameTe: "శ్రీ మవుళ్ళమ్మ ఆలయ వీధి", nameEn: "Mavullamma Temple St", zone: "Town-1", pop: 3620, areaSqKm: 0.42, minElev: 2.1, avgElev: 2.9, lowLyingPct: 74, drainLenKm: 3.6, siltPct: 60, vulnerableBldgs: 480, riskScore: 98, riskCategory: "Critical Risk", riskColor: "#991b1b" },
-  { id: 4, nameTe: "నరసయ్య అగ్రహారం", nameEn: "Narasaiah Agraharam", zone: "Town-1", pop: 3150, areaSqKm: 0.36, minElev: 2.4, avgElev: 3.3, lowLyingPct: 55, drainLenKm: 3.0, siltPct: 52, vulnerableBldgs: 340, riskScore: 89, riskCategory: "Very High Risk", riskColor: "#ef4444" },
-  { id: 5, nameTe: "బొక్కవారిపాలెం", nameEn: "Bokkavaripalem", zone: "Town-1", pop: 3340, areaSqKm: 0.41, minElev: 2.8, avgElev: 4.1, lowLyingPct: 32, drainLenKm: 3.4, siltPct: 40, vulnerableBldgs: 190, riskScore: 68, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 6, nameTe: "మెంటేవారి తోట", nameEn: "Mentevari Thota", zone: "Town-1", pop: 3490, areaSqKm: 0.43, minElev: 2.5, avgElev: 3.4, lowLyingPct: 52, drainLenKm: 3.9, siltPct: 58, vulnerableBldgs: 360, riskScore: 88, riskCategory: "Very High Risk", riskColor: "#ef4444" },
-  { id: 7, nameTe: "కుర్మయ్యపేట", nameEn: "Kurmayyapeta", zone: "Town-1", pop: 3080, areaSqKm: 0.35, minElev: 2.6, avgElev: 3.6, lowLyingPct: 48, drainLenKm: 3.1, siltPct: 46, vulnerableBldgs: 280, riskScore: 82, riskCategory: "High Risk", riskColor: "#f97316" },
-  { id: 8, nameTe: "గాంధీ నగర్", nameEn: "Gandhi Nagar", zone: "Town-1", pop: 3550, areaSqKm: 0.46, minElev: 2.8, avgElev: 4.0, lowLyingPct: 35, drainLenKm: 4.2, siltPct: 42, vulnerableBldgs: 210, riskScore: 72, riskCategory: "High Risk", riskColor: "#f97316" },
-  { id: 9, nameTe: "బి.పి.ఆర్. రోడ్డు", nameEn: "BPR Road", zone: "Town-1", pop: 3220, areaSqKm: 0.39, minElev: 2.9, avgElev: 4.2, lowLyingPct: 30, drainLenKm: 3.5, siltPct: 38, vulnerableBldgs: 175, riskScore: 64, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 10, nameTe: "సుంకర విజయాల వీధి", nameEn: "Sunkara Vijayala St", zone: "Town-1", pop: 3190, areaSqKm: 0.37, minElev: 2.7, avgElev: 3.7, lowLyingPct: 44, drainLenKm: 3.3, siltPct: 48, vulnerableBldgs: 250, riskScore: 79, riskCategory: "High Risk", riskColor: "#f97316" },
-  { id: 11, nameTe: "చిగిడిలపేట", nameEn: "Chigidilapeta", zone: "Town-1", pop: 2980, areaSqKm: 0.33, minElev: 3.1, avgElev: 4.5, lowLyingPct: 22, drainLenKm: 2.8, siltPct: 35, vulnerableBldgs: 120, riskScore: 54, riskCategory: "Low Risk", riskColor: "#84cc16" },
-  { id: 12, nameTe: "గంగనమ్మ గుంట", nameEn: "Ganganamma Gunta", zone: "Town-1", pop: 3370, areaSqKm: 0.40, minElev: 2.6, avgElev: 3.5, lowLyingPct: 50, drainLenKm: 3.6, siltPct: 50, vulnerableBldgs: 310, riskScore: 84, riskCategory: "High Risk", riskColor: "#f97316" },
-  { id: 13, nameTe: "వీరమ్మ పార్క్ ఏరియా", nameEn: "Veeramma Park Area", zone: "Town-1", pop: 3450, areaSqKm: 0.42, minElev: 3.2, avgElev: 4.6, lowLyingPct: 20, drainLenKm: 3.7, siltPct: 30, vulnerableBldgs: 110, riskScore: 50, riskCategory: "Low Risk", riskColor: "#84cc16" },
-  { id: 14, nameTe: "గన్నబాతుల వీధి", nameEn: "Gannabathula St", zone: "Town-1", pop: 3120, areaSqKm: 0.36, minElev: 2.8, avgElev: 3.9, lowLyingPct: 34, drainLenKm: 3.2, siltPct: 39, vulnerableBldgs: 180, riskScore: 66, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 15, nameTe: "సరాజువారి వీధి", nameEn: "Sarajuvari St", zone: "Town-1", pop: 3310, areaSqKm: 0.39, minElev: 2.9, avgElev: 4.0, lowLyingPct: 31, drainLenKm: 3.4, siltPct: 37, vulnerableBldgs: 160, riskScore: 63, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 16, nameTe: "లెక్చరర్స్ వీధి", nameEn: "Lecturers St", zone: "Town-1", pop: 3580, areaSqKm: 0.45, minElev: 3.4, avgElev: 4.8, lowLyingPct: 18, drainLenKm: 4.0, siltPct: 28, vulnerableBldgs: 95, riskScore: 46, riskCategory: "Low Risk", riskColor: "#84cc16" },
-  { id: 17, nameTe: "బాలుసుముడి", nameEn: "Balusumudi", zone: "Town-1", pop: 3740, areaSqKm: 0.50, minElev: 2.6, avgElev: 3.5, lowLyingPct: 56, drainLenKm: 4.8, siltPct: 54, vulnerableBldgs: 420, riskScore: 90, riskCategory: "Critical Risk", riskColor: "#991b1b" },
-  { id: 18, nameTe: "ఆకులవారి వీధి", nameEn: "Akulavari St", zone: "Town-1", pop: 3040, areaSqKm: 0.34, minElev: 2.6, avgElev: 3.6, lowLyingPct: 49, drainLenKm: 3.0, siltPct: 47, vulnerableBldgs: 260, riskScore: 81, riskCategory: "High Risk", riskColor: "#f97316" },
-  { id: 19, nameTe: "నాచువారి సెంటర్", nameEn: "Nachuvari Center", zone: "Town-1", pop: 3260, areaSqKm: 0.38, minElev: 3.0, avgElev: 4.3, lowLyingPct: 26, drainLenKm: 3.3, siltPct: 35, vulnerableBldgs: 140, riskScore: 58, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 20, nameTe: "భీమేశ్వర స్వామి కాలనీ", nameEn: "Bhimeswara Swamy Colony", zone: "Town-1", pop: 3390, areaSqKm: 0.41, minElev: 3.3, avgElev: 4.7, lowLyingPct: 17, drainLenKm: 3.6, siltPct: 27, vulnerableBldgs: 85, riskScore: 44, riskCategory: "Low Risk", riskColor: "#84cc16" },
-  { id: 21, nameTe: "ప్రభుత్వ ఆసుపత్రి ప్రాంతం", nameEn: "Govt Hospital Area", zone: "Town-2", pop: 3480, areaSqKm: 0.44, minElev: 3.1, avgElev: 4.4, lowLyingPct: 28, drainLenKm: 4.1, siltPct: 36, vulnerableBldgs: 180, riskScore: 71, riskCategory: "High Risk", riskColor: "#f97316" },
-  { id: 22, nameTe: "ఆర్టీసీ బస్టాండ్ రోడ్డు", nameEn: "RTC Bus Stand Road", zone: "Town-2", pop: 3610, areaSqKm: 0.48, minElev: 3.0, avgElev: 4.2, lowLyingPct: 34, drainLenKm: 4.5, siltPct: 41, vulnerableBldgs: 230, riskScore: 75, riskCategory: "High Risk", riskColor: "#f97316" },
-  { id: 23, nameTe: "జువ్వలపాలెం రోడ్డు నార్త్", nameEn: "Juvvalapalem Rd North", zone: "Town-2", pop: 3290, areaSqKm: 0.40, minElev: 3.2, avgElev: 4.5, lowLyingPct: 24, drainLenKm: 3.7, siltPct: 34, vulnerableBldgs: 150, riskScore: 59, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 24, nameTe: "సుభాష్ నగర్", nameEn: "Subhash Nagar", zone: "Town-2", pop: 3170, areaSqKm: 0.37, minElev: 3.3, avgElev: 4.6, lowLyingPct: 21, drainLenKm: 3.4, siltPct: 32, vulnerableBldgs: 130, riskScore: 53, riskCategory: "Low Risk", riskColor: "#84cc16" },
-  { id: 25, nameTe: "గుణుపూడి మెయిన్ బజార్", nameEn: "Gunupudi Main Bazar", zone: "Town-2", pop: 3520, areaSqKm: 0.45, minElev: 2.7, avgElev: 3.7, lowLyingPct: 47, drainLenKm: 4.2, siltPct: 52, vulnerableBldgs: 320, riskScore: 85, riskCategory: "Very High Risk", riskColor: "#ef4444" },
-  { id: 26, nameTe: "సోమేశ్వర స్వామి దేవాలయ వీధి", nameEn: "Someswara Temple St", zone: "Town-2", pop: 3440, areaSqKm: 0.43, minElev: 2.6, avgElev: 3.5, lowLyingPct: 51, drainLenKm: 4.0, siltPct: 54, vulnerableBldgs: 350, riskScore: 89, riskCategory: "Very High Risk", riskColor: "#ef4444" },
-  { id: 27, nameTe: "మున్సిపల్ కార్యాలయ వీధి", nameEn: "Municipal Office St", zone: "Town-2", pop: 3310, areaSqKm: 0.40, minElev: 3.3, avgElev: 4.6, lowLyingPct: 23, drainLenKm: 3.8, siltPct: 31, vulnerableBldgs: 125, riskScore: 56, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 28, nameTe: "డి.ఎన్.ఆర్. కళాశాల రోడ్డు", nameEn: "DNR College Road", zone: "Town-2", pop: 3680, areaSqKm: 0.49, minElev: 2.8, avgElev: 3.9, lowLyingPct: 43, drainLenKm: 4.6, siltPct: 46, vulnerableBldgs: 290, riskScore: 80, riskCategory: "High Risk", riskColor: "#f97316" },
-  { id: 29, nameTe: "సోంపేట", nameEn: "Sompeta", zone: "Town-2", pop: 3820, areaSqKm: 0.54, minElev: 2.4, avgElev: 3.3, lowLyingPct: 65, drainLenKm: 5.1, siltPct: 59, vulnerableBldgs: 460, riskScore: 95, riskCategory: "Critical Risk", riskColor: "#991b1b" },
-  { id: 30, nameTe: "చినమిరం రోడ్డు ఈస్ట్", nameEn: "Chinamiram Road East", zone: "Town-2", pop: 3250, areaSqKm: 0.39, minElev: 2.9, avgElev: 4.1, lowLyingPct: 33, drainLenKm: 3.5, siltPct: 40, vulnerableBldgs: 195, riskScore: 69, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 31, nameTe: "కొమరద గేట్ ప్రాంతం", nameEn: "Komarada Gate Area", zone: "Town-2", pop: 3110, areaSqKm: 0.36, minElev: 3.0, avgElev: 4.3, lowLyingPct: 29, drainLenKm: 3.3, siltPct: 37, vulnerableBldgs: 165, riskScore: 62, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 32, nameTe: "రాయలం కాలువ గట్టు", nameEn: "Rayalam Canal Bank", zone: "Town-2", pop: 3380, areaSqKm: 0.42, minElev: 2.7, avgElev: 3.7, lowLyingPct: 46, drainLenKm: 3.9, siltPct: 49, vulnerableBldgs: 275, riskScore: 81, riskCategory: "High Risk", riskColor: "#f97316" },
-  { id: 33, nameTe: "చినమిరం వెస్ట్", nameEn: "Chinamiram West", zone: "Town-2", pop: 3490, areaSqKm: 0.46, minElev: 3.0, avgElev: 4.2, lowLyingPct: 32, drainLenKm: 4.1, siltPct: 38, vulnerableBldgs: 205, riskScore: 67, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 34, nameTe: "రైల్వే గేట్ దరి", nameEn: "Near Railway Gate", zone: "Town-2", pop: 3070, areaSqKm: 0.35, minElev: 3.1, avgElev: 4.4, lowLyingPct: 27, drainLenKm: 3.2, siltPct: 36, vulnerableBldgs: 155, riskScore: 60, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 35, nameTe: "విద్యానగర్ కాలనీ", nameEn: "Vidyanagar Colony", zone: "Town-2", pop: 3560, areaSqKm: 0.47, minElev: 2.8, avgElev: 3.9, lowLyingPct: 41, drainLenKm: 4.3, siltPct: 44, vulnerableBldgs: 260, riskScore: 77, riskCategory: "High Risk", riskColor: "#f97316" },
-  { id: 36, nameTe: "తాడేరు రోడ్డు ప్రాంతం", nameEn: "Taderu Road Area", zone: "Town-2", pop: 3210, areaSqKm: 0.38, minElev: 3.2, avgElev: 4.5, lowLyingPct: 25, drainLenKm: 3.5, siltPct: 33, vulnerableBldgs: 140, riskScore: 57, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 37, nameTe: "టౌన్ రైల్వే స్టేషన్ పరిసరాలు", nameEn: "Town Rly Station Area", zone: "Town-2", pop: 3720, areaSqKm: 0.51, minElev: 2.1, avgElev: 3.1, lowLyingPct: 69, drainLenKm: 4.9, siltPct: 63, vulnerableBldgs: 450, riskScore: 96, riskCategory: "Critical Risk", riskColor: "#991b1b" },
-  { id: 38, nameTe: "బాలసుముడి బ్రాంచ్ దరి", nameEn: "Near Balasumudi Branch", zone: "Town-2", pop: 3140, areaSqKm: 0.37, minElev: 3.1, avgElev: 4.4, lowLyingPct: 26, drainLenKm: 3.4, siltPct: 35, vulnerableBldgs: 145, riskScore: 61, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 39, nameTe: "రైల్వే జంక్షన్ పరిసరాలు", nameEn: "Railway Junction Area", zone: "Town-2", pop: 3410, areaSqKm: 0.44, minElev: 3.2, avgElev: 4.6, lowLyingPct: 24, drainLenKm: 3.9, siltPct: 34, vulnerableBldgs: 160, riskScore: 60, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 40, nameTe: "కొమరద రోడ్డు నార్త్", nameEn: "Komarada Road North", zone: "Town-2", pop: 3090, areaSqKm: 0.35, minElev: 3.4, avgElev: 4.8, lowLyingPct: 19, drainLenKm: 3.1, siltPct: 29, vulnerableBldgs: 105, riskScore: 48, riskCategory: "Low Risk", riskColor: "#84cc16" },
-  { id: 41, nameTe: "అమరం నార్త్ బౌండరీ", nameEn: "Amaram North Boundary", zone: "Amaram Cluster", pop: 3180, areaSqKm: 0.42, minElev: 3.5, avgElev: 5.1, lowLyingPct: 16, drainLenKm: 3.5, siltPct: 26, vulnerableBldgs: 90, riskScore: 43, riskCategory: "Low Risk", riskColor: "#84cc16" },
-  { id: 42, nameTe: "ఉండి ఫీడర్ ఛానల్ దరి", nameEn: "Near Undi Feeder", zone: "Amaram Cluster", pop: 3270, areaSqKm: 0.45, minElev: 3.3, avgElev: 4.8, lowLyingPct: 25, drainLenKm: 3.8, siltPct: 38, vulnerableBldgs: 155, riskScore: 62, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 43, nameTe: "అమరం చెరువు వీధి", nameEn: "Amaram Tank Street", zone: "Amaram Cluster", pop: 3020, areaSqKm: 0.38, minElev: 3.1, avgElev: 4.5, lowLyingPct: 28, drainLenKm: 3.2, siltPct: 35, vulnerableBldgs: 140, riskScore: 59, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 44, nameTe: "అమరం సెంట్రల్ కాలనీ", nameEn: "Amaram Central Colony", zone: "Amaram Cluster", pop: 3350, areaSqKm: 0.43, minElev: 3.6, avgElev: 5.2, lowLyingPct: 15, drainLenKm: 3.6, siltPct: 25, vulnerableBldgs: 80, riskScore: 41, riskCategory: "Very Low Risk", riskColor: "#15803d" },
-  { id: 45, nameTe: "గొల్లలకోడేరు అప్రోచ్", nameEn: "Gollalakoderu Approach", zone: "Amaram Cluster", pop: 2990, areaSqKm: 0.41, minElev: 3.4, avgElev: 4.9, lowLyingPct: 20, drainLenKm: 3.3, siltPct: 30, vulnerableBldgs: 110, riskScore: 51, riskCategory: "Low Risk", riskColor: "#84cc16" },
-  { id: 46, nameTe: "రాయలం సౌత్ బోర్డర్", nameEn: "Rayalam South Border", zone: "Rayalam Zone", pop: 3240, areaSqKm: 0.48, minElev: 2.7, avgElev: 3.8, lowLyingPct: 45, drainLenKm: 4.0, siltPct: 48, vulnerableBldgs: 270, riskScore: 80, riskCategory: "High Risk", riskColor: "#f97316" },
-  { id: 47, nameTe: "కరకోడు ఛానల్ రీచ్", nameEn: "Karakodu Channel Reach", zone: "Rayalam Zone", pop: 3160, areaSqKm: 0.46, minElev: 2.5, avgElev: 3.6, lowLyingPct: 53, drainLenKm: 4.1, siltPct: 56, vulnerableBldgs: 345, riskScore: 87, riskCategory: "Very High Risk", riskColor: "#ef4444" },
-  { id: 48, nameTe: "రాయలం పంచాయతీ కాలనీ", nameEn: "Rayalam Panchayat Colony", zone: "Rayalam Zone", pop: 3420, areaSqKm: 0.52, minElev: 2.5, avgElev: 3.5, lowLyingPct: 58, drainLenKm: 4.7, siltPct: 59, vulnerableBldgs: 385, riskScore: 91, riskCategory: "Critical Risk", riskColor: "#991b1b" },
-  { id: 49, nameTe: "రాయలం నార్త్ వీధి", nameEn: "Rayalam North Street", zone: "Rayalam Zone", pop: 3080, areaSqKm: 0.39, minElev: 3.3, avgElev: 4.7, lowLyingPct: 22, drainLenKm: 3.2, siltPct: 31, vulnerableBldgs: 120, riskScore: 52, riskCategory: "Low Risk", riskColor: "#84cc16" },
-  { id: 50, nameTe: "వ్యవసాయ పొలాల సరిహద్దు", nameEn: "Agrarian Border Reach", zone: "Rayalam Zone", pop: 3190, areaSqKm: 0.49, minElev: 2.8, avgElev: 3.9, lowLyingPct: 42, drainLenKm: 4.2, siltPct: 45, vulnerableBldgs: 240, riskScore: 76, riskCategory: "High Risk", riskColor: "#f97316" },
-  { id: 51, nameTe: "రాయలం చెరువు పరిసరాలు", nameEn: "Rayalam Tank Environs", zone: "Rayalam Zone", pop: 3110, areaSqKm: 0.41, minElev: 3.0, avgElev: 4.3, lowLyingPct: 30, drainLenKm: 3.4, siltPct: 36, vulnerableBldgs: 165, riskScore: 61, riskCategory: "Moderate Risk", riskColor: "#eab308" },
-  { id: 52, nameTe: "దక్షిణ సరిహద్దు నాలా", nameEn: "South Boundary Nala Reach", zone: "Rayalam Zone", pop: 3230, areaSqKm: 0.47, minElev: 2.6, avgElev: 3.7, lowLyingPct: 48, drainLenKm: 4.3, siltPct: 51, vulnerableBldgs: 295, riskScore: 83, riskCategory: "High Risk", riskColor: "#f97316" }
+  {
+    "id": 1,
+    "nameTe": "గోవిందరావు నగర్ & యలమదుర్రు డ్రెయిన్ నార్త్",
+    "nameEn": "Govindarao Nagar & Yanamadurru Drain North",
+    "zone": "North Zone",
+    "pop": 3410,
+    "areaSqKm": 0.44,
+    "minElev": 2.6,
+    "avgElev": 3.8,
+    "lowLyingPct": 38,
+    "drainLenKm": 3.8,
+    "siltPct": 48,
+    "vulnerableBldgs": 245,
+    "riskScore": 78,
+    "riskCategory": "High Risk",
+    "riskColor": "#f97316",
+    "center": [
+      16.556,
+      81.5245
+    ],
+    "rsNos": [
+      281,
+      302,
+      312,
+      326,
+      337,
+      351
+    ],
+    "landmarks": [
+      "Yanamadurru Drain",
+      "BY-Pass Road Junction",
+      "CPM Office Road",
+      "Miramiya Kodu"
+    ]
+  },
+  {
+    "id": 2,
+    "nameTe": "మెంటేవారి తోట & CPM ఆఫీస్ ఏరియా",
+    "nameEn": "Mentevari Thota & CPM Office Area",
+    "zone": "North-Central Zone",
+    "pop": 3280,
+    "areaSqKm": 0.38,
+    "minElev": 2.3,
+    "avgElev": 3.2,
+    "lowLyingPct": 62,
+    "drainLenKm": 3.2,
+    "siltPct": 56,
+    "vulnerableBldgs": 390,
+    "riskScore": 92,
+    "riskCategory": "Critical Risk",
+    "riskColor": "#991b1b",
+    "center": [
+      16.55,
+      81.528
+    ],
+    "rsNos": [
+      302,
+      651,
+      655,
+      560,
+      312,
+      326,
+      337,
+      351
+    ],
+    "landmarks": [
+      "Bhimavaram-Nidadavolu Railway line",
+      "Gudiwada-Bhimavaram Railway line",
+      "Mentevari thota under-pass",
+      "CPM office backside road",
+      "By-Pass road"
+    ]
+  },
+  {
+    "id": 3,
+    "nameTe": "కనకదుర్గ గుడి & తణుకు రోడ్డు",
+    "nameEn": "Kanaka Durga Temple & Tanuku Road Junction",
+    "zone": "East Zone",
+    "pop": 3620,
+    "areaSqKm": 0.42,
+    "minElev": 2.1,
+    "avgElev": 2.9,
+    "lowLyingPct": 74,
+    "drainLenKm": 3.6,
+    "siltPct": 60,
+    "vulnerableBldgs": 480,
+    "riskScore": 98,
+    "riskCategory": "Critical Risk",
+    "riskColor": "#991b1b",
+    "center": [
+      16.5465,
+      81.5335
+    ],
+    "rsNos": [
+      655,
+      299
+    ],
+    "landmarks": [
+      "Miramiya Kodu canal",
+      "Bhimavaram-Nidadavolu Railway line",
+      "By-Pass road & Bhimavaram Tanuku road junction",
+      "P.P road",
+      "Kanaka Durga Temple"
+    ]
+  },
+  {
+    "id": 4,
+    "nameTe": "శ్రీలంక రోడ్డు & నరసయ్య అగ్రహారం",
+    "nameEn": "Srilanka Road & Narasayya Agraharam",
+    "zone": "East-North Zone",
+    "pop": 3150,
+    "areaSqKm": 0.36,
+    "minElev": 2.4,
+    "avgElev": 3.3,
+    "lowLyingPct": 55,
+    "drainLenKm": 3,
+    "siltPct": 52,
+    "vulnerableBldgs": 340,
+    "riskScore": 89,
+    "riskCategory": "Very High Risk",
+    "riskColor": "#ef4444",
+    "center": [
+      16.5525,
+      81.5365
+    ],
+    "rsNos": [
+      651,
+      100,
+      655
+    ],
+    "landmarks": [
+      "Bhimavaram Nidadavolu Railway line",
+      "Srilanka road",
+      "ASR Statue",
+      "Narasayya Agraharam Main Road",
+      "Miramiya Kodu canal"
+    ]
+  },
+  {
+    "id": 5,
+    "nameTe": "కుర్మయ్యపేట & డాక్టర్ CSN కాలేజీ వెస్ట్",
+    "nameEn": "Kurmayyapeta & Dr CSN College West",
+    "zone": "East Zone",
+    "pop": 3340,
+    "areaSqKm": 0.41,
+    "minElev": 2.8,
+    "avgElev": 4.1,
+    "lowLyingPct": 32,
+    "drainLenKm": 3.4,
+    "siltPct": 40,
+    "vulnerableBldgs": 190,
+    "riskScore": 68,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.5535,
+      81.5435
+    ],
+    "rsNos": [
+      100,
+      101,
+      92
+    ],
+    "landmarks": [
+      "Dr CSN College",
+      "Eastern Power Distribution center",
+      "IALA Layout plot 51",
+      "Kandikopu Dibba",
+      "Kurmayyapeta School Road",
+      "P.P road",
+      "Kanaka Durga temple",
+      "ASR Statue",
+      "Srilanka Road"
+    ]
+  },
+  {
+    "id": 6,
+    "nameTe": "గునుపూడి ఔటర్ & ఇండస్ట్రియల్ ఎస్టేట్ (IALA)",
+    "nameEn": "Gunupudi Outer & Industrial Estate (IALA)",
+    "zone": "North-East Outer Zone",
+    "pop": 3490,
+    "areaSqKm": 0.43,
+    "minElev": 2.5,
+    "avgElev": 3.4,
+    "lowLyingPct": 52,
+    "drainLenKm": 3.9,
+    "siltPct": 58,
+    "vulnerableBldgs": 360,
+    "riskScore": 88,
+    "riskCategory": "Very High Risk",
+    "riskColor": "#ef4444",
+    "center": [
+      16.555,
+      81.552
+    ],
+    "rsNos": [
+      24,
+      23,
+      22,
+      19,
+      18,
+      13,
+      12,
+      1,
+      191
+    ],
+    "landmarks": [
+      "Natural boundary of Bhimavaram municipality",
+      "P.P road & Bhimavaram Municipal limits junction",
+      "Kurmayya peta school road",
+      "Kandikappu Dibba",
+      "Industrial estate road plot 51 IALA",
+      "Eastern power Distribution Center",
+      "CSN college western boundary"
+    ]
+  },
+  {
+    "id": 7,
+    "nameTe": "భారతీయ విద్యాభవన్ రోడ్డు & గాంధీనగర్",
+    "nameEn": "Bharatiya Vidya Bhavans Road & Gandhinagar",
+    "zone": "East Zone",
+    "pop": 3080,
+    "areaSqKm": 0.35,
+    "minElev": 2.6,
+    "avgElev": 3.6,
+    "lowLyingPct": 48,
+    "drainLenKm": 3.1,
+    "siltPct": 46,
+    "vulnerableBldgs": 280,
+    "riskScore": 82,
+    "riskCategory": "High Risk",
+    "riskColor": "#f97316",
+    "center": [
+      16.542,
+      81.5495
+    ],
+    "rsNos": [
+      195,
+      201,
+      731,
+      489,
+      431,
+      726,
+      723
+    ],
+    "landmarks": [
+      "P.P road",
+      "Bhimavaram municipal limits",
+      "Bharatiya Vidya Bhavans Road",
+      "Railway gate",
+      "Gandhinagar Road",
+      "G&V canal"
+    ]
+  },
+  {
+    "id": 8,
+    "nameTe": "చినరంగనిపాలెం & G&V కెనాల్ వెస్ట్ బండ్",
+    "nameEn": "Chinaranganipalem & G&V Canal West Bund",
+    "zone": "East-Central Zone",
+    "pop": 3550,
+    "areaSqKm": 0.46,
+    "minElev": 2.8,
+    "avgElev": 4,
+    "lowLyingPct": 35,
+    "drainLenKm": 4.2,
+    "siltPct": 42,
+    "vulnerableBldgs": 210,
+    "riskScore": 72,
+    "riskCategory": "High Risk",
+    "riskColor": "#f97316",
+    "center": [
+      16.5435,
+      81.542
+    ],
+    "rsNos": [
+      244,
+      236,
+      384,
+      374
+    ],
+    "landmarks": [
+      "PP road",
+      "Chinaranganipalem main road",
+      "G&V Canal West bund road",
+      "BVRM-NSP railway line",
+      "FCI godowns road",
+      "Railway quarters road",
+      "Bandarpuntha road"
+    ]
+  },
+  {
+    "id": 9,
+    "nameTe": "జంక్షన్ రైల్వే స్టేషన్ రోడ్డు & వెజిటబుల్ మార్కెట్",
+    "nameEn": "Junction Railway Station Road & Veg Market",
+    "zone": "Central-East Zone",
+    "pop": 3220,
+    "areaSqKm": 0.39,
+    "minElev": 2.9,
+    "avgElev": 4.2,
+    "lowLyingPct": 30,
+    "drainLenKm": 3.5,
+    "siltPct": 38,
+    "vulnerableBldgs": 175,
+    "riskScore": 64,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.5425,
+      81.5365
+    ],
+    "rsNos": [
+      292,
+      262,
+      250,
+      385,
+      257
+    ],
+    "landmarks": [
+      "PP road",
+      "Junction railway station road",
+      "Vegetable market street road",
+      "APHB road",
+      "Temple Tree Heights Apartment",
+      "Traffic park South side road",
+      "Geethams school",
+      "Aditya school road"
+    ]
+  },
+  {
+    "id": 10,
+    "nameTe": "APHB కాలనీ & ట్రాఫిక్ పార్క్ సౌత్",
+    "nameEn": "APHB Colony & Traffic Park South",
+    "zone": "Central-East Zone",
+    "pop": 3190,
+    "areaSqKm": 0.37,
+    "minElev": 2.7,
+    "avgElev": 3.7,
+    "lowLyingPct": 44,
+    "drainLenKm": 3.3,
+    "siltPct": 48,
+    "vulnerableBldgs": 250,
+    "riskScore": 79,
+    "riskCategory": "High Risk",
+    "riskColor": "#f97316",
+    "center": [
+      16.5385,
+      81.5365
+    ],
+    "rsNos": [
+      315,
+      262,
+      365
+    ],
+    "landmarks": [
+      "BVRM-NSP railway boundary",
+      "Junction railway station road",
+      "Aditya school",
+      "APHB road",
+      "Geethams school",
+      "Traffic park south road",
+      "Temple tree apartment road",
+      "Vegetable market street",
+      "Chinaranganipalem main road",
+      "Bandaru puntha road",
+      "FCI road",
+      "Railway quarters road"
+    ]
+  },
+  {
+    "id": 11,
+    "nameTe": "కందికట్ల వారి వీధి & Z-బ్రిడ్జి నార్త్",
+    "nameEn": "Kandikatla Vari Street & Z-Bridge North",
+    "zone": "Two Town East",
+    "pop": 2980,
+    "areaSqKm": 0.33,
+    "minElev": 3.1,
+    "avgElev": 4.5,
+    "lowLyingPct": 22,
+    "drainLenKm": 2.8,
+    "siltPct": 35,
+    "vulnerableBldgs": 120,
+    "riskScore": 54,
+    "riskCategory": "Low Risk",
+    "riskColor": "#84cc16",
+    "center": [
+      16.5355,
+      81.5325
+    ],
+    "rsNos": [
+      367
+    ],
+    "landmarks": [
+      "Railway compound wall",
+      "G&V canal Center line",
+      "Z Bridge",
+      "Kandikatla vari street",
+      "BN Road",
+      "Gunupudi drain",
+      "Vasanthala vari street"
+    ]
+  },
+  {
+    "id": 12,
+    "nameTe": "బ్రిడ్జిపేట & AP టిడ్కో హౌసింగ్ కాలనీ",
+    "nameEn": "Bridgepeta & AP TIDCO Housing Colony",
+    "zone": "South-East Zone",
+    "pop": 3370,
+    "areaSqKm": 0.4,
+    "minElev": 2.6,
+    "avgElev": 3.5,
+    "lowLyingPct": 50,
+    "drainLenKm": 3.6,
+    "siltPct": 50,
+    "vulnerableBldgs": 310,
+    "riskScore": 84,
+    "riskCategory": "High Risk",
+    "riskColor": "#f97316",
+    "center": [
+      16.5325,
+      81.546
+    ],
+    "rsNos": [
+      723,
+      726,
+      431,
+      491,
+      629,
+      624,
+      463,
+      468
+    ],
+    "landmarks": [
+      "G&V canal road",
+      "Gandhinagar road",
+      "Bhimavaram Matsyapuri road",
+      "AP TIDCO housing colony",
+      "Bridgepeta",
+      "Z bridge"
+    ]
+  },
+  {
+    "id": 13,
+    "nameTe": "తాడేరు రెవెన్యూ విలేజ్ లిమిట్స్",
+    "nameEn": "Taderu Revenue Village Limits",
+    "zone": "South-East Outer Zone",
+    "pop": 3450,
+    "areaSqKm": 0.42,
+    "minElev": 3.2,
+    "avgElev": 4.6,
+    "lowLyingPct": 20,
+    "drainLenKm": 3.7,
+    "siltPct": 30,
+    "vulnerableBldgs": 110,
+    "riskScore": 50,
+    "riskCategory": "Low Risk",
+    "riskColor": "#84cc16",
+    "center": [
+      16.523,
+      81.553
+    ],
+    "rsNos": [
+      1,
+      508,
+      448
+    ],
+    "landmarks": [
+      "Gunupudi south drain",
+      "Taderu revenue village limit"
+    ]
+  },
+  {
+    "id": 14,
+    "nameTe": "మిషన్ హాస్పిటల్ సౌత్ & బేతనిపేట",
+    "nameEn": "Mission Hospital South & Bethanipeta",
+    "zone": "South-East Zone",
+    "pop": 3120,
+    "areaSqKm": 0.36,
+    "minElev": 2.8,
+    "avgElev": 3.9,
+    "lowLyingPct": 34,
+    "drainLenKm": 3.2,
+    "siltPct": 39,
+    "vulnerableBldgs": 180,
+    "riskScore": 66,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.5285,
+      81.5335
+    ],
+    "rsNos": [
+      629,
+      704,
+      716
+    ],
+    "landmarks": [
+      "Mission Hospital South Road",
+      "Punta road",
+      "Canal Road",
+      "BN road",
+      "Taderu Bridge",
+      "South Canal",
+      "St. Anns school road",
+      "Bethanipeta road"
+    ]
+  },
+  {
+    "id": 15,
+    "nameTe": "రాజీవ్ గాంధీ & YSR విగ్రహం సెంటర్",
+    "nameEn": "Rajeev Gandhi & YSR Statue Center",
+    "zone": "Central-East Zone",
+    "pop": 3310,
+    "areaSqKm": 0.39,
+    "minElev": 2.9,
+    "avgElev": 4,
+    "lowLyingPct": 31,
+    "drainLenKm": 3.4,
+    "siltPct": 37,
+    "vulnerableBldgs": 160,
+    "riskScore": 63,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.533,
+      81.5315
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Rajeev Gandhi statue",
+      "BN road",
+      "YSR statue",
+      "Z-bridge",
+      "G&V canal",
+      "Leprosy colony road",
+      "Bridge peta bridge",
+      "Pavurala vari veedhi",
+      "Drain bund road"
+    ]
+  },
+  {
+    "id": 16,
+    "nameTe": "రజకుల వీధి & మిషన్ హాస్పిటల్ ఈస్ట్",
+    "nameEn": "Rajakula Veedhi & Mission Hospital East",
+    "zone": "Central Zone",
+    "pop": 3580,
+    "areaSqKm": 0.45,
+    "minElev": 3.4,
+    "avgElev": 4.8,
+    "lowLyingPct": 18,
+    "drainLenKm": 4,
+    "siltPct": 28,
+    "vulnerableBldgs": 95,
+    "riskScore": 46,
+    "riskCategory": "Low Risk",
+    "riskColor": "#84cc16",
+    "center": [
+      16.5345,
+      81.528
+    ],
+    "rsNos": [
+      352
+    ],
+    "landmarks": [
+      "Rajiv Gandhi Statue road",
+      "Rajakula veedhi",
+      "Canal bund road",
+      "Mission Hospital East Compound Wall Road"
+    ]
+  },
+  {
+    "id": 17,
+    "nameTe": "నచ్చువారి జంక్షన్ & సోమేశ్వర స్వామి గుడి",
+    "nameEn": "Nachuvari Junction & Someswara Swamy Temple",
+    "zone": "One Town Center",
+    "pop": 3740,
+    "areaSqKm": 0.5,
+    "minElev": 2.6,
+    "avgElev": 3.5,
+    "lowLyingPct": 56,
+    "drainLenKm": 4.8,
+    "siltPct": 54,
+    "vulnerableBldgs": 420,
+    "riskScore": 90,
+    "riskCategory": "Critical Risk",
+    "riskColor": "#991b1b",
+    "center": [
+      16.5375,
+      81.527
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Mission hospital road",
+      "Bhimavaram-Narasapuram road (Nachuvari Junction)",
+      "Someswara swamy temple",
+      "Telaga vari street",
+      "Gudur anjaneyulu vari street"
+    ]
+  },
+  {
+    "id": 18,
+    "nameTe": "పెద్ద మసీదు & గుమాస్తాల వారి వీధి",
+    "nameEn": "Pedda Masjid & Gumasthala Vari Street",
+    "zone": "One Town Center",
+    "pop": 3040,
+    "areaSqKm": 0.34,
+    "minElev": 2.6,
+    "avgElev": 3.6,
+    "lowLyingPct": 49,
+    "drainLenKm": 3,
+    "siltPct": 47,
+    "vulnerableBldgs": 260,
+    "riskScore": 81,
+    "riskCategory": "High Risk",
+    "riskColor": "#f97316",
+    "center": [
+      16.5395,
+      81.5255
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Pedda masjid road",
+      "Motupalli vari street",
+      "Gumasthala vari Street",
+      "Mohammadeeyula street",
+      "Old Y.drain",
+      "Pasupuleti vari street",
+      "Raitu bazar road",
+      "Nimmala gunta park street",
+      "BN road",
+      "Mission Hospital road",
+      "Guduri Anjaneyulu street",
+      "Bethani peta street",
+      "Ramaraju Bhusanam street",
+      "Ravururi vari street",
+      "Prayaga vari street",
+      "Rayaprolu vari street",
+      "Veluri vari street"
+    ]
+  },
+  {
+    "id": 19,
+    "nameTe": "గునుపూడి డ్రెయిన్ & అయ్యవారి వీధి",
+    "nameEn": "Gunupudi Drain & Ayyavari Street",
+    "zone": "One Town Central",
+    "pop": 3260,
+    "areaSqKm": 0.38,
+    "minElev": 3,
+    "avgElev": 4.3,
+    "lowLyingPct": 26,
+    "drainLenKm": 3.3,
+    "siltPct": 35,
+    "vulnerableBldgs": 140,
+    "riskScore": 58,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.5415,
+      81.529
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Railway compound wall",
+      "Gunupudi drain",
+      "Gunupudi Water tank",
+      "Badugu vari street (major drain)",
+      "BN road",
+      "Someswara swamy temple",
+      "Nachu vari centre",
+      "Ayyavari street",
+      "Yamijaalavari street",
+      "Railway junction road"
+    ]
+  },
+  {
+    "id": 20,
+    "nameTe": "ఫైర్ స్టేషన్ & బండారు మల్లేశ్వరరావు వీధి",
+    "nameEn": "Fire Station & Bandaru Malleswarao Street",
+    "zone": "One Town Central",
+    "pop": 3390,
+    "areaSqKm": 0.41,
+    "minElev": 3.3,
+    "avgElev": 4.7,
+    "lowLyingPct": 17,
+    "drainLenKm": 3.6,
+    "siltPct": 27,
+    "vulnerableBldgs": 85,
+    "riskScore": 44,
+    "riskCategory": "Low Risk",
+    "riskColor": "#84cc16",
+    "center": [
+      16.5435,
+      81.527
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Bandaru Malleswarao street",
+      "Railway junction road",
+      "Fire station road",
+      "Yamijalavari street",
+      "Ayyavari street",
+      "Old BSNL office road",
+      "Krishna temple",
+      "Pasupuleti vari street",
+      "Nilla vari street",
+      "Bandaru apparao street"
+    ]
+  },
+  {
+    "id": 21,
+    "nameTe": "RTC కాంప్లెక్స్ & గూడ్స్ షెడ్ రోడ్డు",
+    "nameEn": "RTC Complex & Goods Shed Road",
+    "zone": "One Town Central",
+    "pop": 3480,
+    "areaSqKm": 0.44,
+    "minElev": 3.1,
+    "avgElev": 4.4,
+    "lowLyingPct": 28,
+    "drainLenKm": 4.1,
+    "siltPct": 36,
+    "vulnerableBldgs": 180,
+    "riskScore": 71,
+    "riskCategory": "High Risk",
+    "riskColor": "#f97316",
+    "center": [
+      16.5455,
+      81.526
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Palakollu-Pamarru road",
+      "RTC Complex East side road",
+      "Railway Compound wall",
+      "Goods Shed road",
+      "Bandela vari Street",
+      "Nilla vari Street",
+      "Paluri vari Street",
+      "Pasupuleti vari Street",
+      "Rajakula Cheruvu North road",
+      "Rajakula Cheruvu West Road",
+      "Mohammadeeyula Street",
+      "Old Y Drain Road",
+      "Gumasthala vari Street"
+    ]
+  },
+  {
+    "id": 22,
+    "nameTe": "కామరాజు వారి వీధి & త్రికూట రైల్వే జంక్షన్",
+    "nameEn": "Kamaraju Vari Veedhi & Tri-Junction Railway",
+    "zone": "One Town Railway Zone",
+    "pop": 3610,
+    "areaSqKm": 0.48,
+    "minElev": 3,
+    "avgElev": 4.2,
+    "lowLyingPct": 34,
+    "drainLenKm": 4.5,
+    "siltPct": 41,
+    "vulnerableBldgs": 230,
+    "riskScore": 75,
+    "riskCategory": "High Risk",
+    "riskColor": "#f97316",
+    "center": [
+      16.5465,
+      81.529
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Bhimavaram–Gudivada Railway line",
+      "Bhimavaram–Narsapuram line Junction",
+      "Bhimavaram–Tanuku railway line",
+      "Tri-Junction of Bhimavaram–Tanuku, Bhimavaram–Narsapuram and P.P Road",
+      "PP Road",
+      "Kamaraju vari veedhi"
+    ]
+  },
+  {
+    "id": 23,
+    "nameTe": "మోటుపల్లి వారి వీధి & పద్మశ్రీ రోడ్డు",
+    "nameEn": "Motupalli Vari Veedhi & Padmasri Road",
+    "zone": "One Town West",
+    "pop": 3290,
+    "areaSqKm": 0.4,
+    "minElev": 3.2,
+    "avgElev": 4.5,
+    "lowLyingPct": 24,
+    "drainLenKm": 3.7,
+    "siltPct": 34,
+    "vulnerableBldgs": 150,
+    "riskScore": 59,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.544,
+      81.5215
+    ],
+    "rsNos": [
+      363,
+      366,
+      650
+    ],
+    "landmarks": [
+      "Old Yanamaduru Drain",
+      "Miramiya Kodu drain",
+      "Bhimavaram–Nidadavolu Railway line",
+      "Bhimavaram–Palakollu railway line",
+      "Motupalli vari veedhi",
+      "P.P. road junction",
+      "Bus stand road",
+      "Subramanyam swamy temple",
+      "Divya fancy shop",
+      "Padmasri road (Reliance super market backside road)"
+    ]
+  },
+  {
+    "id": 24,
+    "nameTe": "రెస్ట్ హౌస్ రోడ్డు & వీరమ్మ పార్క్",
+    "nameEn": "Rest House Road & Veeramma Park",
+    "zone": "One Town Center",
+    "pop": 3170,
+    "areaSqKm": 0.37,
+    "minElev": 3.3,
+    "avgElev": 4.6,
+    "lowLyingPct": 21,
+    "drainLenKm": 3.4,
+    "siltPct": 32,
+    "vulnerableBldgs": 130,
+    "riskScore": 53,
+    "riskCategory": "Low Risk",
+    "riskColor": "#84cc16",
+    "center": [
+      16.5425,
+      81.523
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Rest House Road",
+      "Palakollu Pamarru Road",
+      "Indian Bank Road",
+      "RTC Complex south side road",
+      "Anjaneya Swamy Temple Junction",
+      "Pedda Masjid Road",
+      "Veeramma park west side road",
+      "B.N.Road",
+      "Sri Potti Sriramulu statue"
+    ]
+  },
+  {
+    "id": 25,
+    "nameTe": "మున్సిపల్ ఆఫీస్ రోడ్డు & తాటవర్తి వారి వీధి",
+    "nameEn": "Municipal Office Road & Tatavarthy Vari Street",
+    "zone": "Two Town Center",
+    "pop": 3520,
+    "areaSqKm": 0.45,
+    "minElev": 2.7,
+    "avgElev": 3.7,
+    "lowLyingPct": 47,
+    "drainLenKm": 4.2,
+    "siltPct": 52,
+    "vulnerableBldgs": 320,
+    "riskScore": 85,
+    "riskCategory": "Very High Risk",
+    "riskColor": "#ef4444",
+    "center": [
+      16.539,
+      81.5225
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Municipal Office Road",
+      "Tatavarthy vari street",
+      "BN Road",
+      "Veluri vari street",
+      "Rayaprolu vari street",
+      "Old Y drain road",
+      "Yerragopu vari street",
+      "Katari vari street",
+      "Moganti vari street"
+    ]
+  },
+  {
+    "id": 26,
+    "nameTe": "ఎడ్వర్డ్ ట్యాంక్ & గవర్నమెంట్ హాస్పిటల్ రోడ్డు",
+    "nameEn": "Edward Tank & Govt Hospital Road",
+    "zone": "Two Town West",
+    "pop": 3440,
+    "areaSqKm": 0.43,
+    "minElev": 2.6,
+    "avgElev": 3.5,
+    "lowLyingPct": 51,
+    "drainLenKm": 4,
+    "siltPct": 54,
+    "vulnerableBldgs": 350,
+    "riskScore": 89,
+    "riskCategory": "Very High Risk",
+    "riskColor": "#ef4444",
+    "center": [
+      16.539,
+      81.5185
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Yanamadurru Drain",
+      "Bhimavaram–Gudiwada Railway Line",
+      "Rest House Road",
+      "Thatavarthy Vari Street",
+      "Municipal Office Road",
+      "Rayasam vari Street",
+      "Edward tank south side road",
+      "Government Hospital Road",
+      "Sarraju vari street"
+    ]
+  },
+  {
+    "id": 27,
+    "nameTe": "హెడ్ పోస్ట్ ఆఫీస్ & లూథరన్ హైస్కూల్ గ్రౌండ్",
+    "nameEn": "Head Post Office & Lutheran High School Ground",
+    "zone": "Two Town West",
+    "pop": 3310,
+    "areaSqKm": 0.4,
+    "minElev": 3.3,
+    "avgElev": 4.6,
+    "lowLyingPct": 23,
+    "drainLenKm": 3.8,
+    "siltPct": 31,
+    "vulnerableBldgs": 125,
+    "riskScore": 56,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.5355,
+      81.518
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Rayasam vari street",
+      "Government Hospital road",
+      "Head Post office",
+      "Municipal Office road",
+      "Moganti Vari Street Junction",
+      "Rest house Road",
+      "Akkarabothu Vari Street",
+      "Luthern High School Ground Compound",
+      "Christian Burial Ground West side road",
+      "Yanamadurru Drain",
+      "Sarraju vari street"
+    ]
+  },
+  {
+    "id": 28,
+    "nameTe": "కటారి వారి వీధి & సుంకర ప Peddaయ్య వీధి",
+    "nameEn": "Katari Vari Street & Sunkara Padayya Street",
+    "zone": "Two Town Center",
+    "pop": 3680,
+    "areaSqKm": 0.49,
+    "minElev": 2.8,
+    "avgElev": 3.9,
+    "lowLyingPct": 43,
+    "drainLenKm": 4.6,
+    "siltPct": 46,
+    "vulnerableBldgs": 290,
+    "riskScore": 80,
+    "riskCategory": "High Risk",
+    "riskColor": "#f97316",
+    "center": [
+      16.5368,
+      81.522
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Katari vari street",
+      "Sunkara padayya street",
+      "Yadhavula vari street -2",
+      "Rest house road"
+    ]
+  },
+  {
+    "id": 29,
+    "nameTe": "SP స్ట్రీట్ & ఎర్రగోపు వారి వీధి",
+    "nameEn": "S.P. Street & Yerragopu Vari Street",
+    "zone": "Two Town Center",
+    "pop": 3820,
+    "areaSqKm": 0.54,
+    "minElev": 2.4,
+    "avgElev": 3.3,
+    "lowLyingPct": 65,
+    "drainLenKm": 5.1,
+    "siltPct": 59,
+    "vulnerableBldgs": 460,
+    "riskScore": 95,
+    "riskCategory": "Critical Risk",
+    "riskColor": "#991b1b",
+    "center": [
+      16.535,
+      81.5238
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "S.P.Street",
+      "Yerragopuvari Street",
+      "Old Yanamadurru Drain Road",
+      "Yalla Vari Street",
+      "Baduguvari street",
+      "Chikilevari Street",
+      "Subash Vari Street"
+    ]
+  },
+  {
+    "id": 30,
+    "nameTe": "రాయప్రోలు వారి వీధి & రావురి వారి వీధి",
+    "nameEn": "Rayaprolu Vari Street & Ravuri Vari Street",
+    "zone": "One Town South",
+    "pop": 3250,
+    "areaSqKm": 0.39,
+    "minElev": 2.9,
+    "avgElev": 4.1,
+    "lowLyingPct": 33,
+    "drainLenKm": 3.5,
+    "siltPct": 40,
+    "vulnerableBldgs": 195,
+    "riskScore": 69,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.5335,
+      81.5255
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Old Yanamadurru Drain West side Road",
+      "Rayaprolu vari street",
+      "Ravuri Vari Street",
+      "Mission Hospital Compound North Side Road",
+      "Bethanipeta Road",
+      "Old Y Drain east Side Road"
+    ]
+  },
+  {
+    "id": 31,
+    "nameTe": "గంగనమ్మ గుడి & క్రిస్టియన్ బరియల్ గ్రౌండ్",
+    "nameEn": "Ganganamma Gudi & Christian Burial Ground",
+    "zone": "Two Town Central-South",
+    "pop": 3110,
+    "areaSqKm": 0.36,
+    "minElev": 3,
+    "avgElev": 4.3,
+    "lowLyingPct": 29,
+    "drainLenKm": 3.3,
+    "siltPct": 37,
+    "vulnerableBldgs": 165,
+    "riskScore": 62,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.5325,
+      81.521
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Rest house road",
+      "Yadhavula vari street 2",
+      "SP street",
+      "Subhash gari street",
+      "Chinapeta road",
+      "Chikilevari street",
+      "Old Y.drain junction",
+      "Teachers street",
+      "Degalavari veedhi",
+      "Ganganamma Gudi centre",
+      "Centre line of Yanamadurru Drain",
+      "Christian Burial ground",
+      "Luthern High School Ground Compound"
+    ]
+  },
+  {
+    "id": 32,
+    "nameTe": "శ్రీకృష్ణదేవరాయ ఫంక్షన్ హాల్ & దిరుసుమర్రు రోడ్డు",
+    "nameEn": "Sri Krishnadevaraya Function Hall & Dirusumarru Rd",
+    "zone": "Two Town South",
+    "pop": 3380,
+    "areaSqKm": 0.42,
+    "minElev": 2.7,
+    "avgElev": 3.7,
+    "lowLyingPct": 46,
+    "drainLenKm": 3.9,
+    "siltPct": 49,
+    "vulnerableBldgs": 275,
+    "riskScore": 81,
+    "riskCategory": "High Risk",
+    "riskColor": "#f97316",
+    "center": [
+      16.5305,
+      81.5228
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "S.P.street",
+      "Degalavari veedhi",
+      "Chinapeta street",
+      "Chinna Anjaneya swamy temple",
+      "M.L.A street",
+      "Sri Krishna devaraya function hall west road",
+      "Reddy colony street",
+      "Kapu kalyana mandapam road",
+      "Old Y.Drain",
+      "St. Ann's school road",
+      "Dirsumarru road junction at Fish market"
+    ]
+  },
+  {
+    "id": 33,
+    "nameTe": "రెడ్డీ కాలనీ & కాపు కళ్యాణ మండపం రోడ్డు",
+    "nameEn": "Reddy Colony & Kapu Kalyana Mandapam Road",
+    "zone": "South-Central Zone",
+    "pop": 3490,
+    "areaSqKm": 0.46,
+    "minElev": 3,
+    "avgElev": 4.2,
+    "lowLyingPct": 32,
+    "drainLenKm": 4.1,
+    "siltPct": 38,
+    "vulnerableBldgs": 205,
+    "riskScore": 67,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.5275,
+      81.524
+    ],
+    "rsNos": [
+      504,
+      506,
+      517,
+      530,
+      629,
+      634
+    ],
+    "landmarks": [
+      "Chinapeta street",
+      "Teacher street",
+      "Old Y.drain west bund road",
+      "Bhimavaram Municipal boundary limits",
+      "Dirusumarru road",
+      "Yanamadurru bund road",
+      "St. Ann's school road",
+      "Kapu kalyana mandapam road",
+      "Reddy colony street",
+      "Sri Krishna devaraya function hall",
+      "M.L.A street",
+      "Chinna Anjaneya swamy temple"
+    ]
+  },
+  {
+    "id": 34,
+    "nameTe": "BC కాలనీ & గొల్లవానితిప్ప రోడ్డు జంక్షన్",
+    "nameEn": "BC Colony & Gollavanitippa Road Junction",
+    "zone": "South Zone",
+    "pop": 3070,
+    "areaSqKm": 0.35,
+    "minElev": 3.1,
+    "avgElev": 4.4,
+    "lowLyingPct": 27,
+    "drainLenKm": 3.2,
+    "siltPct": 36,
+    "vulnerableBldgs": 155,
+    "riskScore": 60,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.5245,
+      81.5175
+    ],
+    "rsNos": [
+      605
+    ],
+    "landmarks": [
+      "B.C. colony",
+      "Municipal open space",
+      "DNR college road gollavanitippa road junction",
+      "Yanamadurru drain centre line",
+      "Municipal limits"
+    ]
+  },
+  {
+    "id": 35,
+    "nameTe": "DNR కాలేజీ గ్రౌండ్ & ఇంజనీరింగ్ కాలేజీ రోడ్డు",
+    "nameEn": "DNR College Ground & Engg College Road",
+    "zone": "South-West Zone",
+    "pop": 3560,
+    "areaSqKm": 0.47,
+    "minElev": 2.8,
+    "avgElev": 3.9,
+    "lowLyingPct": 41,
+    "drainLenKm": 4.3,
+    "siltPct": 44,
+    "vulnerableBldgs": 260,
+    "riskScore": 77,
+    "riskCategory": "High Risk",
+    "riskColor": "#f97316",
+    "center": [
+      16.5285,
+      81.515
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "D.N.R college ground road",
+      "Komarada road",
+      "D.N.R college internal road",
+      "D.N.R Engineering college road",
+      "Ram Lakshmana nagar colony",
+      "B.C. colony layout open space",
+      "Water tank road"
+    ]
+  },
+  {
+    "id": 36,
+    "nameTe": "శ్రీరాంపురం మెయిన్ రోడ్డు & లోసరి కెనాల్ రోడ్డు",
+    "nameEn": "Srirampuram Main Road & Losari Canal Road",
+    "zone": "West Zone",
+    "pop": 3210,
+    "areaSqKm": 0.38,
+    "minElev": 3.2,
+    "avgElev": 4.5,
+    "lowLyingPct": 25,
+    "drainLenKm": 3.5,
+    "siltPct": 33,
+    "vulnerableBldgs": 140,
+    "riskScore": 57,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.5335,
+      81.5135
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "J.P. road",
+      "Losari canal road",
+      "Srirampuram main road junction",
+      "Yanamadurru canal center line",
+      "D.N.R college ground road",
+      "Komarada road",
+      "Karanam gari street",
+      "Gundu sagarams street",
+      "Kompella vari street"
+    ]
+  },
+  {
+    "id": 37,
+    "nameTe": "రాయలవరం రోడ్డు & నేతాజీ స్ట్రీట్",
+    "nameEn": "Rayalam Road & Nethaji Street",
+    "zone": "West Zone",
+    "pop": 3720,
+    "areaSqKm": 0.51,
+    "minElev": 2.1,
+    "avgElev": 3.1,
+    "lowLyingPct": 69,
+    "drainLenKm": 4.9,
+    "siltPct": 63,
+    "vulnerableBldgs": 450,
+    "riskScore": 96,
+    "riskCategory": "Critical Risk",
+    "riskColor": "#991b1b",
+    "center": [
+      16.536,
+      81.509
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "J.P.Road",
+      "Rayalam Road junction",
+      "Kompalli vari street",
+      "Gundu sagarams street",
+      "Rajarajeswari street",
+      "D.N.R College road junction",
+      "Nethaji street",
+      "Karanamgari street"
+    ]
+  },
+  {
+    "id": 38,
+    "nameTe": "ప్రశాంతి నగర్ & బాలుసుమూడి మవుళ్ళమ్మ గుడి",
+    "nameEn": "Prasanthi Nagar & Balusumudi Mavullamma Temple",
+    "zone": "West Zone",
+    "pop": 3140,
+    "areaSqKm": 0.37,
+    "minElev": 3.1,
+    "avgElev": 4.4,
+    "lowLyingPct": 26,
+    "drainLenKm": 3.4,
+    "siltPct": 35,
+    "vulnerableBldgs": 145,
+    "riskScore": 61,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.5335,
+      81.5078
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Rayalam road",
+      "Karanamgari street",
+      "Nethaji street",
+      "Prasanthi nagar street 1 & 3",
+      "D.N.R college road",
+      "Balusumudi mavullamma temple street",
+      "Chandrika enclave apartment",
+      "Ramalayam temple Y-junction",
+      "Church street",
+      "Komarada road",
+      "Bhimavaram revenue village boundary"
+    ]
+  },
+  {
+    "id": 39,
+    "nameTe": "కుమ్మర్ల వీధి & పాత భీమవరం టౌన్ లిమిట్స్",
+    "nameEn": "Kummarla Street & Old Bhimavaram Town Limits",
+    "zone": "South-West Zone",
+    "pop": 3410,
+    "areaSqKm": 0.44,
+    "minElev": 3.2,
+    "avgElev": 4.6,
+    "lowLyingPct": 24,
+    "drainLenKm": 3.9,
+    "siltPct": 34,
+    "vulnerableBldgs": 160,
+    "riskScore": 60,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.5305,
+      81.509
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Komarada road",
+      "Church street",
+      "Kummarla street",
+      "Ramalayam temple Y-junction",
+      "Balusumudi mavullamma temple street",
+      "D.N.R college road",
+      "Old Bhimavaram Town Limits",
+      "Rayalam Bhimavaram boundary limits"
+    ]
+  },
+  {
+    "id": 40,
+    "nameTe": "చినమిల్లి నాయుడు విగ్రహం & రాయలవరం ఆర్చ్",
+    "nameEn": "Chinamilli Naidu Statue & Rayalam Arch",
+    "zone": "Rayalam North Zone",
+    "pop": 3090,
+    "areaSqKm": 0.35,
+    "minElev": 3.4,
+    "avgElev": 4.8,
+    "lowLyingPct": 19,
+    "drainLenKm": 3.1,
+    "siltPct": 29,
+    "vulnerableBldgs": 105,
+    "riskScore": 48,
+    "riskCategory": "Low Risk",
+    "riskColor": "#84cc16",
+    "center": [
+      16.527,
+      81.5045
+    ],
+    "rsNos": [
+      90,
+      254
+    ],
+    "landmarks": [
+      "Chinamilli Naidu statue",
+      "Rayalam Arch",
+      "Balusumudi–Komarada Branch Canal",
+      "Ramanayya Kodu",
+      "Komarada Village boundary",
+      "Kamakshamma Temple",
+      "Shiva Temple",
+      "R&B Road",
+      "Guttula Satyanarayana Coffee Hotel",
+      "Karnam Gari Bodhi"
+    ]
+  },
+  {
+    "id": 41,
+    "nameTe": "రాయలవరం పంచాయతీ ఆఫీస్ & శివాలయం",
+    "nameEn": "Rayalam Panchayat Office & Shiva Temple",
+    "zone": "Rayalam Central Zone",
+    "pop": 3180,
+    "areaSqKm": 0.42,
+    "minElev": 3.5,
+    "avgElev": 5.1,
+    "lowLyingPct": 16,
+    "drainLenKm": 3.5,
+    "siltPct": 26,
+    "vulnerableBldgs": 90,
+    "riskScore": 43,
+    "riskCategory": "Low Risk",
+    "riskColor": "#84cc16",
+    "center": [
+      16.5225,
+      81.502
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Panchayat Office Main Road",
+      "Brahmam Gari Temple",
+      "Shiva Temple",
+      "Pallapu Street",
+      "R&B Road",
+      "Setti Balija Ramalayam",
+      "Arundhati Street",
+      "Kamakshamma Temple",
+      "Komarada Village Boundary",
+      "Chabattula Street",
+      "Uppugunta Cheruvu Road",
+      "Karnam Gari Bodhi"
+    ]
+  },
+  {
+    "id": 42,
+    "nameTe": "అనకోడేరు ఇరిగేషన్ కెనాల్ & బైపాస్ రోడ్డు",
+    "nameEn": "Anakoderu Irrigation Canal & Bypass Rd",
+    "zone": "Rayalam-Anakoderu Zone",
+    "pop": 3270,
+    "areaSqKm": 0.45,
+    "minElev": 3.3,
+    "avgElev": 4.8,
+    "lowLyingPct": 25,
+    "drainLenKm": 3.8,
+    "siltPct": 38,
+    "vulnerableBldgs": 155,
+    "riskScore": 62,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.5215,
+      81.4955
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Anakoderu irrigation canal",
+      "Bypass road leading to Rayalam",
+      "Rayudu Gari Statue",
+      "Naidu Gari Statue",
+      "Kamakshamma Temple",
+      "Panchayat Road",
+      "Arundhati Peta",
+      "Chinamiram Village boundary"
+    ]
+  },
+  {
+    "id": 43,
+    "nameTe": "SRKR ఇంజనీరింగ్ కాలేజీ & అంబేద్కర్ సెంటర్",
+    "nameEn": "SRKR Engineering College & Ambedkar Centre",
+    "zone": "Chinamiram-Pedamiram Zone",
+    "pop": 3020,
+    "areaSqKm": 0.38,
+    "minElev": 3.1,
+    "avgElev": 4.5,
+    "lowLyingPct": 28,
+    "drainLenKm": 3.2,
+    "siltPct": 35,
+    "vulnerableBldgs": 140,
+    "riskScore": 59,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.5415,
+      81.496
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Pedamiram Village Southern Boundary",
+      "S.R.K.R. College",
+      "Bhimavaram Hospital",
+      "Ambedkar Centre",
+      "Patapeta",
+      "Anakoderu Village Northern Boundary",
+      "Vempadu Village"
+    ]
+  },
+  {
+    "id": 44,
+    "nameTe": "యూత్ క్లబ్ రోడ్డు & చినమిరం విలేజ్ లిమిట్స్",
+    "nameEn": "Youth Club Road & Chinamiram Village Limits",
+    "zone": "Chinamiram Zone",
+    "pop": 3350,
+    "areaSqKm": 0.43,
+    "minElev": 3.6,
+    "avgElev": 5.2,
+    "lowLyingPct": 15,
+    "drainLenKm": 3.6,
+    "siltPct": 25,
+    "vulnerableBldgs": 80,
+    "riskScore": 41,
+    "riskCategory": "Very Low Risk",
+    "riskColor": "#15803d",
+    "center": [
+      16.541,
+      81.5025
+    ],
+    "rsNos": [
+      130,
+      146,
+      131
+    ],
+    "landmarks": [
+      "Southern Boundary of Pedamiram Village",
+      "J.P Road",
+      "Youth club road junction",
+      "Chinamiram road junction",
+      "Chinamiram village limits",
+      "S.R.K.R. College",
+      "Bhimavaram Hospital",
+      "Ambedkar Centre",
+      "Patapeta"
+    ]
+  },
+  {
+    "id": 45,
+    "nameTe": "సర్ ఆర్థర్ కాటన్ పార్క్ & రాయలవరం డ్రెయిన్",
+    "nameEn": "Sir Arthur Cotton Park & Rayalam Drain",
+    "zone": "West Central Zone",
+    "pop": 2990,
+    "areaSqKm": 0.41,
+    "minElev": 3.4,
+    "avgElev": 4.9,
+    "lowLyingPct": 20,
+    "drainLenKm": 3.3,
+    "siltPct": 30,
+    "vulnerableBldgs": 110,
+    "riskScore": 51,
+    "riskCategory": "Low Risk",
+    "riskColor": "#84cc16",
+    "center": [
+      16.5375,
+      81.505
+    ],
+    "rsNos": [
+      76
+    ],
+    "landmarks": [
+      "J.P Road",
+      "Chinaamiram road junction",
+      "Sir Arthur cotton park",
+      "Rayalam Drain Junction",
+      "Bhimavaram revenue village limits"
+    ]
+  },
+  {
+    "id": 46,
+    "nameTe": "కాస్మోపాలిటన్ క్లబ్ రోడ్డు & కెనరా బ్యాంక్",
+    "nameEn": "Cosmopolitan Club Road & Canara Bank",
+    "zone": "West Central Zone",
+    "pop": 3240,
+    "areaSqKm": 0.48,
+    "minElev": 2.7,
+    "avgElev": 3.8,
+    "lowLyingPct": 45,
+    "drainLenKm": 4,
+    "siltPct": 48,
+    "vulnerableBldgs": 270,
+    "riskScore": 80,
+    "riskCategory": "High Risk",
+    "riskColor": "#f97316",
+    "center": [
+      16.5445,
+      81.5065
+    ],
+    "rsNos": [
+      1,
+      26,
+      50
+    ],
+    "landmarks": [
+      "Municipal limits",
+      "Rayalam drain",
+      "Cosmopolitan club road",
+      "J.P. Road junction",
+      "Canara bank near D.No.7-199",
+      "Youth club road"
+    ]
+  },
+  {
+    "id": 47,
+    "nameTe": "పాత కరెంట్ ఆఫీస్ రోడ్డు & ఉండి రోడ్డు జంక్షన్",
+    "nameEn": "Old Current Office Rd & Undi Rd Junction",
+    "zone": "West Central Zone",
+    "pop": 3160,
+    "areaSqKm": 0.46,
+    "minElev": 2.5,
+    "avgElev": 3.6,
+    "lowLyingPct": 53,
+    "drainLenKm": 4.1,
+    "siltPct": 56,
+    "vulnerableBldgs": 345,
+    "riskScore": 87,
+    "riskCategory": "Very High Risk",
+    "riskColor": "#ef4444",
+    "center": [
+      16.542,
+      81.5115
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Rayalam drain",
+      "Old current office road",
+      "Anakoderu canal and undi road junction",
+      "Losari canal road",
+      "J.P. road & Losari canal junction",
+      "Cosmopolitan club road"
+    ]
+  },
+  {
+    "id": 48,
+    "nameTe": "ఉండి రోడ్డు & గుడివాడ రైల్వే లైన్",
+    "nameEn": "Undi Road & Gudivada Railway Line",
+    "zone": "West Central Zone",
+    "pop": 3420,
+    "areaSqKm": 0.52,
+    "minElev": 2.5,
+    "avgElev": 3.5,
+    "lowLyingPct": 58,
+    "drainLenKm": 4.7,
+    "siltPct": 59,
+    "vulnerableBldgs": 385,
+    "riskScore": 91,
+    "riskCategory": "Critical Risk",
+    "riskColor": "#991b1b",
+    "center": [
+      16.5455,
+      81.515
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Undi road",
+      "Bhimavaram–Gudivada railway line",
+      "Yanamadduru Drain",
+      "Yanamadurru drain bund road",
+      "Losari canal road"
+    ]
+  },
+  {
+    "id": 49,
+    "nameTe": "BV రాజు విగ్రహం & తాడేపల్లిగూడెం రోడ్డు",
+    "nameEn": "BV Raju Statue & Tadepalligudem Road",
+    "zone": "North-West Zone",
+    "pop": 3080,
+    "areaSqKm": 0.39,
+    "minElev": 3.3,
+    "avgElev": 4.7,
+    "lowLyingPct": 22,
+    "drainLenKm": 3.2,
+    "siltPct": 31,
+    "vulnerableBldgs": 120,
+    "riskScore": 52,
+    "riskCategory": "Low Risk",
+    "riskColor": "#84cc16",
+    "center": [
+      16.5525,
+      81.517
+    ],
+    "rsNos": [],
+    "landmarks": [
+      "Bypass Road",
+      "Anakoderu Canal junction",
+      "BV Raju statue",
+      "Tadepalligudem Road",
+      "Anjaneyaswami Temple",
+      "Yenamadurru Drain",
+      "Gudivada–Bhimavaram railway line"
+    ]
+  },
+  {
+    "id": 50,
+    "nameTe": "ఉండి బైపాస్ రోడ్డు & అనకోడేరు కెనాల్",
+    "nameEn": "Undi Bypass Road & Anakoderu Canal",
+    "zone": "West Zone",
+    "pop": 3190,
+    "areaSqKm": 0.49,
+    "minElev": 2.8,
+    "avgElev": 3.9,
+    "lowLyingPct": 42,
+    "drainLenKm": 4.2,
+    "siltPct": 45,
+    "vulnerableBldgs": 240,
+    "riskScore": 76,
+    "riskCategory": "High Risk",
+    "riskColor": "#f97316",
+    "center": [
+      16.5505,
+      81.509
+    ],
+    "rsNos": [
+      28
+    ],
+    "landmarks": [
+      "Bhimavaram village boundary",
+      "Undi Road",
+      "Undi Bypass Road junction",
+      "Anakoderu canal",
+      "Gudivada–Bhimavaram railway line junction",
+      "Old current office road",
+      "Rayalam drain"
+    ]
+  },
+  {
+    "id": 51,
+    "nameTe": "అన్నవరం & కొవ్వాడ రెవెన్యూ విలేజ్ సరిహద్దులు",
+    "nameEn": "Annavaram & Kovvada Revenue Village Boundaries",
+    "zone": "North-West Outer Zone",
+    "pop": 3110,
+    "areaSqKm": 0.41,
+    "minElev": 3,
+    "avgElev": 4.3,
+    "lowLyingPct": 30,
+    "drainLenKm": 3.4,
+    "siltPct": 36,
+    "vulnerableBldgs": 165,
+    "riskScore": 61,
+    "riskCategory": "Moderate Risk",
+    "riskColor": "#eab308",
+    "center": [
+      16.564,
+      81.508
+    ],
+    "rsNos": [
+      1,
+      139,
+      194,
+      78,
+      28
+    ],
+    "landmarks": [
+      "Annavaram village boundaries",
+      "Kovvada village boundary",
+      "Anakoderu Canal",
+      "Undi Bypass Road Junction",
+      "Undi Road",
+      "Rayalam Drain Junction"
+    ]
+  },
+  {
+    "id": 52,
+    "nameTe": "మున్సిపల్ నార్త్ బౌండరీ & తాడేపల్లిగూడెం బైపాస్",
+    "nameEn": "Municipal North Boundary & Tadepalligudem Bypass",
+    "zone": "North Zone",
+    "pop": 3230,
+    "areaSqKm": 0.47,
+    "minElev": 2.6,
+    "avgElev": 3.7,
+    "lowLyingPct": 48,
+    "drainLenKm": 4.3,
+    "siltPct": 51,
+    "vulnerableBldgs": 295,
+    "riskScore": 83,
+    "riskCategory": "High Risk",
+    "riskColor": "#f97316",
+    "center": [
+      16.564,
+      81.519
+    ],
+    "rsNos": [
+      253,
+      259,
+      278,
+      283
+    ],
+    "landmarks": [
+      "Municipal boundary",
+      "Yanamadurru drain",
+      "Anjaneya Swamy Temple",
+      "Tadepalligudem Road",
+      "B.V. Raju statue",
+      "Bypass road",
+      "Anakoderu canal junction"
+    ]
+  }
 ];
 
 // ==========================================
