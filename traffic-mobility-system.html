@@ -14,6 +14,10 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Universal Theme Engine (Light & Dark) -->
+  <link rel="stylesheet" href="assets/theme.css">
+  <script src="assets/theme.js"></script>
+
   <!-- Leaflet CSS & JS (Offline first with CDN Fallback) -->
   <link rel="stylesheet" href="leaflet.css" onerror="this.onerror=null;this.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';" />
   <script src="leaflet.js" onerror="this.onerror=null;this.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';"></script>
@@ -134,6 +138,12 @@
             <option value="scenario_c">దృశ్యం C: స్మార్ట్ ITMS & ఈ-బస్సులు (₹64.5 Cr)</option>
           </select>
         </div>
+
+        <!-- Universal Theme Toggle Button -->
+        <button onclick="toggleTheme()" id="themeToggleBtn" class="theme-toggle-btn inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-bold shadow-sm transition" title="లైట్ / డార్క్ మోడ్ మార్చండి">
+          <span id="themeToggleIcon" class="theme-toggle-icon">☀️</span>
+          <span id="themeToggleText" class="theme-toggle-text">లైట్</span>
+        </button>
 
         <!-- Quick navigation to other portals -->
         <a href="index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition" title="ముఖ్య పేజీ (వార్డుల మ్యాప్)">

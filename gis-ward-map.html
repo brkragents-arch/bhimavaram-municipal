@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
   <title>భీమవరం పురపాలక సంఘం – 39 వార్డుల GIS డిజిటల్ పటం & APSAC జలవనరులు (Bhimavaram 39 Wards GIS Map)</title>
   
   <!-- Comprehensive Site Meta Description depicting Total Functionality -->
@@ -13,6 +14,10 @@
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Theme Engine (Light & Dark) -->
+  <link rel="stylesheet" href="assets/theme.css">
+  <script src="assets/theme.js"></script>
   
   <!-- Leaflet CSS & JS (Local Offline First with CDN Fallback) -->
   <link rel="stylesheet" href="leaflet.css" onerror="this.onerror=null;this.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';" />
@@ -239,6 +244,12 @@
 
       <!-- Quick Action Buttons -->
       <div class="flex items-center gap-2">
+        <!-- Universal Theme Toggle Button (Light & Dark Mode) -->
+        <button onclick="toggleTheme()" id="themeToggleBtn" class="theme-toggle-btn inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold transition shadow-sm" title="లైట్ / డార్క్ మోడ్ మార్చండి">
+          <span id="themeToggleIcon" class="theme-toggle-icon">☀️</span>
+          <span id="themeToggleText" class="theme-toggle-text">లైట్ మోడ్</span>
+        </button>
+
         <button onclick="toggleWaterbodiesModal()" class="inline-flex items-center gap-1.5 bg-gradient-to-r from-sky-600 via-blue-600 to-cyan-600 hover:from-sky-500 hover:to-cyan-500 text-white font-bold border border-sky-400/50 px-3 py-1.5 rounded-lg text-xs shadow-lg shadow-sky-950/60 transition hover:scale-105 active:scale-95" title="చెరువులు, కాలువలు & కాలానుగుణ మార్పుల సమగ్ర సమాచారం">
           <span class="text-sm">🌊</span>
           <span>చెరువులు & కాలువలు</span>
@@ -278,13 +289,23 @@
   <div class="bg-slate-900/90 border-b border-slate-800 px-3 sm:px-4 py-2 flex-shrink-0 z-20">
     <div class="max-w-[1700px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
       
-      <!-- Left: Search Box -->
+      <!-- Left: Ward Mode Switcher (39 Wards Town Plan vs 52 Wards Gazette) -->
+      <div class="flex items-center bg-slate-950/90 p-1 rounded-lg border border-slate-800 gap-1 flex-shrink-0 shadow-inner">
+        <button onclick="switchWardMode(39)" id="btnMode39" class="px-2.5 py-1 rounded-md text-xs font-bold transition bg-amber-600 text-white shadow-sm flex items-center gap-1" title="భీమవరం పురపాలక సంఘం – 39 వార్డుల GIS డిజిటల్ మాస్టర్ ప్లాన్">
+          <span>📜 39 వార్డులు (మాస్టర్ ప్లాన్)</span>
+        </button>
+        <button onclick="switchWardMode(52)" id="btnMode52" class="px-2.5 py-1 rounded-md text-xs font-medium transition text-slate-400 hover:text-white flex items-center gap-1" title="భీమవరం పురపాలక సంఘం – 52 వార్డుల గెజిట్ నోటిఫికేషన్ & ఎన్నికల పొర">
+          <span>🏛️ 52 వార్డులు (గెజిట్)</span>
+        </button>
+      </div>
+
+      <!-- Center-Left: Search Box -->
       <div class="relative flex-1 min-w-[200px] max-w-sm">
         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">🔍</span>
         <input 
           type="text" 
           id="wardSearchInput" 
-          placeholder="వార్డు నెంబర్ (1-39) లేదా ప్రాంతం (DNR, స్టేషన్, రాయలం, జువ్వలపాలెం...)" 
+          placeholder="వార్డు నెంబర్ లేదా ప్రాంతం (DNR, స్టేషన్, రాయలం, జువ్వలపాలెం...)" 
           class="w-full bg-slate-950/80 border border-slate-700 text-slate-200 pl-9 pr-8 py-1.5 rounded-lg text-xs placeholder:text-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
           oninput="handleWardSearch(this.value)"
         >
@@ -863,10 +884,10 @@
   <script>
     // ====================================================
     // Bhimavaram Municipality GIS Digital Portal
-    // Supports 52 Wards Official Gazette & 39 Wards Master Plan
+    // Supports 39 Wards Master Plan & 52 Wards Official Gazette
     // ====================================================
 
-    let activeWardMode = 52; // Default to 52 Wards Official Gazette
+    let activeWardMode = 39; // Default to 39 Wards Master Plan
     let activeSelectedWard = 1;
 
     let map;
@@ -881,10 +902,10 @@
     let waterbodiesLayers = [];
     let changesLayers = [];
 
-    // Master Plan Bounds for 39 Wards Scanned Map
+    // Master Plan Calibrated Bounds for 39 Wards Scanned Map
     let scannedBounds = [
-      [16.5180, 81.5050], // Southwest
-      [16.5700, 81.5550]  // Northeast
+      [16.5079, 81.4922], // Southwest [South, West]
+      [16.5806, 81.5589]  // Northeast [North, East]
     ];
 
     const APSAC_MAP_BOUNDS = [
@@ -1228,7 +1249,7 @@
     // Render Ward Pills in Bottom Selector
     // ----------------------------------------------------
     function renderWardPills() {
-      const container = document.getElementById('wardPillsContainer');
+      const container = document.getElementById('wardPillsGrid') || document.getElementById('wardPillsContainer');
       if (!container) return;
       container.innerHTML = '';
 
@@ -1351,6 +1372,11 @@
         document.getElementById('sideWardHouseholds').innerText = Math.round(estPop / 3.8).toLocaleString('en-IN');
         
         // Gazette Boundaries
+        const gazetteBox = document.getElementById('sideWardGazetteBoundaries');
+        if (gazetteBox) gazetteBox.classList.remove('hidden');
+        const rsBox = document.getElementById('sideWardRsContainer');
+        if (rsBox) rsBox.classList.remove('hidden');
+
         document.getElementById('sideWardNorth').innerText = ward.north || 'సమాచారం అందుబాటులో లేదు';
         document.getElementById('sideWardEast').innerText = ward.east || 'సమాచారం అందుబాటులో లేదు';
         document.getElementById('sideWardSouth').innerText = ward.south || 'సమాచారం అందుబాటులో లేదు';
@@ -1450,6 +1476,11 @@
         });
 
         // Sidebar
+        const gazetteBox = document.getElementById('sideWardGazetteBoundaries');
+        if (gazetteBox) gazetteBox.classList.add('hidden');
+        const rsBox = document.getElementById('sideWardRsContainer');
+        if (rsBox) rsBox.classList.add('hidden');
+
         document.getElementById('sideWardBadge').innerText = `వార్డు ${ward.number} (Master Plan)`;
         document.getElementById('sideWardZone').innerText = ward.zone;
         document.getElementById('sideWardNameTe').innerText = ward.nameTe;
@@ -1554,25 +1585,7 @@
     }
 
     function initWaterbodiesModalTable() {
-      const tbody = document.getElementById('waterbodiesTableBody');
-      if (!tbody || typeof BHIMAVARAM_WATERBODIES_DATA === 'undefined') return;
-
-      tbody.innerHTML = BHIMAVARAM_WATERBODIES_DATA.map(wb => `
-        <tr class="hover:bg-slate-800/50 transition">
-          <td class="p-2 font-mono font-bold text-sky-400">${wb.code}</td>
-          <td class="p-2">
-            <div class="font-bold text-white">${wb.nameTe}</div>
-            <div class="text-[10px] text-slate-400">${wb.nameEn}</div>
-          </td>
-          <td class="p-2 font-mono text-right text-emerald-400">${wb.totalAreaAcres} AC</td>
-          <td class="p-2 text-center text-slate-300 text-[11px]">${(wb.wards || []).join(', ')}</td>
-          <td class="p-2 text-center">
-            <button onclick="locateWaterbody('${wb.id}'); toggleWaterbodiesModal();" class="px-2 py-0.5 rounded bg-sky-950 text-sky-300 hover:bg-sky-900 border border-sky-500/40 text-[10px]">
-              మ్యాప్ ➔
-            </button>
-          </td>
-        </tr>
-      `).join('');
+      renderWbTableRows('all', '');
     }
 
     // Layer Toggle Functions
@@ -1639,11 +1652,70 @@
     }
 
     function setViewPreset(preset) {
-      if (preset === 'waterbodies') {
+      const presets = ['aligned', 'waterbodies', 'scanned_only', 'satellite', 'streets'];
+      presets.forEach(p => {
+        const btn = document.getElementById('btnPreset_' + p);
+        if (btn) {
+          if (p === preset) {
+            btn.className = "px-2.5 py-1 rounded text-xs font-semibold bg-amber-500 text-slate-950 shadow-md transition";
+          } else {
+            btn.className = "px-2.5 py-1 rounded text-xs text-slate-400 hover:text-white transition";
+          }
+        }
+      });
+
+      if (preset === 'aligned') {
+        setBasemap('google_streets');
+        if (!map.hasLayer(scannedOverlay)) scannedOverlay.addTo(map);
+        scannedOverlay.setOpacity(0.75);
+        const sSlider = document.getElementById('scannedOpacitySlider');
+        if (sSlider) sSlider.value = 75;
+        const sLbl = document.getElementById('scannedOpacityLabel');
+        if (sLbl) sLbl.innerText = '75%';
+        changeWardOpacity(20);
+        const wSlider = document.getElementById('wardOpacitySlider');
+        if (wSlider) wSlider.value = 20;
+        const wLbl = document.getElementById('wardOpacityLabel');
+        if (wLbl) wLbl.innerText = '20%';
+        toggleApsacOverlay(false);
+        const chk = document.getElementById('chkShowApsacOverlay');
+        if (chk) chk.checked = false;
+        const chkSc = document.getElementById('chkShowScanned');
+        if (chkSc) chkSc.checked = true;
+      } else if (preset === 'waterbodies') {
         setBasemap('google_hybrid');
         toggleApsacOverlay(true);
         const chk = document.getElementById('chkShowApsacOverlay');
         if (chk) chk.checked = true;
+        toggleWaterbodiesLayer(true);
+        toggleChangesLayer(true);
+      } else if (preset === 'scanned_only') {
+        setBasemap('google_streets');
+        if (!map.hasLayer(scannedOverlay)) scannedOverlay.addTo(map);
+        scannedOverlay.setOpacity(1.0);
+        const sSlider = document.getElementById('scannedOpacitySlider');
+        if (sSlider) sSlider.value = 100;
+        const sLbl = document.getElementById('scannedOpacityLabel');
+        if (sLbl) sLbl.innerText = '100%';
+        changeWardOpacity(0);
+        const wSlider = document.getElementById('wardOpacitySlider');
+        if (wSlider) wSlider.value = 0;
+        const wLbl = document.getElementById('wardOpacityLabel');
+        if (wLbl) wLbl.innerText = '0%';
+        const chkSc = document.getElementById('chkShowScanned');
+        if (chkSc) chkSc.checked = true;
+      } else if (preset === 'satellite') {
+        setBasemap('google_hybrid');
+        if (map.hasLayer(scannedOverlay)) map.removeLayer(scannedOverlay);
+        const chkSc = document.getElementById('chkShowScanned');
+        if (chkSc) chkSc.checked = false;
+        changeWardOpacity(25);
+      } else if (preset === 'streets') {
+        setBasemap('google_streets');
+        if (map.hasLayer(scannedOverlay)) map.removeLayer(scannedOverlay);
+        const chkSc = document.getElementById('chkShowScanned');
+        if (chkSc) chkSc.checked = false;
+        changeWardOpacity(25);
       }
     }
 
@@ -1664,7 +1736,10 @@
 
     function toggleCalibratorModal() {
       const m = document.getElementById('calibratorModal');
-      if (m) m.classList.toggle('hidden');
+      if (m) {
+        m.classList.toggle('hidden');
+        updateCalibratorDisplay();
+      }
     }
 
     // Live Nudge & Scale Calibrator for Scanned Map
@@ -1674,6 +1749,7 @@
       scannedBounds[1][0] += dLat;
       scannedBounds[1][1] += dLng;
       if (scannedOverlay) scannedOverlay.setBounds(scannedBounds);
+      updateCalibratorDisplay();
     }
 
     function scaleOverlay(factor) {
@@ -1686,14 +1762,151 @@
         [cLat + halfH, cLng + halfW]
       ];
       if (scannedOverlay) scannedOverlay.setBounds(scannedBounds);
+      updateCalibratorDisplay();
     }
 
     function resetAlignment() {
       scannedBounds = [
-        [16.5180, 81.5050],
-        [16.5700, 81.5550]
+        [16.5079, 81.4922],
+        [16.5806, 81.5589]
       ];
       if (scannedOverlay) scannedOverlay.setBounds(scannedBounds);
+      updateCalibratorDisplay();
+    }
+
+    function updateCalibratorDisplay() {
+      const nEl = document.getElementById('calibNorth');
+      const sEl = document.getElementById('calibSouth');
+      const wEl = document.getElementById('calibWest');
+      const eEl = document.getElementById('calibEast');
+      if (nEl) nEl.innerText = scannedBounds[1][0].toFixed(4);
+      if (sEl) sEl.innerText = scannedBounds[0][0].toFixed(4);
+      if (wEl) wEl.innerText = scannedBounds[0][1].toFixed(4);
+      if (eEl) eEl.innerText = scannedBounds[1][1].toFixed(4);
+    }
+
+    // Search Engine
+    function handleWardSearch(val) {
+      val = (val || '').trim().toLowerCase();
+      if (!val) {
+        renderCurrentMode();
+        return;
+      }
+      const numMatch = val.match(/\d+/);
+      if (numMatch) {
+        const qNum = parseInt(numMatch[0]);
+        if (activeWardMode === 39 && qNum >= 1 && qNum <= 39) {
+          selectWard(qNum, true);
+          return;
+        } else if (activeWardMode === 52 && qNum >= 1 && qNum <= 52) {
+          selectWard(qNum, true);
+          return;
+        }
+      }
+      if (activeWardMode === 39) {
+        const found = (typeof BHIMAVARAM_39_WARDS !== 'undefined' ? BHIMAVARAM_39_WARDS : []).find(w => 
+          (w.nameTe && w.nameTe.toLowerCase().includes(val)) || 
+          (w.nameEn && w.nameEn.toLowerCase().includes(val)) || 
+          (w.landmarks && w.landmarks.toLowerCase().includes(val)) || 
+          (w.roads && w.roads.toLowerCase().includes(val))
+        );
+        if (found) selectWard(found.number, true);
+      } else {
+        const found = (typeof BHIMAVARAM_52_WARDS_DATA !== 'undefined' ? BHIMAVARAM_52_WARDS_DATA : []).find(w => 
+          (w.nameTe && w.nameTe.toLowerCase().includes(val)) || 
+          (w.nameEn && w.nameEn.toLowerCase().includes(val)) || 
+          (w.landmarks && w.landmarks.some(l => l.toLowerCase().includes(val))) ||
+          (w.rsNos && w.rsNos.some(r => r.toString().includes(val)))
+        );
+        if (found) selectWard(found.ward, true);
+      }
+    }
+
+    function clearSearch() {
+      const inp = document.getElementById('wardSearchInput');
+      if (inp) inp.value = '';
+      handleWardSearch('');
+    }
+
+    // Waterbodies Modal Tabs & Filtering
+    function switchWbTab(tabName) {
+      ['table', 'timeline', 'mapview'].forEach(t => {
+        const content = document.getElementById('tabContent_' + t);
+        const btn = document.getElementById('tabBtn_' + t);
+        if (content) {
+          if (t === tabName) content.classList.remove('hidden');
+          else content.classList.add('hidden');
+        }
+        if (btn) {
+          if (t === tabName) {
+            btn.className = "px-3 py-1.5 rounded-lg font-semibold bg-sky-600 text-white transition flex items-center gap-1.5 shadow-sm";
+          } else {
+            btn.className = "px-3 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition flex items-center gap-1.5";
+          }
+        }
+      });
+    }
+
+    function filterWbTable(filterType) {
+      ['all', 'tanks', 'canals', 'changed'].forEach(f => {
+        const btn = document.getElementById('wbFilt_' + f);
+        if (btn) {
+          if (f === filterType) {
+            btn.className = "px-2.5 py-1 rounded text-[11px] font-semibold bg-sky-600 text-white";
+          } else {
+            btn.className = "px-2.5 py-1 rounded text-[11px] text-slate-400 hover:text-white";
+          }
+        }
+      });
+      renderWbTableRows(filterType, document.getElementById('wbSearchInput')?.value || '');
+    }
+
+    function filterWbByText(text) {
+      renderWbTableRows('all', text);
+    }
+
+    function renderWbTableRows(filterType, searchTxt) {
+      const tbody = document.getElementById('wbTableBody');
+      if (!tbody || typeof BHIMAVARAM_WATERBODIES_DATA === 'undefined') return;
+      
+      let list = BHIMAVARAM_WATERBODIES_DATA;
+      if (filterType === 'tanks') list = list.filter(w => w.type === 'tank');
+      if (filterType === 'canals') list = list.filter(w => w.type === 'major_drain');
+      if (filterType === 'changed') list = list.filter(w => w.id === 'T7');
+
+      if (searchTxt) {
+        const st = searchTxt.toLowerCase();
+        list = list.filter(w => (w.code && w.code.toLowerCase().includes(st)) || (w.nameTe && w.nameTe.toLowerCase().includes(st)) || (w.nameEn && w.nameEn.toLowerCase().includes(st)));
+      }
+
+      tbody.innerHTML = list.map((wb, idx) => {
+        const isChanged = wb.id === 'T7';
+        return `
+          <tr class="hover:bg-slate-800/50 transition">
+            <td class="py-2 px-2.5 font-mono text-slate-400">${idx + 1}</td>
+            <td class="py-2 px-2.5 font-mono font-bold ${isChanged ? 'text-pink-400' : 'text-sky-400'}">${wb.code}</td>
+            <td class="py-2 px-2.5">
+              <div class="font-bold text-white">${wb.nameTe}</div>
+              <div class="text-[10px] text-slate-400">${wb.nameEn}</div>
+            </td>
+            <td class="py-2 px-2.5 text-slate-300">${wb.localName || wb.nameTe}</td>
+            <td class="py-2 px-2.5 font-mono text-right text-emerald-400 font-semibold">${wb.totalAreaAcres} AC</td>
+            <td class="py-2 px-2.5 font-mono text-right ${isChanged ? 'text-pink-400 font-bold' : 'text-slate-500'}">${isChanged ? '1.42 AC' : '0.00'}</td>
+            <td class="py-2 px-2.5 font-mono text-right text-cyan-300">${(wb.totalAreaAcres - (isChanged ? 1.42 : 0)).toFixed(2)} AC</td>
+            <td class="py-2 px-2.5 text-center">
+              <button onclick="locateWaterbody('${wb.id}'); toggleWaterbodiesModal();" class="px-2 py-0.5 rounded bg-sky-950 text-sky-300 hover:bg-sky-900 border border-sky-500/40 text-[10px] transition font-semibold">
+                మ్యాప్ ➔
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function toggleApsacOverlayFromModal(show) {
+      toggleApsacOverlay(show);
+      const chk = document.getElementById('chkShowApsacOverlay');
+      if (chk) chk.checked = show;
     }
 
     // GeoJSON Export

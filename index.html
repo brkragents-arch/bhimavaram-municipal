@@ -17,6 +17,10 @@
   <meta property="og:site_name" content="Bhimavaram Municipal Urban Intelligence Suite">
   
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Universal Theme Engine (Light & Dark) -->
+  <link rel="stylesheet" href="assets/theme.css">
+  <script src="assets/theme.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tiro+Telugu:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -90,6 +94,12 @@
 
       <!-- Prominent Buttons to all Integrated Modules & System Overview -->
       <div class="flex items-center flex-wrap gap-2 text-xs">
+        <!-- Universal Theme Toggle Button -->
+        <button onclick="toggleTheme()" id="themeToggleBtn" class="theme-toggle-btn inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-bold text-xs shadow-md transition-all hover:scale-105 active:scale-95" title="లైట్ / డార్క్ మోడ్ మార్చండి">
+          <span id="themeToggleIcon" class="theme-toggle-icon">☀️</span>
+          <span id="themeToggleText" class="theme-toggle-text">లైట్ మోడ్</span>
+        </button>
+
         <button onclick="toggleSystemOverviewModal()" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 hover:text-white font-bold text-xs shadow-md border border-cyan-500/40 transition-all hover:scale-105 active:scale-95" title="మొత్తం వేదిక సమగ్ర కార్యాచరణ వివరణ">
           <span class="text-sm">ℹ️</span>
           <span>ప్లాట్‌ఫారమ్ వివరణ</span>

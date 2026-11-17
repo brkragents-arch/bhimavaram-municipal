@@ -12,6 +12,10 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
+  <!-- Universal Theme Engine (Light & Dark) -->
+  <link rel="stylesheet" href="assets/theme.css">
+  <script src="assets/theme.js"></script>
+  
   <!-- Leaflet CSS (Local offline + CDN fallback) -->
   <link rel="stylesheet" href="leaflet.css" onerror="this.onerror=null;this.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -206,6 +210,12 @@
       <!-- Quick Portals & Module Switcher Buttons -->
       <div class="flex items-center flex-wrap gap-2 text-xs">
         
+        <!-- Universal Theme Toggle Button -->
+        <button onclick="toggleTheme()" id="themeToggleBtn" class="theme-toggle-btn inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-bold shadow-sm transition" title="లైట్ / డార్క్ మోడ్ మార్చండి">
+          <span id="themeToggleIcon" class="theme-toggle-icon">☀️</span>
+          <span id="themeToggleText" class="theme-toggle-text">లైట్</span>
+        </button>
+
         <!-- AP CDMA GIS Portal Link -->
         <a href="https://bhimavaram.cdma.ap.gov.in/ulbprofile/bhimavaram/gis-map/" target="_blank" rel="noopener noreferrer" 
            class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/40 font-semibold shadow-sm transition hover:scale-105"
