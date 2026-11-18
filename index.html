@@ -68,6 +68,7 @@
   <script src="assets/bhimavaram_52_wards_boundaries.js"></script>
   <script src="assets/bhimavaram_election_candidates.js"></script>
   <script src="assets/bhimavaram_waterbodies_data.js"></script>
+  <script src="assets/bhimavaram_polling_stations.js"></script>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col selection:bg-cyan-500 selection:text-white">
 
@@ -1278,7 +1279,20 @@
       if (dSec) dSec.textContent = ward.sec;
 
       const dBooths = document.getElementById('detailBooths');
-      if (dBooths) dBooths.textContent = `${ward.booths} పోలింగ్ కేంద్రాలు`;
+      if (dBooths) {
+        if (typeof getPollingStationsForWard === 'function') {
+          const stList = getPollingStationsForWard(ward.id);
+          if (stList && stList.length > 0) {
+            const bNos = stList.map(s => s.boothNo);
+            const bTxt = bNos.length > 2 ? `#${bNos[0]}-${bNos[bNos.length-1]}` : `#${bNos.join(', #')}`;
+            dBooths.textContent = `${stList.length} పోలింగ్ కేంద్రాలు (${bTxt})`;
+          } else {
+            dBooths.textContent = `${ward.booths} పోలింగ్ కేంద్రాలు`;
+          }
+        } else {
+          dBooths.textContent = `${ward.booths} పోలింగ్ కేంద్రాలు`;
+        }
+      }
 
       // Gazette boundaries
       const dNorth = document.getElementById('detailNorth');
