@@ -530,7 +530,9 @@
           <!-- Table displaying Ward Demographics and Area Information -->
           <div>
             <div class="text-xs font-semibold text-slate-300 mb-1.5 flex items-center gap-1.5">
-              <span>📊 వార్డు జనాభా & సమగ్ర గణాంకాల పట్టిక</span>
+              <span>📊</span>
+              <span id="detailDemographicsWardBadge" class="px-2 py-0.5 rounded text-[11px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">వార్డు 1</span>
+              <span>వార్డు జనాభా & సమగ్ర గణాంకాల పట్టిక</span>
             </div>
             <div class="rounded-lg border border-slate-800 overflow-hidden bg-slate-950/60">
               <table class="w-full text-xs text-left">
@@ -1265,6 +1267,9 @@
 
       const dEng = document.getElementById('detailWardEngName');
       if (dEng) dEng.textContent = ward.nameEng;
+
+      const dDemogBadge = document.getElementById('detailDemographicsWardBadge');
+      if (dDemogBadge) dDemogBadge.textContent = `వార్డు ${ward.id}`;
 
       const dLocal = document.getElementById('detailLocalities');
       if (dLocal) dLocal.textContent = ward.areas;
