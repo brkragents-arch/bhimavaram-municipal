@@ -1,0 +1,470 @@
+{
+  "1": {
+    "ward": 1,
+    "pop": 3624,
+    "voters": 3159,
+    "male": 1808,
+    "female": 1816,
+    "sexRatio": 1004,
+    "houses": 959
+  },
+  "2": {
+    "ward": 2,
+    "pop": 3182,
+    "voters": 2707,
+    "male": 1575,
+    "female": 1607,
+    "sexRatio": 1020,
+    "houses": 842
+  },
+  "3": {
+    "ward": 3,
+    "pop": 2892,
+    "voters": 2515,
+    "male": 1411,
+    "female": 1481,
+    "sexRatio": 1050,
+    "houses": 765
+  },
+  "4": {
+    "ward": 4,
+    "pop": 3219,
+    "voters": 2785,
+    "male": 1575,
+    "female": 1644,
+    "sexRatio": 1044,
+    "houses": 852
+  },
+  "5": {
+    "ward": 5,
+    "pop": 3354,
+    "voters": 2858,
+    "male": 1667,
+    "female": 1687,
+    "sexRatio": 1012,
+    "houses": 887
+  },
+  "6": {
+    "ward": 6,
+    "pop": 3085,
+    "voters": 2696,
+    "male": 1537,
+    "female": 1548,
+    "sexRatio": 1007,
+    "houses": 816
+  },
+  "7": {
+    "ward": 7,
+    "pop": 3218,
+    "voters": 2761,
+    "male": 1579,
+    "female": 1639,
+    "sexRatio": 1038,
+    "houses": 851
+  },
+  "8": {
+    "ward": 8,
+    "pop": 3638,
+    "voters": 3119,
+    "male": 1772,
+    "female": 1866,
+    "sexRatio": 1053,
+    "houses": 962
+  },
+  "9": {
+    "ward": 9,
+    "pop": 3455,
+    "voters": 3020,
+    "male": 1704,
+    "female": 1751,
+    "sexRatio": 1028,
+    "houses": 914
+  },
+  "10": {
+    "ward": 10,
+    "pop": 2979,
+    "voters": 2540,
+    "male": 1486,
+    "female": 1493,
+    "sexRatio": 1005,
+    "houses": 788
+  },
+  "11": {
+    "ward": 11,
+    "pop": 3082,
+    "voters": 2665,
+    "male": 1525,
+    "female": 1557,
+    "sexRatio": 1021,
+    "houses": 815
+  },
+  "12": {
+    "ward": 12,
+    "pop": 3353,
+    "voters": 2918,
+    "male": 1635,
+    "female": 1718,
+    "sexRatio": 1051,
+    "houses": 887
+  },
+  "13": {
+    "ward": 13,
+    "pop": 3133,
+    "voters": 2665,
+    "male": 1533,
+    "female": 1600,
+    "sexRatio": 1044,
+    "houses": 829
+  },
+  "14": {
+    "ward": 14,
+    "pop": 3033,
+    "voters": 2642,
+    "male": 1508,
+    "female": 1525,
+    "sexRatio": 1011,
+    "houses": 802
+  },
+  "15": {
+    "ward": 15,
+    "pop": 3484,
+    "voters": 3008,
+    "male": 1735,
+    "female": 1749,
+    "sexRatio": 1008,
+    "houses": 922
+  },
+  "16": {
+    "ward": 16,
+    "pop": 3640,
+    "voters": 3106,
+    "male": 1786,
+    "female": 1854,
+    "sexRatio": 1038,
+    "houses": 963
+  },
+  "17": {
+    "ward": 17,
+    "pop": 3184,
+    "voters": 2784,
+    "male": 1551,
+    "female": 1633,
+    "sexRatio": 1053,
+    "houses": 842
+  },
+  "18": {
+    "ward": 18,
+    "pop": 3021,
+    "voters": 2587,
+    "male": 1491,
+    "female": 1530,
+    "sexRatio": 1026,
+    "houses": 799
+  },
+  "19": {
+    "ward": 19,
+    "pop": 3312,
+    "voters": 2846,
+    "male": 1653,
+    "female": 1659,
+    "sexRatio": 1004,
+    "houses": 876
+  },
+  "20": {
+    "ward": 20,
+    "pop": 3235,
+    "voters": 2826,
+    "male": 1600,
+    "female": 1635,
+    "sexRatio": 1022,
+    "houses": 856
+  },
+  "21": {
+    "ward": 21,
+    "pop": 2941,
+    "voters": 2504,
+    "male": 1434,
+    "female": 1507,
+    "sexRatio": 1051,
+    "houses": 778
+  },
+  "22": {
+    "ward": 22,
+    "pop": 3228,
+    "voters": 2797,
+    "male": 1580,
+    "female": 1648,
+    "sexRatio": 1043,
+    "houses": 854
+  },
+  "23": {
+    "ward": 23,
+    "pop": 3656,
+    "voters": 3175,
+    "male": 1818,
+    "female": 1838,
+    "sexRatio": 1011,
+    "houses": 967
+  },
+  "24": {
+    "ward": 24,
+    "pop": 3416,
+    "voters": 2907,
+    "male": 1701,
+    "female": 1715,
+    "sexRatio": 1008,
+    "houses": 904
+  },
+  "25": {
+    "ward": 25,
+    "pop": 3060,
+    "voters": 2670,
+    "male": 1501,
+    "female": 1559,
+    "sexRatio": 1039,
+    "houses": 810
+  },
+  "26": {
+    "ward": 26,
+    "pop": 3248,
+    "voters": 2795,
+    "male": 1582,
+    "female": 1666,
+    "sexRatio": 1053,
+    "houses": 859
+  },
+  "27": {
+    "ward": 27,
+    "pop": 3347,
+    "voters": 2860,
+    "male": 1652,
+    "female": 1695,
+    "sexRatio": 1026,
+    "houses": 885
+  },
+  "28": {
+    "ward": 28,
+    "pop": 2984,
+    "voters": 2610,
+    "male": 1489,
+    "female": 1495,
+    "sexRatio": 1004,
+    "houses": 789
+  },
+  "29": {
+    "ward": 29,
+    "pop": 2981,
+    "voters": 2548,
+    "male": 1474,
+    "female": 1507,
+    "sexRatio": 1022,
+    "houses": 789
+  },
+  "30": {
+    "ward": 30,
+    "pop": 3496,
+    "voters": 3011,
+    "male": 1704,
+    "female": 1792,
+    "sexRatio": 1052,
+    "houses": 925
+  },
+  "31": {
+    "ward": 31,
+    "pop": 3576,
+    "voters": 3120,
+    "male": 1751,
+    "female": 1825,
+    "sexRatio": 1042,
+    "houses": 946
+  },
+  "32": {
+    "ward": 32,
+    "pop": 3180,
+    "voters": 2706,
+    "male": 1582,
+    "female": 1598,
+    "sexRatio": 1010,
+    "houses": 841
+  },
+  "33": {
+    "ward": 33,
+    "pop": 3189,
+    "voters": 2769,
+    "male": 1587,
+    "female": 1602,
+    "sexRatio": 1009,
+    "houses": 844
+  },
+  "34": {
+    "ward": 34,
+    "pop": 3422,
+    "voters": 2966,
+    "male": 1678,
+    "female": 1744,
+    "sexRatio": 1039,
+    "houses": 905
+  },
+  "35": {
+    "ward": 35,
+    "pop": 3145,
+    "voters": 2678,
+    "male": 1532,
+    "female": 1613,
+    "sexRatio": 1053,
+    "houses": 832
+  },
+  "36": {
+    "ward": 36,
+    "pop": 2852,
+    "voters": 2491,
+    "male": 1408,
+    "female": 1444,
+    "sexRatio": 1026,
+    "houses": 754
+  },
+  "37": {
+    "ward": 37,
+    "pop": 3231,
+    "voters": 2777,
+    "male": 1612,
+    "female": 1619,
+    "sexRatio": 1004,
+    "houses": 855
+  },
+  "38": {
+    "ward": 38,
+    "pop": 3594,
+    "voters": 3077,
+    "male": 1776,
+    "female": 1818,
+    "sexRatio": 1024,
+    "houses": 951
+  },
+  "39": {
+    "ward": 39,
+    "pop": 3328,
+    "voters": 2910,
+    "male": 1622,
+    "female": 1706,
+    "sexRatio": 1052,
+    "houses": 880
+  },
+  "40": {
+    "ward": 40,
+    "pop": 3155,
+    "voters": 2692,
+    "male": 1546,
+    "female": 1609,
+    "sexRatio": 1041,
+    "houses": 835
+  },
+  "41": {
+    "ward": 41,
+    "pop": 3427,
+    "voters": 2958,
+    "male": 1705,
+    "female": 1722,
+    "sexRatio": 1010,
+    "houses": 907
+  },
+  "42": {
+    "ward": 42,
+    "pop": 3356,
+    "voters": 2924,
+    "male": 1670,
+    "female": 1686,
+    "sexRatio": 1010,
+    "houses": 888
+  },
+  "43": {
+    "ward": 43,
+    "pop": 2898,
+    "voters": 2465,
+    "male": 1420,
+    "female": 1478,
+    "sexRatio": 1041,
+    "houses": 767
+  },
+  "44": {
+    "ward": 44,
+    "pop": 2976,
+    "voters": 2589,
+    "male": 1450,
+    "female": 1526,
+    "sexRatio": 1052,
+    "houses": 787
+  },
+  "45": {
+    "ward": 45,
+    "pop": 3464,
+    "voters": 2995,
+    "male": 1711,
+    "female": 1753,
+    "sexRatio": 1025,
+    "houses": 916
+  },
+  "46": {
+    "ward": 46,
+    "pop": 3441,
+    "voters": 2933,
+    "male": 1717,
+    "female": 1724,
+    "sexRatio": 1004,
+    "houses": 910
+  },
+  "47": {
+    "ward": 47,
+    "pop": 3160,
+    "voters": 2762,
+    "male": 1561,
+    "female": 1599,
+    "sexRatio": 1024,
+    "houses": 836
+  },
+  "48": {
+    "ward": 48,
+    "pop": 3356,
+    "voters": 2878,
+    "male": 1636,
+    "female": 1720,
+    "sexRatio": 1051,
+    "houses": 888
+  },
+  "49": {
+    "ward": 49,
+    "pop": 3524,
+    "voters": 3024,
+    "male": 1727,
+    "female": 1797,
+    "sexRatio": 1041,
+    "houses": 932
+  },
+  "50": {
+    "ward": 50,
+    "pop": 3099,
+    "voters": 2709,
+    "male": 1542,
+    "female": 1557,
+    "sexRatio": 1010,
+    "houses": 820
+  },
+  "51": {
+    "ward": 51,
+    "pop": 2842,
+    "voters": 2422,
+    "male": 1414,
+    "female": 1428,
+    "sexRatio": 1010,
+    "houses": 752
+  },
+  "52": {
+    "ward": 52,
+    "pop": 3245,
+    "voters": 2808,
+    "male": 1590,
+    "female": 1655,
+    "sexRatio": 1041,
+    "houses": 858
+  }
+}

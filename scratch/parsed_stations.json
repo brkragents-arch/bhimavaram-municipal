@@ -1,0 +1,734 @@
+[
+  {
+    "index": 0,
+    "area": "Anakoderu",
+    "boothNo": 146,
+    "location": "Zilla Parishad High School, Anacoderu,Southern Side, 2Nd Room"
+  },
+  {
+    "index": 1,
+    "area": "Anakoderu",
+    "boothNo": 147,
+    "location": "Zilla Parishad High School, Anacoderu,Southern Side, 3Rd Room"
+  },
+  {
+    "index": 2,
+    "area": "Bhimavaram",
+    "boothNo": 33,
+    "location": "Mpl Ele School (Spl), Suryanarayanapuram,Northern Side Room"
+  },
+  {
+    "index": 3,
+    "area": "Bhimavaram",
+    "boothNo": 34,
+    "location": "Mpl Ele School, Suryanarayanapuram, Bhimavaram,Southern Side Raam"
+  },
+  {
+    "index": 4,
+    "area": "Bhimavaram",
+    "boothNo": 35,
+    "location": "Mp Special Ele School,Suryanarayana Puram,Eastern Side,22 Nd Room"
+  },
+  {
+    "index": 5,
+    "area": "Bhimavaram",
+    "boothNo": 36,
+    "location": "D N R Mpl Library, Sivaraopeta,Bhimavaram,Sivaraopeta,Bhimavaram"
+  },
+  {
+    "index": 6,
+    "area": "Bhimavaram",
+    "boothNo": 37,
+    "location": "Mpl E School (Reg), Sivaraopeta,Rajulapeta,Bvrm,Eastern Side"
+  },
+  {
+    "index": 7,
+    "area": "Bhimavaram",
+    "boothNo": 38,
+    "location": "Mpl E School (Reg), Sivaraopeta,Rajulapeta,Bvrm,Western Side Of Northern Side"
+  },
+  {
+    "index": 8,
+    "area": "Bhimavaram",
+    "boothNo": 39,
+    "location": "Municipal Elementary School Regular ,Sivarao Peta,Eastern Side Shed ,Southern Side Room"
+  },
+  {
+    "index": 9,
+    "area": "Bhimavaram",
+    "boothNo": 40,
+    "location": "Mpl E School (Reg), Sivaraopeta,Rajulapeta,Bvrm,Southern Side Room Of Western Side"
+  },
+  {
+    "index": 10,
+    "area": "Bhimavaram",
+    "boothNo": 41,
+    "location": "Gali Ramayya Mpl Up School,Bhimavaram,Eastern Side"
+  },
+  {
+    "index": 11,
+    "area": "Bhimavaram",
+    "boothNo": 42,
+    "location": "Gali Ramayya Mpl Up School,Bhimavaram,Western Side"
+  },
+  {
+    "index": 12,
+    "area": "Bhimavaram",
+    "boothNo": 43,
+    "location": "Rcm Aided Ele School, Lankapeta, Bvrm,Northernside"
+  },
+  {
+    "index": 13,
+    "area": "Bhimavaram",
+    "boothNo": 44,
+    "location": "Rcm Aided Ele School, Lankapeta, Bvrm,Southernside"
+  },
+  {
+    "index": 14,
+    "area": "Bhimavaram",
+    "boothNo": 45,
+    "location": "Mpl Ele School, Durgapuram, Bhimavaram,Northernside"
+  },
+  {
+    "index": 15,
+    "area": "Bhimavaram",
+    "boothNo": 46,
+    "location": "Mpl Ele School, Durgapuram, Bhimavaram,Southernside"
+  },
+  {
+    "index": 16,
+    "area": "Bhimavaram",
+    "boothNo": 47,
+    "location": "Srrm Ele.School,Srirampuram, Bvrm,Eastern Side, 1St Room,New Building"
+  },
+  {
+    "index": 17,
+    "area": "Bhimavaram",
+    "boothNo": 48,
+    "location": "Srrm Ele.School,Srirampuram, Bvrm,Westernside Room Easternside"
+  },
+  {
+    "index": 18,
+    "area": "Bhimavaram",
+    "boothNo": 49,
+    "location": "Srrm Ele.School,Srirampuram, Bvrm,Middle Hall"
+  },
+  {
+    "index": 19,
+    "area": "Bhimavaram",
+    "boothNo": 50,
+    "location": "Srrm Ele.School,East Side Eastpart,Srirampuram, Bvrm"
+  },
+  {
+    "index": 20,
+    "area": "Bhimavaram",
+    "boothNo": 51,
+    "location": "Sri Raja Rajeswari Mpl Ele School,Srirampuram,Middle Hall,Western Side"
+  },
+  {
+    "index": 21,
+    "area": "Bhimavaram",
+    "boothNo": 52,
+    "location": "Smt Sarojinidevi Mpl Mahila Library,Sriramapuram,Bhimavaram"
+  },
+  {
+    "index": 22,
+    "area": "Bhimavaram",
+    "boothNo": 53,
+    "location": "G Gandhi Kasturiba Seva Sangh Bhavan, Bhimavaram,Court Premises"
+  },
+  {
+    "index": 23,
+    "area": "Bhimavaram",
+    "boothNo": 54,
+    "location": "S Ch B R M High School, Bhimavaram,Easternside Room In Northernside New Block"
+  },
+  {
+    "index": 24,
+    "area": "Bhimavaram",
+    "boothNo": 55,
+    "location": "S Ch B R M High School, Bhimavaram,Westernside In Northside New Block"
+  },
+  {
+    "index": 25,
+    "area": "Bhimavaram",
+    "boothNo": 56,
+    "location": "S Ch B R M High School,Old Block ,Dnr College Road,Northern Side Building ,Eastern Side 16 Th Room"
+  },
+  {
+    "index": 26,
+    "area": "Bhimavaram",
+    "boothNo": 57,
+    "location": "S Ch B R M High School, Bhimavaram,13 Th Room In Main Building"
+  },
+  {
+    "index": 27,
+    "area": "Bhimavaram",
+    "boothNo": 58,
+    "location": "S Ch B R M High School, Bhimavaram,New Block In Southernside"
+  },
+  {
+    "index": 28,
+    "area": "Bhimavaram",
+    "boothNo": 59,
+    "location": "S C H B R M High School,Old Block,Dnr College Road,Old Block Northern Side Middle ,Room No-17"
+  },
+  {
+    "index": 29,
+    "area": "Bhimavaram",
+    "boothNo": 60,
+    "location": "S V S School For Duff, Basulumudi, Bhimavaram,Prayer Room"
+  },
+  {
+    "index": 30,
+    "area": "Bhimavaram",
+    "boothNo": 61,
+    "location": "Jhansi Lakshmibayi Mpl Girls High School, Bvrm,8 Th Room"
+  },
+  {
+    "index": 31,
+    "area": "Bhimavaram",
+    "boothNo": 62,
+    "location": "Jhansi Lakshmibayi Mpl Girls High School, Bvrm,6 Th Room"
+  },
+  {
+    "index": 32,
+    "area": "Bhimavaram",
+    "boothNo": 63,
+    "location": "Jlb Municipal Girls High School,Room No.10"
+  },
+  {
+    "index": 33,
+    "area": "Bhimavaram",
+    "boothNo": 64,
+    "location": "Smdgmm Mpl.U.P.School, Bhimavaram,Westernside"
+  },
+  {
+    "index": 34,
+    "area": "Bhimavaram",
+    "boothNo": 65,
+    "location": "Smdgmm Mpl.U.P. School, Bhimavaram,Easternside"
+  },
+  {
+    "index": 35,
+    "area": "Bhimavaram",
+    "boothNo": 66,
+    "location": "Dr. B.R. Ambetkar Municipal Elementary School,Pedapeta Bhimavaram"
+  },
+  {
+    "index": 36,
+    "area": "Bhimavaram",
+    "boothNo": 67,
+    "location": "Sri Jupudi Gangaiah Memorial High School, Bvrm,Upstairs"
+  },
+  {
+    "index": 37,
+    "area": "Bhimavaram",
+    "boothNo": 68,
+    "location": "Sri Jupudi Gangaiah Memorial High School, Bvrm,13 Th Room In Easternside"
+  },
+  {
+    "index": 38,
+    "area": "Bhimavaram",
+    "boothNo": 69,
+    "location": "Sjgm High School,Physical Education Room"
+  },
+  {
+    "index": 39,
+    "area": "Bhimavaram",
+    "boothNo": 70,
+    "location": "Sri Jupudi Gangaiah Memorial High School, Bvrm,9 Th Room, A Section Room"
+  },
+  {
+    "index": 40,
+    "area": "Bhimavaram",
+    "boothNo": 71,
+    "location": "Sri Jupudi Gangaiah Memorial High School, Bvrm,10 Th Room"
+  },
+  {
+    "index": 41,
+    "area": "Bhimavaram",
+    "boothNo": 72,
+    "location": "S J G M High School,Bhimavaram,Head Master Room"
+  },
+  {
+    "index": 42,
+    "area": "Bhimavaram",
+    "boothNo": 73,
+    "location": "Sri P G Rammurthy Oriental Sanskrit High School,Nortern Side Acc Shed"
+  },
+  {
+    "index": 43,
+    "area": "Bhimavaram",
+    "boothNo": 74,
+    "location": "Sri P G Rammurthy Oriental Sanskrit High School,Easternside, New Building, 1St Room"
+  },
+  {
+    "index": 44,
+    "area": "Bhimavaram",
+    "boothNo": 75,
+    "location": "Luthern High School, Bhimavaram,Southernside Part, 1 St Room"
+  },
+  {
+    "index": 45,
+    "area": "Bhimavaram",
+    "boothNo": 76,
+    "location": "Luthern High School, Bhimavaram,Southernside Part, 3 Rd Room"
+  },
+  {
+    "index": 46,
+    "area": "Bhimavaram",
+    "boothNo": 77,
+    "location": "Luthern High School, Bhimavaram,Northernside Part, 17 Th Room"
+  },
+  {
+    "index": 47,
+    "area": "Bhimavaram",
+    "boothNo": 78,
+    "location": "Luthern High School, Bhimavaram,Northernside Part, 18 Th Room"
+  },
+  {
+    "index": 48,
+    "area": "Bhimavaram",
+    "boothNo": 79,
+    "location": "Luthern Jr College, Bhimavaram,Seminor Hall"
+  },
+  {
+    "index": 49,
+    "area": "Bhimavaram",
+    "boothNo": 80,
+    "location": "Municipal Elementary School, Bank Colony,1 St Room"
+  },
+  {
+    "index": 50,
+    "area": "Bhimavaram",
+    "boothNo": 81,
+    "location": "Municipal Elementary School, Bank Colony,2 Nd Room"
+  },
+  {
+    "index": 51,
+    "area": "Bhimavaram",
+    "boothNo": 82,
+    "location": "Municipal Elementary School, Bank Colony,4 Th Room"
+  },
+  {
+    "index": 52,
+    "area": "Bhimavaram",
+    "boothNo": 83,
+    "location": "Adavi Bapiraju Memorial Mpl Ele School, Bhimavaram,Southern Side"
+  },
+  {
+    "index": 53,
+    "area": "Bhimavaram",
+    "boothNo": 84,
+    "location": "Adavi Bapiraju Memorial Mpl Ele School, Bhimavaram,Middle Room, Bhimavaram"
+  },
+  {
+    "index": 54,
+    "area": "Bhimavaram",
+    "boothNo": 85,
+    "location": "Gannabattula Tulasamma G S Mpl. Ele School, Bvrm,Southside Room In Westernside"
+  },
+  {
+    "index": 55,
+    "area": "Bhimavaram",
+    "boothNo": 86,
+    "location": "Adavibabi Raju Mpl.Ele.School, Bhimavaram, Northside Building East Side"
+  },
+  {
+    "index": 56,
+    "area": "Bhimavaram",
+    "boothNo": 87,
+    "location": "Adivibapiraju Memorial Mpl.Ele.School, Bhimavaram,Southernside Building Western Side"
+  },
+  {
+    "index": 57,
+    "area": "Bhimavaram",
+    "boothNo": 88,
+    "location": "Sri Potti Sriramulumplgirlshighschool, Bhimavaram,1 St Room"
+  },
+  {
+    "index": 58,
+    "area": "Bhimavaram",
+    "boothNo": 89,
+    "location": "Sri Potti Sriramulumplgirlshighschool, Bhimavaram,4Th Room"
+  },
+  {
+    "index": 59,
+    "area": "Bhimavaram",
+    "boothNo": 90,
+    "location": "Sri Potti Sriramulu Mpl Girl H School, Bhimavaram,5Th Room, Upstairs"
+  },
+  {
+    "index": 60,
+    "area": "Bhimavaram",
+    "boothNo": 91,
+    "location": "Sri Potti Sriramulu Mpl Girl H School, Bhimavaram,Upstairs 8Th Room"
+  },
+  {
+    "index": 61,
+    "area": "Bhimavaram",
+    "boothNo": 92,
+    "location": "Sri Potti Sriramulu Mpl Girl H School, Bhimavaram,Staff Room, Bhimavaram"
+  },
+  {
+    "index": 62,
+    "area": "Bhimavaram",
+    "boothNo": 93,
+    "location": "Mahatma Gandhi Memorial Ele School, Bhimavaram,Southern Side"
+  },
+  {
+    "index": 63,
+    "area": "Bhimavaram",
+    "boothNo": 94,
+    "location": "Mahatma Gandhi Memorial Ele School, Bhimavaram,Northern Side"
+  },
+  {
+    "index": 64,
+    "area": "Bhimavaram",
+    "boothNo": 95,
+    "location": "Sri Adabala Venkatachandrarao Spl Up Ele School,Northern Side Room, Bhimavaram"
+  },
+  {
+    "index": 65,
+    "area": "Bhimavaram",
+    "boothNo": 96,
+    "location": "Sri A V Chandrarao Spl Ele School, Main Bldg,Southern Side Room, Bhimavaram"
+  },
+  {
+    "index": 66,
+    "area": "Bhimavaram",
+    "boothNo": 97,
+    "location": "Municipal Elementary School, Bank Colony,5Th Room"
+  },
+  {
+    "index": 67,
+    "area": "Bhimavaram",
+    "boothNo": 98,
+    "location": "Mpl Library, S P Street, Bhimavaram,Library Hall"
+  },
+  {
+    "index": 68,
+    "area": "Bhimavaram",
+    "boothNo": 99,
+    "location": "Bethani Spl.Mpl.Ele.School, Bhimavaram.,Easternside 5Th Room"
+  },
+  {
+    "index": 69,
+    "area": "Bhimavaram",
+    "boothNo": 100,
+    "location": "Bethani Spl.Mpl Ele Schoo, Bhimavaram,1St Room"
+  },
+  {
+    "index": 70,
+    "area": "Bhimavaram",
+    "boothNo": 101,
+    "location": "Bethani Spl. Mpl Ele Schoo, Bhimavaram,Easternside 3Rd Room"
+  },
+  {
+    "index": 71,
+    "area": "Bhimavaram",
+    "boothNo": 102,
+    "location": "Bethani Spl.Mpl Ele School, Bhimavaram,Easternside 4Th Room"
+  },
+  {
+    "index": 72,
+    "area": "Bhimavaram",
+    "boothNo": 103,
+    "location": "Bethani Girls High School, Bhimavaram,6Th Class Room"
+  },
+  {
+    "index": 73,
+    "area": "Bhimavaram",
+    "boothNo": 104,
+    "location": "Bethani Girls High School, Bhimavaram,Northern Side 8Th Class Room"
+  },
+  {
+    "index": 74,
+    "area": "Bhimavaram",
+    "boothNo": 105,
+    "location": "Bethani Girls High School, Bhimavaram,Northern Side 9Th Class Room"
+  },
+  {
+    "index": 75,
+    "area": "Bhimavaram",
+    "boothNo": 106,
+    "location": "Bethani Girls High School, Bhimavaram,Northern Side 10Th Class Room"
+  },
+  {
+    "index": 76,
+    "area": "Bhimavaram",
+    "boothNo": 107,
+    "location": "Sri Umasomeswara Mpl Ele School, Nallamvari St,,Southern Side Room"
+  },
+  {
+    "index": 77,
+    "area": "Bhimavaram",
+    "boothNo": 108,
+    "location": "Sri Umasomeswara Mpl Ele School, Nallamvari St,,Northernside"
+  },
+  {
+    "index": 78,
+    "area": "Bhimavaram",
+    "boothNo": 109,
+    "location": "Sri Umasomeswara Mpl Ele School, Nallamvari St,,Northernside 2Nd Room"
+  },
+  {
+    "index": 79,
+    "area": "Bhimavaram",
+    "boothNo": 110,
+    "location": "Sri Umasomeswara Mpl Ele School, Nallamvari St,,Upstairs , Bhimavaram"
+  },
+  {
+    "index": 80,
+    "area": "Bhimavaram",
+    "boothNo": 111,
+    "location": "Sri Umasomeswara Mpl Library, Nallamvari St.,Library Building, Bhimavaram"
+  },
+  {
+    "index": 81,
+    "area": "Bhimavaram",
+    "boothNo": 112,
+    "location": "Moulana Abdulkalam Ajad Mpl U.P School, Bhimavaram,Old Building, Eastern Side"
+  },
+  {
+    "index": 82,
+    "area": "Bhimavaram",
+    "boothNo": 113,
+    "location": "Moulana Abdulkalam Ajad Mpl U.P School, Bhimavaram,Old Building, Western Side"
+  },
+  {
+    "index": 83,
+    "area": "Bhimavaram",
+    "boothNo": 114,
+    "location": "Moulana Abdulkalam Azad Mpl.U.P.School, Bhimavaram,Upstairs"
+  },
+  {
+    "index": 84,
+    "area": "Bhimavaram",
+    "boothNo": 115,
+    "location": "Moulana Abdulkalam Ajad Liberary Bhimavaram,Library Building,"
+  },
+  {
+    "index": 85,
+    "area": "Bhimavaram",
+    "boothNo": 116,
+    "location": "Moulana Abdulkalam Ajad Mpl U.P School, Bhimavaram,Sarvasiksha Abhayan Building"
+  },
+  {
+    "index": 86,
+    "area": "Bhimavaram",
+    "boothNo": 117,
+    "location": "Banda Veerraju Mpl Ele School, Narasayya Agraharam,Main Bulg, Northernside Room, Bhimavaram"
+  },
+  {
+    "index": 87,
+    "area": "Bhimavaram",
+    "boothNo": 118,
+    "location": "Banda Veerraju Mpl Ele School, Narasayya Agraharam,Southernside Room, Bhimavaram"
+  },
+  {
+    "index": 88,
+    "area": "Bhimavaram",
+    "boothNo": 119,
+    "location": "Banda Veerraju Mpl Ele School, Narasayya Agraharam,Zink Shed, Northernside Room, Bhimavaram"
+  },
+  {
+    "index": 89,
+    "area": "Bhimavaram",
+    "boothNo": 120,
+    "location": "Banda Veerraju Mpl Ele School, Narasayya Agraharam,Zink Shed, Southernside Room, Bhimavaram"
+  },
+  {
+    "index": 90,
+    "area": "Bhimavaram",
+    "boothNo": 121,
+    "location": "St. Maries Lower Narsary, Bhimavaram,Lkg A Section"
+  },
+  {
+    "index": 91,
+    "area": "Bhimavaram",
+    "boothNo": 122,
+    "location": "St. Maries Lower Narsary, Bhimavaram,Ukg A Section"
+  },
+  {
+    "index": 92,
+    "area": "Bhimavaram",
+    "boothNo": 123,
+    "location": "St. Maries Ele School, Bhimavaram,3Rd Class Room, B Section"
+  },
+  {
+    "index": 93,
+    "area": "Bhimavaram",
+    "boothNo": 124,
+    "location": "St. Maries Ele School, Bhimavaram,Hall"
+  },
+  {
+    "index": 94,
+    "area": "Bhimavaram",
+    "boothNo": 125,
+    "location": "Mpl High School, Chinaranganipalem, Bhimavaram,1St Room"
+  },
+  {
+    "index": 95,
+    "area": "Bhimavaram",
+    "boothNo": 126,
+    "location": "Mpl High School, Chinaranganipalem, Bhimavaram,2Nd Room"
+  },
+  {
+    "index": 96,
+    "area": "Bhimavaram",
+    "boothNo": 127,
+    "location": "Mpl High School, Chinaranganipalem, Bhimavaram,3Rd Room, Old Building"
+  },
+  {
+    "index": 97,
+    "area": "Bhimavaram",
+    "boothNo": 128,
+    "location": "Mpl U.P School, Chinaranganipalem, Bhimavaram,Sarvasiksha Abhiyan Building"
+  },
+  {
+    "index": 98,
+    "area": "Bhimavaram",
+    "boothNo": 129,
+    "location": "T L N Mpl Spl Ele School, Rc Puram, Bvrm,Easternside, Bhimavaram"
+  },
+  {
+    "index": 99,
+    "area": "Bhimavaram",
+    "boothNo": 130,
+    "location": "T L N Mpl Spl Ele School, Rc Puram, Bvrm,Westernsideside,"
+  },
+  {
+    "index": 100,
+    "area": "Bhimavaram",
+    "boothNo": 131,
+    "location": "T L N Mpl Spl Ele School, Rc Puram, Bvrm,Tailaring Training Center, Bhimavaram"
+  },
+  {
+    "index": 101,
+    "area": "Bhimavaram",
+    "boothNo": 132,
+    "location": "Indiragandhi Mpl Spl Ele School, Gunupudi, Bvrm,2Nd Room,"
+  },
+  {
+    "index": 102,
+    "area": "Bhimavaram",
+    "boothNo": 133,
+    "location": "Indiragandhi Mpl Spl Ele School, Gunupudi, Bvrm,4Th Room,"
+  },
+  {
+    "index": 103,
+    "area": "Bhimavaram",
+    "boothNo": 134,
+    "location": "Indiragandhi Mpl Spl Ele School, Gunupudi, Bvrm,Upstairs"
+  },
+  {
+    "index": 104,
+    "area": "Bhimavaram",
+    "boothNo": 135,
+    "location": "T S S Mpl Ele School, Gunupudi, Bhimavaram,Old Building, Garuvupet"
+  },
+  {
+    "index": 105,
+    "area": "Bhimavaram",
+    "boothNo": 136,
+    "location": "T S S Mpl Sarvasiksha Abhayan Scl, Gunupudi, Bvrm,Garuvupet"
+  },
+  {
+    "index": 106,
+    "area": "China Amiram",
+    "boothNo": 142,
+    "location": "M.P.Ele School, Main , Chinamiram,Acc Shed, Eastern Side"
+  },
+  {
+    "index": 107,
+    "area": "China Amiram",
+    "boothNo": 143,
+    "location": "Mp.Ele. School,Ssa New Building Ground Flour,Middle Room,Chinamiram"
+  },
+  {
+    "index": 108,
+    "area": "China Amiram",
+    "boothNo": 144,
+    "location": "Zilla Parishat High Schhol, Chinamiram,New Building, 1St Room"
+  },
+  {
+    "index": 109,
+    "area": "China Amiram",
+    "boothNo": 145,
+    "location": "Zilla Parishad High School, Chinamiram,4Th Room,New Building"
+  },
+  {
+    "index": 110,
+    "area": "K Annavaram",
+    "boothNo": 17,
+    "location": "M P Ele School,,Vellaturu, H/O.Annavaram"
+  },
+  {
+    "index": 111,
+    "area": "Komarada",
+    "boothNo": 152,
+    "location": "Mandal Parishad Ele School, Komarada,Mandal Parishad Ele School, Komarada"
+  },
+  {
+    "index": 112,
+    "area": "Komarada",
+    "boothNo": 153,
+    "location": "Mandal Parishad Ele School, Komarada,Sarvasiksha Abhayan Building"
+  },
+  {
+    "index": 113,
+    "area": "Kovvada",
+    "boothNo": 18,
+    "location": "M P Ele School, Easternside Room,Kovvada"
+  },
+  {
+    "index": 114,
+    "area": "Kovvada",
+    "boothNo": 19,
+    "location": "M P Ele School, Westernside Room,Kovvada"
+  },
+  {
+    "index": 115,
+    "area": "Lv N Puram",
+    "boothNo": 149,
+    "location": "M P U P School L V N Puram,Western Side, Zinc Shed"
+  },
+  {
+    "index": 116,
+    "area": "Lv N Puram",
+    "boothNo": 150,
+    "location": "M P U P School L V N Puram,Eastern Side, Rcc Building"
+  },
+  {
+    "index": 117,
+    "area": "Rayalam",
+    "boothNo": 137,
+    "location": "Mp. Ele School-1, Rayalam,Easternside"
+  },
+  {
+    "index": 118,
+    "area": "Rayalam",
+    "boothNo": 138,
+    "location": "M.P. Ele School -1, Rayalam,Westernside"
+  },
+  {
+    "index": 119,
+    "area": "Rayalam",
+    "boothNo": 139,
+    "location": "M P Ele School-2, Rayalam,1St Room"
+  },
+  {
+    "index": 120,
+    "area": "Rayalam",
+    "boothNo": 140,
+    "location": "M.P. Ele. School-2, Rayalam,2Nd Room,"
+  },
+  {
+    "index": 121,
+    "area": "Rayalam",
+    "boothNo": 141,
+    "location": "Mandal Parishat Special Elementary School,Souther Side, New Building,"
+  }
+]
