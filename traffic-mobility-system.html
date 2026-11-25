@@ -2582,11 +2582,15 @@
       simTimer = 0;
       simUnderpassWaterlogged = false;
 
-      // Spawn initial fleet of 45 vehicles along corridors
-      for (let i = 0; i < 45; i++) {
-        spawnVehicle(Math.random() * 800);
+      // Spawn initial fleet of 38 vehicles along corridors (avoiding intersection zone)
+      for (let i = 0; i < 38; i++) {
+        let x = Math.random() * 800;
+        if (x > 255 && x < 375) {
+          x = x < 315 ? 230 - Math.random() * 100 : 390 + Math.random() * 100;
+        }
+        spawnVehicle(x);
       }
-      updateTelemetryUI(14.8, 45, 42, 64);
+      updateTelemetryUI(14.8, 38, 42, 64);
     }
 
     function spawnVehicle(forcedX = 0) {
@@ -2620,25 +2624,33 @@
     function updateSimState() {
       simTimer++;
 
-      // Traffic Light State Machine: Green (280 frames), Amber (40 frames), Red (180 frames)
+      // Traffic Light State Machine (500 frames / ~8.3 sec total cycle):
+      // - Green Phase (0-260 frames / 4.3s): Continuous East-West P.P. Road flow
+      // - Amber Clearance (260-300 frames / 0.7s): Yellow caution & clearance
+      // - Red Phase (300-500 frames / 3.3s): Stop at stop line, Rest House Road cross-flow
       const cyclePos = simTimer % 500;
       let lightState = 'green';
-      if (cyclePos > 440) lightState = 'red';
-      else if (cyclePos > 380) lightState = 'amber';
+      if (cyclePos >= 300) lightState = 'red';
+      else if (cyclePos >= 260) lightState = 'amber';
 
       const phaseEl = document.getElementById('sim-signal-phase');
       if (phaseEl) {
-        if (lightState === 'green') phaseEl.innerHTML = '<span class="text-emerald-400">నార్త్-సౌత్ గ్రీన్</span>';
-        else if (lightState === 'amber') phaseEl.innerHTML = '<span class="text-amber-400">అంబర్ క్లియరెన్స్</span>';
-        else phaseEl.innerHTML = '<span class="text-rose-400">రెడ్ స్టాప్</span>';
+        if (lightState === 'green') phaseEl.innerHTML = '<span class="text-emerald-400">P.P. రోడ్డు గ్రీన్ (Green Phase)</span>';
+        else if (lightState === 'amber') phaseEl.innerHTML = '<span class="text-amber-400">అంబర్ క్లియరెన్స్ (Amber Clearance)</span>';
+        else phaseEl.innerHTML = '<span class="text-rose-400 font-bold">రెడ్ సిగ్నల్ - స్టాప్ (Red Signal: All Vehicles Stop)</span>';
       }
 
       // Random vehicle influx
-      if (Math.random() < 0.05 * simDensityFactor && simVehicles.length < 90) {
+      if (Math.random() < 0.045 * simDensityFactor && simVehicles.length < 80) {
         spawnVehicle();
       }
 
-      // Update vehicle positions
+      // Junction Geometry Coordinates
+      const STOP_LINE_EAST = 265; // Eastbound stop line (before zebra crossing)
+      const STOP_LINE_WEST = 372; // Westbound stop line
+      const JUNCTION_START = 270;
+      const JUNCTION_END = 365;
+
       let stoppedCount = 0;
       let totalSpeed = 0;
 
@@ -2646,35 +2658,135 @@
         const v = simVehicles[i];
         let desiredSpeed = v.maxSpeed;
 
-        // Grade-Separated Railway Underpass (RuB) at X = 485 to 565
-        // Continuous flow beneath railway line; if sump waterlogged in monsoon test, crawl speed
+        // 1. Grade-Separated Railway Underpass (RuB) at X = 485 to 565
         if (simUnderpassWaterlogged && v.x > 470 && v.x < 570) {
           desiredSpeed = Math.min(desiredSpeed, v.maxSpeed * 0.35); // Slow crawl through waterlogged sump
         }
 
-        // Check Traffic Light at X = 320
-        if (lightState === 'red' && v.dir === 1 && v.x > 260 && v.x < 315) {
-          desiredSpeed = 0;
-          v.stopped = true;
-        } else if (lightState === 'amber' && v.dir === 1 && v.x > 240 && v.x < 315) {
-          desiredSpeed = v.maxSpeed * 0.4;
-        }
-
-        // Check vehicle in front (Car following model)
-        for (let j = 0; j < simVehicles.length; j++) {
-          if (i !== j && simVehicles[j].dir === v.dir && Math.abs(simVehicles[j].y - v.y) < 12) {
-            const gap = (simVehicles[j].x - v.x) * v.dir;
-            if (gap > 0 && gap < v.length + 15) {
-              desiredSpeed = Math.min(desiredSpeed, simVehicles[j].speed * 0.7);
-              if (gap < v.length + 6) desiredSpeed = 0;
+        // 2. Traffic Signal Enforcement at Prakasham Chowk Junction
+        if (v.dir === 1) { // Eastbound
+          const front = v.x + v.length;
+          if (lightState === 'red') {
+            if (front <= STOP_LINE_EAST) {
+              // Smooth deceleration to stop line; zero crossing permitted
+              const distToStop = STOP_LINE_EAST - front;
+              if (distToStop < 110) {
+                desiredSpeed = Math.min(desiredSpeed, Math.max(0, (distToStop / 110) * v.maxSpeed));
+              }
+              if (distToStop <= 2) {
+                desiredSpeed = 0;
+                v.x = Math.min(v.x, STOP_LINE_EAST - v.length);
+                v.stopped = true;
+              }
+            } else if (v.x < JUNCTION_END) {
+              // Clearing vehicle already inside intersection: smoothly complete crossing
+              desiredSpeed = Math.max(desiredSpeed, v.maxSpeed * 0.9);
+            }
+          } else if (lightState === 'amber') {
+            if (front <= STOP_LINE_EAST - 35) {
+              const distToStop = STOP_LINE_EAST - front;
+              desiredSpeed = Math.min(desiredSpeed, Math.max(0, (distToStop / 100) * v.maxSpeed));
+            } else {
+              desiredSpeed = Math.max(desiredSpeed, v.maxSpeed * 0.85);
+            }
+          }
+        } else { // Westbound (v.dir === -1)
+          const front = v.x;
+          if (lightState === 'red') {
+            if (front >= STOP_LINE_WEST) {
+              const distToStop = front - STOP_LINE_WEST;
+              if (distToStop < 110) {
+                desiredSpeed = Math.min(desiredSpeed, Math.max(0, (distToStop / 110) * v.maxSpeed));
+              }
+              if (distToStop <= 2) {
+                desiredSpeed = 0;
+                v.x = Math.max(v.x, STOP_LINE_WEST);
+                v.stopped = true;
+              }
+            } else if (v.x + v.length > JUNCTION_START) {
+              desiredSpeed = Math.max(desiredSpeed, v.maxSpeed * 0.9);
+            }
+          } else if (lightState === 'amber') {
+            if (front >= STOP_LINE_WEST + 35) {
+              const distToStop = front - STOP_LINE_WEST;
+              desiredSpeed = Math.min(desiredSpeed, Math.max(0, (distToStop / 100) * v.maxSpeed));
+            } else {
+              desiredSpeed = Math.max(desiredSpeed, v.maxSpeed * 0.85);
             }
           }
         }
 
-        v.speed = desiredSpeed;
+        // 3. Intelligent Car Following & Queuing Model
+        let minGap = Infinity;
+        let leadVehicle = null;
+
+        for (let j = 0; j < simVehicles.length; j++) {
+          if (i !== j && simVehicles[j].dir === v.dir && Math.abs(simVehicles[j].y - v.y) < 14) {
+            if (v.dir === 1 && simVehicles[j].x > v.x) {
+              const gap = simVehicles[j].x - (v.x + v.length);
+              if (gap < minGap) {
+                minGap = gap;
+                leadVehicle = simVehicles[j];
+              }
+            } else if (v.dir === -1 && simVehicles[j].x < v.x) {
+              const gap = v.x - (simVehicles[j].x + simVehicles[j].length);
+              if (gap < minGap) {
+                minGap = gap;
+                leadVehicle = simVehicles[j];
+              }
+            }
+          }
+        }
+
+        if (leadVehicle && minGap < Infinity) {
+          if (minGap <= 8) {
+            desiredSpeed = 0;
+            if (v.dir === 1) {
+              v.x = Math.min(v.x, leadVehicle.x - v.length - 4);
+            } else {
+              v.x = Math.max(v.x, leadVehicle.x + leadVehicle.length + 4);
+            }
+            v.stopped = true;
+          } else if (minGap < 50) {
+            const factor = Math.max(0, (minGap - 8) / 42);
+            desiredSpeed = Math.min(desiredSpeed, Math.max(0, leadVehicle.speed * factor + (v.maxSpeed * factor * 0.4)));
+          }
+        }
+
+        // 4. Smooth Acceleration / Braking
+        if (desiredSpeed === 0) {
+          v.speed = Math.max(0, v.speed - 0.4);
+          if (v.speed < 0.1) {
+            v.speed = 0;
+            v.stopped = true;
+          }
+        } else if (v.speed < desiredSpeed) {
+          v.speed = Math.min(desiredSpeed, v.speed + 0.15);
+          v.stopped = false;
+        } else {
+          v.speed = Math.max(desiredSpeed, v.speed - 0.25);
+        }
+
+        // 5. Absolute Stop Line Enforcer During Red Signal (Strict Stop)
+        if (lightState === 'red') {
+          if (v.dir === 1 && v.x + v.length <= STOP_LINE_EAST + 2) {
+            if (v.x + v.length + v.speed > STOP_LINE_EAST) {
+              v.speed = 0;
+              v.x = STOP_LINE_EAST - v.length;
+              v.stopped = true;
+            }
+          } else if (v.dir === -1 && v.x >= STOP_LINE_WEST - 2) {
+            if (v.x - v.speed < STOP_LINE_WEST) {
+              v.speed = 0;
+              v.x = STOP_LINE_WEST;
+              v.stopped = true;
+            }
+          }
+        }
+
         v.x += v.speed * v.dir;
         totalSpeed += v.speed;
-        if (v.speed < 0.3) stoppedCount++;
+        if (v.speed < 0.2) stoppedCount++;
       }
 
       // Remove offscreen vehicles
@@ -2739,6 +2851,7 @@
       ctx.fillStyle = '#1e293b';
       ctx.fillRect(290, 0, 60, H);
       ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(290, 0); ctx.lineTo(290, 195);
       ctx.moveTo(350, 0); ctx.lineTo(350, 195);
@@ -2746,11 +2859,23 @@
       ctx.moveTo(350, 265); ctx.lineTo(350, H);
       ctx.stroke();
 
-      // Zebra Crossings
-      ctx.fillStyle = '#f8fafc';
-      for (let z = 200; z < 265; z += 10) {
-        ctx.fillRect(275, z, 8, 5);
-        ctx.fillRect(355, z, 8, 5);
+      // Clear Stop Lines across P.P. Road
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 3;
+      // Eastbound Stop Line (X = 265)
+      ctx.beginPath();
+      ctx.moveTo(265, 195); ctx.lineTo(265, 265);
+      ctx.stroke();
+      // Westbound Stop Line (X = 372)
+      ctx.beginPath();
+      ctx.moveTo(372, 195); ctx.lineTo(372, 265);
+      ctx.stroke();
+
+      // Zebra Crossings (Pedestrian Crosswalks)
+      ctx.fillStyle = 'rgba(248, 250, 252, 0.85)';
+      for (let z = 198; z < 262; z += 10) {
+        ctx.fillRect(272, z, 12, 5);
+        ctx.fillRect(354, z, 12, 5);
       }
 
       // Draw Elevated Railway Bridge Structure at X = 500 to 555
@@ -2793,7 +2918,6 @@
 
       // Underpass Status Text & Indicators
       if (simUnderpassWaterlogged) {
-        // Waterlogged sump overlay
         ctx.fillStyle = 'rgba(6, 182, 212, 0.45)';
         ctx.fillRect(490, 195, 75, 70);
         ctx.fillStyle = '#f59e0b';
@@ -2805,31 +2929,87 @@
         ctx.fillText('🚇 టౌన్ అండర్‌పాస్ (RuB Flow: OK)', 460, 185);
       }
 
-      // Draw Traffic Signal Box at Junction (X=280, Y=180)
+      // Traffic Signal Post & 3-Aspect Signal Head at X=250, Y=145
       const cyclePos = simTimer % 500;
-      let lightColor = '#10b981';
-      if (cyclePos > 440) lightColor = '#ef4444';
-      else if (cyclePos > 380) lightColor = '#f59e0b';
+      const isRed = cyclePos >= 300;
+      const isAmber = cyclePos >= 260 && cyclePos < 300;
+      const isGreen = cyclePos < 260;
 
+      // Pole
+      ctx.fillStyle = '#475569';
+      ctx.fillRect(254, 180, 4, 15);
+
+      // Signal Head Housing
       ctx.fillStyle = '#0f172a';
-      ctx.fillRect(270, 160, 18, 32);
-      ctx.strokeStyle = '#334155';
-      ctx.strokeRect(270, 160, 18, 32);
-
-      // Light circle
-      ctx.fillStyle = lightColor;
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.arc(279, 176, 6, 0, Math.PI * 2);
+      if (ctx.roundRect) ctx.roundRect(246, 142, 20, 40, 4);
+      else ctx.rect(246, 142, 20, 40);
       ctx.fill();
+      ctx.stroke();
+
+      // Red Light Aspect
+      ctx.fillStyle = isRed ? '#ef4444' : '#450a0a';
+      if (isRed) { ctx.shadowColor = '#ef4444'; ctx.shadowBlur = 8; }
+      ctx.beginPath();
+      ctx.arc(256, 150, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Amber Light Aspect
+      ctx.fillStyle = isAmber ? '#f59e0b' : '#451a03';
+      if (isAmber) { ctx.shadowColor = '#f59e0b'; ctx.shadowBlur = 8; }
+      ctx.beginPath();
+      ctx.arc(256, 162, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Green Light Aspect
+      ctx.fillStyle = isGreen ? '#10b981' : '#022c22';
+      if (isGreen) { ctx.shadowColor = '#10b981'; ctx.shadowBlur = 8; }
+      ctx.beginPath();
+      ctx.arc(256, 174, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Rest House Road Cross Traffic during Red Phase
+      if (isRed) {
+        const crossProgress = ((cyclePos - 300) / 200); // 0 to 1
+        // Auto-rickshaw heading North to South
+        const crossY1 = (crossProgress * (H + 60)) - 30;
+        ctx.fillStyle = '#f59e0b';
+        ctx.shadowColor = '#f59e0b';
+        ctx.shadowBlur = 4;
+        ctx.fillRect(308, crossY1, 10, 16);
+        ctx.shadowBlur = 0;
+
+        // Car heading South to North
+        const crossY2 = H - ((crossProgress * 1.15 * (H + 60)) - 25);
+        if (crossY2 > -30 && crossY2 < H + 30) {
+          ctx.fillStyle = '#38bdf8';
+          ctx.shadowColor = '#38bdf8';
+          ctx.shadowBlur = 4;
+          ctx.fillRect(328, crossY2, 12, 20);
+          ctx.shadowBlur = 0;
+        }
+      }
 
       // Road Names Text overlay
       ctx.fillStyle = '#94a3b8';
       ctx.font = 'bold 11px sans-serif';
       ctx.fillText('పి.పి. రోడ్డు (P.P. Road)', 40, 185);
-      ctx.fillText('ప్రకాశం చౌక్ జంక్షన్', 260, 40);
+      ctx.fillText('ప్రకాశం చౌక్ జంక్షన్ (Prakasham Chowk)', 240, 35);
       ctx.fillText('టౌన్ స్టేషన్ అండర్‌పాస్ (RuB)', 545, 185);
 
-      // Draw all simulated vehicles (moving continuously through underpass!)
+      // Stop Line Indicator Label when Red
+      if (isRed) {
+        ctx.fillStyle = '#ef4444';
+        ctx.font = 'bold 10px sans-serif';
+        ctx.fillText('⛔ STOP LINE', 205, 278);
+      }
+
+      // Draw all simulated vehicles
       simVehicles.forEach(v => {
         ctx.fillStyle = v.color;
         ctx.shadowColor = v.color;
