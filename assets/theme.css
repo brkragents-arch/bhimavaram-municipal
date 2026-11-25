@@ -192,31 +192,264 @@ html.light [class*="divide-slate-800"] {
 /* ====================================================
    5. BUTTONS, TABS & FORM CONTROLS
    ==================================================== */
-html.light button.bg-slate-800,
-html.light a.bg-slate-800,
+/* Standard Slate Buttons & Links */
+html.light button[class*="bg-slate-800"],
+html.light a[class*="bg-slate-800"],
+html.light button[class*="bg-slate-700"],
+html.light a[class*="bg-slate-700"],
+html.light button[class*="bg-slate-900"],
+html.light a[class*="bg-slate-900"],
 html.light .tab-btn,
-html.light .layer-btn {
+html.light .layer-btn,
+html.light .proj-filter-btn {
   background-color: #f1f5f9 !important;
   color: #1e293b !important;
   border: 1px solid #cbd5e1 !important;
 }
 
-html.light button.bg-slate-800:hover,
-html.light a.bg-slate-800:hover,
+html.light button[class*="bg-slate-800"]:hover,
+html.light a[class*="bg-slate-800"]:hover,
+html.light button[class*="bg-slate-700"]:hover,
+html.light a[class*="bg-slate-700"]:hover,
+html.light button[class*="bg-slate-900"]:hover,
+html.light a[class*="bg-slate-900"]:hover,
 html.light .tab-btn:hover,
-html.light .layer-btn:hover {
+html.light .layer-btn:hover,
+html.light .proj-filter-btn:hover {
   background-color: #e2e8f0 !important;
   color: #0f172a !important;
 }
 
-/* Active tab highlight */
+html.light button[class*="bg-slate-800"] span,
+html.light a[class*="bg-slate-800"] span,
+html.light button[class*="bg-slate-700"] span,
+html.light a[class*="bg-slate-700"] span {
+  color: #1e293b !important;
+}
+
+/* Themed Navigation Pills (Converts dark bg-*-950 / bg-*-900 buttons to high-contrast crisp light pills) */
+/* 1. Cyan & Sky (e.g. వరద AI) */
+html.light a[class*="bg-cyan-950"],
+html.light button[class*="bg-cyan-950"],
+html.light span[class*="bg-cyan-950"],
+html.light a[class*="bg-cyan-900"],
+html.light button[class*="bg-cyan-900"],
+html.light a[class*="bg-sky-950"],
+html.light button[class*="bg-sky-950"],
+html.light span[class*="bg-sky-950"] {
+  background-color: #f0f9ff !important;
+  border: 1.5px solid #7dd3fc !important;
+  color: #0369a1 !important;
+}
+html.light a[class*="bg-cyan-950"]:hover,
+html.light button[class*="bg-cyan-950"]:hover,
+html.light a[class*="bg-sky-950"]:hover,
+html.light button[class*="bg-sky-950"]:hover {
+  background-color: #e0f2fe !important;
+  border-color: #0284c7 !important;
+  color: #0c4a6e !important;
+}
+html.light a[class*="bg-cyan-950"] span,
+html.light button[class*="bg-cyan-950"] span,
+html.light a[class*="bg-cyan-900"] span,
+html.light button[class*="bg-cyan-900"] span,
+html.light a[class*="bg-sky-950"] span,
+html.light button[class*="bg-sky-950"] span {
+  color: #0369a1 !important;
+  font-weight: 700 !important;
+}
+
+/* 2. Emerald & Green (e.g. 52 వార్డుల సరిహద్దులు) */
+html.light a[class*="bg-emerald-950"],
+html.light button[class*="bg-emerald-950"],
+html.light span[class*="bg-emerald-950"],
+html.light a[class*="bg-emerald-900"],
+html.light button[class*="bg-emerald-900"],
+html.light a[class*="bg-green-950"],
+html.light button[class*="bg-green-950"],
+html.light span[class*="bg-green-950"] {
+  background-color: #f0fdf4 !important;
+  border: 1.5px solid #86efac !important;
+  color: #15803d !important;
+}
+html.light a[class*="bg-emerald-950"]:hover,
+html.light button[class*="bg-emerald-950"]:hover,
+html.light a[class*="bg-green-950"]:hover,
+html.light button[class*="bg-green-950"]:hover {
+  background-color: #dcfce7 !important;
+  border-color: #16a34a !important;
+  color: #14532d !important;
+}
+html.light a[class*="bg-emerald-950"] span,
+html.light button[class*="bg-emerald-950"] span,
+html.light a[class*="bg-emerald-900"] span,
+html.light button[class*="bg-emerald-900"] span,
+html.light a[class*="bg-green-950"] span,
+html.light button[class*="bg-green-950"] span {
+  color: #15803d !important;
+  font-weight: 700 !important;
+}
+
+/* 3. Amber & Orange (e.g. ఎన్నికలు / ట్రాఫిక్ AI) */
+html.light a[class*="bg-amber-950"],
+html.light button[class*="bg-amber-950"],
+html.light span[class*="bg-amber-950"],
+html.light a[class*="bg-amber-900"],
+html.light button[class*="bg-amber-900"],
+html.light a[class*="bg-orange-950"],
+html.light button[class*="bg-orange-950"],
+html.light span[class*="bg-orange-950"] {
+  background-color: #fffbeb !important;
+  border: 1.5px solid #fcd34d !important;
+  color: #b45309 !important;
+}
+html.light a[class*="bg-amber-950"]:hover,
+html.light button[class*="bg-amber-950"]:hover,
+html.light a[class*="bg-orange-950"]:hover,
+html.light button[class*="bg-orange-950"]:hover {
+  background-color: #fef3c7 !important;
+  border-color: #d97706 !important;
+  color: #78350f !important;
+}
+html.light a[class*="bg-amber-950"] span,
+html.light button[class*="bg-amber-950"] span,
+html.light a[class*="bg-amber-900"] span,
+html.light button[class*="bg-amber-900"] span,
+html.light a[class*="bg-orange-950"] span,
+html.light button[class*="bg-orange-950"] span {
+  color: #b45309 !important;
+  font-weight: 700 !important;
+}
+
+/* 4. Blue & Indigo (e.g. GIS మ్యాప్ / RS రిజిస్ట్రీ) */
+html.light a[class*="bg-blue-950"],
+html.light button[class*="bg-blue-950"],
+html.light span[class*="bg-blue-950"],
+html.light a[class*="bg-blue-900"],
+html.light button[class*="bg-blue-900"],
+html.light a[class*="bg-indigo-950"],
+html.light button[class*="bg-indigo-950"],
+html.light span[class*="bg-indigo-950"],
+html.light a[class*="bg-indigo-900"],
+html.light button[class*="bg-indigo-900"] {
+  background-color: #eff6ff !important;
+  border: 1.5px solid #bfdbfe !important;
+  color: #1d4ed8 !important;
+}
+html.light a[class*="bg-blue-950"]:hover,
+html.light button[class*="bg-blue-950"]:hover,
+html.light a[class*="bg-indigo-950"]:hover,
+html.light button[class*="bg-indigo-950"]:hover {
+  background-color: #dbeafe !important;
+  border-color: #2563eb !important;
+  color: #1e40af !important;
+}
+html.light a[class*="bg-blue-950"] span,
+html.light button[class*="bg-blue-950"] span,
+html.light a[class*="bg-blue-900"] span,
+html.light button[class*="bg-blue-900"] span,
+html.light a[class*="bg-indigo-950"] span,
+html.light button[class*="bg-indigo-950"] span,
+html.light a[class*="bg-indigo-900"] span,
+html.light button[class*="bg-indigo-900"] span {
+  color: #1d4ed8 !important;
+  font-weight: 700 !important;
+}
+
+/* 5. Rose & Red (e.g. హాట్‌స్పాట్ పల్స్) */
+html.light a[class*="bg-rose-950"],
+html.light button[class*="bg-rose-950"],
+html.light span[class*="bg-rose-950"],
+html.light a[class*="bg-red-950"],
+html.light button[class*="bg-red-950"],
+html.light span[class*="bg-red-950"] {
+  background-color: #fff1f2 !important;
+  border: 1.5px solid #fecdd3 !important;
+  color: #be123c !important;
+}
+html.light a[class*="bg-rose-950"]:hover,
+html.light button[class*="bg-rose-950"]:hover,
+html.light a[class*="bg-red-950"]:hover,
+html.light button[class*="bg-red-950"]:hover {
+  background-color: #ffe4e6 !important;
+  border-color: #e11d48 !important;
+  color: #9f1239 !important;
+}
+html.light a[class*="bg-rose-950"] span,
+html.light button[class*="bg-rose-950"] span,
+html.light a[class*="bg-red-950"] span,
+html.light button[class*="bg-red-950"] span {
+  color: #be123c !important;
+  font-weight: 700 !important;
+}
+
+/* 6. Purple & Violet */
+html.light a[class*="bg-purple-950"],
+html.light button[class*="bg-purple-950"],
+html.light a[class*="bg-purple-900"],
+html.light button[class*="bg-purple-900"] {
+  background-color: #faf5ff !important;
+  border: 1.5px solid #e9d5ff !important;
+  color: #7e22ce !important;
+}
+html.light a[class*="bg-purple-950"]:hover,
+html.light button[class*="bg-purple-950"]:hover {
+  background-color: #f3e8ff !important;
+  border-color: #9333ea !important;
+  color: #581c87 !important;
+}
+html.light a[class*="bg-purple-950"] span,
+html.light button[class*="bg-purple-950"] span {
+  color: #7e22ce !important;
+  font-weight: 700 !important;
+}
+
+/* Active tab highlights across all dashboards */
 html.light .tab-btn.bg-cyan-600,
 html.light .tab-btn.bg-amber-600,
 html.light .layer-btn.bg-amber-600,
-html.light .tab-btn.active {
-  background-color: #0284c7 !important;
+html.light .tab-btn.active,
+html.light .tab-btn[class*="bg-amber-500/20"],
+html.light .tab-btn.text-amber-300 {
+  background-color: #fef3c7 !important;
+  color: #b45309 !important;
+  border-color: #f59e0b !important;
+  font-weight: 700 !important;
+}
+html.light .tab-btn.bg-cyan-600 span,
+html.light .tab-btn.bg-amber-600 span,
+html.light .layer-btn.bg-amber-600 span,
+html.light .tab-btn.active span,
+html.light .tab-btn[class*="bg-amber-500/20"] span,
+html.light .tab-btn.text-amber-300 span {
+  color: #b45309 !important;
+  font-weight: 700 !important;
+}
+
+/* Solid Vibrant Buttons Keep White Text */
+html.light button.bg-cyan-600,
+html.light a.bg-cyan-600,
+html.light button.bg-blue-600,
+html.light a.bg-blue-600,
+html.light button.bg-amber-600,
+html.light a.bg-amber-600,
+html.light button.bg-emerald-600,
+html.light a.bg-emerald-600,
+html.light [class*="bg-gradient-to-r"][class*="from-amber-500"],
+html.light [class*="bg-gradient-to-r"][class*="from-cyan-600"] {
   color: #ffffff !important;
-  border-color: #0369a1 !important;
+}
+html.light button.bg-cyan-600 span,
+html.light a.bg-cyan-600 span,
+html.light button.bg-blue-600 span,
+html.light a.bg-blue-600 span,
+html.light button.bg-amber-600 span,
+html.light a.bg-amber-600 span,
+html.light button.bg-emerald-600 span,
+html.light a.bg-emerald-600 span,
+html.light [class*="bg-gradient-to-r"][class*="from-amber-500"] span,
+html.light [class*="bg-gradient-to-r"][class*="from-cyan-600"] span {
+  color: #ffffff !important;
 }
 
 /* Inputs & Dropdowns */
@@ -236,18 +469,26 @@ html.light input[type="search"]::placeholder {
   color: #94a3b8 !important;
 }
 
-/* Scenario Buttons */
+/* Scenario & Simulation Buttons */
 html.light .sc-btn,
-html.light button[onclick^="setScenario"] {
+html.light button[onclick^="setScenario"],
+html.light button[id^="sim-scen-"] {
   background-color: #ffffff !important;
   border: 1px solid #cbd5e1 !important;
   color: #1e293b !important;
 }
 
 html.light .sc-btn:hover,
-html.light button[onclick^="setScenario"]:hover {
+html.light button[onclick^="setScenario"]:hover,
+html.light button[id^="sim-scen-"]:hover {
   background-color: #f8fafc !important;
   border-color: #0284c7 !important;
+}
+
+html.light button[id^="sim-scen-"] span,
+html.light button[id^="sim-scen-"] p,
+html.light button[id^="sim-scen-"] div {
+  color: #1e293b !important;
 }
 
 /* ====================================================
