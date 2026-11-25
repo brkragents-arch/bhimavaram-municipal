@@ -57,7 +57,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.55075,
         81.52239
       ]
-    ]
+    ],
+    "pop": 3624,
+    "voters": 3159,
+    "male": 1808,
+    "female": 1816,
+    "sexRatio": 1004,
+    "houses": 959
   },
   {
     "ward": 2,
@@ -127,7 +133,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.54904,
         81.53125
       ]
-    ]
+    ],
+    "pop": 3182,
+    "voters": 2707,
+    "male": 1575,
+    "female": 1607,
+    "sexRatio": 1020,
+    "houses": 842
   },
   {
     "ward": 3,
@@ -183,7 +195,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.54713,
         81.5385
       ]
-    ]
+    ],
+    "pop": 2892,
+    "voters": 2515,
+    "male": 1411,
+    "female": 1481,
+    "sexRatio": 1050,
+    "houses": 765
   },
   {
     "ward": 4,
@@ -247,7 +265,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.5705,
         81.5375
       ]
-    ]
+    ],
+    "pop": 3219,
+    "voters": 2785,
+    "male": 1575,
+    "female": 1644,
+    "sexRatio": 1044,
+    "houses": 852
   },
   {
     "ward": 5,
@@ -314,7 +338,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.568,
         81.54532
       ]
-    ]
+    ],
+    "pop": 3354,
+    "voters": 2858,
+    "male": 1667,
+    "female": 1687,
+    "sexRatio": 1012,
+    "houses": 887
   },
   {
     "ward": 6,
@@ -379,7 +409,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.54632,
         81.56211
       ]
-    ]
+    ],
+    "pop": 3085,
+    "voters": 2696,
+    "male": 1537,
+    "female": 1548,
+    "sexRatio": 1007,
+    "houses": 816
   },
   {
     "ward": 7,
@@ -446,7 +482,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53453,
         81.56228
       ]
-    ]
+    ],
+    "pop": 3218,
+    "voters": 2761,
+    "male": 1579,
+    "female": 1639,
+    "sexRatio": 1038,
+    "houses": 851
   },
   {
     "ward": 8,
@@ -511,7 +553,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53831,
         81.54486
       ]
-    ]
+    ],
+    "pop": 3638,
+    "voters": 3119,
+    "male": 1772,
+    "female": 1866,
+    "sexRatio": 1053,
+    "houses": 962
   },
   {
     "ward": 9,
@@ -570,7 +618,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.5405,
         81.5397
       ]
-    ]
+    ],
+    "pop": 3455,
+    "voters": 3020,
+    "male": 1704,
+    "female": 1751,
+    "sexRatio": 1028,
+    "houses": 914
   },
   {
     "ward": 10,
@@ -638,7 +692,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53745,
         81.54248
       ]
-    ]
+    ],
+    "pop": 2979,
+    "voters": 2540,
+    "male": 1486,
+    "female": 1493,
+    "sexRatio": 1005,
+    "houses": 788
   },
   {
     "ward": 11,
@@ -710,7 +770,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53249,
         81.53641
       ]
-    ]
+    ],
+    "pop": 3082,
+    "voters": 2665,
+    "male": 1525,
+    "female": 1557,
+    "sexRatio": 1021,
+    "houses": 815
   },
   {
     "ward": 12,
@@ -772,7 +838,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53365,
         81.55751
       ]
-    ]
+    ],
+    "pop": 3353,
+    "voters": 2918,
+    "male": 1635,
+    "female": 1718,
+    "sexRatio": 1051,
+    "houses": 887
   },
   {
     "ward": 13,
@@ -826,7 +898,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.51521,
         81.54028
       ]
-    ]
+    ],
+    "pop": 3133,
+    "voters": 2665,
+    "male": 1533,
+    "female": 1600,
+    "sexRatio": 1044,
+    "houses": 829
   },
   {
     "ward": 14,
@@ -900,7 +978,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.515,
         81.53012
       ]
-    ]
+    ],
+    "pop": 3033,
+    "voters": 2642,
+    "male": 1508,
+    "female": 1525,
+    "sexRatio": 1011,
+    "houses": 802
   },
   {
     "ward": 15,
@@ -959,7 +1043,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.52903,
         81.52864
       ]
-    ]
+    ],
+    "pop": 3484,
+    "voters": 3008,
+    "male": 1735,
+    "female": 1749,
+    "sexRatio": 1008,
+    "houses": 922
   },
   {
     "ward": 16,
@@ -1012,7 +1102,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53025,
         81.52825
       ]
-    ]
+    ],
+    "pop": 3640,
+    "voters": 3106,
+    "male": 1786,
+    "female": 1854,
+    "sexRatio": 1038,
+    "houses": 963
   },
   {
     "ward": 17,
@@ -1071,7 +1167,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53554,
         81.52613
       ]
-    ]
+    ],
+    "pop": 3184,
+    "voters": 2784,
+    "male": 1551,
+    "female": 1633,
+    "sexRatio": 1053,
+    "houses": 842
   },
   {
     "ward": 18,
@@ -1155,7 +1257,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53727,
         81.52461
       ]
-    ]
+    ],
+    "pop": 3021,
+    "voters": 2587,
+    "male": 1491,
+    "female": 1530,
+    "sexRatio": 1026,
+    "houses": 799
   },
   {
     "ward": 19,
@@ -1234,7 +1342,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.5383,
         81.5304
       ]
-    ]
+    ],
+    "pop": 3312,
+    "voters": 2846,
+    "male": 1653,
+    "female": 1659,
+    "sexRatio": 1004,
+    "houses": 876
   },
   {
     "ward": 20,
@@ -1301,7 +1415,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.54514,
         81.52779
       ]
-    ]
+    ],
+    "pop": 3235,
+    "voters": 2826,
+    "male": 1600,
+    "female": 1635,
+    "sexRatio": 1022,
+    "houses": 856
   },
   {
     "ward": 21,
@@ -1374,7 +1494,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.54367,
         81.52483
       ]
-    ]
+    ],
+    "pop": 2941,
+    "voters": 2504,
+    "male": 1434,
+    "female": 1507,
+    "sexRatio": 1051,
+    "houses": 778
   },
   {
     "ward": 22,
@@ -1428,7 +1554,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.544,
         81.53125
       ]
-    ]
+    ],
+    "pop": 3228,
+    "voters": 2797,
+    "male": 1580,
+    "female": 1648,
+    "sexRatio": 1043,
+    "houses": 854
   },
   {
     "ward": 23,
@@ -1493,7 +1625,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.54282,
         81.5178
       ]
-    ]
+    ],
+    "pop": 3656,
+    "voters": 3175,
+    "male": 1818,
+    "female": 1838,
+    "sexRatio": 1011,
+    "houses": 967
   },
   {
     "ward": 24,
@@ -1552,7 +1690,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.5406,
         81.52377
       ]
-    ]
+    ],
+    "pop": 3416,
+    "voters": 2907,
+    "male": 1701,
+    "female": 1715,
+    "sexRatio": 1008,
+    "houses": 904
   },
   {
     "ward": 25,
@@ -1608,7 +1752,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53743,
         81.5243
       ]
-    ]
+    ],
+    "pop": 3060,
+    "voters": 2670,
+    "male": 1501,
+    "female": 1559,
+    "sexRatio": 1039,
+    "houses": 810
   },
   {
     "ward": 26,
@@ -1681,7 +1831,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.5381,
         81.51397
       ]
-    ]
+    ],
+    "pop": 3248,
+    "voters": 2795,
+    "male": 1582,
+    "female": 1666,
+    "sexRatio": 1053,
+    "houses": 859
   },
   {
     "ward": 27,
@@ -1747,7 +1903,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.5317,
         81.5172
       ]
-    ]
+    ],
+    "pop": 3347,
+    "voters": 2860,
+    "male": 1652,
+    "female": 1695,
+    "sexRatio": 1026,
+    "houses": 885
   },
   {
     "ward": 28,
@@ -1803,7 +1965,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53736,
         81.52436
       ]
-    ]
+    ],
+    "pop": 2984,
+    "voters": 2610,
+    "male": 1489,
+    "female": 1495,
+    "sexRatio": 1004,
+    "houses": 789
   },
   {
     "ward": 29,
@@ -1863,7 +2031,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53564,
         81.52588
       ]
-    ]
+    ],
+    "pop": 2981,
+    "voters": 2548,
+    "male": 1474,
+    "female": 1507,
+    "sexRatio": 1022,
+    "houses": 789
   },
   {
     "ward": 30,
@@ -1925,7 +2099,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.52964,
         81.5282
       ]
-    ]
+    ],
+    "pop": 3496,
+    "voters": 3011,
+    "male": 1704,
+    "female": 1792,
+    "sexRatio": 1052,
+    "houses": 925
   },
   {
     "ward": 31,
@@ -1997,7 +2177,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.52893,
         81.51905
       ]
-    ]
+    ],
+    "pop": 3576,
+    "voters": 3120,
+    "male": 1751,
+    "female": 1825,
+    "sexRatio": 1042,
+    "houses": 946
   },
   {
     "ward": 32,
@@ -2063,7 +2249,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53013,
         81.52623
       ]
-    ]
+    ],
+    "pop": 3180,
+    "voters": 2706,
+    "male": 1582,
+    "female": 1598,
+    "sexRatio": 1010,
+    "houses": 841
   },
   {
     "ward": 33,
@@ -2138,7 +2330,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.515,
         81.52583
       ]
-    ]
+    ],
+    "pop": 3189,
+    "voters": 2769,
+    "male": 1587,
+    "female": 1602,
+    "sexRatio": 1009,
+    "houses": 844
   },
   {
     "ward": 34,
@@ -2197,7 +2395,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.515,
         81.51085
       ]
-    ]
+    ],
+    "pop": 3422,
+    "voters": 2966,
+    "male": 1678,
+    "female": 1744,
+    "sexRatio": 1039,
+    "houses": 905
   },
   {
     "ward": 35,
@@ -2260,7 +2464,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.52287,
         81.51045
       ]
-    ]
+    ],
+    "pop": 3145,
+    "voters": 2678,
+    "male": 1532,
+    "female": 1613,
+    "sexRatio": 1053,
+    "houses": 832
   },
   {
     "ward": 36,
@@ -2323,7 +2533,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53042,
         81.51231
       ]
-    ]
+    ],
+    "pop": 2852,
+    "voters": 2491,
+    "male": 1408,
+    "female": 1444,
+    "sexRatio": 1026,
+    "houses": 754
   },
   {
     "ward": 37,
@@ -2381,7 +2597,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53562,
         81.50658
       ]
-    ]
+    ],
+    "pop": 3231,
+    "voters": 2777,
+    "male": 1612,
+    "female": 1619,
+    "sexRatio": 1004,
+    "houses": 855
   },
   {
     "ward": 38,
@@ -2442,7 +2664,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53238,
         81.50195
       ]
-    ]
+    ],
+    "pop": 3594,
+    "voters": 3077,
+    "male": 1776,
+    "female": 1818,
+    "sexRatio": 1024,
+    "houses": 951
   },
   {
     "ward": 39,
@@ -2492,7 +2720,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.52425,
         81.51025
       ]
-    ]
+    ],
+    "pop": 3328,
+    "voters": 2910,
+    "male": 1622,
+    "female": 1706,
+    "sexRatio": 1052,
+    "houses": 880
   },
   {
     "ward": 40,
@@ -2561,7 +2795,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.52774,
         81.49787
       ]
-    ]
+    ],
+    "pop": 3155,
+    "voters": 2692,
+    "male": 1546,
+    "female": 1609,
+    "sexRatio": 1041,
+    "houses": 835
   },
   {
     "ward": 41,
@@ -2617,7 +2857,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.51502,
         81.49982
       ]
-    ]
+    ],
+    "pop": 3427,
+    "voters": 2958,
+    "male": 1705,
+    "female": 1722,
+    "sexRatio": 1010,
+    "houses": 907
   },
   {
     "ward": 42,
@@ -2670,7 +2916,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53164,
         81.49
       ]
-    ]
+    ],
+    "pop": 3356,
+    "voters": 2924,
+    "male": 1670,
+    "female": 1686,
+    "sexRatio": 1010,
+    "houses": 888
   },
   {
     "ward": 43,
@@ -2742,7 +2994,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.55666,
         81.49466
       ]
-    ]
+    ],
+    "pop": 2898,
+    "voters": 2465,
+    "male": 1420,
+    "female": 1478,
+    "sexRatio": 1041,
+    "houses": 767
   },
   {
     "ward": 44,
@@ -2793,7 +3051,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.54814,
         81.49978
       ]
-    ]
+    ],
+    "pop": 2976,
+    "voters": 2589,
+    "male": 1450,
+    "female": 1526,
+    "sexRatio": 1052,
+    "houses": 787
   },
   {
     "ward": 45,
@@ -2852,7 +3116,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.5326,
         81.49743
       ]
-    ]
+    ],
+    "pop": 3464,
+    "voters": 2995,
+    "male": 1711,
+    "female": 1753,
+    "sexRatio": 1025,
+    "houses": 916
   },
   {
     "ward": 46,
@@ -2907,7 +3177,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.55118,
         81.49891
       ]
-    ]
+    ],
+    "pop": 3441,
+    "voters": 2933,
+    "male": 1717,
+    "female": 1724,
+    "sexRatio": 1004,
+    "houses": 910
   },
   {
     "ward": 47,
@@ -2968,7 +3244,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.53987,
         81.50817
       ]
-    ]
+    ],
+    "pop": 3160,
+    "voters": 2762,
+    "male": 1561,
+    "female": 1599,
+    "sexRatio": 1024,
+    "houses": 836
   },
   {
     "ward": 48,
@@ -3016,7 +3298,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.54155,
         81.51545
       ]
-    ]
+    ],
+    "pop": 3356,
+    "voters": 2878,
+    "male": 1636,
+    "female": 1720,
+    "sexRatio": 1051,
+    "houses": 888
   },
   {
     "ward": 49,
@@ -3078,7 +3366,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.54813,
         81.51903
       ]
-    ]
+    ],
+    "pop": 3524,
+    "voters": 3024,
+    "male": 1727,
+    "female": 1797,
+    "sexRatio": 1041,
+    "houses": 932
   },
   {
     "ward": 50,
@@ -3134,7 +3428,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.55628,
         81.49538
       ]
-    ]
+    ],
+    "pop": 3099,
+    "voters": 2709,
+    "male": 1542,
+    "female": 1557,
+    "sexRatio": 1010,
+    "houses": 820
   },
   {
     "ward": 51,
@@ -3199,7 +3499,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.565,
         81.498
       ]
-    ]
+    ],
+    "pop": 2842,
+    "voters": 2422,
+    "male": 1414,
+    "female": 1428,
+    "sexRatio": 1010,
+    "houses": 752
   },
   {
     "ward": 52,
@@ -3258,7 +3564,13 @@ var BHIMAVARAM_52_WARDS_DATA = [
         16.55903,
         81.5135
       ]
-    ]
+    ],
+    "pop": 3245,
+    "voters": 2808,
+    "male": 1590,
+    "female": 1655,
+    "sexRatio": 1041,
+    "houses": 858
   }
 ];
 if (typeof window !== 'undefined') {
@@ -4183,5 +4495,25 @@ if (typeof module !== 'undefined' && module.exports) {
     BHIMAVARAM_52_WARDS_DATA,
     BHIMAVARAM_RS_NUMBERS_REGISTRY,
     BHIMAVARAM_MUNICIPALITY_METADATA
+  };
+}
+
+
+var BHIMAVARAM_MUNICIPALITY_STATS = {
+  totalPopulation: 168940,
+  totalVoters: 145737,
+  totalMale: 83303,
+  totalFemale: 85637,
+  totalHouseholds: 44691,
+  overallSexRatio: 1028,
+  totalWards: 52,
+  averageWardVoters: 2803,
+  averageWardPopulation: 3249
+};
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    BHIMAVARAM_52_WARDS_DATA,
+    BHIMAVARAM_MUNICIPALITY_STATS
   };
 }
