@@ -64,8 +64,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1816,
     "sexRatio": 1004,
     "houses": 959,
-    "maleVoters": 1576,
-    "femaleVoters": 1583
+    "maleVoters": 1534,
+    "femaleVoters": 1625
   },
   {
     "ward": 2,
@@ -142,8 +142,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1607,
     "sexRatio": 1020,
     "houses": 842,
-    "maleVoters": 1340,
-    "femaleVoters": 1367
+    "maleVoters": 1303,
+    "femaleVoters": 1404
   },
   {
     "ward": 3,
@@ -206,8 +206,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1481,
     "sexRatio": 1050,
     "houses": 765,
-    "maleVoters": 1227,
-    "femaleVoters": 1288
+    "maleVoters": 1193,
+    "femaleVoters": 1322
   },
   {
     "ward": 4,
@@ -278,8 +278,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1644,
     "sexRatio": 1044,
     "houses": 852,
-    "maleVoters": 1363,
-    "femaleVoters": 1422
+    "maleVoters": 1325,
+    "femaleVoters": 1460
   },
   {
     "ward": 5,
@@ -353,8 +353,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1687,
     "sexRatio": 1012,
     "houses": 887,
-    "maleVoters": 1420,
-    "femaleVoters": 1438
+    "maleVoters": 1382,
+    "femaleVoters": 1476
   },
   {
     "ward": 6,
@@ -426,8 +426,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1548,
     "sexRatio": 1007,
     "houses": 816,
-    "maleVoters": 1343,
-    "femaleVoters": 1353
+    "maleVoters": 1307,
+    "femaleVoters": 1389
   },
   {
     "ward": 7,
@@ -501,8 +501,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1639,
     "sexRatio": 1038,
     "houses": 851,
-    "maleVoters": 1355,
-    "femaleVoters": 1406
+    "maleVoters": 1317,
+    "femaleVoters": 1444
   },
   {
     "ward": 8,
@@ -574,8 +574,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1866,
     "sexRatio": 1053,
     "houses": 962,
-    "maleVoters": 1519,
-    "femaleVoters": 1600
+    "maleVoters": 1477,
+    "femaleVoters": 1642
   },
   {
     "ward": 9,
@@ -641,8 +641,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1751,
     "sexRatio": 1028,
     "houses": 914,
-    "maleVoters": 1489,
-    "femaleVoters": 1531
+    "maleVoters": 1449,
+    "femaleVoters": 1571
   },
   {
     "ward": 10,
@@ -717,8 +717,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1493,
     "sexRatio": 1005,
     "houses": 788,
-    "maleVoters": 1267,
-    "femaleVoters": 1273
+    "maleVoters": 1233,
+    "femaleVoters": 1307
   },
   {
     "ward": 11,
@@ -797,8 +797,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1557,
     "sexRatio": 1021,
     "houses": 815,
-    "maleVoters": 1319,
-    "femaleVoters": 1346
+    "maleVoters": 1283,
+    "femaleVoters": 1382
   },
   {
     "ward": 12,
@@ -867,8 +867,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1718,
     "sexRatio": 1051,
     "houses": 887,
-    "maleVoters": 1423,
-    "femaleVoters": 1495
+    "maleVoters": 1383,
+    "femaleVoters": 1535
   },
   {
     "ward": 13,
@@ -929,8 +929,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1600,
     "sexRatio": 1044,
     "houses": 829,
-    "maleVoters": 1304,
-    "femaleVoters": 1361
+    "maleVoters": 1268,
+    "femaleVoters": 1397
   },
   {
     "ward": 14,
@@ -1011,8 +1011,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1525,
     "sexRatio": 1011,
     "houses": 802,
-    "maleVoters": 1314,
-    "femaleVoters": 1328
+    "maleVoters": 1278,
+    "femaleVoters": 1364
   },
   {
     "ward": 15,
@@ -1078,8 +1078,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1749,
     "sexRatio": 1008,
     "houses": 922,
-    "maleVoters": 1498,
-    "femaleVoters": 1510
+    "maleVoters": 1458,
+    "femaleVoters": 1550
   },
   {
     "ward": 16,
@@ -1139,8 +1139,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1854,
     "sexRatio": 1038,
     "houses": 963,
-    "maleVoters": 1524,
-    "femaleVoters": 1582
+    "maleVoters": 1482,
+    "femaleVoters": 1624
   },
   {
     "ward": 17,
@@ -1206,8 +1206,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1633,
     "sexRatio": 1053,
     "houses": 842,
-    "maleVoters": 1356,
-    "femaleVoters": 1428
+    "maleVoters": 1318,
+    "femaleVoters": 1466
   },
   {
     "ward": 18,
@@ -1298,8 +1298,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1530,
     "sexRatio": 1026,
     "houses": 799,
-    "maleVoters": 1277,
-    "femaleVoters": 1310
+    "maleVoters": 1242,
+    "femaleVoters": 1345
   },
   {
     "ward": 19,
@@ -1385,8 +1385,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1659,
     "sexRatio": 1004,
     "houses": 876,
-    "maleVoters": 1420,
-    "femaleVoters": 1426
+    "maleVoters": 1382,
+    "femaleVoters": 1464
   },
   {
     "ward": 20,
@@ -1460,8 +1460,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1635,
     "sexRatio": 1022,
     "houses": 856,
-    "maleVoters": 1398,
-    "femaleVoters": 1428
+    "maleVoters": 1360,
+    "femaleVoters": 1466
   },
   {
     "ward": 21,
@@ -1541,8 +1541,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1507,
     "sexRatio": 1051,
     "houses": 778,
-    "maleVoters": 1221,
-    "femaleVoters": 1283
+    "maleVoters": 1187,
+    "femaleVoters": 1317
   },
   {
     "ward": 22,
@@ -1603,8 +1603,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1648,
     "sexRatio": 1043,
     "houses": 854,
-    "maleVoters": 1369,
-    "femaleVoters": 1428
+    "maleVoters": 1331,
+    "femaleVoters": 1466
   },
   {
     "ward": 23,
@@ -1676,8 +1676,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1838,
     "sexRatio": 1011,
     "houses": 967,
-    "maleVoters": 1579,
-    "femaleVoters": 1596
+    "maleVoters": 1536,
+    "femaleVoters": 1639
   },
   {
     "ward": 24,
@@ -1743,8 +1743,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1715,
     "sexRatio": 1008,
     "houses": 904,
-    "maleVoters": 1448,
-    "femaleVoters": 1459
+    "maleVoters": 1409,
+    "femaleVoters": 1498
   },
   {
     "ward": 25,
@@ -1807,8 +1807,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1559,
     "sexRatio": 1039,
     "houses": 810,
-    "maleVoters": 1310,
-    "femaleVoters": 1360
+    "maleVoters": 1273,
+    "femaleVoters": 1397
   },
   {
     "ward": 26,
@@ -1888,8 +1888,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1666,
     "sexRatio": 1053,
     "houses": 859,
-    "maleVoters": 1361,
-    "femaleVoters": 1434
+    "maleVoters": 1323,
+    "femaleVoters": 1472
   },
   {
     "ward": 27,
@@ -1962,8 +1962,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1695,
     "sexRatio": 1026,
     "houses": 885,
-    "maleVoters": 1412,
-    "femaleVoters": 1448
+    "maleVoters": 1373,
+    "femaleVoters": 1487
   },
   {
     "ward": 28,
@@ -2026,8 +2026,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1495,
     "sexRatio": 1004,
     "houses": 789,
-    "maleVoters": 1302,
-    "femaleVoters": 1308
+    "maleVoters": 1268,
+    "femaleVoters": 1342
   },
   {
     "ward": 29,
@@ -2094,8 +2094,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1507,
     "sexRatio": 1022,
     "houses": 789,
-    "maleVoters": 1260,
-    "femaleVoters": 1288
+    "maleVoters": 1226,
+    "femaleVoters": 1322
   },
   {
     "ward": 30,
@@ -2164,8 +2164,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1792,
     "sexRatio": 1052,
     "houses": 925,
-    "maleVoters": 1468,
-    "femaleVoters": 1543
+    "maleVoters": 1427,
+    "femaleVoters": 1584
   },
   {
     "ward": 31,
@@ -2244,8 +2244,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1825,
     "sexRatio": 1042,
     "houses": 946,
-    "maleVoters": 1528,
-    "femaleVoters": 1592
+    "maleVoters": 1485,
+    "femaleVoters": 1635
   },
   {
     "ward": 32,
@@ -2318,8 +2318,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1598,
     "sexRatio": 1010,
     "houses": 841,
-    "maleVoters": 1346,
-    "femaleVoters": 1360
+    "maleVoters": 1310,
+    "femaleVoters": 1396
   },
   {
     "ward": 33,
@@ -2401,8 +2401,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1602,
     "sexRatio": 1009,
     "houses": 844,
-    "maleVoters": 1378,
-    "femaleVoters": 1391
+    "maleVoters": 1341,
+    "femaleVoters": 1428
   },
   {
     "ward": 34,
@@ -2468,8 +2468,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1744,
     "sexRatio": 1039,
     "houses": 905,
-    "maleVoters": 1454,
-    "femaleVoters": 1512
+    "maleVoters": 1414,
+    "femaleVoters": 1552
   },
   {
     "ward": 35,
@@ -2539,8 +2539,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1613,
     "sexRatio": 1053,
     "houses": 832,
-    "maleVoters": 1305,
-    "femaleVoters": 1373
+    "maleVoters": 1268,
+    "femaleVoters": 1410
   },
   {
     "ward": 36,
@@ -2610,8 +2610,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1444,
     "sexRatio": 1026,
     "houses": 754,
-    "maleVoters": 1230,
-    "femaleVoters": 1261
+    "maleVoters": 1196,
+    "femaleVoters": 1295
   },
   {
     "ward": 37,
@@ -2676,8 +2676,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1619,
     "sexRatio": 1004,
     "houses": 855,
-    "maleVoters": 1385,
-    "femaleVoters": 1392
+    "maleVoters": 1348,
+    "femaleVoters": 1429
   },
   {
     "ward": 38,
@@ -2745,8 +2745,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1818,
     "sexRatio": 1024,
     "houses": 951,
-    "maleVoters": 1521,
-    "femaleVoters": 1556
+    "maleVoters": 1479,
+    "femaleVoters": 1598
   },
   {
     "ward": 39,
@@ -2803,8 +2803,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1706,
     "sexRatio": 1052,
     "houses": 880,
-    "maleVoters": 1418,
-    "femaleVoters": 1492
+    "maleVoters": 1379,
+    "femaleVoters": 1531
   },
   {
     "ward": 40,
@@ -2880,8 +2880,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1609,
     "sexRatio": 1041,
     "houses": 835,
-    "maleVoters": 1319,
-    "femaleVoters": 1373
+    "maleVoters": 1283,
+    "femaleVoters": 1409
   },
   {
     "ward": 41,
@@ -2944,8 +2944,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1722,
     "sexRatio": 1010,
     "houses": 907,
-    "maleVoters": 1472,
-    "femaleVoters": 1486
+    "maleVoters": 1432,
+    "femaleVoters": 1526
   },
   {
     "ward": 42,
@@ -3005,8 +3005,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1686,
     "sexRatio": 1010,
     "houses": 888,
-    "maleVoters": 1455,
-    "femaleVoters": 1469
+    "maleVoters": 1416,
+    "femaleVoters": 1508
   },
   {
     "ward": 43,
@@ -3085,8 +3085,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1478,
     "sexRatio": 1041,
     "houses": 767,
-    "maleVoters": 1208,
-    "femaleVoters": 1257
+    "maleVoters": 1174,
+    "femaleVoters": 1291
   },
   {
     "ward": 44,
@@ -3144,8 +3144,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1526,
     "sexRatio": 1052,
     "houses": 787,
-    "maleVoters": 1261,
-    "femaleVoters": 1328
+    "maleVoters": 1226,
+    "femaleVoters": 1363
   },
   {
     "ward": 45,
@@ -3211,8 +3211,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1753,
     "sexRatio": 1025,
     "houses": 916,
-    "maleVoters": 1479,
-    "femaleVoters": 1516
+    "maleVoters": 1439,
+    "femaleVoters": 1556
   },
   {
     "ward": 46,
@@ -3274,8 +3274,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1724,
     "sexRatio": 1004,
     "houses": 910,
-    "maleVoters": 1464,
-    "femaleVoters": 1469
+    "maleVoters": 1424,
+    "femaleVoters": 1509
   },
   {
     "ward": 47,
@@ -3343,8 +3343,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1599,
     "sexRatio": 1024,
     "houses": 836,
-    "maleVoters": 1364,
-    "femaleVoters": 1398
+    "maleVoters": 1327,
+    "femaleVoters": 1435
   },
   {
     "ward": 48,
@@ -3399,8 +3399,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1720,
     "sexRatio": 1051,
     "houses": 888,
-    "maleVoters": 1403,
-    "femaleVoters": 1475
+    "maleVoters": 1364,
+    "femaleVoters": 1514
   },
   {
     "ward": 49,
@@ -3469,8 +3469,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1797,
     "sexRatio": 1041,
     "houses": 932,
-    "maleVoters": 1482,
-    "femaleVoters": 1542
+    "maleVoters": 1441,
+    "femaleVoters": 1583
   },
   {
     "ward": 50,
@@ -3533,8 +3533,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1557,
     "sexRatio": 1010,
     "houses": 820,
-    "maleVoters": 1348,
-    "femaleVoters": 1361
+    "maleVoters": 1312,
+    "femaleVoters": 1397
   },
   {
     "ward": 51,
@@ -3606,8 +3606,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1428,
     "sexRatio": 1010,
     "houses": 752,
-    "maleVoters": 1205,
-    "femaleVoters": 1217
+    "maleVoters": 1173,
+    "femaleVoters": 1249
   },
   {
     "ward": 52,
@@ -3673,8 +3673,8 @@ var BHIMAVARAM_52_WARDS_DATA = [
     "female": 1655,
     "sexRatio": 1041,
     "houses": 858,
-    "maleVoters": 1376,
-    "femaleVoters": 1432
+    "maleVoters": 1338,
+    "femaleVoters": 1470
   }
 ];
 if (typeof window !== 'undefined') {
