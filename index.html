@@ -136,9 +136,14 @@
           <div class="text-slate-400">మొత్తం జనాభా</div>
           <div class="font-bold text-cyan-400 text-sm" id="header-total-pop">1,68,940</div>
         </div>
-        <div class="bg-slate-800/80 border border-slate-700/60 rounded-lg px-3 py-1.5 text-center hidden sm:block">
-          <div class="text-slate-400">మొత్తం ఓటర్లు</div>
+        <div class="bg-slate-800/80 border border-slate-700/60 rounded-lg px-3 py-1 text-center hidden sm:block">
+          <div class="text-slate-400 text-[11px]">మొత్తం ఓటర్లు</div>
           <div class="font-bold text-emerald-400 text-sm" id="header-total-voters">1,45,737</div>
+          <div class="text-[10px] text-slate-300 flex items-center justify-center gap-1.5 mt-0.5 font-medium">
+            <span>👨 71,863</span>
+            <span class="text-slate-500">|</span>
+            <span>👩 73,874</span>
+          </div>
         </div>
         <div class="bg-slate-800/80 border border-slate-700/60 rounded-lg px-3 py-1.5 text-center hidden lg:block">
           <div class="text-slate-400">సగటు వార్డు ఓటర్లు</div>
@@ -462,8 +467,12 @@
             <div class="font-semibold text-slate-200">26.14 చ.కి.మీ</div>
           </div>
           <div class="bg-slate-950/60 p-2 rounded-lg border border-slate-800">
-            <div class="text-slate-400">మొత్తం ఓటర్లు</div>
-            <div class="font-semibold text-cyan-400">1,45,737 మంది</div>
+            <div class="text-slate-400 text-[11px]">మొత్తం ఓటర్లు</div>
+            <div class="font-semibold text-cyan-400 text-xs">1,45,737 మంది</div>
+            <div class="text-[10px] text-slate-300 flex items-center justify-between mt-1 pt-1 border-t border-slate-800/80">
+              <span>👨 పురుషులు: <strong class="text-slate-100 font-bold">71,863</strong></span>
+              <span>👩 స్త్రీలు: <strong class="text-pink-400 font-bold">73,874</strong></span>
+            </div>
           </div>
         </div>
       </div>
@@ -1001,6 +1010,8 @@
       const sexRatio = w.sexRatio || Math.round((female / male) * 1000);
       const houses = w.houses || Math.round(popBase / 3.78);
       const voters = w.voters || Math.round(popBase * 0.862655);
+      const maleVoters = w.maleVoters || Math.round(voters * (male / popBase));
+      const femaleVoters = w.femaleVoters || (voters - maleVoters);
       const booths = Math.max(2, Math.min(6, Math.ceil(voters / 750)));
 
       return {
@@ -1027,6 +1038,8 @@
         sexRatio: sexRatio,
         houses: houses,
         voters: voters,
+        maleVoters: maleVoters,
+        femaleVoters: femaleVoters,
         booths: booths,
         sec: `వార్డు ${w.ward} సచివాలయం`
       };
@@ -1189,7 +1202,7 @@
         <div class="font-bold ${isLight ? 'text-cyan-700' : 'text-cyan-300'} text-xs mb-1 telugu-font">${ward.name}</div>
         <div class="text-[10px] text-slate-400 mb-1.5">${ward.nameEng}</div>
         <div class="text-[11px] ${isLight ? 'text-slate-700' : 'text-slate-300'} space-y-0.5">
-          <div>👥 జనాభా: <span class="font-semibold ${isLight ? 'text-slate-900' : 'text-white'}">~${ward.pop.toLocaleString('en-IN')}</span> | ఓటర్లు: <span class="font-semibold ${isLight ? 'text-amber-700' : 'text-amber-300'}">${ward.voters.toLocaleString('en-IN')}</span></div>
+          <div>👥 జనాభా: <span class="font-semibold ${isLight ? 'text-slate-900' : 'text-white'}">~${ward.pop.toLocaleString('en-IN')}</span> | ఓటర్లు: <span class="font-semibold ${isLight ? 'text-amber-700' : 'text-amber-300'}">${ward.voters.toLocaleString('en-IN')}</span> <span class="text-[10px] text-slate-400 font-normal">(👨 ${(ward.maleVoters || Math.round(ward.voters * 0.493)).toLocaleString('en-IN')} | 👩 ${(ward.femaleVoters || (ward.voters - Math.round(ward.voters * 0.493))).toLocaleString('en-IN')})</span></div>
           <div>🏛️ ల్యాండ్‌మార్క్‌లు: <span class="${isLight ? 'text-slate-600' : 'text-slate-300'}">${ward.landmarks.slice(0, 2).join(', ') || 'N/A'}</span></div>
         </div>
         ${candidateHtml}
@@ -1381,9 +1394,21 @@
             <td class="py-2 px-3 ${isLight ? 'text-slate-600' : 'text-slate-400'}">మొత్తం గృహాలు (Households)</td>
             <td class="py-2 px-3 text-right font-semibold ${isLight ? 'text-slate-800' : 'text-slate-200'}">${ward.houses.toLocaleString('en-IN')} ఇళ్ళు</td>
           </tr>
+          <tr class="${isLight ? 'bg-amber-50/70' : 'bg-amber-950/20'}">
+            <td class="py-2 px-3 ${isLight ? 'text-slate-800' : 'text-slate-300'} font-medium">నమోదిత ఓటర్లు (Total Voters)</td>
+            <td class="py-2 px-3 text-right font-bold ${isLight ? 'text-amber-700' : 'text-amber-400'} text-sm">${ward.voters.toLocaleString('en-IN')} మంది</td>
+          </tr>
           <tr>
-            <td class="py-2 px-3 ${isLight ? 'text-slate-600' : 'text-slate-400'}">నమోదిత ఓటర్లు (Voters)</td>
-            <td class="py-2 px-3 text-right font-semibold ${isLight ? 'text-amber-700' : 'text-amber-400'}">${ward.voters.toLocaleString('en-IN')} మంది</td>
+            <td class="py-1.5 px-3 pl-5 ${isLight ? 'text-slate-600' : 'text-slate-400'} text-[11px] flex items-center gap-1">
+              <span>↳ 👨 పురుష ఓటర్లు (Male Voters)</span>
+            </td>
+            <td class="py-1.5 px-3 text-right font-semibold ${isLight ? 'text-slate-800' : 'text-slate-200'} text-[11px]">${(ward.maleVoters || Math.round(ward.voters * 0.493)).toLocaleString('en-IN')}</td>
+          </tr>
+          <tr>
+            <td class="py-1.5 px-3 pl-5 ${isLight ? 'text-slate-600' : 'text-slate-400'} text-[11px] flex items-center gap-1">
+              <span>↳ 👩 స్త్రీ ఓటర్లు (Female Voters)</span>
+            </td>
+            <td class="py-1.5 px-3 text-right font-semibold ${isLight ? 'text-pink-700' : 'text-pink-400'} text-[11px]">${(ward.femaleVoters || (ward.voters - Math.round(ward.voters * 0.493))).toLocaleString('en-IN')}</td>
           </tr>
         `;
       }
